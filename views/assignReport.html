@@ -1,0 +1,88 @@
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
+</style>
+<div ng-include="'app/views/header.html'"></div>
+      <div class="maincontainer">
+         <div class="maincontent">
+            <div class="container-fluid">
+				<div class="content-shadow">	
+               <div class="ot-userAdministration" >
+                  <ul class="nav nav-tabs">
+                     <li class="active"><a data-toggle="tab" href="">Available Reports</a></li>
+                     
+                  </ul>
+                  <div class="tab-content">
+                     <div id="User" class="tab-pane fade in active">
+                        <div class="orchestra_devices_table">
+                           <div class="row">
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								 <div class="table-header">
+									<ul class="userAdministration-btn">
+					<!--				  <li class="active"><a data-toggle="tab" href="#home">Username</a></li>  -->
+									
+									</ul>
+
+									<div class="tab-content">
+									  <div id="home" class="tab-pane fade in active">
+										<div class="device-table">
+									
+                                    <div class="table-responsive">
+									<div ui-grid="availableReportsGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%;font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)"></div>
+
+                                    </div>
+                                 </div>
+									  </div>
+									 
+
+									</div>
+                                    <div class="clearfix"></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+                  </div>
+               </div>
+			   <div class="ot-userAdministration" style = "height:300px;min-height:200px;">
+                  <ul class="nav nav-tabs" >
+                     <li class="active"><a >Assign Report</a></li>
+                   
+                  </ul>
+				   <div class="ot-center">
+							
+						  <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+							 <div class="device-table">
+								<p style="font-family: Rajdhani-SemiBold; font-size: 19px;color:rgb(35, 35, 35)">Available Users</p>
+								<div class="table-responsive">
+								  <div ui-grid="usersNotHavingReportGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%;height:200px;font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)"></div>
+								</div>
+							 </div>
+						  </div>
+						  <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+							<div class="ot-toggle">
+								<div><button type="button" class="" ng-click="assignReport()">&gt;</button></div>
+								<div><button type="button" class="" ng-click="unassignReport()">&lt;</button></div>
+							</div>
+						  </div>
+						   <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+							 <div class="device-table">
+								<p style="font-family: Rajdhani-SemiBold; font-size: 19px;color:rgb(35, 35, 35)">Selected Users</p>
+								<div class="table-responsive">
+								  <div ui-grid="existingreportGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%;height:200px;font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)"></div>
+								</div>
+							 </div>
+						  </div>
+						  </div>
+				  
+                
+               </div>
+				</div>
+				<div ng-include="'app/views/favourites.html'"></div>
+			</div>
+         </div>
+      </div>
+	  <div ng-include="'app/views/favouritesPopUp.html'"></div>

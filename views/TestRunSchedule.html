@@ -1,0 +1,102 @@
+
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer" style="padding:15px">
+    <div class="maincontent">
+        <div class="container-fluid">
+            <div class="content-shadow">
+            <div class="ot-userAdministration"> 
+            <div class="orchestra_devices_table" style="max-width:100%;height:auto;">
+
+                <div class="tab-content">
+                    <div id="devices" class="tab-pane fade in active">
+                        <div class="orchestra_devices_table" style="max-width:100%;height:auto">
+                            <div ncy-breadcrumb ncy-breadcrumb-separator=" > "></div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%">
+                                    <div class="table-header">
+                                        <p style="color:#337ab7;">Schedule Test Run</p>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                        <form class="form-horizontal form_schedule" role="form" name="form" novalidate>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">Test Run:</label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control input_width"
+                                                           value="{{testRunName}}" ng-readonly='true'
+                                                           ng-model="testRunName">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">Job Template Description: </label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control input_width"
+                                                           value="{{jobTemplateDescription}}" ng-readonly='true'>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"> Schedule Start Date &
+                                                    Time:</label>
+                                                <div class="col-sm-2">
+                                                        <input class=" input_width form-control" ng-model="Datendtime" style="background-color:#FFFFFF" datetime-picker date-format="yyyy-MM-dd HH:mm:ss" name="Datendtime" required/>
+                                                    <div ng-show="form.$submitted || form.Datendtime.$touched">
+                                                        <div ng-show="form.Datendtime.$error.required" style="color:red">**Please Select Start Date and Time</div>
+                                                    </div>
+                                                         <i class="icon-place fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">End Date: </label>
+                                                <div class="col-sm-2">
+                                                    <input class=" input_width form-control" ng-model="EndDate" style="background-color:#FFFFFF"
+                                                           datetime-picker date-format="yyyy-MM-dd" name="EndDate" required/>
+                                                    <div ng-show="form.$submitted || form.EndDate.$touched">
+                                                        <div ng-show="form.EndDate.$error.required" style="color:red">**Please Select End Time</div>
+                                                    </div>
+                                                     <i class="icon-place fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">Select Recurrence: </label>
+                                                <div class="col-sm-2">
+                                                    <select class="form-control input_width" id="sel2" style="background-color:#FFFFFF"
+                                                            ng-model="recurrence" ng-change="change()" name="recurrence" required>
+                                                        <option>None</option>
+                                                        <option>Daily</option>
+
+                                                    </select>
+                                                    <div ng-show="form.$submitted || form.recurrence.$touched">
+                                                        <div ng-show="form.recurrence.$error.required" style="color:red">**Please Select Recurrence</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div style="width:100%;height:50px;margin:0px 25%;margin-top: 30px; ">
+
+                                                <input type="submit" name="button" value="Start Now" class="btn btn-info"
+                                                       ng-click="startnow();"/>
+                                                <input type="submit" name="button" value="Schedule" class="btn btn-info"
+                                                       ng-click="schedule();"/>
+                                                <input type="submit" name="button" value="Stop" class="btn btn-info"
+                                                       ng-click="stop();"/>
+                                            </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+
+                </div>
+            </div>
+</div>
+</div>
+        </div>
+
+    </div>
+</div>
+<div ng-include="'app/views/favourites.html'"></div>
+                    <div ng-include="'app/views/popUp.html'"></div>

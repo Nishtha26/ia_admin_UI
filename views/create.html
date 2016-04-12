@@ -1,0 +1,85 @@
+
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer" style="padding:15px">
+    <div class="maincontent">
+        <div class="container-fluid">
+            <div class="ot-deviceData" style="max-width:100%;margin-left:0px">
+
+                <div class="tab-content">
+                    <div id="devices" class="tab-pane fade in active">
+                        <div class="orchestra_devices_table" style="height:800px;max-width: 61%">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%">
+                                    <div class="device-table">
+                                        <div style="width:100%;height:50px">
+                                            <h1>Test Plan</h1>
+                                        </div>
+
+                                        <div class="tree" style="width: 100%;height: 500px;">
+
+                                            <div class="table-responsive" style="width:48%;height:450px;float:left;background-color: grey;color:white;">
+             
+                                                <ul id="my-basket"
+                                                    class="list-group"
+                                                    ad-drop="true"
+                                                    ad-drop-over="onDragOver($data, $dragElement, $dropElement, $event);"
+                                                    ad-drop-leave="onDragLeave($data, $dragElement, $dropElement, $event)"
+                                                    ad-drop-end="onDrop($data, $dragElement, $dropElement, $event);">
+                                                    <li class="list-group-item disabled">My Basket</li>
+                                                    <li class="list-group-item"
+                                                        ad-drag="true"
+                                                        ng-repeat="car in models.basket">
+                                                        <span>
+                                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                                            {{ car.name}} - {{ car.modelYear}} ( {{ car.price | currency }} )
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item" ng-hide="models.basket.length">
+                                                        <span> Drop here</span>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="list-group">
+                                                    <!-- =========== Drag with handles ============= -->
+                                                    <li class="list-group-item"
+                                                        ad-drag="true"
+                                                        ad-drag-handle="true"
+                                                        id="drag-handle-demo">
+                                                        <span class="ad-drag-handle glyphicon glyphicon-align-justify"></span>
+                                                        Drag me using my handle
+                                                    </li>
+                                                    <!-- =========== Drag on the whole element ============= -->
+                                                    <li class="list-group-item"
+                                                        ad-drag="true"
+                                                        id="drag-element-demo">
+                                                        Drag me without handle
+                                                    </li>
+                                                    <!-- =========== Prevent drag on parts of the element ============= -->
+                                                    <li class="list-group-item"
+                                                        ad-drag="true"
+                                                        id="drag-prevent-demo">
+                                                        Drag me, except <strong ad-prevent-drag>this bold text</strong></li>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>\
+                                    <div style="width:100%;height:100px;float: right;margin-right:0px">
+                                        <!--                                        <input type="button" name="button" value="Finish" class="btn btn-info" style="float: right;margin: 10px;width: 100px;"/>
+                                                                                <input type="button" name="button" value="Cancel" class="btn btn-info" style="float: right;margin: 10px;width: 100px;"/>-->
+                                        <input type="button" name="button" value="Next" class="btn btn-info" style="float: right;margin: 10px;width: 100px;" ng-click="commandParameters_next()"/>
+                                        <!--                                        <input type="button" name="button" value="Previous" class="btn btn-info" style="float: right;margin: 10px;width: 100px;"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

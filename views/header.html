@@ -1,0 +1,173 @@
+<header class="boxshdw">
+	<div class="container-fluid">
+		<div class="orchestra_header">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" >
+					<div class="logo">
+						<a href="javascript:void(0)" class="navbar-brand"><img src="images/logo.png" alt="logo" title="Orchestra IntelliAgent" class="OrchestraLogo" ng-click="gotoDashBoard()"></a>
+						<a href="javascript:void(0)" class="menu_dropdown" ng-click="toggleMenu()"></a>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" style="height:50px;">
+					
+					<div class="mobile_menu_trigger">
+						<div class="navbar navbar-default"><div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="right_menu">
+						<ul class="nav">
+						
+							<li  ng-if="role ==  'ROLE_OTADMIN' ">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="images/more_menu-icon.png" alt="More Menu" class="MoreMenuIcon">
+								</a>
+								
+									<div class="dropdown-menu" ng-if="role ==  'ROLE_OTADMIN'">
+									<ul class="more_menu nav"  >
+									
+									<li ng-click = "addreports()"  ><a href=""><img src="images/add_report.png" alt="Devices"> <span>Add Reports </span></a></li>
+									
+									<li class="" ng-click ="useradminstration()"   ><a href=""><img src="images/user.png" alt="Users"> <span>User Administration</span></a></li>
+                                    <li class="" ng-click = "testscript()"		><a href=""><img src="images/test_script.png" alt="Groups"> <span>Test Scripts</span></a></li>
+                                   
+								   <li ng-click ="addUsergroups()"  ><a href="javascript:void(0);"><img src="images/user_group.png" alt="Test Scripts"> <span>User Groups</span></a></li>
+								   
+									<li ng-click ="testplanAdmin()"  ><a href=""><img src="images/test_plan.png" alt="Test Scripts"> <span>Test Plan Administration</span></a></li>
+									
+									
+									<li ng-click = "deviceAdmin()" ><a href=""><img src="images/device_admin.png" alt="Test Scripts"> <span>Device Administration</span></a></li>
+									<li  ng-click="assignReport()" ><a href="javascript:void(0);"><img src="images/add_report.png" alt="Test Scripts" width="50%"> <span>Assign Reports</span></a></li>
+									<li  ng-click="userDeviceMapping()" ><a href="javascript:void(0);"><img src="images/user_deviceMapping.png"  width="50%"> <span>User DeviceMapping</span></a></li>
+									</ul>
+									</div>
+				
+							</li>
+							
+							<li  ng-if="role ==  'ROLE_IAADMIN' " >
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="images/more_menu-icon.png" alt="More Menu" class="MoreMenuIcon">
+								</a>
+								
+									<div class="dropdown-menu" ng-if="role ==  'ROLE_IAADMIN'">
+									<ul class="more_menu nav"  >
+									
+									<li class="" ng-click ="useradminstration()"   ><a href=""><img src="images/user.png" alt="Users"> <span>User Administration</span></a></li>
+                                    <li class="" ng-click = "testscript()"		><a href=""><img src="images/test_script.png" alt="Groups"> <span>Test Scripts</span></a></li>
+                					<li ng-click = "deviceAdmin()" ><a href=""><img src="images/device_admin.png" alt="Test Scripts"> <span>Device Administration</span></a></li>
+									<li  ng-click="assignReport()" ><a href="javascript:void(0);"><img src="images/add_report.png" alt="Test Scripts" width="50%"> <span>Assign Reports</span></a></li>
+									</ul>
+									</div>
+				
+							</li>
+							
+							<li ng-if="role == 'ROLE_OTADMIN' ">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="images/settings-icon.png" alt="Settings" class="SettingsIcon">
+								</a>
+								<div class="dropdown-menu settings_dropdown">
+									<ul class="more_menu settings_menu nav">
+										<li class="landing" ng-click="landingpage()"><a href=""><img src="images/landing-icon.png" alt="Landing"> <span>Landing</span></a></li>
+										<li ng-click="server()"  ><a href=""><img src="images/server-icon.png" alt="Server"> <span>Settings</span></a></li>
+									</ul>
+								</div>
+							</li>
+							
+							<li ng-if="role == 'ROLE_IAADMIN' ">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="images/settings-icon.png" alt="Settings" class="SettingsIcon">
+								</a>
+								<div class="dropdown-menu settings_dropdown">
+									<ul class="more_menu settings_menu nav">
+										<li class="landing" ng-click="landingpage()"><a href=""><img src="images/landing-icon.png" alt="Landing"> <span>Landing</span></a></li>
+										<li ng-click="server()"  ><a href=""><img src="images/server-icon.png" alt="Server"> <span>Settings</span></a></li>
+									</ul>
+								</div>
+							</li>
+							
+							<li ng-if="role == 'ROLE_REPORTING' ">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+									<img src="images/settings-icon.png" alt="Settings" class="SettingsIcon">
+								</a>
+								<div class="dropdown-menu settings_dropdown">
+									<ul class="more_menu" style="width : 40px;">
+										<li class="landing" ng-click="landingpage()"><a href=""><img src="images/landing-icon.png" alt="Landing"> <span>Landing</span></a></li>
+									</ul>
+								</div>
+							</li>
+							
+						</ul>
+						<div class="user_profile">
+							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+								<img src="images/profilepic-icon.png" alt="Profile Image" class="ImageIcon">
+							</a>
+							<div class="dropdown-menu">
+								<div class="user_profile_details">
+									<div class="profile_image">
+										<img src="images/profile-pic.png">
+									</div>
+								<!--	<div class="profile_details"> -->
+								<div class="my_account text-center">
+										<p>{{name}}</p>
+									<!--	<span>{{email}}</span> -->
+									<!--	<a href="javascript:void(0);" class="my_account text-center">My Account</a> -->
+									</div>
+								</div>
+								<div class="user_profile_operations">
+									<a href="" ng-click="changePassword()" class="operation_btn">Change Password</a>
+									<a href="" ng-click="signOut()" class="operation_btn signout" id="logoutDiv">Sign out</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mobile_menu">
+					<nav class="navbar-default">
+						<div class="collapse navbar-collapse orchestra_mobile_menu" id="bs-example-navbar-collapse-1">
+							<ul class="nav">
+								<li ng-repeat="(key, val) in menuData">
+									<!-- <a href="javascript:void(0);" ng-click="toggleSubMenu($event,key)"> -->
+									<a href="javascript:void(0);" >
+										<img ng-src='{{ val[0].iconUrl == null && "images/dashboard-icon.png" || "images/" + val[0].iconUrl }}' alt={{key}}/>
+										<span class="link_name">{{key}}</span>
+										<em class="glyphicon glyphicon-plus"></em>
+									</a>
+									<ul class="nav sub-nav map-subnav-icons">
+										<li ng-repeat="x in menuData[key]">
+											<img src="images/menu_loading.gif"></img>
+											<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl,x.screenName)">{{x.screenName}}</a>
+											<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 5px; cursor: pointer;" />
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="orchestra_menu">
+		<ul class="nav">
+			<li ng-repeat="(key, val) in menuData">
+				<a href="javascript:void(0);" ng-click="toggleSubMenu($event,key)">
+					<img ng-src='{{ val[0].iconUrl == null && "images/Icon-dashboard.png" || "images/" + val[0].iconUrl }}' alt={{key}} />
+					<span class="link_name">{{key}}</span>
+					<em class="glyphicon glyphicon-menu-down"></em>
+				</a>
+				<ul class="nav sub-nav map-subnav-icons" style="{{headerStyle[key]}}" >
+					<li ng-repeat="x in menuData[key]">
+						<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
+						<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
+					</li>
+				</ul>
+			</li>
+		</ul> 
+	</div>
+</header>

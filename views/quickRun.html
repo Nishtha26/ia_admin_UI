@@ -1,0 +1,34 @@
+<div ng-include="'app/views/header.html'"></div>						
+<div>
+	<div class="maincontent">
+		<div class="container-fluid">
+			<div class="content-shadow">	
+               <div class="ot-userAdministration">
+			<div class="orchestra_devices_table">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="table-header">
+							<p style="color:#337ab7;">Quick Run</p>
+							<div class="clearfix"></div>
+						</div>
+						<div class="device-table" style="position: relative;top: 10px;font-weight:900">
+						
+							<div class="table-responsive">
+							<img src="images/loading.gif" style="position:relative;left:42%;top:200px;" ng-show="dataLoading"></img>
+				<span style ="position:relative;left:42%;color:red;font-size:10px;top:90px;" ng-show ="!$scope.quickrunGridOptions.data.length"> No Data Found </span>
+								<div ui-grid="quickrunGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%;">
+								
+								</div>
+							</div>
+							<button type="button" class="btn btn-info ot-btn" ng-click="quicknext()">Next</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+			<div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div>
+		</div>
+	</div>
+</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

@@ -1,0 +1,54 @@
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer">
+		<div class="maincontent">
+			<div class="container-fluid">
+				<div class="ot-deviceData" style="background-color: #fff;">
+				
+					<div class="tab-content">
+					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
+						<div class="orchestra_devices_table" style="background-color: #fff;">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="table-header">
+									<p>Devices</p>
+									<div class="clearfix"></div>
+							</div>
+								
+								<div class="device-table">
+									<div class="table-responsive">
+									<div ag-grid="gridOptions" class="ag-fresh" style="height: 500px;" id="myGrid"></div>
+									</div>
+								</div>
+								
+								<div class="table-more-info" style="position: relative;top: 10px;">
+									<div class="row">
+										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+											<dl class="dl-horizontal">
+											  <dt>Licensed To</dt><dd>Orchestra Technologies Dev.</dd>
+											  <dt>Device Name</dt><dd>{{devicename}}</dd>
+											  <dt>Device Type</dt><dd>{{devicetype}}</dd>
+											  <dt>iac Version</dt><dd>{{iacversion}}</dd>
+											</dl>
+										</div>
+										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+											<dl class="dl-horizontal">									
+											  <dt>imei</dt><dd>{{imei}}</dd>
+											  <dt>imsi</dt><dd>{{imsi}}</dd>
+											  <dt>Last Ping</dt><dd>{{lastping}}</dd>
+											</dl>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				  </div>
+				 
+				</div>				
+				</div>
+					<div ng-include="'app/views/favourites.html'"></div>
+			</div>
+		</div>
+	</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

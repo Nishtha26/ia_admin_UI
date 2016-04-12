@@ -1,0 +1,170 @@
+<div ng-include="'app/views/header.html'"></div>
+	<!-- Header Ends -->
+	
+	
+	<!-- Main Content Starts -->
+	<div class="maincontainer">
+		<div class="maincontent">
+			<div class="container-fluid">
+				<div class="orch-rep-dashboards boxshdw" style="margin-bottom:10px;">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						
+							<div class="heading1"><a ng-click="goBack('reportsCategory')" style="cursor:pointer;">Reports Category</a> > <a ng-click="goBack(selected)" style="cursor:pointer;">{{selected}}</a> > <a ng-click="goBack(selected1)" style="cursor:pointer;">{{selected1}}</a><span style="font-weight:900;">{{' > '+ (Market | capitalize)}}</span></div>
+							<div class="orch-rep-dashboards-innerDv orch-pad1">
+								<div class="row" >
+
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+									
+										<div class="orch-dashboard-loc-zone">
+											
+											<div >
+											<div class="heading1" style=" width:60%;">Select Key </div>
+												
+												<ul id="parent-list" style ="width:60%;">
+								                    <li ng-click ="getSelectedKey($event)">Test Plan</li>
+													<li  class ="active" ng-click ="getSelectedKey($event)">Device</li>
+													<li  ng-click ="getSelectedKey($event)">Device Group</li>
+													<li  ng-click ="getSelectedKey($event)">Configuration</li>
+																
+													
+							                    </ul>
+							
+									 		</div>
+										</div>
+
+									</div>
+									 <!--Error Div	-->						 
+                         				 <div class="table-responsive"  ng-show ="errdiv " style="color:red;font-size:20px;position:relative;left:60px;border:none;" >
+                                         No Data Found
+										 </div>	
+									<div class="col-xs-12 col-sm-2 col-md-3  col-lg-3" style="position:relative;left:3%">
+								     <img src="images/loading.gif" style="position:relative;left:40%;" ng-show="dataLoading3"></img>
+						<!--Device Div	-->			
+										<div class="table-responsive"  ng-show ="deviceDiv" >
+											<div id='div_header' style="position:absolute;background-color: #ebf2f7;text-align: left;font-weight: bold;font-family: Rajdhani-Regular;overflow:hidden;height:40px;width:100%;margin-left:-15px;">
+												<table class="table table-bordered" >
+													<tr>
+															<td style="width:100px">Device ID</td>
+															<td>Device Name</td>
+													</tr>
+												</table>
+											</div>
+											<div id='div_data' style='position:absolute;top: 37px; bottom: 0px; width: 100%; overflow: auto;left:0px' >
+												<table class="table table-bordered" id ="table">
+													<tr ng-repeat="val in deviceList" ng-class='{active:$first}' ng-click="selectItem($event)" id="select" style="cursor:pointer;">	
+														<td style="width:100px">{{val.deviceId}}</td>
+														<td>{{val.deviceName}}</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+                    <!--Configuration Div	-->			 										
+                                        <div class="table-responsive"  ng-show ="configuarationDiv"  >
+										<div id='div_header' style="position:absolute;background-color: #ebf2f7;text-align: left;font-weight: bold;font-family: Rajdhani-Regular;overflow:hidden;height:40px;width:100%;margin-left:-15px;">
+											<table class="table table-bordered" >
+													<tr>
+														<td style="width:100px">Job ID</td>
+														<td>Configuration</td>
+													</tr>
+												</table>
+											</div>
+											<div id='div_data' style='position:absolute;top: 37px; bottom: 0px; width: 100%; overflow: auto;left:0px' >
+												<table class="table table-bordered" id ="table2">
+													<tr ng-repeat="value in configMarket" ng-class='{active:$first}' ng-click="selectItem($event)" id="select" style="cursor:pointer;">	
+														<td style="width:100px">{{value.jobId}}</td>
+														<td>{{value.configuration}}</td>
+													</tr>
+											</table>
+											</div>
+										 </div>
+                <!--Device Group Div	-->			 										
+                                        <div class="table-responsive"  ng-show ="deviceGroupDiv"  >
+										<div id='div_header' style="position:absolute;background-color: #ebf2f7;text-align: left;font-weight: bold;font-family: Rajdhani-Regular;overflow:hidden;height:40px;width:100%;margin-left:-15px;">
+											<table class="table table-bordered" id ="table4">
+													<tr>
+														<td style="width:100px">Job ID</td>
+														<td>Configuration</td>
+													    
+													</tr>
+												</table>
+												</div>
+												<div id='div_data' style='position:absolute;top: 37px; bottom: 0px; width: 100%; overflow: auto;left:0px' >
+												<table class="table table-bordered">
+													<tr ng-repeat="group in deviceGroupMarket" ng-class='{active:$first}' ng-click="selectItem($event)" id="select" style="cursor:pointer;">	
+														<td style="width:100px">{{group.jobId}}</td>
+														<td>{{group.configuration}}</td>
+													
+													</tr>
+											</table>
+											</div>
+										 </div> 										 
+														 
+										
+									</div>
+									
+									<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="position:relative;left:3%" >
+						              <img src="images/loading.gif" style="position:relative;left:60%;" ng-show="dataLoading3"></img> 
+						<!--Device Div	-->						
+										<div class="table-responsive" ng-show ="deviceDiv"  >
+										<div id='div_header' style="position:absolute;background-color: #ebf2f7;text-align: left;font-weight: bold;font-family: Rajdhani-Regular;overflow:hidden;height:40px;width:100%;margin-left:-15px;">
+											<table class="table table-bordered"  >
+													<tr>
+														<td style="width:120px">IMSI</td>
+														<td>MSISDN</td>
+													</tr>
+												</table>
+											</div>
+											<div id='div_data' style='position:absolute;top: 37px; bottom: 0px; width: 100%; overflow: auto;left:0px' >
+												<table class="table table-bordered" id ="table1">
+													<tr ng-repeat="val in deviceList" ng-class='{active:$first}' ng-click="selectItem1($event)" id="select" style="cursor:pointer;">	
+														<td style="width:120px">{{val.imsi}}</td>
+														<td>{{val.msisdn}}</td>
+													
+													</tr>
+											</table>
+										</div>
+										</div>
+                          <!--Configuration Div	-->	            
+									<div class="table-responsive"  ng-show ="configuarationDiv"  >
+									<div id='div_header' style="position:absolute;background-color: #ebf2f7;text-align: left;font-weight: bold;font-family: Rajdhani-Regular;overflow:hidden;height:40px;width:100%;margin-left:-15px;">
+											<table class="table table-bordered" >
+													<tr>
+														<td style="width:100px">DutId</td>
+														<td>JobType</td>
+													    
+													</tr>
+												</table>
+												</div>
+												<div id='div_data' style='position:absolute;top: 37px; bottom: 0px; width: 100%; overflow: auto;left:0px' >
+												<table class="table table-bordered" id ="table3">
+													<tr ng-repeat="value in configMarket" ng-class='{active:$first}' ng-click="selectItem1($event)" id="select" style="cursor:pointer;">	
+														<td style="width:100px">{{value.dutId}}</td>
+														<td>{{value.jobType}}</td>
+													
+													</tr>
+											</table>
+											</div>
+										 </div>										
+										
+									</div>
+
+							
+								</div>
+								
+								
+								
+								<div class="bottom-section">
+							
+									<a ng-click="goToNext()" class="btn btn-primary" ng-disabled="dataLoading || dataLoading3">Next</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-include="'app/views/favourites.html'"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Main Content Ends -->
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

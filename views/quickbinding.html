@@ -1,0 +1,47 @@
+<div ng-include="'app/views/header.html'"></div>						
+<div>
+	<div class="maincontent">
+		<div class="container-fluid">
+			<div class="content-shadow">	
+               <div class="ot-userAdministration">
+			<div class="orchestra_devices_table">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="table-header">
+							<p style="color:#337ab7;">Quick Run</p>
+							<div class="clearfix"></div>
+						</div>
+						<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+							 <div class="device-table">
+								<p>Available Tasks</p>
+								<div class="table-responsive">
+								<img src="images/loading.gif" style="position:relative;left:18%;top:200px;" ng-show="dataLoading"></img>
+									<!--		<span style ="position:relative;left:20%;color:red;font-size:20px;top:150px;" ng-show ="!$scope.quickrunbindingGridOptions.data.length"> No Data Found </span> -->
+								  <div ui-grid="quickrunbindingGridOptions" ui-grid-selection class="grid" style="margin:1 auto;max-width:100%;font-weight:900"></div>
+								</div>
+							 </div>
+						  </div>
+						  
+						  <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+							 <div class="device-table">
+								<p>Commands Available In The Tasks</p>
+								<div class="table-responsive">
+								<img src="images/loading.gif" style="position:relative;left:18%;top:200px;" ng-show="depDataLoading"></img>
+										<!--	<span style ="position:relative;left:10%;color:red;font-size:12px;top:180px;" ng-show ="!$scope.quickrunTaskDependantOptions.data.length" id="noData"> No Data Found </span> -->
+								  <div ui-grid="quickrunTaskDependantOptions" ui-grid-selection class="grid" style="margin:1 auto;max-width:50%"></div>
+								</div>
+								<button type="button" class="btn btn-info ot-btn" ng-click="quickrun()" id="quickRun">Quick Run</button>
+							 </div>
+						  </div>
+						  
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+			<div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div>
+		</div>
+	</div>
+</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>
+<div ng-include="'app/views/popUp.html'"></div>

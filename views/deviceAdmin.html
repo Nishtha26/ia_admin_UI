@@ -1,0 +1,42 @@
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
+</style>
+<div ng-include="'app/views/header.html'"></div>						
+<div>
+	<div class="maincontent">
+		<div class="container-fluid">
+			<div class="content-shadow">
+			<div class="ot-userAdministration">
+			<div class="orchestra_devices_table">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="table-header">
+							<p style="color:#337ab7;">Device Administration</p>
+							<div class="clearfix"></div>
+						</div>
+						<div class="device-table" style="position: relative;top: 10px;font-weight: 900;">
+							<div class="table-responsive">
+						
+								<div ui-grid="deviceAdminGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%;">
+							<img src="images/loading.gif" style="position:relative;left:52%;top:180px; font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)" ng-show="dataLoading"></img>
+								</div>
+								
+								<button type="button" class="btn btn-info ot-btn" ng-click = "approve()" id="approve">Approve</button>
+								<button type="button" class="btn btn-info ot-btn" ng-click = "reject()" >Reject</button>
+								<button type="button" class="btn btn-info ot-btn" ng-click = "reject()" id="restartIac">Restart IAC</button>
+								<button type="button" class="btn btn-info ot-btn" ng-click = "reject()" id="registerIac">Register IAC</button>
+								<button type="button" class="btn btn-info ot-btn" ng-click = "reject()" id="unregisterIac">UnRegister IAC</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+			<div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div>
+		</div>
+	</div>
+</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>
