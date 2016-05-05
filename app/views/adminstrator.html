@@ -1,0 +1,386 @@
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer">
+         <div class="maincontent">
+            <div class="container-fluid">
+            <div class="content-shadow">  
+               <div class="ot-userAdministration">
+            
+                  <div class="tab-content">
+                    
+                <div id="Device" class="tab-pane fade">
+                        <div class="orchestra_devices_table">
+                           <div class="row">
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                         <div class="table-header">
+                           <ul class="userAdministration-btn">
+                             <li id ="deviceone" class="active" ng-click ="showDeviceAdministrationSubDiv($event)"><a  data-toggle="tab" aria-expanded="true">Device ID</a></li>
+                             <li id ="devicetwo" ng-click ="showDeviceAdministrationSubDiv($event)"><a  data-toggle="tab" aria-expanded="true">Device Group</a></li>
+                            
+                           </ul>
+
+                           <div class="tab-content">
+                             <div class="tab-pane fade in active" id="deviceid">
+                        
+                        </div>
+                         <div class="tab-pane fade " id="devicegroup">
+                              <div class="device-table group-table">
+                              <div class="">
+                           <a class="table-AdministrationAdd" href="javascript:void(0)"><img alt="add" src="images/device-plus-icon.png"></a>
+                              <div class="popup-AdministrationAdd AdministrationAdd">
+                                 <form>
+                                   <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4" for="username-3">Group id</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                      <input type="text" class="form-control" id="username-3">
+                                    </div>
+                                   </div>
+                                   <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4" for="name-2">Name</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                      <input type="text" class="form-control" id="name-2">
+                                    </div>
+                                   </div>
+                                   <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4" for="customer-2">Customer</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                      <input type="text" class="form-control" id="customer-2">
+                                    </div>
+                                   </div>
+                                   <div class="form-group ot-btn-data">
+                                    <button class="btn btn-info ot-btn" type="button">Save</button>
+                                    <button class="btn btn-info ot-btn" type="button">Cancel</button>
+                                   </div>
+                                 </form>
+                              </div>
+                           </div>
+                                  
+                                 </div>
+                        </div>
+                           </div>
+                                    <div class="clearfix"></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+               
+                  </div>
+               </div>
+            <div class="ot-userAdministration">
+                  <ul class="nav nav-tabs">
+                     <li class="active" id="form1" ng-click ="showformpages($event)"><a data-toggle="tab" >User Account</a></li>
+                     <li id="form2" ng-click ="showformpages($event)"><a data-toggle="tab" >Assign Users</a></li>
+                     <li id="form3" ng-click ="showformpages($event)"><a data-toggle="tab" >Assign Reports</a></li>
+                  </ul>
+                  <div class="tab-content">
+                     <div id="account" class="tab-pane fade in active">
+                        <div class="orchestra_devices_table">
+                           <div class="row">
+                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                           <form class="form-horizontal">
+                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                 <label class="control-label col-sm-5 col-md-4 col-lg-4" for="username-7">Username</label>
+                                 <div class="col-sm-7 col-md-8 col-lg-8">
+                                   <input type="text" class="form-control" id="username-7">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-5 col-md-4 col-lg-4" for="firstname">Firstname</label>
+                                 <div class="col-sm-7 col-md-8 col-lg-8">
+                                   <input type="text" class="form-control" id="firstname">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-5 col-md-4 col-lg-4" for="password">Password</label>
+                                 <div class="col-sm-7 col-md-8 col-lg-8">
+                                   <input type="password" class="form-control" id="password">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-5 col-md-4 col-lg-4" for="cnfpassword">Conform Password</label>
+                                 <div class="col-sm-7 col-md-8 col-lg-8">
+                                   <input type="password" class="form-control" id="cnfpassword">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-5 col-md-4 col-lg-4" for="role">Role</label>
+                                 <div class="col-sm-7 col-md-8 col-lg-8">
+                                 <select class="form-control" id="role">
+                                    <option value="one">One</option>
+                                    <option value="two">Two</option>
+                                    <option value="three">Three</option>
+                                    <option value="four">Four</option>
+                                    <option value="five">Five</option>
+                                 </select>
+                                 </div>
+                                </div>
+                             </div>
+                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group hidden-xs">
+                                 <label class="control-label col-sm-2 col-md-2 col-lg-2" for="username">&nbsp;</label>
+                                 <div class="col-sm-8 col-md-8 col-lg-8">&nbsp;</div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-3 col-md-2 col-lg-2" for="lastname">Lastname</label>
+                                 <div class="col-sm-8 col-md-8 col-lg-8">
+                                   <input type="text" class="form-control" id="lastname">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <div class="">
+                                    <a class="table-emailAdd" href="javascript:void(0)">+</a>
+                                       <div class="popup-AdministrationAdd emailAdd">
+                                          
+                                            <div class="form-group">
+                                             <label class="control-label col-sm-5 col-md-4 col-lg-4" for="username-8">Customer ID</label>
+                                             <div class="col-sm-7 col-md-7 col-lg-7">
+                                               <input type="text" class="form-control" id="username-8">
+                                             </div>
+                                            </div>
+                                            <div class="form-group">
+                                             <label class="control-label col-sm-5 col-md-4 col-lg-4" for="name-8">Customer Name</label>
+                                             <div class="col-sm-7 col-md-7 col-lg-7">
+                                               <input type="text" class="form-control" id="name-8">
+                                             </div>
+                                            </div>
+                                            
+                                            <div class="form-group ot-btn-data">
+                                             <button class="btn btn-info ot-btn" type="button">Save</button>
+                                             <button class="btn btn-info ot-btn" type="button">Cancel</button>
+                                            </div>
+                                          
+                                       </div>
+                                    </div>
+                                 <label class="control-label col-sm-3 col-md-2 col-lg-2" for="customer-8">Customer</label>
+                                 <div class="col-sm-8 col-md-8 col-lg-8">
+                                   <input type="text" class="form-control" id="customer-8">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 
+                                 <label class="control-label col-sm-3 col-md-2 col-lg-2" for="email-8">Email</label>
+                                 <div class="col-sm-8 col-md-8 col-lg-8">
+                                   <input type="email" class="form-control" id="email-8">
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                 <label class="control-label col-sm-3 col-md-2 col-lg-2" for="role-8">Group</label>
+                                 <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <select class="form-control" id="role-8">
+                                       <option value="one">One</option>
+                                       <option value="two">Two</option>
+                                       <option value="three">Three</option>
+                                       <option value="four">Four</option>
+                                       <option value="five">Five</option>
+                                    </select>
+                                 </div>
+                                </div>
+                             </div>
+                             <div class="form-group ot-btn-data"> 
+                              <div class="col-sm-offset-2 col-sm-10  text-center">
+                                <button type="button" class="btn btn-info ot-btn">Save</button>
+                                <button type="button" class="btn btn-info ot-btn">Cancel</button>
+                              </div>
+                             </div>
+                           </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                <div id="assign" class="tab-pane fade">
+                        <div class="orchestra_devices_table assign-table">                          
+                     <div class="row">
+                        <div class="ot-center">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                           <div class="assign-tableTitle">
+                              <p> Selected Group : <span class="groupname">Wifigroup1</span></p>
+                           </div>
+                        </div>
+                              <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                 <div class="device-table">
+                           <p>Available Users</p>
+                                    <div class="table-responsive">
+                                       <table class="table">
+                                          <thead>
+                                             <tr>                                              
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                    <th>Username</th>
+                                             </tr>
+                                             <tr>
+                                                <th><label class="hide" for="selectall-8">Select All</label><input type="text" class="device_col_search" id="selectall-8" name="selectall-8"></th>
+                                                <th><label class="hide" for="deviceID-8">Device ID</label><input type="text" class="device_col_search" id="deviceID-8" name="deviceId-8"></th>
+                                                <th><label class="hide" for="deviceName-8">Device Name</label><input type="text" class="device_col_search" id="deviceName-8" name="deviceName-8"></th>                                               
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                       <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+                        <div class="ot-toggle">
+                           <div><button type="button" class="">&gt;</button></div>
+                           <div><button type="button" class="">&lt;</button></div>
+                        </div>
+                       </div>
+                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                 <div class="device-table">
+                           <p>Selected Users</p>
+                                    <div class="table-responsive">
+                                       <table class="table">
+                                          <thead>
+                                             <tr>                                              
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                    <th>Username</th>
+                                             </tr>
+                                             <tr>
+                                                <th><label class="hide" for="selectall-9">Select All</label><input type="text" class="device_col_search" id="selectall-9" name="selectall-9"></th>
+                                                <th><label class="hide" for="deviceID-9">Device ID</label><input type="text" class="device_col_search" id="deviceID-9" name="deviceId-9"></th>
+                                                <th><label class="hide" for="deviceName-9">Device Name</label><input type="text" class="device_col_search" id="deviceName-9" name="deviceName-9"></th>                                               
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                       </div>
+                        <div class="col-sm-12 text-center ot-btn-data">
+                          <button class="btn btn-info ot-btn" type="button">Save</button>
+                          <button class="btn btn-info ot-btn" type="button">Cancel</button>
+                        </div>
+                           </div>
+                        </div>
+                     </div>
+                <div id="reports" class="tab-pane fade">
+                        <div class="orchestra_devices_table assign-table">                          
+                     <div class="row">
+                        <div class="ot-assignCenter">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                           <div class="assign-tableTitle">
+                              <p>&nbsp;</p>
+                           </div>
+                        </div>
+                              <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+                                 <div class="device-table">
+                           <p>AvailableReports</p>
+                                    <div class="table-responsive">
+                                       <table class="table">
+                                          <thead>
+                                             <tr>                                              
+                                                <th>Report name</th>
+                                                <th>Category</th>
+                                            </tr>
+                                             <tr>
+                                                <th><label class="hide" for="selectall-10">Select All</label><input type="text" class="device_col_search" id="selectall-10" name="selectall-10"></th>
+                                                <th><label class="hide" for="deviceID-10">Device ID</label><input type="text" class="device_col_search" id="deviceID-10" name="deviceId-10"></th> 
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                       <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+                        <div class="ot-toggle">
+                           <div><button type="button" class="">&gt;</button></div>
+                           <div><button type="button" class="">&lt;</button></div>
+                        </div>
+                       </div>
+                        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+                                 <div class="device-table">
+                           <p>SelectedReports</p>
+                                    <div class="table-responsive">
+                                       <table class="table">
+                                          <thead>
+                                             <tr>                                              
+                                                <th>Report name</th>
+                                                <th>Category</th>
+                                            </tr>
+                                             <tr>
+                                                <th><label class="hide" for="selectall-11">Select All</label><input type="text" class="device_col_search" id="selectall-11" name="selectall-11"></th>
+                                                <th><label class="hide" for="deviceID-11">Device ID</label><input type="text" class="device_col_search" id="deviceID-11" name="deviceId-11"></th> 
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                   <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                       </div>
+                        <div class="col-sm-12 text-center ot-btn-data">
+                          <button class="btn btn-info ot-btn" type="button">Save</button>
+                          <button class="btn btn-info ot-btn" type="button">Cancel</button>
+                        </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div ng-include="'app/views/favourites.html'"></div>
+         </div>
+         </div>
+      </div>
+     

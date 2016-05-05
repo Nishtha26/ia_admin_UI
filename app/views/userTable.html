@@ -1,0 +1,35 @@
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
+</style>
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer" style="padding:15px">
+		<div class="maincontent">
+			<div class="container-fluid">
+				<div class="content-shadow">
+			<div class="ot-userAdministration">
+				<div class="orchestra_devices_table" style="width:100%">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="table-header">
+									<p style="color:#337ab7;">User Table</p>
+									<div class="clearfix"></div>
+								</div>
+								<div class="device-table server-table" style="position: relative;top: 10px;">
+									<div class="table-responsive">
+										
+										<div ui-grid="userTableGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%; font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+				</div>
+			</div>
+		</div>
+				<div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div>
+			</div>
+		</div>
+	</div>
+	<div ng-include="'app/views/favouritesPopUp.html'"></div>

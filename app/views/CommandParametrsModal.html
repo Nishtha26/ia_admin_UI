@@ -1,0 +1,25 @@
+
+<div class="modal-header">
+    <h3 class="modal-title text-center"><strong>Command Parameters</strong></h3>
+</div>
+<div class="modal-body">   
+    <h3 class="text-center"><strong>Edit Command Parameters</strong></h3>
+    <form class="form-horizontal" role="form">
+        <div class="form-group"  ng-repeat="item in Names | unique: 'CmdPrmtrsName'">
+            <label class="control-label col-sm-2">{{item.CmdPrmtrsName| uppercase}}:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control modainput_width" id="cmds" value="{{item.Cmds}}" ng-model="item.Cmds">
+            </div>
+        </div>
+        <div class="form-group"> 
+            <div class="col-sm-offset-2 col-sm-10 " >
+                <button type="submit" class="btn btn-info " data-toggle="modal" data-target="#Mymodal" ng-click="UpdateComndPrms()">Update</button>
+                <button type="submit" class="btn btn-info " style='margin-left: 33%;' ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+<div ng-include="'app/views/popUp.html'"></div>
+    </form>
+</div>
+    
+
+

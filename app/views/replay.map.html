@@ -1,0 +1,77 @@
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer">	
+  <div class="maincontent" style="width:100%;">
+    <div class="container-fluid">
+	
+	<h3 style="text-align:center;margin-left:-190px;">Map Replay</h3>
+  <div class="row" style="margin-left:5px;">
+						<!-- <div class='col-sm-2'><h4>User</h4></div> -->
+						<div class="col-sm-3"><h4>Device</h4></div>
+						<div class="col-sm-3"><h4>From</h4></div>
+						<div class="col-sm-3"><h4>To</h4></div>
+						
+  </div>
+					
+					
+<form id="fetchReplay" >
+						 
+	 <div class="col-sm-3">
+				<div class="form-group">
+					<select id="deviceId" name="deviceId" class="form-control" >
+
+						<option ng-repeat="device in devices" value={{device.deviceId}}>{{device.deviceId}}</option>
+
+					</select> 
+		<!--
+		<ui-select ng-model="device.selected" theme="selectize" ng-disabled="disabled" style="width: 300px;">
+    <ui-select-match placeholder="Select or search a device in the list...">{{$select.selected.deviceId}}</ui-select-match>
+    <ui-select-choices repeat="device in devices | filter: $select.search">
+      <span ng-bind-html="device.deviceId | highlight: $select.search"></span>
+     
+    </ui-select-choices>
+  </ui-select>		-->
+ 				</div>
+ 	 </div>
+ 						
+	 <div class="col-sm-3">
+				<div class="form-group">
+					   <div class="input-group date " id="datetimepicker1">
+							<input id="fromDate" name="fromDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					   </div>
+				</div>
+	 </div>
+	 
+	 <div class="col-sm-3">
+			    <div class="form-group">
+					 <div class="input-group date " id="datetimepicker2">
+							<input id="toDate" name="toDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					</div>
+				</div>
+	 </div>
+							
+	 <div class="col-sm-3">															
+				<input class="btn btn-success btn-sm" type="button" value="Replay" ng-click="checkAjaxCall()">								
+	 </div>
+						
+
+</form>		
+<div class="row">
+							<div class="col-sm-12" style=" width:95%;">
+								 <div id="rePlayMap" ng-show ="rePlayMap" style=" width:90%;position:relative;height: 480px;  position:relative;"></div>
+								 <div id="DefaultReplayMap" ng-show ="DefaultReplayMap" style=" width:90%;position:relative;height: 480px;  position:relative;"></div>
+						    </div>
+						
+								
+</div>	
+   
+
+	
+	</div>
+	 	<div ng-include="'app/views/favourites.html'" ></div>	
+</div>	
+</div>	
+	
+	<!-- Main Content Ends -->
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

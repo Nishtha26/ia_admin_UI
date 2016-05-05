@@ -1,0 +1,87 @@
+<div ng-include="'app/views/header.html'"></div>
+	<!-- Header Ends -->
+	
+	
+	<!-- Main Content Starts -->
+	<div class="maincontainer">
+		<div class="maincontent" style="width:98%;">
+			<div class="container-fluid">
+				<div class="orch-rep-dashboards boxshdw" style="margin-bottom:10px;">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:650px;">
+							<div class="device_availability_map boxshdw">
+								<div class="availability_map_viewimage">
+									<span class="mapview_image"><img src="images/mapview_image.png" alt="Map Image"></span>
+									<div class="availability_map_viewimage_content">
+										<span class="text-uppercase">Map View</span>
+										<div class="viewimage_links">
+											<a href="" ng-click = "ShowReplay()">Replay</a>
+											<a href="" ng-click = "ShowLive()">Live</a>
+										</div>
+										<img src="images/map_mobile.png" alt="Mobile">
+									</div>
+								</div>
+								<div class="device_availability_map" ng-show ="ShowLiveMap" style="heigth:1000px;">
+									<div id="Map"  style="height:540px;width:1500px"></div>
+									
+								</div>
+<div class="device_availability_map"  ng-show ="ShowMapDiv " style="heigth:1000px;">
+ <div class="row" style="margin-left:5px;">
+						
+						<div class="col-sm-3"><h4>Device</h4></div>
+						<div class="col-sm-3"><h4>From</h4></div>
+						<div class="col-sm-3"><h4>To</h4></div>
+						
+  </div>
+					
+					
+<form id="fetchReplay" >
+						 
+	 <div class="col-sm-3">
+				<div class="form-group">
+			<select id="deviceId" name="deviceId" class="form-control">
+
+						<option ng-repeat="device in devices" value={{device.deviceId}}>{{device.deviceId}}</option>
+
+					</select>
+			
+ 				</div>
+ 	 </div>
+ 						
+	 <div class="col-sm-3">
+				<div class="form-group">
+					   <div class="input-group date " id="datetimepicker1">
+							<input id="fromDate" name="fromDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					   </div>
+				</div>
+	 </div>
+	 
+	 <div class="col-sm-3">
+			    <div class="form-group">
+					 <div class="input-group date " id="datetimepicker2">
+							<input id="toDate" name="toDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					</div>
+				</div>
+	 </div>
+							
+	 <div class="col-sm-3">															
+				<input class="btn btn-success btn-sm" type="button" value="Replay" ng-click="checkAjaxCall()">								
+	 </div>
+						
+
+</form>	
+								<div id="DefaultReplayMap" ng-show ="one" style="height:425px;width:1500px"></div>
+								<div id="rePlayMap" ng-show ="two" style="height:425px;width:1500px"></div>
+							    </div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+				<div ng-include="'app/views/favourites.html'" ></div>
+			</div>
+		</div>
+	</div>
+	<div ng-include="'app/views/favouritesPopUp.html'"></div>

@@ -1,0 +1,38 @@
+
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer" style="padding:15px">
+    <div class="maincontent">
+        <div class="container-fluid">
+            <div class="content-shadow">    
+               <div class="ot-userAdministration">
+            <!-- <div class="ot-deviceData" style="max-width:100%;margin-left:0px"> -->
+
+                <div class="tab-content">
+                    <div id="devices" class="tab-pane fade in active">
+                        <div class="orchestra_devices_table" style="height:auto;max-width: 100%">
+                            <div ncy-breadcrumb></div>
+                            
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%">
+                                    
+                                   
+                                        <div id="firstGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
+                                        <div id="secondGrid" ui-grid="gridOptions2" ui-grid-selection ui-grid-cellNav class="grid"></div>
+                                        <div style="width:100%;height:50px;margin:0px 40%">
+                                                   
+                                            <a  class="btn btn-info" ng-click="ScheduleTestrunNext()" >Next</a>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div ng-include="'app/views/favourites.html'" ></div>
+<div ng-include="'app/views/popUp.html'"></div>

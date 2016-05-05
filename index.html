@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="oTech">
+<head>	<!--<script src="js/google.maps.js"></script><!--Google Maps-->
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnL_GTvZ6WfmXIqs4qcbfVigXinoFIGkM"></script><!--Google Maps-->
+	<script src="js/jstz.min.js"></script><!--Including timezone detect javascript-->
+    <script src="js/jquery.min.js"></script><!--Including Jquery-->
+    <script src="js/lib/angular.min.js"></script><!--Including AngularJs-->
+	
+    <script src="js/lib/angular-ui-router.min.js"></script>
+	
+	<script src="js/lib/timeout.js"></script>
+	
+	
+	
+	<link rel="stylesheet" href="css/bootstrap.min.css"><!--Including BootStrap CSS-->
+	
+	
+	<script src="js/Chart.js"></script><!--Plugin for Device Usage and Executive Status-->
+	
+	
+	
+	<script src="js/lib/infobox.js"></script><!--Google Maps Infobox-->
+	
+	<script src="js/lib/highcharts.js"></script><!--For Dart Chart-->
+	
+	<script type="text/javascript" src="js/lib/google.charts.js"></script>
+	
+	<link rel="stylesheet" href="css/style.css"><!--Css file for dashboard page-->
+	
+	<link rel="stylesheet" href="css/login.style.css"><!--Css file for login page-->
+	
+	
+	<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"/> <!-- for auto complete -->
+
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script> <!-- for auto complete -->
+	
+	
+	<!--For Grids-->
+    <script src="js/lib/angular-touch.js"></script>
+    <script src="js/lib/angular-animate.js"></script>
+    <script src="js/lib/csv.js"></script>
+    <script src="js/lib/pdfmake.js"></script>
+    <script src="js/lib/vfs_fonts.js"></script>
+    <script src="js/lib/grid.js"></script>
+	  <script src="js/lib/jj.js"></script>
+    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css" />
+	
+	<link rel="stylesheet" href="css/fi.css">
+	<link rel="stylesheet" href="css/si.css">
+	<script src="js/lib/angular-sanitize.min.js"></script>
+	
+	
+	<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+	<script src="js/lib/bootstrap-datepicker.js"></script>
+	
+	<link href="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+	<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+	<link href="css/formelements.css" rel="stylesheet" />
+	<link href="css/font-awesome.css" rel="stylesheet" />
+	 <link href="css/bootstrap-select.css" rel="stylesheet" />
+	 <script src="js/bootstrap.min.js"></script><!--Including Bootstrap JS-->
+	<script src="js/bootstrap-select.js"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript"></script>
+        
+	<!--Testplan and Test Run support -->
+	<link href="css/treeGrid.css" rel="stylesheet" type="text/css"/>
+        <script src="js/tree-grid-directive.js" type="text/javascript"></script>
+        <script src="js/angular-cookies.min.js" type="text/javascript"></script>
+        <script src="js/ui-bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/angularjs-datetime-picker.min.js" type="text/javascript"></script>
+        <link href="css/angularjs-datetime-picker.css" rel="stylesheet" type="text/css"/>
+        <script src="js/angular-breadcrumb.min.js" type="text/javascript"></script>
+        <script src="js/angular-filter.min.js" type="text/javascript"></script>
+        <script src="js/lib/angular-ui-tree.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+    <div data-ui-view=""></div>
+	<!--Including All Services, Controllers and configuration files-->
+	 <script src="app/app.js"></script>
+	 <script src="app/config.js"></script>
+	 
+	 
+	 <script src="app/services/authentication.service.js"></script>
+	 <script src="app/services/common.service.js"></script>
+	 <script src="app/services/shared.properties.service.js"></script>
+	 <script src="app/services/maps.service.js"></script>
+	 <script src="app/services/createTestRunScheduleService.js"></script>
+	 <script src="app/controllers/replay.map.controller.js"></script>
+	  <script src="app/controllers/changePassword.controller.js"></script>
+	 <script src="app/services/graph.service.js"></script>
+	 <script src="app/services/graphs.maximize.service.js"></script>
+	 <script src="app/services/reports.service.js"></script>
+	 <script src="app/controllers/login.controller.js"></script>
+	 <script src="app/controllers/dashboard.controller.js"></script>
+	 <script src="app/controllers/adminstrator.controller.js"></script>
+	 <script src="app/controllers/userGroups.controller.js"></script>
+	  <script src="app/controllers/testplanAdmin.controller.js"></script>
+	   <script src="app/controllers/quickRun.controller.js"></script>
+	  
+	  <script src="app/controllers/addUsergroups.controller.js"></script>
+	  <script src="app/controllers/userTable.controller.js"></script>
+	  <script src="app/controllers/landing.page.controller.js"></script>
+	 <script src="app/controllers/serverSetting.controller.js"></script>
+	  <script src="app/controllers/quickbinding.controller.js"></script>
+	 <script src="app/controllers/user.adminstration.controller.js"></script>
+	 <script src="app/controllers/deviceAdmin.controller.js"></script>
+	  <script src="app/controllers/addReports.controller.js"></script>
+	   <script src="app/controllers/assignReport.controller.js"></script>
+	 <script src="app/controllers/deviceAvailability.controller.js"></script>
+	  <script src="app/controllers/testScript.controller.js"></script>
+	 <script src="app/controllers/myDevice.controller.js"></script>
+	 <script src="app/controllers/deviceMaps.controller.js"></script>
+	 <script src="app/controllers/reports.controller.js"></script>
+	 <script src="app/controllers/deviceMeasurements.controller.js"></script>
+	 <script src="app/controllers/drive.routes.controller.js"></script>
+	 <script src="app/controllers/reports.category.controller.js"></script>
+	 <script src="app/controllers/performance.controller.js"></script>
+	 <script src="app/controllers/market.controller.js"></script>
+	 <script src="app/controllers/common.report.controller.js"></script>
+	 <script src="app/controllers/time.schedule.controller.js"></script>
+	 <script src="app/controllers/performance.result.controller.js"></script>
+	 <script src="app/controllers/userDeviceMappingController.js"></script>
+	 
+	 <!--Testplan and Test Run support -->
+	 <script src="app/services/testScript.service.js" type="text/javascript"></script>
+         <script src="app/controllers/TestRunSchedule.controller.js" type="text/javascript"></script>
+         <script src="app/controllers/TestrunGrid.js" type="text/javascript"></script>
+         <script src="app/controllers/createTestpPlanController.js" type="text/javascript"></script>
+         <script src="app/controllers/createTestRunController.js" type="text/javascript"></script>
+         <script src="app/controllers/EditTestRunController.js" type="text/javascript"></script>
+         <script src="app/controllers/createTestRunGrid.js" type="text/javascript"></script>
+         <script src="app/controllers/editTestPlanController.js" type="text/javascript"></script>
+         <!--<script src="app/controllers/TestRun_CreateTestRunController.js" type="text/javascript"></script>-->
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-8 col-md-8 col-sm-7 col-xs-12 bg_image left-login-img hidden-xs"> </div>
+		<div class=" col-lg-4 col-md-4 col-sm-5  col-xs-12 text-center right-login-form"><img src="images/logo-Orchestratech.png" class="logo_center" width="228" height="98">
+			<form class="login" ng-submit="login()" name="form" role="form">
+				<div class="form-group"> 
+					<div ng-show="error" class="alert alert-danger" id="loginErrorDiv">{{error}}</div>
+					 <input type="text" class="form-control" placeholder="Enter your Username" ng-model="username" name="username" required />
+					<span style="color:red" ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+				</div>
+				<div class="form-group"> 
+					<input type="password"  class="form-control"  name="password" ng-model="password" placeholder="Enter Account Password " required />
+					<span  style="color:red" ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+				</div>
+				<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-defaultb" style="font-size:12pt;color:black">Login</button>
+				<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />	
+			</form>
+			<div class=" row footer tobase">IntelliAgent &copy; 2016</div>
+		</div>
+	</div>
+</div>
