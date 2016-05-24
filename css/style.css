@@ -182,7 +182,7 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 .device_availability .device_heading h3 {margin: 0}
 .refresh {float: right;}
 .device_availability_pi_chart {margin: 0px 0 0px; text-align: center;}
-.executive_status_graph {margin-bottom: 8px;}
+.executive_status_graph {margin-bottom: -1px;}
 .device_availability_content {font-family: "Rajdhani-Medium"; font-size: 15px; color: #78909c;}
 
 .device_availability_map {}

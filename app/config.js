@@ -130,8 +130,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://localhost:8080/IAPORTAL/',
+	MEASUREMENT_URL :'http://localhost:8080/IAPORTAL/rest/measurement/',
 
 	jobListGridOptions : {
 		paginationPageSizes: [1,25, 50, 75],
@@ -262,19 +262,22 @@ oApp.config = {
 		//	 {headerName: "workUrl", field: "workUrl", width: 100},
 		],
 	deviceListGridOptionsapn : {
-        // note - we do not set 'virtualPaging' here, so the grid knows we are doing standard paging
-        enableSorting: true,
-        enableFilter: true,
-        enableColResize: true,
-        columnDefs: [
-			
-		]	
+        paginationPageSizes: [25, 50, 75],
+		paginationPageSize: 25,
+		enableSorting: true,
+	    enableFilter: true,
+	    enableColResize: true,
+		enableRowSelection: true,  // for selection
+		enableColumnMenus: true, //to hide ascending and descending colomn menu names
+		enableRowHeaderSelection: false, // this is for check box to appear on grid options
+		enableFiltering: true,
+		enableGridMenu: true,		// for searching
+		multiSelect:false,
+        columnDefs: [  ]	
 	},
 	columnDefsapn : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
+			
 			{headerName: "autoId", field: "autoId", width: 150, visible:false},
 			{headerName: "deviceId", field: "deviceId", width: 90},
 			{headerName: "jobId", field: "jobId", width: 120},
@@ -309,9 +312,7 @@ oApp.config = {
 		],
 		columnDefsapplications : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
+			
 			{headerName: "deviceId", field: "deviceId", width: 150},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   
@@ -340,259 +341,233 @@ oApp.config = {
 		],
 		columnDefsipaddress : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "autoId", field: "autoId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "timeStamp", field: "timeStamp", width: 110},
-			{headerName: "ipPublicV4", field: "ipPublicV4", width: 100},
-			{headerName: "dupId", field: "dupId", width: 100},
-			{headerName: "ipPrivateV4", field: "ipPrivateV4", width: 100},
-			{headerName: "ipPublicV6", field: "ipPublicV6", width: 100},
-			{headerName: "ipPrivateV6", field: "ipPrivateV6", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "autoId", field: "autoId" },
+			{headerName: "deviceId", field: "deviceId" },
+		   {headerName: "jobId", field: "jobId" },
+			{headerName: "timeStamp", field: "timeStamp" },
+			{headerName: "ipPublicV4", field: "ipPublicV4", },
+			{headerName: "dupId", field: "dupId"},
+			{headerName: "ipPrivateV4", field: "ipPrivateV4"},
+			{headerName: "ipPublicV6", field: "ipPublicV6"},
+			{headerName: "ipPrivateV6", field: "ipPrivateV6"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefsl1log : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "deviceId", field: "deviceId", width: 150},
-			{headerName: "testcaseId", field: "testcaseId", width: 90},
-		   {headerName: "jobStartTime", field: "jobStartTime", width: 90},
-			{headerName: "jobStartTimeMs", field: "jobStartTimeMs", width: 110},
-			{headerName: "pci", field: "pci", width: 100},
-			{headerName: "cellId", field: "cellId", width: 100},
-			{headerName: "cellName", field: "cellName", width: 100},
-			{headerName: "channelBandWidth", field: "channelBandWidth", width: 150}
+			
+			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "testcaseId", field: "testcaseId"},
+		   {headerName: "jobStartTime", field: "jobStartTime"},
+			{headerName: "jobStartTimeMs", field: "jobStartTimeMs"},
+			{headerName: "pci", field: "pci"},
+			{headerName: "cellId", field: "cellId"},
+			{headerName: "cellName", field: "cellName"},
+			{headerName: "channelBandWidth", field: "channelBandWidth"}
 		],
 		columnDefslocation : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "deviceId", field: "deviceId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "timeStamp", field: "timeStamp", width: 90},
-			{headerName: "locationProvider", field: "locationProvider", width: 110},
-			{headerName: "collectAltitude", field: "collectAltitude", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "xParam", field: "xParam", width: 100},
-			{headerName: "yParam", field: "yParam", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100},
-			{headerName: "lastLocationTime", field: "lastLocationTime", width: 150}
+			
+			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "locationProvider", field: "locationProvider"},
+			{headerName: "collectAltitude", field: "collectAltitude"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "xParam", field: "xParam"},
+			{headerName: "yParam", field: "yParam"},
+			{headerName: "testcaseId", field: "testcaseId"},
+			{headerName: "lastLocationTime", field: "lastLocationTime"}
 		],
 		columnDefsmms : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "mmsId", field: "mmsId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "callingPartyNumber", field: "callingPartyNumber", width: 150},
-			{headerName: "calledPartyNumber", field: "calledPartyNumber", width: 150},
-			{headerName: "timeZone", field: "timeZone", width: 100},
-			{headerName: "mmsTime", field: "mmsTime", width: 100},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 100},
-			{headerName: "mmsText", field: "mmsText", width: 100},
-			{headerName: "mmsFileSize", field: "mmsFileSize", width: 100},
-			{headerName: "mmsFileName", field: "mmsFileName", width: 100},
-			{headerName: "sendStatus", field: "sendStatus", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "mmsId", field: "mmsId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
+			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
+			{headerName: "timeZone", field: "timeZone"},
+			{headerName: "mmsTime", field: "mmsTime"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "mmsText", field: "mmsText"},
+			{headerName: "mmsFileSize", field: "mmsFileSize"},
+			{headerName: "mmsFileName", field: "mmsFileName"},
+			{headerName: "sendStatus", field: "sendStatus"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefsneighborcellinfo : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "autoId", field: "autoId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "timeStamp", field: "timeStamp", width: 110},
-			{headerName: "mcId", field: "mcId", width: 100},
-			{headerName: "mLac", field: "mLac", width: 100},
-			{headerName: "mNetworkType", field: "mNetworkType", width: 150},
-			{headerName: "mPsc", field: "mPsc", width: 100},
-			{headerName: "rssi", field: "rssi", width: 100},
-			{headerName: "apTime", field: "apTime", width: 100},
-			{headerName: "apDeviceLocalTime", field: "apDeviceLocalTime", width: 150},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "apTimeZone", field: "apTimeZone", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "autoId", field: "autoId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "mcId", field: "mcId"},
+			{headerName: "mLac", field: "mLac"},
+			{headerName: "mNetworkType", field: "mNetworkType"},
+			{headerName: "mPsc", field: "mPsc"},
+			{headerName: "rssi", field: "rssi"},
+			{headerName: "apTime", field: "apTime"},
+			{headerName: "apDeviceLocalTime", field: "apDeviceLocalTime"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "apTimeZone", field: "apTimeZone"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefssms : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "smsId", field: "smsId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "deviceId", field: "deviceId", width: 90},
-			{headerName: "callingPartyNumber", field: "callingPartyNumber", width: 150},
-			{headerName: "calledPartyNumber", field: "calledPartyNumber", width: 150},
-			{headerName: "callingPartySMSC", field: "callingPartySMSC", width: 150},
-			{headerName: "timeZone", field: "timeZone", width: 100},
-			{headerName: "smsTime", field: "smsTime", width: 100},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 100},
-			{headerName: "textMsg", field: "textMsg", width: 100},
-			{headerName: "sendStatus", field: "sendStatus", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "smsId", field: "smsId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "deviceId", field: "deviceId"},
+			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
+			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
+			{headerName: "callingPartySMSC", field: "callingPartySMSC"},
+			{headerName: "timeZone", field: "timeZone"},
+			{headerName: "smsTime", field: "smsTime"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "textMsg", field: "textMsg"},
+			{headerName: "sendStatus", field: "sendStatus"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefstcpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "autoId", field: "autoId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "timeStamp", field: "timeStamp", width: 110},
-			{headerName: "deviceTime", field: "deviceTime", width: 150},
-			{headerName: "deviceTimeZone", field: "deviceTimeZone", width: 150},
-			{headerName: "nodeType", field: "nodeType", width: 100},
-			{headerName: "serverIp", field: "serverIp", width: 100},
-			{headerName: "serverPort", field: "serverPort", width: 100},
-			{headerName: "clientIp", field: "clientIp", width: 100},
-			{headerName: "clientPort", field: "clientPort", width: 100},
-			{headerName: "timeDuration", field: "timeDuration", width: 100},
-			{headerName: "dataTransfered", field: "dataTransfered", width: 150},
-			{headerName: "bandWidth", field: "bandWidth", width: 100},
-			{headerName: "tcpWindowSize", field: "tcpWindowSize", width: 100},
-			{headerName: "networkType", field: "networkType", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+		
+			{headerName: "autoId", field: "autoId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "deviceTime", field: "deviceTime"},
+			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
+			{headerName: "nodeType", field: "nodeType"},
+			{headerName: "serverIp", field: "serverIp"},
+			{headerName: "serverPort", field: "serverPort"},
+			{headerName: "clientIp", field: "clientIp"},
+			{headerName: "clientPort", field: "clientPort"},
+			{headerName: "timeDuration", field: "timeDuration"},
+			{headerName: "dataTransfered", field: "dataTransfered"},
+			{headerName: "bandWidth", field: "bandWidth"},
+			{headerName: "tcpWindowSize", field: "tcpWindowSize"},
+			{headerName: "networkType", field: "networkType"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefsudpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "autoId", field: "autoId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "timeStamp", field: "timeStamp", width: 110},
-			{headerName: "deviceTime", field: "deviceTime", width: 100},
-			{headerName: "deviceTimeZone", field: "deviceTimeZone", width: 150},
-			{headerName: "nodeType", field: "nodeType", width: 100},
-			{headerName: "serverIp", field: "serverIp", width: 100},
-			{headerName: "serverPort", field: "serverPort", width: 100},
-			{headerName: "clientIp", field: "clientIp", width: 100},
-			{headerName: "clientPort", field: "clientPort", width: 100},
-			{headerName: "timeDuration", field: "timeDuration", width: 100},
-			{headerName: "dataTransfered", field: "dataTransfered", width: 100},
-			{headerName: "bandWidth", field: "bandWidth", width: 100},
-			{headerName: "dataGramSize", field: "dataGramSize", width: 100},
-			{headerName: "udpBufferSize", field: "udpBufferSize", width: 150},
-			{headerName: "jitter", field: "jitter", width: 100},
-			{headerName: "dataGramLost", field: "dataGramLost", width: 100},
-			{headerName: "dataGramTotal", field: "dataGramTotal", width: 100},
-			{headerName: "networkType", field: "networkType", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "autoId", field: "autoId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "deviceTime", field: "deviceTime"},
+			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
+			{headerName: "nodeType", field: "nodeType"},
+			{headerName: "serverIp", field: "serverIp"},
+			{headerName: "serverPort", field: "serverPort"},
+			{headerName: "clientIp", field: "clientIp"},
+			{headerName: "clientPort", field: "clientPort"},
+			{headerName: "timeDuration", field: "timeDuration"},
+			{headerName: "dataTransfered", field: "dataTransfered"},
+			{headerName: "bandWidth", field: "bandWidth"},
+			{headerName: "dataGramSize", field: "dataGramSize"},
+			{headerName: "udpBufferSize", field: "udpBufferSize"},
+			{headerName: "jitter", field: "jitter"},
+			{headerName: "dataGramLost", field: "dataGramLost"},
+			{headerName: "dataGramTotal", field: "dataGramTotal"},
+			{headerName: "networkType", field: "networkType"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefsvoice : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "voiceCallSeqNumber", field: "voiceCallSeqNumber", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "callingPartyNumber", field: "callingPartyNumber", width: 150},
-			{headerName: "calledPartyNumber", field: "calledPartyNumber", width: 150},
-			{headerName: "voiceCallTime", field: "voiceCallTime", width: 100},
-			{headerName: "voiceCallDeviceLocalTime", field: "voiceCallDeviceLocalTime", width: 150},
-			{headerName: "voiceCallUTCTime", field: "voiceCallUTCTime", width: 150},
-			{headerName: "voiceCallTimeZone", field: "voiceCallTimeZone", width: 150},
-			{headerName: "eventType", field: "eventType", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "voiceCallFile", field: "voiceCallFile", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+		
+			{headerName: "voiceCallSeqNumber", field: "voiceCallSeqNumber"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
+			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
+			{headerName: "voiceCallTime", field: "voiceCallTime"},
+			{headerName: "voiceCallDeviceLocalTime", field: "voiceCallDeviceLocalTime"},
+			{headerName: "voiceCallUTCTime", field: "voiceCallUTCTime"},
+			{headerName: "voiceCallTimeZone", field: "voiceCallTimeZone"},
+			{headerName: "eventType", field: "eventType"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "voiceCallFile", field: "voiceCallFile"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefswifiinfo : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "autoId", field: "autoId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "timeStamp", field: "timeStamp", width: 110},
-			{headerName: "wifiApn", field: "wifiApn", width: 100},
-			{headerName: "wifiSsId", field: "wifiSsId", width: 100},
-			{headerName: "wifiIpAddress", field: "wifiIpAddress", width: 150},
-			{headerName: "wifiMacAddress", field: "wifiMacAddress", width: 150},
-			{headerName: "wifiBssId", field: "wifiBssId", width: 100},
-			{headerName: "wifiSignalLevel", field: "wifiSignalLevel", width: 100},
-			{headerName: "wifiFrequency", field: "wifiFrequency", width: 100},
-			{headerName: "wifiSecurity", field: "wifiSecurity", width: 100},
-			{headerName: "wifiStatus", field: "wifiStatus", width: 100},
-			{headerName: "apTime", field: "apTime", width: 100},
-			{headerName: "apDeviceLocationTime", field: "apDeviceLocationTime", width: 150},
-			{headerName: "apUtcTime", field: "apUtcTime", width: 100},
-			{headerName: "apTimeZone", field: "apTimeZone", width: 100},
-			{headerName: "wifiLinkSpeed", field: "wifiLinkSpeed", width: 100},
-			{headerName: "wifiApDistance", field: "wifiApDistance", width: 100},
-			{headerName: "wifiSnr", field: "wifiSnr", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "autoId", field: "autoId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "wifiApn", field: "wifiApn"},
+			{headerName: "wifiSsId", field: "wifiSsId"},
+			{headerName: "wifiIpAddress", field: "wifiIpAddress"},
+			{headerName: "wifiMacAddress", field: "wifiMacAddress"},
+			{headerName: "wifiBssId", field: "wifiBssId"},
+			{headerName: "wifiSignalLevel", field: "wifiSignalLevel"},
+			{headerName: "wifiFrequency", field: "wifiFrequency"},
+			{headerName: "wifiSecurity", field: "wifiSecurity"},
+			{headerName: "wifiStatus", field: "wifiStatus"},
+			{headerName: "apTime", field: "apTime"},
+			{headerName: "apDeviceLocationTime", field: "apDeviceLocationTime"},
+			{headerName: "apUtcTime", field: "apUtcTime"},
+			{headerName: "apTimeZone", field: "apTimeZone"},
+			{headerName: "wifiLinkSpeed", field: "wifiLinkSpeed"},
+			{headerName: "wifiApDistance", field: "wifiApDistance"},
+			{headerName: "wifiSnr", field: "wifiSnr"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefswifitrafficinfo : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "wifiCollectId", field: "wifiCollectId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "deviceId", field: "deviceId", width: 90},
-			{headerName: "initialConnectedState", field: "initialConnectedState", width: 150},
-			{headerName: "finalConnectedState", field: "finalConnectedState", width: 150},
-			{headerName: "timeTakenToConnect", field: "timeTakenToConnect", width: 150},
-			{headerName: "timeTakenToDisconnect", field: "timeTakenToDisconnect", width: 150},
-			{headerName: "wifiInfoTime", field: "wifiInfoTime", width: 100},
-			{headerName: "timeZone", field: "timeZone", width: 100},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "wifiCollectId", field: "wifiCollectId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "deviceId", field: "deviceId"},
+			{headerName: "initialConnectedState", field: "initialConnectedState"},
+			{headerName: "finalConnectedState", field: "finalConnectedState"},
+			{headerName: "timeTakenToConnect", field: "timeTakenToConnect"},
+			{headerName: "timeTakenToDisconnect", field: "timeTakenToDisconnect"},
+			{headerName: "wifiInfoTime", field: "wifiInfoTime"},
+			{headerName: "timeZone", field: "timeZone"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefsattach : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "deviceId", field: "deviceId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "sessionSeqNumber", field: "sessionSeqNumber", width: 150},
-			{headerName: "sessionTime", field: "sessionTime", width: 110},
-			{headerName: "sessionDeviceLocalTime", field: "sessionDeviceLocalTime", width: 150},
-			{headerName: "sessionUTCTime", field: "sessionUTCTime", width: 150},
-			{headerName: "sessionTimeZone", field: "sessionTimeZone", width: 150},
-			{headerName: "sessionType", field: "sessionType", width: 100},
-			{headerName: "connectTechnology", field: "connectTechnology", width: 100},
-			{headerName: "sessionStatus", field: "sessionStatus", width: 100},
-			{headerName: "serviceStateStatus", field: "serviceStateStatus", width: 150},
-			{headerName: "sessionSpeed", field: "sessionSpeed", width: 100},
-			{headerName: "sessionVolumn", field: "sessionVolumn", width: 100},
-			{headerName: "sessionLatency", field: "sessionLatency", width: 100},
-			{headerName: "sessionCauseCode", field: "sessionCauseCode", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "sessionSeqNumber", field: "sessionSeqNumber"},
+			{headerName: "sessionTime", field: "sessionTime"},
+			{headerName: "sessionDeviceLocalTime", field: "sessionDeviceLocalTime"},
+			{headerName: "sessionUTCTime", field: "sessionUTCTime"},
+			{headerName: "sessionTimeZone", field: "sessionTimeZone"},
+			{headerName: "sessionType", field: "sessionType"},
+			{headerName: "connectTechnology", field: "connectTechnology"},
+			{headerName: "sessionStatus", field: "sessionStatus"},
+			{headerName: "serviceStateStatus", field: "serviceStateStatus"},
+			{headerName: "sessionSpeed", field: "sessionSpeed"},
+			{headerName: "sessionVolumn", field: "sessionVolumn"},
+			{headerName: "sessionLatency", field: "sessionLatency"},
+			{headerName: "sessionCauseCode", field: "sessionCauseCode"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 		],
 		columnDefslatency : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
+			
 			{headerName: "deviceId", field: "deviceId", width: 150},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   {headerName: "pingSeqNumber", field: "pingSeqNumber", width: 90},
@@ -617,146 +592,130 @@ oApp.config = {
 		],
 		columnDefsupload : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "jobId", field: "jobId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "uploadSeqNo", field: "uploadSeqNo", width: 90},
-			{headerName: "uploadTime", field: "uploadTime", width: 110},
-			{headerName: "uploadTimeZone", field: "uploadTimeZone", width: 100},
-			{headerName: "uploadDeviceLocalTime", field: "uploadDeviceLocalTime", width: 100},
-			{headerName: "uploadUTCTime", field: "uploadUTCTime", width: 100},
-			{headerName: "uploadType", field: "uploadType", width: 100},
-			{headerName: "mobileNetworkType", field: "mobileNetworkType", width: 100},
-			{headerName: "uploadProcess", field: "uploadProcess", width: 100},
-			{headerName: "uploadFileUrl", field: "uploadFileUrl", width: 100},
-			{headerName: "uploadedFileSize", field: "uploadedFileSize", width: 150},
-			{headerName: "uploadedTotalFileSize", field: "uploadedTotalFileSize", width: 150},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "jobId", field: "jobId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "uploadSeqNo", field: "uploadSeqNo"},
+			{headerName: "uploadTime", field: "uploadTime"},
+			{headerName: "uploadTimeZone", field: "uploadTimeZone"},
+			{headerName: "uploadDeviceLocalTime", field: "uploadDeviceLocalTime"},
+			{headerName: "uploadUTCTime", field: "uploadUTCTime"},
+			{headerName: "uploadType", field: "uploadType"},
+			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
+			{headerName: "uploadProcess", field: "uploadProcess"},
+			{headerName: "uploadFileUrl", field: "uploadFileUrl"},
+			{headerName: "uploadedFileSize", field: "uploadedFileSize"},
+			{headerName: "uploadedTotalFileSize", field: "uploadedTotalFileSize"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefsemail : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "emailId", field: "emailId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "jobId", field: "jobId", width: 90},
-			{headerName: "sendingFrom", field: "sendingFrom", width: 110},
-			{headerName: "sendingTo", field: "sendingTo", width: 100},
-			{headerName: "emailTime", field: "emailTime", width: 100},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 100},
-			{headerName: "timeZone", field: "timeZone", width: 100},
-			{headerName: "emailSubject", field: "emailSubject", width: 100},
-			{headerName: "emailMsg", field: "emailMsg", width: 100},
-			{headerName: "emailHasAttachment", field: "emailHasAttachment", width: 150},
-			{headerName: "attachmentSize", field: "attachmentSize", width: 100},
-			{headerName: "sendStatus", field: "sendStatus", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "emailId", field: "emailId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "jobId", field: "jobId"},
+			{headerName: "sendingFrom", field: "sendingFrom"},
+			{headerName: "sendingTo", field: "sendingTo"},
+			{headerName: "emailTime", field: "emailTime"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "timeZone", field: "timeZone"},
+			{headerName: "emailSubject", field: "emailSubject"},
+			{headerName: "emailMsg", field: "emailMsg"},
+			{headerName: "emailHasAttachment", field: "emailHasAttachment"},
+			{headerName: "attachmentSize", field: "attachmentSize"},
+			{headerName: "sendStatus", field: "sendStatus"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 		],
 		columnDefsdatausage : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "deviceId", field: "deviceId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "timeStamp", field: "timeStamp", width: 90},
-			{headerName: "intfName", field: "intfName", width: 110},
-			{headerName: "intfOutband", field: "intfOutband", width: 100},
-			{headerName: "intfInband", field: "intfInband", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100},
-			{headerName: "ipAddress", field: "ipAddress", width: 100},
-			{headerName: "bytes", field: "bytes", width: 100},
-			{headerName: "sentOrRevice", field: "sentOrRevice", width: 100}
+			
+			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "timeStamp", field: "timeStamp"},
+			{headerName: "intfName", field: "intfName"},
+			{headerName: "intfOutband", field: "intfOutband"},
+			{headerName: "intfInband", field: "intfInband"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"},
+			{headerName: "ipAddress", field: "ipAddress"},
+			{headerName: "bytes", field: "bytes"},
+			{headerName: "sentOrRevice", field: "sentOrRevice"}
 			
 		],
 		columnDefsvideo : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "jobId", field: "jobId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "mplayerSeqNo", field: "mplayerSeqNo", width: 90},
-			{headerName: "mplayerTime", field: "mplayerTime", width: 110},
-			{headerName: "mplayerTimeZone", field: "mplayerTimeZone", width: 150},
-			{headerName: "mplayerDeviceLocalTime", field: "mplayerDeviceLocalTime", width: 150},
-			{headerName: "mplayerUTCTime", field: "mplayerUTCTime", width: 150},
-			{headerName: "mplayerType", field: "mplayerType", width: 100},
-			{headerName: "mobileNetWorkType", field: "mobileNetWorkType", width: 150},
-			{headerName: "mplayerProgress", field: "mplayerProgress", width: 100},
-			{headerName: "mplayerFileUrl", field: "mplayerFileUrl", width: 100},
-			{headerName: "mplayerBufferProgress", field: "mplayerBufferProgress", width: 150},
-			{headerName: "mplayerTotalFileDuration", field: "mplayerTotalFileDuration", width: 150},
-			{headerName: "mplayerCodeInfo", field: "mplayerCodeInfo", width: 100},
-			{headerName: "mplayerSessionId", field: "mplayerSessionId", width: 130},
-			{headerName: "testCaseId", field: "testCaseId", width: 100}
+			
+			{headerName: "jobId", field: "jobId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "mplayerSeqNo", field: "mplayerSeqNo"},
+			{headerName: "mplayerTime", field: "mplayerTime"},
+			{headerName: "mplayerTimeZone", field: "mplayerTimeZone"},
+			{headerName: "mplayerDeviceLocalTime", field: "mplayerDeviceLocalTime"},
+			{headerName: "mplayerUTCTime", field: "mplayerUTCTime"},
+			{headerName: "mplayerType", field: "mplayerType"},
+			{headerName: "mobileNetWorkType", field: "mobileNetWorkType"},
+			{headerName: "mplayerProgress", field: "mplayerProgress"},
+			{headerName: "mplayerFileUrl", field: "mplayerFileUrl"},
+			{headerName: "mplayerBufferProgress", field: "mplayerBufferProgress"},
+			{headerName: "mplayerTotalFileDuration", field: "mplayerTotalFileDuration"},
+			{headerName: "mplayerCodeInfo", field: "mplayerCodeInfo"},
+			{headerName: "mplayerSessionId", field: "mplayerSessionId"},
+			{headerName: "testCaseId", field: "testCaseId"}
 			
 		],
 		columnDefsclickscreanimage : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} }
+			
 			
 			
 		],
 		columnDefsaudio : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "deviceId", field: "deviceId", width: 150},
-			{headerName: "jobId", field: "jobId", width: 90},
-		   {headerName: "time", field: "time", width: 90},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 110},
-			{headerName: "utcTime", field: "utcTime", width: 100},
-			{headerName: "timeZone", field: "timeZone", width: 100},
-			{headerName: "localAudioFilePath", field: "localAudioFilePath", width: 180},
-			{headerName: "startTime", field: "startTime", width: 100},
-			{headerName: "endTime", field: "endTime", width: 100},
-			{headerName: "ifPlayer", field: "ifPlayer", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100},
-			{headerName: "ftpServer", field: "ftpServer", width: 100},
-			{headerName: "ftpServerWaveFilePath", field: "ftpServerWaveFilePath", width: 150},
-			{headerName: "audioAnalyzed", field: "audioAnalyzed", width: 100}
+			
+			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "jobId", field: "jobId"},
+		   {headerName: "time", field: "time"},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "utcTime", field: "utcTime"},
+			{headerName: "timeZone", field: "timeZone"},
+			{headerName: "localAudioFilePath", field: "localAudioFilePath"},
+			{headerName: "startTime", field: "startTime"},
+			{headerName: "endTime", field: "endTime"},
+			{headerName: "ifPlayer", field: "ifPlayer"},
+			{headerName: "testcaseId", field: "testcaseId"},
+			{headerName: "ftpServer", field: "ftpServer"},
+			{headerName: "ftpServerWaveFilePath", field: "ftpServerWaveFilePath"},
+			{headerName: "audioAnalyzed", field: "audioAnalyzed"}
 			
 			
 		],
 		columnDefsdownload: [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} },
-			{headerName: "jobId", field: "jobId", width: 150},
-			{headerName: "deviceId", field: "deviceId", width: 90},
-		   {headerName: "downloadSeqNo", field: "downloadSeqNo", width: 90},
-			{headerName: "downloadTime", field: "downloadTime", width: 110},
-			{headerName: "downloadTimeZone", field: "downloadTimeZone", width: 100},
-			{headerName: "downloadDeviceLocalTime", field: "downloadDeviceLocalTime", width: 100},
-			{headerName: "downloadUTCTime", field: "downloadUTCTime", width: 180},
-			{headerName: "downloadType", field: "downloadType", width: 100},
-			{headerName: "mobileNetworkType", field: "mobileNetworkType", width: 100},
-			{headerName: "downloadProgress", field: "downloadProgress", width: 100},
-			{headerName: "downloadFileUrl", field: "downloadFileUrl", width: 100},
-			{headerName: "downloadedFileSize", field: "downloadedFileSize", width: 100},
-			{headerName: "downloadTotalFileSize", field: "downloadTotalFileSize", width: 150},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			
+			{headerName: "jobId", field: "jobId"},
+			{headerName: "deviceId", field: "deviceId"},
+		   {headerName: "downloadSeqNo", field: "downloadSeqNo"},
+			{headerName: "downloadTime", field: "downloadTime"},
+			{headerName: "downloadTimeZone", field: "downloadTimeZone"},
+			{headerName: "downloadDeviceLocalTime", field: "downloadDeviceLocalTime"},
+			{headerName: "downloadUTCTime", field: "downloadUTCTime"},
+			{headerName: "downloadType", field: "downloadType"},
+			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
+			{headerName: "downloadProgress", field: "downloadProgress"},
+			{headerName: "downloadFileUrl", field: "downloadFileUrl"},
+			{headerName: "downloadedFileSize", field: "downloadedFileSize"},
+			{headerName: "downloadTotalFileSize", field: "downloadTotalFileSize"},
+			{headerName: "sessionId", field: "sessionId"},
+			{headerName: "testcaseId", field: "testcaseId"}
 			
 			
 		],
 		columnDefsclickscreanxy : [
 			// this row just shows the row index, doesn't use any data from the row
-			{headerName: "#", width: 50, cellRenderer: function(params) {
-				return params.node.id + 1;
-			} }
+			
 			
 			
 		],
@@ -1063,6 +1022,44 @@ quickrunGridOptions : {
 		]
 		
 	},
+	
+	// added by punit
+	myDevicesGridOptions : {
+		paginationPageSizes: [20, 40, 60],
+		paginationPageSize: 20,
+		enableSorting: true,
+	    enableFilter: true,
+	    enableColResize: true,
+		enableRowSelection: true,  // for selection
+		enableColumnMenus: true, //to hide ascending and descending colomn menu names
+		enableRowHeaderSelection: false, // this is for check box to appear on grid options
+		enableFiltering: true,
+		enableGridMenu: true,		// for searching
+		multiSelect:false,
+		columnDefs: [
+			{ name: 'deviceId' ,width:150,pinnedLeft:true},
+			{ name: 'deviceName',width:150 },
+			{ name: 'deviceType' ,width:150},
+			{ name: 'Carrier' ,width:150},
+			{ name: 'model' ,width:"20%"},
+			{ name: 'manufacturer' ,width:"10%"},
+			{ name: 'imsi' ,width:150},
+			{ name: 'imei' ,width:150},
+			{ name: 'msisdn' ,width:"15%"},
+			{ name: 'networkType' ,width:"15%"},
+			{ name: 'region' ,width:"15%"},
+			{ name: 'statusFlag' ,width:"15%"},
+			{ name: 'lastPing' ,width:150},
+			{ name: 'jobId' ,width:150},
+			{ name: 'jobName' ,width:150},
+			{ name: 'jobStatusTime' ,width:"10%" },
+			{ name: 'jobStartDate' ,width:"10%" },
+			{ name: 'jobEndDate' ,width:"10%" },
+			
+			
+		]
+	},
+
 	menuData : null
 }
 	

@@ -1,7 +1,7 @@
 
 oTech.controller('MyDevicesController',
 	function ($scope, $rootScope, $location, AppServices, $stateParams) {
-		
+		$scope.loading = true;
 		var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
 		$rootScope.role = sessionStorage.role;
@@ -69,14 +69,27 @@ oTech.controller('MyDevicesController',
 	
 	
 	 /* Devices list */
+   $scope.myDevicesGridOptions = oApp.config.myDevicesGridOptions;
+	$scope.myDevicesGridOptions.onRegisterApi = function( gridApi ) { //extra code
+	 $scope.gridApi = gridApi;
+	  $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+	    console.log(row);
+	    }); 
+    };
+   
 		$scope.showDeviceList = function(){
-			
+			$scope.loading = true;
 			promise = AppServices.GetDeviceData(userId, token);
 			promise.then(
 			function(data){
-				console.log(data);
+				/*console.log(data);
 				var data1 =data.devicesList;
-			 $scope.gridOptions.api.setRowData(data1);
+			 $scope.gridOptions.api.setRowData(data1);*/
+			 
+			 $scope.myDevicesGridOptions.data = data.devicesList;
+			 //$scope.myDevicesGridOptions.data = [];
+			 $scope.loading = false;
+				//$scope.gridOptions.selection.selectRow($scope.gridOptions.data[0]); //extra code
 			// $scope.gridOptions.rowData=data.devicesList;
 
 			},

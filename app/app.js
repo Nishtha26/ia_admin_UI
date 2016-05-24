@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['ui.router', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.treeView', 'ngSanitize', "agGrid", 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree']).filter('oTech', function () {});
+var oTech = angular.module("oTech", ['ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.selection','ui.grid.moveColumns','ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ngSanitize', "agGrid", 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree']).filter('oTech', function () {});
 
 
 oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $q, $location) {
@@ -651,5 +651,7 @@ oTech.filter('capitalize', function () {
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+
+
 
 
