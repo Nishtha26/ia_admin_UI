@@ -1,45 +1,73 @@
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
+
+.ui-grid-cell-contents {
+    text-align: left;
+	}
+.ui-grid-header-cell-wrapper{
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+
+.ui-grid-render-container{
+		width: 100%; 
+}
+
+.ui-grid-pager-panel
+{
+position: inherit; 
+  padding-top: 20px;
+}
+ .ui-grid-viewport{
+ height: 650px;
+ }
+</style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData" style="background-color: #fff;">
+				<div class="ot-deviceData" style="background-color: #fff;margin: 0 auto 10px; height:880px">
 				
 					<div class="tab-content">
 					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff;">
+						<div class="orchestra_devices_table" style="background-color: #fff; width:100%; height: 650px; ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div class="table-header">
-									<p>Devices</p>
+							<div class="table-header" >
+									<p style="color:#57bdde;">Devices</p>
 									<div class="clearfix"></div>
 							</div>
 								
-								<div class="device-table">
+								 <div class="panel-body">
 									<div class="table-responsive">
-									<div ag-grid="gridOptions" class="ag-fresh" style="height: 500px;" id="myGrid"></div>
-									</div>
-								</div>
-								
-								<div class="table-more-info" style="position: relative;top: 10px;">
-									<div class="row">
-										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-											<dl class="dl-horizontal">
-											  <dt>Licensed To</dt><dd>Orchestra Technologies Dev.</dd>
-											  <dt>Device Name</dt><dd>{{devicename}}</dd>
-											  <dt>Device Type</dt><dd>{{devicetype}}</dd>
-											  <dt>iac Version</dt><dd>{{iacversion}}</dd>
-											</dl>
+										 <table class="table table-striped table-bordered table-hover" id="dataTables-example" style="height: 650px;" ui-grid="myDevicesGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-pagination ui.grid.pinning ui.grid.moveColumns >
+										 <div class="grid-msg-overlay" ng-hide="!loading">
+										  <div class="msg">
+											<span>
+											  Loading ...
+											  <i class="fa fa-spinner fa-spin"></i>
+											</span>
+										  </div>
 										</div>
-										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-											<dl class="dl-horizontal">									
-											  <dt>imei</dt><dd>{{imei}}</dd>
-											  <dt>imsi</dt><dd>{{imsi}}</dd>
-											  <dt>Last Ping</dt><dd>{{lastping}}</dd>
-											</dl>
+										<div class="grid-msg-overlay" ng-hide="loading || myDevicesGridOptions.data.length > 0">
+										  <div class="msg">
+											<span>No Data</span>
+										  </div>
 										</div>
+										 </table>
 									</div>
-								</div>
+									</div>
 								
+								<div style=" clear: both;"/>
+								<div ng-include="'app/views/footer.html'"></div>
 							</div>
 						</div>
 					</div>
@@ -47,7 +75,7 @@
 				 
 				</div>				
 				</div>
-					<div ng-include="'app/views/favourites.html'"></div>
+					<!--<div ng-include="'app/views/favourites.html'"></div>-->
 			</div>
 		</div>
 	</div>

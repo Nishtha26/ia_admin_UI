@@ -153,7 +153,7 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 .black_bg_color {background-color: #2f3a4c;}
 
 .device_usage {}
-.device_usage_graph {background-color: #fff; padding: 15px 30px;position:relative;}
+.device_usage_graph {background-color: #fff; padding: 0px 30px;position:relative;}
 .device_graph_text{position: absolute;transform: rotate(-90deg);-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);top:55%;left:-25px;font-weight:bold;}
 .device_graph_text1{position: absolute;transform: rotate(-90deg);-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);top:55%;left:14px;z-index:1;font-weight:bold;}
 .device_usage_graph .device_heading {margin-bottom: 15px;}
@@ -169,7 +169,7 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 .usage_graph {overflow: hidden;}
 .usergraph_y_axis {float: left; margin: 0 30px 0 10px;}
 .usergraph_y_axis ul li {color: #78909c; font-size: 15px; margin-bottom: 21px;}
-.user_graph_image {display: inline-block; margin-top: 8px; float: left;width:100%;}
+.user_graph_image {display: inline-block; margin-top: 5px; float: left;width:100%;}
 .usergraph_x_axis ul {margin-top: 25px;}
 .usergraph_x_axis ul li {float: left; margin: 0 36px 0 37px;}
 .usergraph_x_axis ul li:last-child {margin: 0 0 0 37px;}
@@ -178,11 +178,11 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 .executive_status_graph img {width: 100%;}
 
 .availability_map_section {}
-.device_availability {background-color: #fff; padding: 10px 190px 25px 12px;}
+.device_availability {background-color: #fff; padding: 10px 190px 6px 12px;}
 .device_availability .device_heading h3 {margin: 0}
 .refresh {float: right;}
 .device_availability_pi_chart {margin: 0px 0 0px; text-align: center;}
-.executive_status_graph {margin-bottom: -1px;}
+.executive_status_graph {margin-bottom: 8px;}
 .device_availability_content {font-family: "Rajdhani-Medium"; font-size: 15px; color: #78909c;}
 
 .device_availability_map {}
@@ -722,8 +722,8 @@ label{margin-left: 20px;}
 }
 /* ot-deviceData Start
 ---------------------------------------------------------------*/
-.ot-deviceData{max-width:1050px;margin:0 auto 50px;padding-bottom: 15px;border:1px solid #000;font-weight: 900;}
-.ot-deviceData .orchestra_devices_table{padding:10px;background-color:#ebecf0;font-weight: 900;}
+.ot-deviceData{max-width:inherit;margin:0 auto 50px;padding-bottom: 15px;border:1px solid #F3F3F3;;font-weight: 900;}
+.ot-deviceData .orchestra_devices_table{padding:10px;background-color:#ebecf0;font-weight: 900; max-width: inherit;}
 .ot-deviceData .orchestra_devices_table .table-more-info{padding-left:50px;padding-right:50px; font-weight: 900;}
 .ot-deviceData .nav-tabs{border:none;margin-bottom:15px;}
 .ot-deviceData .nav-tabs li{width:100%;text-align:center;}
@@ -1103,4 +1103,76 @@ input:-moz-placeholder { font-size: 10pt; color: 	#000000; }
 	left: 330px;
 	bottom: 26px;
 }
+/*-------------loader css ------------------------------------------*/
+.grid-msg-overlay {
+    position: absolute;
+    top: 107px;
+    bottom: 170px;
+    width: 98%;
+}
+.grid-msg-overlay .msg {
+    opacity: 1;
+    position: absolute;
+    top: 36%;
+    left: 35%;
+    width: 21%;
+    height: 10%;
+    background-color: #eee;
+    border-radius: 4px;
+    border: 1px solid #555;
+    text-align: center;
+    font-size: 24px;
+    display: table;
+}
+.grid-msg-overlay .msg span {
+  display: table-cell;
+  vertical-align: middle;
+}
+/*-------------end loader css ------------------------------------------*/
+
+/*-------------footer css ------------------------------------------*/
+.page-footer {
+    border-top: 1px solid #e2e2e2;
+    padding-top: 7px;
+    padding-top: 9px;
+    margin-top: 15px;
+}
+.page-footer nav {
+    float: left;
+    margin-bottom: 16px;
+}
+.page-footer nav {
+    float: left;
+    margin-bottom: 16px;
+}
+.page-footer nav ul li a {
+    color: #999;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+p, ul, ol, dl, dd {
+    margin: 0 0 1em 0;
+}
+
+.page-footer nav ul li {
+    font-size: 11px;
+    font-size: 0.6875rem;
+    line-height: 15px;
+    line-height: 0.9375rem;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "nyt-franklin",arial,helvetica,sans-serif;
+    padding-left: 7px;
+    padding-right: 7px;
+    float: left;
+    line-height: 10px;
+    height: 10px;
+    padding: 0 5px;
+    border-color: #e2e2e2;
+}
+/*-------------end footer css ------------------------------------------*/
 
