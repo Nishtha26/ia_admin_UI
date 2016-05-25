@@ -78,20 +78,12 @@ oTech.controller('MyDevicesController',
     };
    
 		$scope.showDeviceList = function(){
-			$scope.loading = true;
+			$scope.dataLoading = true;
 			promise = AppServices.GetDeviceData(userId, token);
 			promise.then(
 			function(data){
-				/*console.log(data);
-				var data1 =data.devicesList;
-			 $scope.gridOptions.api.setRowData(data1);*/
-			 
-			 $scope.myDevicesGridOptions.data = data.devicesList;
-			 //$scope.myDevicesGridOptions.data = [];
-			 $scope.loading = false;
-				//$scope.gridOptions.selection.selectRow($scope.gridOptions.data[0]); //extra code
-			// $scope.gridOptions.rowData=data.devicesList;
-
+				$scope.myDevicesGridOptions.data = data.devicesList;
+				$scope.dataLoading = false;
 			},
 			function(err){
 				console.log(err);
