@@ -62,7 +62,7 @@ oTech
 						document.getElementById('info').innerHTML = 'Showing '
 								+ startLimit + ' to ' + endLimit + ' of '
 								+ totalRecords;
-						displayLength = endLimit;
+						//displayLength = endLimit;
 						// $scope.showDeviceList(link);
 					}
 					$scope.next = function() {
@@ -79,7 +79,7 @@ oTech
 						document.getElementById('info').innerHTML = 'Showing '
 								+ startLimit + ' to ' + endLimit + ' of '
 								+ totalRecords;
-						displayLength = endLimit;
+						//displayLength = endLimit;
 						$scope.showDeviceList(link);
 						
 						if (totalRecords == endLimit || totalRecords < endLimit) {
@@ -90,10 +90,22 @@ oTech
 						}
 					}
 					$scope.previous = function() {
+						document.getElementById("next").disabled = false;
 						count = count - 1;
 						startLimit = startLimit - 20;
-						endLimit = endLimit - 20;
-						displayLength = endLimit;
+						// added by punit
+						if(totalRecords == endLimit)
+						{
+							var reminder = totalRecords % displayLength;
+							if(reminder > 0){
+								endLimit = totalRecords - reminder;
+							}else{
+								endLimit = endLimit - 20;
+							}
+						}
+						
+						
+						//displayLength = endLimit;
 						document.getElementById('info').innerHTML = 'Showing '
 								+ startLimit + ' to ' + endLimit + ' of '
 								+ totalRecords;
