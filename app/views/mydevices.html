@@ -26,19 +26,17 @@ font-size:0;
 position: inherit; 
   padding-top: 20px;
 }
- .ui-grid-viewport{
- height: 650px;
- }
+ 
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData" style="background-color: #fff;margin: 0 auto 10px; height:880px">
+				<div class="ot-deviceData" style="background-color: #fff;margin: 0 auto 10px; ">
 				
 					<div class="tab-content">
 					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff; width:100%; height: 650px; ">
+						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="table-header" >
@@ -48,7 +46,7 @@ position: inherit;
 								
 								 <div class="panel-body">
 									<div class="table-responsive">
-										 <table class="table table-striped table-bordered table-hover" id="dataTables-example" style="height: 650px;" ui-grid="myDevicesGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-pagination ui.grid.pinning ui.grid.moveColumns >
+										 <table class="table table-striped table-bordered table-hover" id="dataTables-example"  ui-grid="myDevicesGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-pagination ui.grid.pinning ui.grid.moveColumns >
 										 <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div style ="position: fixed; margin: auto;margin-left: 500px;margin-top: -500px;color:red;font-size:35px;" ng-show ="err"> No Data Found </div>
 										 </table>
