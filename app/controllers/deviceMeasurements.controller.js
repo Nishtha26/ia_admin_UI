@@ -3,20 +3,14 @@ oTech
 				'deviceMeasurementsController',
 				function($scope, $rootScope, $location, AppServices,
 						$stateParams) {
-
 					$scope.listItem = 'apn';
+					var link = "apn";
+					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
 					var userId = sessionStorage.getItem("userId");
 					$rootScope.role = sessionStorage.getItem("role");
 
-					var startLimit = 1;
-					var displayLength = 20;
-					var totalRecords = 0;
-
-					var link = "apn";
-					var count = 0;
-					$scope.pageSize = '20';
-					var allOfTheData;
+					
 					$rootScope.slideContent();
 					window.onresize = function(event) {
 						$rootScope.slideContent();
@@ -50,125 +44,88 @@ oTech
 							console.log(err);
 						});
 					}
+					$scope.itemsPerPage = 10;
+					$scope.currentPage = 0;
+					$scope.endLimit=$scope.itemsPerPage;
+					var allOfTheData;
+					$scope.totalRecords=0;
 					
-					document.getElementById("previous").disabled = true;
-					var endLimit = 20;
-					
-					
-					// function for next and previous button in measurement grid 
 					$scope.reset = function() {
-						startLimit = 1;
-						endLimit = 20;
-						document.getElementById('info').innerHTML = 'Showing '
-								+ startLimit + ' to ' + endLimit + ' of '
-								+ totalRecords;
-						//displayLength = endLimit;
-						// $scope.showDeviceList(link);
+						$scope.currentPage = 0;
+						allOfTheData="";
+						$scope.totalRecords=0;
+						$scope.endLimit=$scope.itemsPerPage;
 					}
-					$scope.next = function() {
-						// alert(startLimit);
-						$scope.loading = true;
-						startLimit = startLimit + 20;
-						endLimit = endLimit + 20;
-						count = count + 1;
-						if(endLimit > totalRecords){
-							endLimit = startLimit+(19-(endLimit - totalRecords));
-						}
-						
-						document.getElementById("previous").disabled = false;
-						document.getElementById('info').innerHTML = 'Showing '
-								+ startLimit + ' to ' + endLimit + ' of '
-								+ totalRecords;
-						//displayLength = endLimit;
-						$scope.showDeviceList(link);
-						
-						if (totalRecords == endLimit || totalRecords < endLimit) {
-							console.log("count" + count);
-							console.log("startLimit" + startLimit);
-							console.log("endLimit" + endLimit);
-							document.getElementById("next").disabled = true;
-						}
-					}
-					$scope.previous = function() {
-						document.getElementById("next").disabled = false;
-						count = count - 1;
-						startLimit = startLimit - 20;
-						// added by punit
-						if(totalRecords == endLimit)
-						{
-							var reminder = totalRecords % displayLength;
-							if(reminder > 0){
-								endLimit = totalRecords - reminder;
-							}else{
-								endLimit = endLimit - 20;
-							}
-						}
-						
-						
-						//displayLength = endLimit;
-						document.getElementById('info').innerHTML = 'Showing '
-								+ startLimit + ' to ' + endLimit + ' of '
-								+ totalRecords;
-						$scope.showDeviceList(link);
-						console.log("count" + count);
-						console.log("startLimit" + startLimit);
-						console.log("endLimit" + endLimit);
-						if (count == 0 || (startLimit == 1 && endLimit == 20)) {
-							console.log("count" + count);
-							console.log("startLimit" + startLimit);
-							console.log("endLimit" + endLimit);
-							document.getElementById("previous").disabled = true;
-						}
-					}
+					
+					$scope.range = function() {
+								var rangeSize = 6;
+								var ps = [];
+								var start;
 
-					$scope.openDevicedata = function(e) {
+								start = $scope.currentPage;
+								if ( start > $scope.pageCount()-rangeSize ) {
+								start = $scope.pageCount()-rangeSize+1;
+								}
 
-						// alert($(e.currentTarget).text());
-					}
+								for (var i=start; i<start+rangeSize; i++) {
+								if(i>=0) 
+								ps.push(i);
+								}
+								return ps;
+							};
 
-					var columns = oApp.config.mydeviceColumns;
-
-					$scope.gridOptions = {
-						columnDefs : columns,
-						rowSelection : 'multiple',
-						rowData : null,
-						onRowSelected : rowSelectedFunc,
-						enableFilter : true,
-						enableSorting : true
-
-					// onRowDeselected: rowDeselectedFunc,
-					// onSelectionChanged: selectionChangedFunc
-					};
-
-					function rowDeselectedFunc(event) {
-						window.alert("row " + event.node.data.deviceId
-								+ " de-selected");
-					}
-
-					function rowSelectedFunc(event) {
-						// window.alert("row " + event.node.data.deviceId + "
-						// selected");
-						$scope.devicename = event.node.data.deviceName;
-						$scope.devicetype = event.node.data.deviceType;
-						$scope.iacversion = event.node.data.iacVersion;
-						$scope.imei = event.node.data.imei;
-						$scope.imsi = event.node.data.imsi;
-						$scope.lastping = event.node.data.lastPing;
-					}
-
-					function selectionChangedFunc(event) {
-						window.alert('selection changed, '
-								+ event.selectedRows.length + ' rows selected');
-					}
+							$scope.prevPage = function() {
+							if ($scope.currentPage > 0) {
+								startLimit = (startLimit*($scope.currentPage-1));
+								$scope.showDeviceList(link);
+							  $scope.currentPage--;
+								}
+							};
+											
+							$scope.DisablePrevPage = function() {
+								return $scope.currentPage === 0 ? "disabled" : "";
+							 };
+							 
+							 $scope.pageCount = function() {
+								return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+							};
+							
+							$scope.nextPage = function() {
+								if ($scope.currentPage < $scope.pageCount()) {
+								startLimit = ($scope.itemsPerPage*($scope.currentPage-1));
+								$scope.showDeviceList(link);
+								  $scope.currentPage++;
+								}
+							};
+							
+							$scope.DisableNextPage = function() {
+								return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+							};
+							
+							 $scope.setPage = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.showDeviceList(link);
+								$scope.currentPage = n;
+							};
+					
+					
+					
+					
+					
 					
 					$scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
 					/* measurement list apn */
 					$scope.showDeviceList = function(link) {
-						$scope.dataLoading = true;
-						$scope.one = false;
-						$scope.err = false;
-						// $scope.noerr = true;
-						
+						$('#grid').hide();
 						if($scope.listItem == 'apn')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
 						else if ($scope.listItem == 'applications')
@@ -217,38 +174,23 @@ oTech
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdownload;
 
 						promise = AppServices.GetMeasurementsapnData(userId,
-								token, displayLength, startLimit, link);
+								token, $scope.itemsPerPage, startLimit, link);
 						promise.then(function(data) {
-							totalRecords = data.totalRecords;
-							if (data.totalRecords == 0) {
-
-								$scope.butn = false;
-
-							}
+							$scope.dataLoading = true;
+							$scope.totalRecords = data.totalRecords;
+							$scope.datalists = data.apnData;
+							// start logic for new pagination 
 
 							if (data.apnData.length > 0) {
-								$scope.one = true;
-								$scope.butn = true;
+								
 								$scope.DeviceList = data;
 								allOfTheData = data.apnData;
-								$scope.dataLoading = false;
 
-								if (data.totalRecords == endLimit) {
-									$scope.nextButton = false;
-									// document.getElementById("next").disabled
-									// = false;
-								} else {
-									$scope.nextButton = true;
-								}
 								$scope.createNewDatasource();
-
+							$scope.dataLoading = false;
+							$('#grid').show();
 							} else {
-								$scope.nextButton = false;
-								$scope.dataLoading = false;
-								$scope.err = true;
-								$scope.one = false;
-								// document.getElementById("next").disabled =
-								// true;
+								
 							}
 						}, function(err) {
 							console.log(err);
@@ -257,23 +199,7 @@ oTech
 
 					/* call to grid view for device list */
 					$scope.createNewDatasource = function() {
-
-						if (!allOfTheData) {
-
-							// in case user selected 'onPageSizeChanged()' before the json was loaded
-							return;
-						}
-						if(startLimit == 1){
-						document.getElementById('info').style.marginLeft = '30px';
-						document.getElementById('info').innerHTML = 'Showing '
-								+ startLimit + ' to ' + displayLength + ' of '
-								+ totalRecords;
-						}
-
 						$scope.devicesMeasurementGridOptions.data = allOfTheData;
-
-						//$scope.gridOptions.api.setDatasource(allOfTheData);
-
 					}
 
 					$scope.getDashBoardMenu();
@@ -283,8 +209,8 @@ oTech
 					$scope.openDevicedata = function(e) {
 						link = $(e.currentTarget).text();
 						$scope.listItem = link;
-						$scope.showDeviceList(link);
 						$scope.reset();
+						$scope.showDeviceList(link);
 					}
 
 				});

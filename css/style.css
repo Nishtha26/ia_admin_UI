@@ -722,7 +722,7 @@ label{margin-left: 20px;}
 }
 /* ot-deviceData Start
 ---------------------------------------------------------------*/
-.ot-deviceData{max-width:inherit;margin:0 auto 50px;padding-bottom: 15px;border:1px solid #F3F3F3;;font-weight: 900;}
+.ot-deviceData{max-width:inherit;margin:0 auto 50px;padding-bottom: 15px;font-weight: 900;}
 .ot-deviceData .orchestra_devices_table{padding:10px;background-color:#ebecf0;font-weight: 900; max-width: inherit;}
 .ot-deviceData .orchestra_devices_table .table-more-info{padding-left:50px;padding-right:50px; font-weight: 900;}
 .ot-deviceData .nav-tabs{border:none;margin-bottom:15px;}
@@ -1162,5 +1162,79 @@ p, ul, ol, dl, dd {
     padding: 0 5px;
     border-color: #e2e2e2;
 }
-/*-------------end footer css ------------------------------------------*/
 
+
+/*-------------end footer css ------------------------------------------*/
+/*-------------------------pagination-----------------------------------*/
+.paginationclass {
+  margin: 15px 28px;
+}
+
+.paginationclass div {
+  border-bottom: 1px solid silver;
+}
+
+.paginationclass span {
+  margin: 0px 15px;
+  display: inline-block;
+  padding: 5px 0px;
+  text-align: left;
+  width: 70px;
+}
+
+.pagination-controle li {
+  display: inline-block;
+}
+
+.pagination-controle button {
+  width: 63px;
+  font-size: 12px;
+  margin-left: 13px;
+  cursor: pointer;
+}
+
+.pagination-div {
+  margin-left: 40%;
+    position: absolute;
+    margin-top: -25px;
+}
+
+/*-----------------end pagination area--------------------------------------*/
+
+
+
+.main-cont {
+    
+    height: auto;
+   
+    min-height: 94% !important;
+    position: relative;
+   
+}
+html,body{
+height:100%;
+overflow: hidden;
+
+
+}
+.maincontainer1 {
+ height: auto;
+    min-height: 100%;
+    position: fixed;
+   width: 100%;
+    min-height: 86%!important;
+    overflow: hidden;
+}
+.devicedata-height{
+ height:auto;
+    min-height: 100%;
+  overflow: hidden;
+}
+.footer-div {
+    background-color: #fff;
+    float: right;
+    height: 56px;
+    margin-right: 16px;
+    position: relative;
+    width: 82.1%;
+}

@@ -27,19 +27,21 @@ position: inherit;
   padding-top: 20px;
 }
 
+
+
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData" style="background-color: #fff;margin: 0 auto 10px; ">
+				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 10px; ">
 					<div class="tab-content">
 						<div id="measurement" class="tab-pane fade in active">
 							<div class="orchestra_devices_table" style="background-color: #fff; width:100%;">
 								<div class="row" >
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 										<div class="table-header" >
-											<p>Measurements</p>
+											<p style="color:#57bdde;">Measurements</p>
 											<div class="device-header-section">
 												<div class="dropdown measurement" style="outline: 1px solid blueviolet;">
 													<div data-toggle="dropdown" href="javascript:void(0);" aria-expanded="false"><span class="pull-left">{{listItem}}</span><span class="arrow-icon pull-right"></span></div>
@@ -65,15 +67,23 @@ position: inherit;
 										 </div>
 									</div>
 									</div>
-										<div style="height: 40px;width: 100%;position: relative;top: 0px;" ng-show = "butn">
-											<button id ="previous" ng-click="previous()" style="position: absolute;left: 30%;width:60px;top: 5px;" >Previous</button>
-											
-											<button id = "next" ng-click="next()" style="position:absolute;left:60%;width:60px;top: 5px;" ng-class='{disabled :nextButton}'>Next</button>
-											<div id="info" style="position: absolute;top: 5px; margin-left: 30px;"></div>
-										</div>  
-													
-										<div style=" clear: both;"/>
-										<div ng-include="'app/views/footer.html'"></div>	
+										<div class="col-sm-6"><div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div></div>
+
+										<div class="col-sm-6">
+										<div class="pagination-div">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">« Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="#">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next »</a>
+											</li>
+										  </ul>
+										</div>
+									</div>										
 									</div>  
 								</div>
 							</div>
@@ -91,3 +101,26 @@ position: inherit;
 		</div>
 	</div>
 	<div ng-include="'app/views/favouritesPopUp.html'"></div>
+	<script>
+
+ function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $(this).height();
+       //  alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-152);
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ })
+</script>

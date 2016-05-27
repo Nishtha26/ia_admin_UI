@@ -29,44 +29,79 @@ oTech.controller('MyDevicesController',
 		$scope.getDashBoardMenu();
 		$scope.getFavouriteReports();
 		
-		$scope.openDevicedata =function(e){
-			
-			// alert($(e.currentTarget).text());
-		}
+					$scope.itemsPerPage = 10;
+					$scope.currentPage = 0;
+					$scope.endLimit=$scope.itemsPerPage;
+					var allOfTheData;
+					$scope.totalRecords=0;
+					
+					
+					$scope.range = function() {
+								var rangeSize = 6;
+								var ps = [];
+								var start;
+
+								start = $scope.currentPage;
+								if ( start > $scope.pageCount()-rangeSize ) {
+								start = $scope.pageCount()-rangeSize+1;
+								}
+
+								for (var i=start; i<start+rangeSize; i++) {
+								if(i>=0) 
+								ps.push(i);
+								}
+								return ps;
+							};
+
+							$scope.prevPage = function() {
+							if ($scope.currentPage > 0) {
+								startLimit = (startLimit*($scope.currentPage-1));
+								$scope.showDeviceList();
+							  $scope.currentPage--;
+								}
+							};
+											
+							$scope.DisablePrevPage = function() {
+								return $scope.currentPage === 0 ? "disabled" : "";
+							 };
+							 
+							 $scope.pageCount = function() {
+								return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+							};
+							
+							$scope.nextPage = function() {
+								if ($scope.currentPage < $scope.pageCount()) {
+								startLimit = ($scope.itemsPerPage*($scope.currentPage-1));
+								$scope.showDeviceList();
+								  $scope.currentPage++;
+								}
+							};
+							
+							$scope.DisableNextPage = function() {
+								return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+							};
+							
+							 $scope.setPage = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.showDeviceList();
+								$scope.currentPage = n;
+							};
 		
-		var columns = oApp.config.mydeviceColumns;
+		
                             
 
-    $scope.gridOptions = {
-        columnDefs: columns,
-        rowSelection: 'multiple',
-        rowData: null,
-        onRowSelected: rowSelectedFunc,
-		enableFilter: true,
-		enableSorting: true
-
-       // onRowDeselected: rowDeselectedFunc,
-       // onSelectionChanged: selectionChangedFunc
-    };
 	
-    function rowDeselectedFunc(event) {
-        window.alert("row " + event.node.data.deviceId + " de-selected");
-    }
+   
 
-    function rowSelectedFunc(event) {
-      // window.alert("row " + event.node.data.deviceId + " selected");
-		$scope.devicename =event.node.data.deviceName;
-		$scope.devicetype =event.node.data.deviceType;
-		$scope.iacversion =event.node.data.iacVersion;
-		$scope.imei =event.node.data.imei;
-		$scope.imsi =event.node.data.imsi;
-		$scope.lastping =event.node.data.lastPing;
-    }
-
-   function selectionChangedFunc(event) {
-       window.alert('selection changed, ' + event.selectedRows.length + ' rows selected');
-    }
-	
 	
 	 /* Devices list */
    $scope.myDevicesGridOptions = oApp.config.myDevicesGridOptions;
@@ -82,6 +117,7 @@ oTech.controller('MyDevicesController',
 			promise = AppServices.GetDeviceData(userId, token);
 			promise.then(
 			function(data){
+				$scope.totalRecords = data.deviceCount
 				$scope.myDevicesGridOptions.data = data.devicesList;
 				$scope.dataLoading = false;
 			},
