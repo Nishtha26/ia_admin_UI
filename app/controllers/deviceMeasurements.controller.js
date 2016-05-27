@@ -3,6 +3,7 @@ oTech
 				'deviceMeasurementsController',
 				function($scope, $rootScope, $location, AppServices,
 						$stateParams) {
+					$scope.dataLoading = true;
 					$scope.listItem = 'apn';
 					var link = "apn";
 					var startLimit = 1;
@@ -35,7 +36,6 @@ oTech
 
 					/* show measurement list */
 					$scope.getmeasurementList = function() {
-						$scope.dataLoading = true;
 						promise = AppServices.getmeasurementList(token);
 						promise.then(function(data) {
 							$scope.devices = data;
@@ -125,7 +125,6 @@ oTech
 					$scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
 					/* measurement list apn */
 					$scope.showDeviceList = function(link) {
-						$('#grid').hide();
 						if($scope.listItem == 'apn')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
 						else if ($scope.listItem == 'applications')
@@ -177,6 +176,7 @@ oTech
 								token, $scope.itemsPerPage, startLimit, link);
 						promise.then(function(data) {
 							$scope.dataLoading = true;
+							$scope.err = false;
 							$scope.totalRecords = data.totalRecords;
 							$scope.datalists = data.apnData;
 							// start logic for new pagination 
@@ -188,11 +188,13 @@ oTech
 
 								$scope.createNewDatasource();
 							$scope.dataLoading = false;
-							$('#grid').show();
 							} else {
-								
+								$scope.dataLoading = false;
+								$scope.err = true;
 							}
 						}, function(err) {
+							$scope.err = true;
+								$scope.dataLoading = false;
 							console.log(err);
 						});
 					}
@@ -207,6 +209,7 @@ oTech
 					$scope.getmeasurementList();
 					$scope.showDeviceList(link);
 					$scope.openDevicedata = function(e) {
+						$scope.dataLoading = true;
 						link = $(e.currentTarget).text();
 						$scope.listItem = link;
 						$scope.reset();
