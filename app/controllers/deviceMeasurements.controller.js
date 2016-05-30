@@ -76,9 +76,8 @@ oTech
 
 							$scope.prevPage = function() {
 							if ($scope.currentPage > 0) {
-								startLimit = (startLimit*($scope.currentPage-1));
-								$scope.showDeviceList(link);
-							  $scope.currentPage--;
+								$scope.setPagePrev($scope.currentPage-1);
+								//$scope.currentPage--;
 								}
 							};
 											
@@ -92,9 +91,8 @@ oTech
 							
 							$scope.nextPage = function() {
 								if ($scope.currentPage < $scope.pageCount()) {
-								startLimit = ($scope.itemsPerPage*($scope.currentPage-1));
-								$scope.showDeviceList(link);
-								  $scope.currentPage++;
+								$scope.setPageNext($scope.currentPage+1);
+								//$scope.currentPage++;
 								}
 							};
 							
@@ -113,6 +111,35 @@ oTech
 								}
 								 
 								startLimit = ($scope.itemsPerPage*n);
+								$scope.showDeviceList(link);
+								$scope.currentPage = n;
+							};
+							
+							 $scope.setPagePrev = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.showDeviceList(link);
+								$scope.currentPage = n;
+							};
+							 $scope.setPageNext = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*(n));
 								$scope.showDeviceList(link);
 								$scope.currentPage = n;
 							};
