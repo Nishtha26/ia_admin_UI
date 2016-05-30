@@ -1120,18 +1120,14 @@ input:-moz-placeholder { font-size: 10pt; color: 	#000000; }
 
 /*-------------footer css ------------------------------------------*/
 .page-footer {
-    border-top: 1px solid #e2e2e2;
     padding-top: 7px;
     padding-top: 9px;
-    margin-top: 15px;
+  /*  margin-top: 15px;*/
 }
 .page-footer nav {
-    float: left;
+    float: right;
     margin-bottom: 16px;
-}
-.page-footer nav {
-    float: left;
-    margin-bottom: 16px;
+	margin-right: 15px;
 }
 .page-footer nav ul li a {
     color: #999;
@@ -1156,7 +1152,6 @@ p, ul, ol, dl, dd {
     font-family: "nyt-franklin",arial,helvetica,sans-serif;
     padding-left: 7px;
     padding-right: 7px;
-    float: left;
     line-height: 10px;
     height: 10px;
     padding: 0 5px;
@@ -1194,9 +1189,11 @@ p, ul, ol, dl, dd {
 }
 
 .pagination-div {
-  margin-left: 40%;
+    /* margin-left: 40%; */
     position: absolute;
-    margin-top: -25px;
+    margin-top: -15px;
+    /* float: right; */
+    right: 0;
 }
 
 /*-----------------end pagination area--------------------------------------*/
@@ -1228,13 +1225,15 @@ overflow: hidden;
 .devicedata-height{
  height:auto;
     min-height: 100%;
-  overflow: hidden;
+/*   overflow: hidden; */
 }
 .footer-div {
-    background-color: #fff;
-    float: right;
+   background-image: url('../images/footer-bg.png');
+   background-repeat: repeat;
+   margin:auto;
+   
     height: 56px;
-    margin-right: 16px;
+   /* margin-right:16px;*/
     position: relative;
-    width: 82.1%;
+    /*width: 100%
 }

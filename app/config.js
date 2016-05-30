@@ -130,8 +130,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://localhost:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://localhost:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
+	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
 
 	jobListGridOptions : {
 		paginationPageSizes: [1,25, 50, 75],
@@ -279,7 +279,7 @@ oApp.config = {
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{headerName: "autoId", field: "autoId", width: 150, visible:false},
-			{headerName: "deviceId", field: "deviceId", width: 90},
+			{headerName: "deviceId", field: "deviceId", width: 100, pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 120},
 			{headerName: "timeStamp", field: "timeStamp", width: 90},
 			{headerName: "apnId", field: "apnId", width: 110},
@@ -313,7 +313,7 @@ oApp.config = {
 		columnDefsapplications : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId", width: 150},
+			{headerName: "deviceId", field: "deviceId", width: 150, pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   
 			{headerName: "timeStamp", field: "timeStamp", width: 90},
@@ -342,8 +342,8 @@ oApp.config = {
 		columnDefsipaddress : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId" },
-			{headerName: "deviceId", field: "deviceId" },
+			{headerName: "autoId", field: "autoId" ,pinnedLeft:true },
+			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId" },
 			{headerName: "timeStamp", field: "timeStamp" },
 			{headerName: "ipPublicV4", field: "ipPublicV4", },
@@ -356,7 +356,7 @@ oApp.config = {
 		columnDefsl1log : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "testcaseId", field: "testcaseId"},
 		   {headerName: "jobStartTime", field: "jobStartTime"},
 			{headerName: "jobStartTimeMs", field: "jobStartTimeMs"},
@@ -368,7 +368,7 @@ oApp.config = {
 		columnDefslocation : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "timeStamp", field: "timeStamp"},
 			{headerName: "locationProvider", field: "locationProvider"},
@@ -382,8 +382,8 @@ oApp.config = {
 		columnDefsmms : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "mmsId", field: "mmsId"},
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "mmsId", field: "mmsId",pinnedLeft:true},
+			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
 			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
@@ -401,8 +401,8 @@ oApp.config = {
 		columnDefsneighborcellinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId"},
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "autoId", field: "autoId",pinnedLeft:true},
+			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "timeStamp", field: "timeStamp"},
 			{headerName: "mcId", field: "mcId"},
@@ -420,7 +420,7 @@ oApp.config = {
 		columnDefssms : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "smsId", field: "smsId"},
+			{headerName: "smsId", field: "smsId",pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "deviceId", field: "deviceId"},
 			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
@@ -439,7 +439,7 @@ oApp.config = {
 		columnDefstcpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
 		
-			{headerName: "autoId", field: "autoId"},
+			{headerName: "autoId", field: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "timeStamp", field: "timeStamp"},
@@ -461,7 +461,7 @@ oApp.config = {
 		columnDefsudpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId"},
+			{headerName: "autoId", field: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "timeStamp", field: "timeStamp"},
@@ -488,7 +488,7 @@ oApp.config = {
 			// this row just shows the row index, doesn't use any data from the row
 		
 			{headerName: "voiceCallSeqNumber", field: "voiceCallSeqNumber"},
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
 			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
@@ -504,7 +504,7 @@ oApp.config = {
 		columnDefswifiinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId"},
+			{headerName: "autoId", field: "autoId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "timeStamp", field: "timeStamp"},
@@ -529,7 +529,7 @@ oApp.config = {
 		columnDefswifitrafficinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "wifiCollectId", field: "wifiCollectId"},
+			{headerName: "wifiCollectId", field: "wifiCollectId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "deviceId", field: "deviceId"},
 			{headerName: "initialConnectedState", field: "initialConnectedState"},
@@ -546,7 +546,7 @@ oApp.config = {
 		columnDefsattach : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "sessionSeqNumber", field: "sessionSeqNumber"},
 			{headerName: "sessionTime", field: "sessionTime"},
@@ -568,7 +568,7 @@ oApp.config = {
 		columnDefslatency : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId", width: 150},
+			{headerName: "deviceId", field: "deviceId", width: 150 ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   {headerName: "pingSeqNumber", field: "pingSeqNumber", width: 90},
 			{headerName: "pingStartTime", field: "pingStartTime", width: 110},
@@ -593,7 +593,7 @@ oApp.config = {
 		columnDefsupload : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "jobId", field: "jobId"},
+			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "uploadSeqNo", field: "uploadSeqNo"},
 			{headerName: "uploadTime", field: "uploadTime"},
@@ -612,7 +612,7 @@ oApp.config = {
 		columnDefsemail : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "emailId", field: "emailId"},
+			{headerName: "emailId", field: "emailId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "sendingFrom", field: "sendingFrom"},
@@ -632,7 +632,7 @@ oApp.config = {
 		columnDefsdatausage : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "timeStamp", field: "timeStamp"},
 			{headerName: "intfName", field: "intfName"},
@@ -648,7 +648,7 @@ oApp.config = {
 		columnDefsvideo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "jobId", field: "jobId"},
+			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "mplayerSeqNo", field: "mplayerSeqNo"},
 			{headerName: "mplayerTime", field: "mplayerTime"},
@@ -675,7 +675,7 @@ oApp.config = {
 		columnDefsaudio : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId"},
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "time", field: "time"},
 			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
@@ -695,7 +695,7 @@ oApp.config = {
 		columnDefsdownload: [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "jobId", field: "jobId"},
+			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "downloadSeqNo", field: "downloadSeqNo"},
 			{headerName: "downloadTime", field: "downloadTime"},
