@@ -6,6 +6,7 @@ oTech.controller('MyDevicesController',
 		var token = sessionStorage.token;
 		$rootScope.role = sessionStorage.role;
 		$rootScope.slideContent();
+		var startLimit = 1;
 		window.onresize = function(event) {
 			$rootScope.slideContent();
 		}
@@ -56,7 +57,7 @@ oTech.controller('MyDevicesController',
 							$scope.prevPage = function() {
 							if ($scope.currentPage > 0) {
 								startLimit = (startLimit*($scope.currentPage-1));
-								$scope.showDeviceList();
+								$scope.createNewDatasource();
 							  $scope.currentPage--;
 								}
 							};
@@ -72,7 +73,7 @@ oTech.controller('MyDevicesController',
 							$scope.nextPage = function() {
 								if ($scope.currentPage < $scope.pageCount()) {
 								startLimit = ($scope.itemsPerPage*($scope.currentPage-1));
-								$scope.showDeviceList();
+								$scope.createNewDatasource();
 								  $scope.currentPage++;
 								}
 							};
@@ -92,7 +93,7 @@ oTech.controller('MyDevicesController',
 								}
 								 
 								startLimit = ($scope.itemsPerPage*n);
-								$scope.showDeviceList();
+								$scope.createNewDatasource();
 								$scope.currentPage = n;
 							};
 		
@@ -117,8 +118,9 @@ oTech.controller('MyDevicesController',
 			promise = AppServices.GetDeviceData(userId, token);
 			promise.then(
 			function(data){
-				$scope.totalRecords = data.deviceCount
-				$scope.myDevicesGridOptions.data = data.devicesList;
+				$scope.totalRecords = data.devicesList.length;
+				allOfTheData = data.devicesList;
+				$scope.myDevicesGridOptions.data = data.devicesList.slice( 0, $scope.itemsPerPage);
 				$scope.dataLoading = false;
 			},
 			function(err){
@@ -128,5 +130,13 @@ oTech.controller('MyDevicesController',
 	}
 
    $scope.showDeviceList();
+   
+   $scope.createNewDatasource = function() {
+						$scope.dataLoading = true;
+						$scope.myDevicesGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
+						$scope.dataLoading = false;
+					}
+   
+  
 		
 	});
