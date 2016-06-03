@@ -1244,14 +1244,16 @@ overflow: auto;
 	font-family: "Roboto",Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 .ui-grid {
-  height: 405px;
+  height: 377px;
   
  }
   .ui-grid-viewport {
-     height:340px !important;
+     height:318px !important;
      overflow-x:hidden; 
    }
-
+   .container-fluid {
+    overflow:hidden; 
+}
 .loadingErr{
 	position: fixed;
     margin-top: -202px;
