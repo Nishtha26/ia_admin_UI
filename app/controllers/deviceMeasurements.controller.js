@@ -209,13 +209,15 @@ oTech
 							// start logic for new pagination 
 
 							if (data.apnData.length > 0) {
-								
+								$('.ui-grid-viewport').css("display","block");
 								$scope.DeviceList = data;
 								allOfTheData = data.apnData;
 
 								$scope.createNewDatasource();
 							$scope.dataLoading = false;
 							} else {
+								
+								$('.ui-grid-viewport').css("display","none");
 								$scope.dataLoading = false;
 								$scope.err = true;
 							}

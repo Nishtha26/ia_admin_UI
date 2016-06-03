@@ -1251,6 +1251,12 @@ overflow: auto;
      height:340px !important;
      overflow-x:hidden; 
    }
-   .container-fluid {
-    overflow:hidden; 
+
+.loadingErr{
+	position: fixed;
+    margin-top: -202px;
+    color: red;
+    font-size: 19px;
+    width: 100%;
+    text-align: center;
 }
