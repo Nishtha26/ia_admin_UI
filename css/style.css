@@ -1,6 +1,6 @@
 /* Global Styles
 ---------------------------------------------------------------*/
-body {background: #edeef2; font-family: "Rajdhani-Regular"; }
+body {background: rgba(245, 245, 245, 0.24); font-family: "Rajdhani-Regular"; }
 img {max-width: 100%; height: auto;}
 .boxshdw {box-shadow: 0 2px 10px #e7e7e7;}
 .magin-btm-20{margin-bottom: 20px;}
@@ -214,8 +214,9 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 .orchestra_devices_table {max-width: 1020px; margin: 0 auto;}
 
 .table-header {background-color: #fff; width:100%}
-.table-header p {color: #2f3b4c; font-family: "Rajdhani-SemiBold"; font-size: 25px; float: left; padding: 6px 0 3px 10px; margin: 0;}
-
+/* .table-header p {color: #2f3b4c; font-family: "Rajdhani-SemiBold"; font-size: 25px; float: left; padding: 6px 0 3px 10px; margin: 0;} */
+.table-header p {   color: #2f3b4c;
+    font-family: "Rajdhani-SemiBold"; font-size: 25px;  float: left;  padding: 6px 0 0px 10px; margin: 0;}
 .device-header-section{ float:right; }
 .device-header-section .dropdown{ float:left; padding:6px 12px; font-size:22px; color:#00bfe8; cursor:pointer; font-family: "Rajdhani-Medium"; margin-right:0px; }
 .device-header-section .dropdown .arrow-icon{ background:url('../images/dropdown-blue.png'); width:14px; height:8px; display:inline-block; margin-left:54px; }
@@ -722,9 +723,9 @@ label{margin-left: 20px;}
 }
 /* ot-deviceData Start
 ---------------------------------------------------------------*/
-.ot-deviceData{max-width:inherit;margin:0 auto 50px;padding-bottom: 15px;font-weight: 900;}
-.ot-deviceData .orchestra_devices_table{padding:10px;background-color:#ebecf0;font-weight: 900; max-width: inherit;}
-.ot-deviceData .orchestra_devices_table .table-more-info{padding-left:50px;padding-right:50px; font-weight: 900;}
+.ot-deviceData{max-width:inherit;margin:0 auto 50px;padding-bottom: 15px;/* font-weight: 900; */}
+.ot-deviceData .orchestra_devices_table{padding:10px;background-color:#ebecf0;/* font-weight: 900; */ max-width: inherit;}
+.ot-deviceData .orchestra_devices_table .table-more-info{padding-left:50px;padding-right:50px; /* font-weight: 900; */}
 .ot-deviceData .nav-tabs{border:none;margin-bottom:15px;}
 .ot-deviceData .nav-tabs li{width:100%;text-align:center;}
 .ot-deviceData .nav-tabs li:last-child{border-bottom:1px solid #000;}
@@ -1194,6 +1195,8 @@ p, ul, ol, dl, dd {
     margin-top: -15px;
     /* float: right; */
     right: 0;
+    font-family: "Roboto",Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 12px;
 }
 
 /*-----------------end pagination area--------------------------------------*/
@@ -1210,7 +1213,7 @@ p, ul, ol, dl, dd {
 }
 html,body{
 height:100%;
-overflow: hidden;
+overflow: auto;
 
 
 }
@@ -1235,5 +1238,19 @@ overflow: hidden;
     height: 56px;
    /* margin-right:16px;*/
     position: relative;
-    /*width: 100%
+   width: 100%
+}
+.dataTables_info {
+	font-family: "Roboto",Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+.ui-grid {
+  height: 405px;
+  
+ }
+  .ui-grid-viewport {
+     height:340px !important;
+     overflow-x:hidden; 
+   }
+   .container-fluid {
+    overflow:hidden; 
 }

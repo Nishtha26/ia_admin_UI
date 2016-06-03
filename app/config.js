@@ -1036,6 +1036,7 @@ quickrunGridOptions : {
 		enableFiltering: true,
 		enableGridMenu: true,		// for searching
 		multiSelect:false,
+		enableVerticalScrollbar :0,
 		columnDefs: [
 			{ name: 'deviceId' ,width:150,pinnedLeft:true},
 			{ name: 'deviceName',width:150 },
