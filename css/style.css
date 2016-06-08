@@ -1251,9 +1251,7 @@ overflow: auto;
      height:318px !important;
      overflow-x:hidden; 
    }
-   .container-fluid {
-    overflow:hidden; 
-}
+
 .loadingErr{
 	position: fixed;
     margin-top: -202px;

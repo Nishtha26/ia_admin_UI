@@ -273,6 +273,7 @@ oApp.config = {
 		enableFiltering: true,
 		enableGridMenu: true,		// for searching
 		multiSelect:false,
+		enableVerticalScrollbar :0,
         columnDefs: [  ]	
 	},
 	columnDefsapn : [
