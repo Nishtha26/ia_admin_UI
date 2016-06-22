@@ -2,96 +2,47 @@ oTech.controller('createTestPlanController',
     function ($scope, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices,
               $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $log, $timeout) {
 
-        //
-        // var TestPlanId = $cookieStore.get('TestPLANId');
-        // $scope.TestPlanId = TestPlanId;
-        // $scope.TestplanName = $cookieStore.get('TestplanName');
+			  var token = sessionStorage.getItem("token");
+					var userId = sessionStorage.getItem("userId");
+					$rootScope.role = sessionStorage.getItem("role");
 
-        $scope.my_tree_handler = function (branch, size) {
-            var data = branch.ids ? branch.ids[0] : {};
-            if (data.superparentId) {
-                var modalInstance = $uibModal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'app/views/myModalContent.html',
-                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-                        $scope.createTestPlanOptions = {
-                            enableFiltering: true,
-                            enableRowHeaderSelection: false,
-                            enableRowSelection: true,
-                            multiSelect: false,
-                            columnDefs: [
-                                {field: 'commandName', headerCellClass: $scope.highlightFilteredHeader},
-                                {field: 'commandCategoryType', headerCellClass: $scope.highlightFilteredHeader}
-                            ]
-                        };
-                        promise = testScriptService.FetchCommands(userId, token);
-                        promise.then(
-                            function (data) {
-                                $scope.createTestPlanOptions.data = data;
-                            },
-                            function (err) {
-                                console.log(err);
-                            }
-                        );
+			 
+        $rootScope.slideContent();
+      
 
-
-                        $scope.addCommand = function () {
-                            var superParentIndex = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if (data.superparentId == $rootScope.tree_data[0].children[i].id) {
-                                    superParentIndex = i;
-                                }
-                            }
-                            var ParentIndex = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children.length; i++) {
-                                if (data.parentId == $rootScope.tree_data[0].children[superParentIndex].children[i].id) {
-                                    ParentIndex = i;
-                                }
-                            }
-
-                            var id = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.length; i++) {
-
-                                if (data.id == $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[i].id) {
-                                    id = i;
-
-                                }
-                            }
-
-                            if ($scope.entity) {
-                                $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[id].title = $scope.entity.commandName;
-                                $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[id].entity = $scope.entity
-                            }
-
-                            $uibModalInstance.dismiss('cancel');
-
-                        };
-
-                        $scope.closePopup = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-
-
-                        $scope.createTestPlanOptions.onRegisterApi = function (gridApi) {
-                            $scope.gridApi = gridApi;
-                            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                                $scope.entity = row.entity;
-                            });
-                            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-                            });
-                        };
-
-                    }],
-                    size: 'md'
-                });
-
-                modalInstance.result.then(function (selectedItem) {
-                    $scope.selected = selectedItem;
-                }, function () {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
+        window.onresize = function (event) {
+            $rootScope.slideContent();
+        }
+        $scope.name = sessionStorage.getItem("username");
+        /*
+         To get dashboard menu data
+         */
+        $scope.getDashBoardMenu = function () {
+            if ($rootScope.menuData == undefined) {
+                $rootScope.getMenuData();
             }
-        };
+        }
+        /*
+         To get favourite reports
+         */
+        $scope.getFavouriteReports = function () {
+            if ($rootScope.Favourites == undefined) {
+                $rootScope.getFavouriteReports();
+            }
+        }
+			  
+       //added for the tree compnent     	  
+		if($rootScope.tree2!=null && $rootScope.tree2!='undefined')	 {
+			$.cookie("taskJson", JSON.stringify($rootScope.tree2));
+		$scope.tree2 = $rootScope.tree2;
+		}else{
+			$scope.tree2= JSON.parse($.cookie("taskJson"));
+		}
+
+		$scope.createTestPlanPrev = function () {
+                $location.path('/dashboard/testScript');
+        }
+       
 
         var userId = sessionStorage.userId;
         var token = sessionStorage.token;
@@ -130,7 +81,23 @@ oTech.controller('createTestPlanController',
         var sendCreateData = {};
 
         $scope.createTestPlan.jobName = "";
-        $scope.createTestPlanService = function () {
+        $scope.testPlanDate = new Date();
+        $scope.animationsEnabled = true;
+
+        $scope.validateTestPlanData = function (flag) {
+
+
+            $rootScope.Message = flag;
+            $('#MessageColor').css("color", "red");
+            $('#MessagePopUp').modal('show');
+            $timeout(function () {
+                $('#MessagePopUp').modal('hide');
+            }, 2000);
+
+        };
+		
+		$scope.createTestPlanService = function () {
+			
 
             if (!$scope.createTestPlan.jobName) {
                 $scope.validateTestPlanData("Please Enter TestPlan Name");
@@ -143,24 +110,24 @@ oTech.controller('createTestPlanController',
             }
 
             var superParentObject, parentObject = {}, childObject = {};
-            superParentObject = $rootScope.tree_data[0].children;
-            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                parentObject[i] = $rootScope.tree_data[0].children[i].children;
+            superParentObject = $rootScope.tree2[0].nodes;
+            for (var i = 0; i < $rootScope.tree2[0].nodes.length; i++) {
+                parentObject[i] = $rootScope.tree2[0].nodes[i].nodes;
                 childObject[i] = {};
-                if ($rootScope.tree_data[0].children[i].children.length <= 0) {
+                if ($rootScope.tree2[0].nodes[i].nodes.length <= 0) {
                     $scope.validateTestPlanData(" child's or not existed");
                     return 0;
                 }
 
-                for (var j = 0; j < $rootScope.tree_data[0].children[i].children.length; j++) {
-                    childObject[i][j] = $rootScope.tree_data[0].children[i].children[j].children;
+                for (var j = 0; j < $rootScope.tree2[0].nodes[i].nodes.length; j++) {
+                    childObject[i][j] = $rootScope.tree2[0].nodes[i].nodes[j].nodes;
 
-                    if ($rootScope.tree_data[0].children[i].children[j].children.length <= 0) {
+                    if ($rootScope.tree2[0].nodes[i].nodes[j].nodes.length <= 0) {
                         $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
                         return 0;
 
                     }
-                    else if (!$rootScope.tree_data[0].children[i].children[j].children[0].entity) {
+                    else if (!$rootScope.tree2[0].nodes[i].nodes[j].nodes[0].id) {
                         $scope.validateTestPlanData("Please Select Parameters ");
                         return 0;
 
@@ -171,8 +138,8 @@ oTech.controller('createTestPlanController',
             sendCreateData.jobCreatedBy = userId;
             sendCreateData.taskVOList = [];
             sendCreateData.taskVOList[0] = {};
-            sendCreateData.taskVOList[0].taskName = $rootScope.tree_data[0].title;
-            sendCreateData.taskVOList[0].taskLoop = $rootScope.tree_data[0].loop;
+            sendCreateData.taskVOList[0].taskName = $rootScope.tree2[0].title;
+            sendCreateData.taskVOList[0].taskLoop = $rootScope.tree2[0].loop;
 
             sendCreateData.taskVOList[0].taskCreatedBy = userId;
             sendCreateData.taskVOList[0].taskExecutorVOList = [];
@@ -213,10 +180,10 @@ oTech.controller('createTestPlanController',
                     sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList = [];
                     for (var r = 0; r < childKeys.length; r++) {
                         sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r] = {};
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].entity.commandId;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandSeqNo = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].entity.commandSeqNo;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandParams = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].entity.commandParams;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandName = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].entity.commandName;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandId;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandSeqNo = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandSeqNo;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandParams = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandParams;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandName = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandName;
                     }
                 }
             }
@@ -252,13 +219,13 @@ oTech.controller('createTestPlanController',
             );
 
 
-            var assignVirtualDevice = function (token, assignVirtualDevice_Data) {
+            var assignVirtualDevice = function assignVirtualDevice(token, assignVirtualDevice_Data) {
 
                 promise1 = testScriptService.assignVirtualDevice(userId, token, JSON.stringify(assignVirtualDevice_Data));
                 promise1.then(
                     function (data) {
                         if (data.status == "success") {
-                            $location.path('/CreateTestRun/MappingTestRun');
+                            $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
                         }
                         else {
                             $rootScope.Message = " " + data.status;
@@ -276,363 +243,10 @@ oTech.controller('createTestPlanController',
                     }
                 );
             }
-
-
-        };
-        $scope.testPlanDate = new Date();
-        $scope.animationsEnabled = true;
-
-        $rootScope.tree_data = [{
-            'loop': 1, 'sequenceNo': 1010101,
-            'title': 'Task Plan_name' + new Date(),
-            'children': [{
-                'id': 1,
-                'loop': 1, 'sequenceNo': 1,
-                'title': 'Task Executor',
-                'ids': [{'id': 1}],
-                'children': [{
-                    'id': 1, 'loop': 1, 'sequenceNo': 1,
-                    'title': 'Command Executor',
-                    'ids': [{'id': 1, 'parentId': 1}],
-                    'children': [{
-                        'id': 1, 'loop': 1, 'sequenceNo': 1,
-                        'title': 'Add Command',
-                        'ids': [{'id': 1, 'parentId': 1, 'superparentId': 1}]
-
-                    }
-                    ]
-                }]
-
-
-            }]
-        }];
-
-
-        $scope.col_defs = [
-            {
-                field: "ids",
-                displayName: " ",
-                cellTemplate: "<span>&nbsp;&nbsp;</span> <span ng-repeat='data  in row.branch[col.field]'  > <span   class='glyphicon glyphicon-search' ng-if = 'data.superparentId'   ng-click='cellTemplateScope.click({{data}})'  >  </span> </span>",
-                cellTemplateScope: {
-                    click: function (data) {
-                        var modalInstance = $uibModal.open({
-                            animation: $scope.animationsEnabled,
-                            templateUrl: 'app/views/myModalContent.html',
-                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-                                $scope.createTestPlanOptions = {
-                                    enableFiltering: true,
-                                    enableRowHeaderSelection: false,
-                                    enableRowSelection: true,
-                                    multiSelect: false,
-                                    columnDefs: [
-                                        {field: 'commandName', headerCellClass: $scope.highlightFilteredHeader},
-                                        {field: 'commandCategoryType', headerCellClass: $scope.highlightFilteredHeader}
-                                    ]
-                                };
-                                promise = testScriptService.FetchCommands(userId, token);
-                                promise.then(
-                                    function (data) {
-                                        $scope.createTestPlanOptions.data = data;
-                                    },
-                                    function (err) {
-                                        console.log(err);
-                                    }
-                                );
-
-
-                                $scope.addCommand = function () {
-                                    var superParentIndex = 0;
-                                    for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                        if (data.superparentId == $rootScope.tree_data[0].children[i].id) {
-                                            superParentIndex = i;
-                                        }
-                                    }
-                                    var ParentIndex = 0;
-                                    for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children.length; i++) {
-                                        if (data.parentId == $rootScope.tree_data[0].children[superParentIndex].children[i].id) {
-                                            ParentIndex = i;
-                                        }
-                                    }
-
-                                    var id = 0;
-                                    for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.length; i++) {
-
-                                        if (data.id == $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[i].id) {
-                                            id = i;
-
-                                        }
-                                    }
-
-                                    if ($scope.entity) {
-                                        $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[id].title = $scope.entity.commandName;
-                                        $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[id].entity = $scope.entity
-                                    }
-
-                                    $uibModalInstance.dismiss('cancel');
-
-                                };
-
-                                $scope.closePopup = function () {
-                                    $uibModalInstance.dismiss('cancel');
-                                };
-
-
-                                $scope.createTestPlanOptions.onRegisterApi = function (gridApi) {
-                                    $scope.gridApi = gridApi;
-                                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                                        $scope.entity = row.entity;
-                                    });
-                                    gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-                                    });
-                                };
-
-                            }],
-                            size: 'md'
-                        });
-
-                        modalInstance.result.then(function (selectedItem) {
-                            $scope.selected = selectedItem;
-                        }, function () {
-                            $log.info('Modal dismissed at: ' + new Date());
-                        });
-
-                    }
-                }
-            },
-
-            {
-                field: "loop",
-                displayName: "Loop",
-                cellTemplate: "<span ng-if='row.branch[col.field] != 1010101'> <input  type='number'  min='1'  ng-model='row.branch[col.field]' style='width: 4em' />  </span>"
-
-            },
-            {
-                field: "sequenceNo",
-                displayName: "Seq No",
-                cellTemplate: " <span ng-if='row.branch[col.field] != 1010101' > <input type='number' min='1'   ng-model='row.branch[col.field]'  style='width: 4em' /> </span>",
-                cellTemplateScope: {
-                    click: function (data) {         // this works too: $scope.someMethod;
-
-                    }
-                }
-            },
-            {
-                field: "ids",
-                displayName: " ",
-                cellTemplate: " <a href='#'  ng-if='row.branch[col.field]'>        <span  ng-click='cellTemplateScope.click({{row.branch[col.field]}})'>  <span class='glyphicon glyphicon-plus'></span>  </span>      </a> ",
-
-                cellTemplateScope: {
-                    click: function (ids) {
-
-
-                        if (ids[0].id && !ids[0].parentId && !ids[0].superparentId) {
-                            var largeNumber = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                for (var j = i + 1; j < $rootScope.tree_data[0].children.length; j++)
-                                    if ($rootScope.tree_data[0].children[i].id < $rootScope.tree_data[0].children[j].id) {
-                                        largeNumber = $rootScope.tree_data[0].children[j].id;
-                                    } else {
-                                        largeNumber = $rootScope.tree_data[0].children[i].id;
-                                        break;
-                                    }
-                            }
-
-                            if ($rootScope.tree_data[0].children.length == 1) {
-                                largeNumber = $rootScope.tree_data[0].children[0].id
-                            }
-
-                            $rootScope.tree_data[0].children.push({
-                                'id': largeNumber + 1,
-                                'title': 'Task Executor',
-                                'loop': 1,
-                                'sequenceNo': 1,
-                                'ids': [{'id': largeNumber + 1}],
-                                'children': [{
-                                    'id': 1,
-                                    'title': 'Command Executor',
-                                    'loop': 1,
-                                    'sequenceNo': 1,
-                                    'ids': [{'id': 1, 'parentId': largeNumber + 1}],
-                                    'children': [{
-                                        'id': 1,
-                                        'title': 'Add Command',
-                                        'loop': 1,
-                                        'sequenceNo': 1,
-                                        'ids': [{'id': 1, 'parentId': 1, 'superparentId': largeNumber + 1}]
-                                    }]
-                                }]
-
-                            });
-                        }
-                        else if (ids[0].id && ids[0].parentId && !ids[0].superparentId) {
-
-                            var parentIndex = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if (ids[0].parentId == $rootScope.tree_data[0].children[i].id) {
-                                    parentIndex = i;
-                                }
-                            }
-
-                            var largeNumber = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children[parentIndex].children.length; i++) {
-                                for (var j = i + 1; j < $rootScope.tree_data[0].children[parentIndex].children.length; j++)
-                                    if ($rootScope.tree_data[0].children[parentIndex].children[i].id < $rootScope.tree_data[0].children[parentIndex].children[j].id) {
-                                        largeNumber = $rootScope.tree_data[0].children[parentIndex].children[j].id;
-                                    } else {
-                                        largeNumber = $rootScope.tree_data[0].children[parentIndex].children[i].id;
-                                        break;
-                                    }
-                            }
-
-
-                            if ($rootScope.tree_data[0].children[parentIndex].children.length == 1) {
-                                largeNumber = $rootScope.tree_data[0].children[parentIndex].children[0].id;
-                            }
-
-                            $rootScope.tree_data[0].children[parentIndex].children.push({
-                                'id': largeNumber + 1, 'title': 'Command Executor', 'loop': 1, 'sequenceNo': 1,
-                                'ids': [{'id': largeNumber + 1, 'parentId': ids[0].parentId}],
-                                'children': [{
-                                    'id': 1, 'title': 'Add Command', 'loop': 1, 'sequenceNo': 1,
-                                    'ids': [{'id': 1, 'parentId': largeNumber + 1, 'superparentId': ids[0].parentId}]
-
-                                }]
-                            });
-                        }
-
-                        if (ids[0].id && ids[0].parentId && ids[0].superparentId) {
-                            var superParentIndex = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if (ids[0].superparentId == $rootScope.tree_data[0].children[i].id) {
-                                    superParentIndex = i;
-                                }
-                            }
-                            var ParentIndex = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children.length; i++) {
-                                if (ids[0].parentId == $rootScope.tree_data[0].children[superParentIndex].children[i].id) {
-                                    ParentIndex = i;
-                                }
-                            }
-                            var largeNumber = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.length; i++) {
-                                for (var j = i + 1; j < $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.length; j++)
-                                    if ($rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[i].id < $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[j].id) {
-                                        largeNumber = $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[j].id;
-                                    } else {
-                                        largeNumber = $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[i].id;
-                                        break;
-                                    }
-                            }
-
-                            if ($rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.length == 1) {
-                                largeNumber = $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children[0].id;
-                            }
-                            $rootScope.tree_data[0].children[superParentIndex].children[ParentIndex].children.push(
-                                {
-                                    'id': largeNumber + 1, 'title': 'Add Command', 'loop': 1, 'sequenceNo': 1,
-                                    'ids': [{
-                                        'id': largeNumber + 1,
-                                        'parentId': ids[0].parentId,
-                                        'superparentId': ids[0].superparentId
-                                    }]
-                                });
-
-                        }
-
-                    }
-                }
-            },
-
-            {
-                field: "ids",
-                displayName: " ",
-                cellTemplate: "  <a href='#'> <span  ng-if='row.branch[col.field]' ng-click='cellTemplateScope.deleteRow({{row.branch[col.field]}})'> <span class='glyphicon glyphicon-minus'></span></span></a> ",
-
-                cellTemplateScope: {
-                    deleteRow: function (ids) {
-
-                        if (ids[0].id && !ids[0].parentId && !ids[0].superparentId) {
-                            var id = 0;
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if ($rootScope.tree_data[0].children[i].id == ids[0].id) {
-                                    id = i;
-                                    break;
-                                }
-                            }
-                            $rootScope.tree_data[0].children.splice(id, 1);
-                        }
-
-                        else if (ids[0].id && ids[0].parentId && !ids[0].superparentId) {
-                            var id = 0, parentId = 0;
-
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if ($rootScope.tree_data[0].children[i].id == ids[0].parentId) {
-                                    parentId = i;
-                                    break;
-                                }
-                            }
-                            for (var i = 0; i < $rootScope.tree_data[0].children[parentId].children.length; i++) {
-
-                                if ($rootScope.tree_data[0].children[id].children[i].id == ids[0].id) {
-                                    id = i;
-                                    break;
-                                }
-                            }
-
-                            $rootScope.tree_data[0].children[parentId].children.splice(id, 1);
-
-                        }
-
-                        else if (ids[0].id && ids[0].parentId && ids[0].superparentId) {
-                            var id = 0, parentId = 0, superparentId = 0;
-
-                            for (var i = 0; i < $rootScope.tree_data[0].children.length; i++) {
-                                if ($rootScope.tree_data[0].children[i].id == ids[0].superparentId) {
-                                    superparentId = i;
-                                    break;
-                                }
-                            }
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superparentId].children.length; i++) {
-
-                                if ($rootScope.tree_data[0].children[superparentId].children[i].id == ids[0].parentId) {
-                                    parentId = i;
-                                    break;
-                                }
-                            }
-
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superparentId].children.length; i++) {
-                                if ($rootScope.tree_data[0].children[superparentId].children[i].id == ids[0].parentId) {
-                                    parentId = i;
-                                    break;
-                                }
-                            }
-
-                            for (var i = 0; i < $rootScope.tree_data[0].children[superparentId].children[parentId].children.length; i++) {
-
-                                if ($rootScope.tree_data[0].children[superparentId].children[parentId].children[i].id == ids[0].id) {
-                                    id = i;
-                                    break;
-                                }
-                            }
-                            $rootScope.tree_data[0].children[superparentId].children[parentId].children.splice(id, 1);
-                        }
-                    }
-                }
-            }
-        ];
-
-
-        $scope.validateTestPlanData = function (flag) {
-
-
-            $rootScope.Message = flag;
-            $('#MessageColor').css("color", "red");
-            $('#MessagePopUp').modal('show');
-            $timeout(function () {
-                $('#MessagePopUp').modal('hide');
-            }, 2000);
-
-        };
-
-
+		}
+		
+		
+		
+		
+		
     });

@@ -355,17 +355,126 @@ oTech.controller('editTestPlanController',
                 filterable: true
             },
         ];
+		
+		// added for the pagination
+		
+		$scope.itemsPerPage = 10;
+					$scope.currentPage = 0;
+					$scope.endLimit=$scope.itemsPerPage;
+					var allOfTheData;
+					$scope.totalRecords=0;
+					
+					
+					$scope.range = function() {
+								var rangeSize = 6;
+								var ps = [];
+								var start;
+
+								start = $scope.currentPage;
+								if ( start > $scope.pageCount()-rangeSize ) {
+								start = $scope.pageCount()-rangeSize+1;
+								}
+
+								for (var i=start; i<start+rangeSize; i++) {
+								if(i>=0) 
+								ps.push(i);
+								}
+								return ps;
+							};
+
+							$scope.prevPage = function() {
+							if ($scope.currentPage > 0) {
+								$scope.setPagePrev($scope.currentPage-1);
+								//$scope.currentPage--;
+								}
+							};
+											
+							$scope.DisablePrevPage = function() {
+								return $scope.currentPage === 0 ? "disabled" : "";
+							 };
+							 
+							 $scope.pageCount = function() {
+								return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+							};
+							
+							$scope.nextPage = function() {
+								if ($scope.currentPage < $scope.pageCount()) {
+								$scope.setPageNext($scope.currentPage+1);
+								//$scope.currentPage++;
+								}
+							};
+							
+							$scope.DisableNextPage = function() {
+								return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+							};
+							
+							 $scope.setPage = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
+							
+							 $scope.setPagePrev = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
+							 $scope.setPageNext = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*(n));
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
+		
+		
+		
 
         //Test plan table Service
         promise = testScriptService.FetchingTestService(userId, token);
         promise.then(
             function (data) {
-                $scope.TestPlanOptions.data = data;
+                
+				$scope.totalRecords = data.length;
+				allOfTheData = data;
+				$scope.TestPlanOptions.data = data.slice( 0, $scope.itemsPerPage);
+				$scope.dataLoading = false;
             },
             function (err) {
                 console.log(err);
             }
         );
+		
+		 $scope.createNewDatasource = function() {
+						$scope.dataLoading = true;
+						$scope.TestPlanOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
+						$scope.dataLoading = false;
+					}
 
         //Virtual Devices Table
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
@@ -523,7 +632,7 @@ oTech.controller('editTestPlanController',
                         if (data.status == 'success') {
 
 //                                        $rootScope.Message = "Test Plan Updated Successfully";
-                            $location.path('/CreateTestRun/MappingTestRun');
+                            $location.path('/dashboard/testScript/createTestPlan/testPlanEdited');
                         }
                         if (data.status == 'error') {
                             $rootScope.Message = "Error occured while updating the testplan";
@@ -554,6 +663,17 @@ oTech.controller('editTestPlanController',
 
 //                        $location.path('/CreateTestRun/MappingTestRun');
         }
+		
+		$scope.rePlanEdit = function(){
+			$location.path('/dashboard/testScript/EditTestplan');
+		}
+		
+		$scope.editNextTestPlan = function(){
+			$location.path('/dashboard/testScript/EditTestplan');
+		}
+		$scope.testPlanGoForTestRun = function(){
+			$location.path('/CreateTestRun/MappingTestRun/MappingDevices');
+		}
     })
 
 

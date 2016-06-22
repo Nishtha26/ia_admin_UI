@@ -1,6 +1,6 @@
 
 oTech.controller('testScriptController',
-    function ($scope, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore) {
+    function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $rootScope.role = sessionStorage.getItem("role");
@@ -42,6 +42,8 @@ oTech.controller('testScriptController',
                 $rootScope.getFavouriteReports();
             }
         }
+		
+		getTreeDataForCommands();
 
         $scope.testPlanGo = function () {
 
@@ -51,9 +53,6 @@ oTech.controller('testScriptController',
             } else {
                 $location.path('/dashboard/testScript/EditTestplan');
             }
-
-
-
         }
 
         $scope.testRunGo = function () {
@@ -122,6 +121,98 @@ oTech.controller('testScriptController',
         $scope.editTestplans = function () {
             $location.path('/dashboard/testScript/editTestRun');
         }
-    });
+		
+		
+		
+		
+
+	//added for the tree compnent
+		$scope.remove = function (scope) {
+        scope.remove();
+      };
+
+      $scope.toggle = function (scope) {
+        scope.toggle();
+      };
+	  
+	  function getTreeDataForCommands() {
+		 promise = testScriptService.FetchCommandsTree(userId, token);
+			promise.then(
+				function (data) {
+					getTreeDataForCommands1(data);
+
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
+		}
+
+      	  
+	  $scope.newSubItem = function (scope) {
+        var nodeData = scope.$modelValue;
+		if(nodeData.id >=1 && nodeData.id< 10){
+			 nodeData.nodes.push({
+				 "id": (nodeData.nodes.length+1)*10,
+					"title": "Task Executor",
+					"nodrop": true,
+					"sequenceNo":1,
+					"loop":1,
+					"nodes": [
+					  {
+						"id": (nodeData.nodes.length+1)*100,
+						"title": "Command Executor",
+						"sequenceNo":1,
+						"loop":1,
+						 "nodes": []
+					  }
+					]
+				});
+			}
+			if(nodeData.id >=10 && nodeData.id< 100){
+			 nodeData.nodes.push({ "id": (nodeData.nodes.length+1)*100,
+				"title": "Command Executor",
+				"sequenceNo":1,
+				"loop":1,
+				"nodes": []
+				});
+			}
+      };
+function getTreeDataForCommands1(data){
+	$scope.tree1 = data;
+}
+      $rootScope.tree2 = [{
+        "id": 1,
+        "title": 'Task Plan_name ' + new Date(),
+		"nodrop": true,
+		"sequenceNo":1,
+		"loop":1,
+        "nodes": [{
+				"id": 10,
+				"title": "Task Executor",
+				"nodrop": true,
+				"sequenceNo":1,
+				"loop":1,
+				"nodes": [
+					  {
+						"id": 100,
+						"title": "Command Executor",
+						"sequenceNo":1,
+						"loop":1,
+						 "nodes": []
+					  }
+					]
+				}]
+      }];
+	  
+	  
+	     
+	   
+});
+
+	
+		
+		
+    
 
 

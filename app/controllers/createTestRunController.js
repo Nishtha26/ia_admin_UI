@@ -39,6 +39,15 @@ oTech.controller('createTestRunController',
                 $rootScope.getFavouriteReports();
             }
         }
+		
+		$scope.testPlanGoForTestRun = function () {
+
+                $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
+        }
+		
+		$scope.nextTestPlan = function(){
+			$location.path('/dashboard/testScript');
+		}
 
         $scope.getDashBoardMenu();
         $scope.getFavouriteReports();

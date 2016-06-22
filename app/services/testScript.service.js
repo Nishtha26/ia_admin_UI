@@ -106,7 +106,7 @@ oTech.service('testScriptService',
         service.FetchCommands = function (userId, token) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + " rest/testPlan/fetchCommands ",
+                url: oApp.config.BASE_URL + "rest/testPlan/fetchCommands ",
                 type: "POST",
                 data: {token: token, userId: userId},
                 headers: {
@@ -124,6 +124,44 @@ oTech.service('testScriptService',
                     deferred.reject(err);
                 }
             });
+            return deferred.promise;
+        }
+		
+		service.FetchCommandsTree = function (userId, token) {
+            var deferred = $q.defer();
+           $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/fetchCommandsTree",
+                type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId
+                },
+                success: function (data)
+                {
+                    deferred.resolve($.parseJSON(data.items));
+                
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+			
+			/*$.ajax({
+                    url: "/IAAPORTAL/json/test.json",
+                    //force to handle it as text
+                    dataType: "text",
+                    success: function(data) {
+                        
+                      
+                       deferred.resolve($.parseJSON(data));
+                       
+                    }
+                });*/
+			
+			
             return deferred.promise;
         }
 

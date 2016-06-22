@@ -31,9 +31,37 @@
                                                         <span class="plan-radioTitle">Edit Test Plan</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 ot-btn-data">
+                                                
+												<div class="clearfix"></div>
+												<!-- <div class="col-md-4">
+
+													 <tree-grid  tree-data="tree_data1" data-drag="true" data-clone-enabled="true" data-nodrop-enabled="true" tree-control="my_tree1" col-defs="col_defs1" expand-on="expanding_property1" on-select="my_tree_handler1(branch)" expand-level="2" icon-leaf= "glyphicon glyphicon-globe"></tree-grid>
+													 
+													 
+											 </div>
+                                                
+                                               <div class="col-md-8">
+
+												<span style='font-weight:bold;'> TestPlan <input type="text" ng-model="createTestPlan.jobName"/> </span> 
+													<tree-grid tree-data="tree_data"  contenteditable="true"   col-defs= "col_defs"
+                                                            on-click = "my_tree_handler(branch, 'md')"
+                                                               icon-leaf     = "glyphicon glyphicon-file"
+                                                               icon-expand   = "glyphicon glyphicon-folder-close"
+                                                               icon-collapse = "glyphicon glyphicon-folder-open"
+                                                               expand-level= "4"
+
+                                             ></tree-grid>
+
+                                            </div>-->
+											
+											<div ng-include="'app/views/cloning.html'"></div>
+											<!--<div style="width:100%;height:100px;float: center ;vertical-align: bottom;margin-right:0px">
+                            <input type="button"  name="button" ng-click="createTestPlanService()" value="Next" class="btn btn-info" style="float: right;margin: 10px;width: 100px;"/>
+                            </div>-->
+							<div class="col-sm-12 col-md-12 col-lg-12 ot-btn-data">
                                                     <button type="button" class="btn btn-info ot-btn" ng-click = "testPlanGo()">GO</button>
                                                 </div>
+												
                                             </form>
                                         </div>
                                     </div>
@@ -97,6 +125,8 @@
                 </div>
             </div>
             <div ng-include="'app/views/favourites.html'"></div>
+			
+			
         </div>
     </div>
 

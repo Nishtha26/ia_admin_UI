@@ -7,57 +7,38 @@
         <div class="container-fluid">
             <div class="content-shadow">    
                <div class="ot-userAdministration">
-<div style="max-width:100%;margin-left:0px">
-<div class="tab-content" >
-                    <div id="devices" class="tab-pane fade in active">
-                        <div class="orchestra_devices_table" style="height:800px;max-width:100%">
-                            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'">
-                                    <h4 style='font-weight:bold; color:black'><div ncy-breadcrumb></div>   </h4>
-                                    <div>
-                                        <div class="rows">
-                                            <div class="col-md-8">
-
-  <span style='font-weight:bold;'> TestPlan <input type="text" ng-model="createTestPlan.jobName"/> </span> 
-          <tree-grid tree-data="tree_data" contenteditable="true"   col-defs= "col_defs"
-                                                            on-click = "my_tree_handler(branch, 'md')"
-                                                               icon-leaf     = "glyphicon glyphicon-file"
-                                                               icon-expand   = "glyphicon glyphicon-folder-close"
-                                                               icon-collapse = "glyphicon glyphicon-folder-open"
-                                                               expand-level= "4"
-
-                                             ></tree-grid>
-
-                                            </div>
-
- <div class="col-md-4">
-    <span style="margin-left: 27px;">Virtual Devices</span>
-    <div ui-grid="virtualDeviceGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:80%;"></div>
-
-                                           
-                                        </div>
-                                    </div>
-
-<div style="width:100%;height:100px;float: center ;vertical-align: bottom;margin-right:0px">
-                            <input type="button"  name="button" ng-click="createTestPlanService()" value="Next" class="btn btn-info" style="float: right;margin: 10px;width: 100px;"/>
-
-                        </div>
-
-                                    </div>
-                                 
-                                </div>
-                            </div>                          
-                        </div>
-                    </div>
-                </div>
+			<div style="max-width:100%;margin-left:0px">
+			<div class="tab-content" >
+                    
+						
+						<div class="row">
+						  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'"> <h4 style='font-weight:bold; color:black'><div ncy-breadcrumb></div>   </h4></div> 
+						</div>
+						<div class="row">
+						  <div class="col-md-4"></div>
+						  <div class="col-md-4"><h4 style='font-weight:bold; color:black'>TestPlan <input type="text" ng-model="createTestPlan.jobName"/></h4></div>
+						  <div class="col-md-4"></div>
+						</div>
+						<div ng-include="'app/views/createTestPlanUITreeTemplate.html'"></div>
+						
+						<div class="row">
+						  <div class="col-md-4">
+						   <div style="height:100px;float: center ;vertical-align: bottom;">
+								<input type="button"  name="button" ng-click="createTestPlanPrev()" value="previouse" class="btn btn-info" style="float: right;margin: 10px;"/>
+							</div>
+						  </div>
+						  <div class="col-md-4">
+							  <div style="height:100px;float: center ;vertical-align: bottom;">
+								<input type="button"  name="button" ng-click="createTestPlanService()" value="create test plan" class="btn btn-info" style="float: right;margin: 10px;"/>
+							</div>
+						</div>
+						  <div class="col-md-4"></div>
+						</div>
+                   
             </div>
         </div>
         </div>        
         </div>
-      <!--   <div id="menu2" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
-        </div> -->
     </div>              
 </div>
 

@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ngSanitize', "agGrid", 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree']).filter('oTech', function () {});
+var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ngSanitize', "agGrid", 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree']).filter('oTech', function () {});
 
 
 oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $q, $location) {
@@ -147,6 +147,22 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     controller: 'createTestPlanController',
                     ncyBreadcrumb: {
                         label: 'Create Test Plan'
+                    }
+                })
+				.state("testPlanCreated", {
+                    url: "/dashboard/testScript/createTestPlan/testPlanCreated",
+                    templateUrl: "app/views/testPlanCreated.html",
+                    controller: 'createTestRunController',
+                    ncyBreadcrumb: {
+                        label: 'Test Plan'
+                    }
+                })
+				.state("testPlanEdited", {
+                    url: "/dashboard/testScript/createTestPlan/testPlanEdited",
+                    templateUrl: "app/views/testPlanEdited.html",
+                    controller: 'editTestPlanController',
+                    ncyBreadcrumb: {
+                        label: 'Test Plan'
                     }
                 })
                 .state("EditTestplan", {
