@@ -113,6 +113,10 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     url: "/dashboard/deviceMeasurements",
                     templateUrl: "app/views/deviceMeasurements.html",
                     controller: 'deviceMeasurementsController'
+                }).state("heatMaps", {
+                    url: "/dashboard/heatMaps",
+                    templateUrl: "app/views/heatMaps.html",
+                    controller: 'HeatMapsController'
                 })
                 .state("driveRoutes", {
                     url: "/dashboard/driveRoutes",
@@ -422,6 +426,10 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         } else if (key == 'Measurements') {
             $location.path('/dashboard/deviceMeasurements');
         }
+        else if (key == 'Heat Maps') {
+            $location.path('/dashboard/heatMaps');
+        }
+        
 
     }
     /*

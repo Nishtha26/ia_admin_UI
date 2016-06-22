@@ -1,0 +1,132 @@
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
+<div ng-include="'app/views/header.html'"></div>
+<style>
+
+</style>
+<div class="maincontainer">	
+  <div class="maincontent" style="width:100%;">
+    <div class="container-fluid">
+	
+	<h4 class="heatmap-heading"  style="text-align:left;">Heat Map</h4>
+	
+	<form id="heatmap-form" class="form-controlInfo">
+  <div class="row" style="margin-left:5px;">
+						<!-- <div class='col-sm-2'><h4>User</h4></div> -->
+						<div class="col-sm-2">
+								<div class="form-group">
+						<div class="input-group">
+						<span class="input-group-addon">Market</span>
+					<select id="marketName" name="marketName" class="form-control form-controlInfo-box " ng-model="deviceValue" ng-change="showDeviceByMarket(deviceValue);">
+					 <option ng-repeat="marketName in marketList" ng-selected="device.selected" ng-model="marketName">{{marketName}}</option> 
+
+					</select> 
+		
+ 				</div></div>
+						</div>
+						<div class="col-sm-2">
+						<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">	Device</span>
+					<select id="deviceId" name="deviceId" class="form-control form-controlInfo-box " >
+						 <option ng-repeat="device in deviceList" ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option> 
+					</select> 
+		
+ 				</div>
+ 				</div>
+				</div>
+				
+				
+						<div class="col-sm-2">
+					<div class="form-group">
+					
+					   <div class="input-group date " id="datetimepicker1">
+					  <span class="input-group-addon">  From</span>
+							<input id="fromDate" name="fromDate" class="form-control form-controlInfo-box " style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					   </div>
+				</div>
+						</div>
+						<div class="col-sm-2">
+								<div class="form-group date">
+								
+					  <div class="input-group date " id="datetimepicker2"> 
+					  <span class="input-group-addon">To</span>
+							<input id="toDate" name="toDate" class="form-control form-controlInfo-box" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					 </div> 
+				</div>
+						</div>
+						
+					
+						<div class="col-sm-2">
+							<div class="form-group">
+							<div class="input-group">
+						<span class="input-group-addon">	Category</span>
+					<select id="category" name="category" class="form-control form-controlInfo-box" >
+
+					 <option ng-repeat="(id, val) in heatMapCateogoryList" ng-selected="id.selected" value="{{id}}">{{val}}</option> 
+
+					</select> 
+		</div>
+ 				</div>
+ 				</div>
+ 				
+ 				 <div class="col-sm-2" > 
+ 				 <div class="form-group">															
+				<input class="btn btn-success btn-sm" type="button" value="Display" ng-click="generateHeatMap()" >	
+				</div>							
+	 </div>
+	 </div>
+	 		<!-- <% if(showTechnologyFilter) {%> -->
+	
+			
+			<div id="panel" align="center">
+				<label   class="kpiTitle"> 	&nbsp;&nbsp;</label>				 	
+				<select id="technology" name="technology" style="max-width:75px;max-height:35px;">
+					<option value="3G" >3G</option>
+					<option value="4G" >4G</option>
+					<option value="all" selected >3G/ 4G</option>
+				
+				</select>		&nbsp;&nbsp;
+				<select id="location" name="location" style="max-width:75px;max-height:35px;">
+					<option value="indoor" >Indoor</option>
+					<option value="gps" >Network/ GPS</option>
+					<option value="all" selected >All</option>
+				
+				</select>		&nbsp;&nbsp;		
+						
+            	
+            	<input class="btn btn-success btn-sm" type="button" value="View Map" ng-click="generateHeatMap()" >	
+			</div>
+ 		
+	
+			<div id="panel1" align="center" style="display:none;">
+			<label   class="kpiTitle"> 	&nbsp;&nbsp;</label>	
+    
+			</div> 
+			<img src="images/ajax-loader.gif" style="position:absolute;left:40%;z-index: 5;" ng-show="dataLoading3"></img>
+		</form>				
+  </div>
+  	
+					
+<div class="mashupContainer2" style="height: 60px; width: 290px; display: none;" ><img id="kpiImage" src=""  width="290" height="60"  /></div>
+<div class="row">
+							<div class="col-sm-12" style=" width:95%;">
+								
+								 <div id="DefaultReplayMap" ng-show ="DefaultReplayMap" style=" width:90%;position:relative;height: 480px;  position:relative;"></div>
+						    </div>
+						
+								
+</div>
+	
+   
+
+	
+	</div>
+	 	<div ng-include="'app/views/favourites.html'" ></div>	
+</div>	
+</div>	
+	
+	<!-- Main Content Ends -->
+<div ng-include="'app/views/favouritesPopUp.html'"></div>

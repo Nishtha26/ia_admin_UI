@@ -1251,7 +1251,9 @@ overflow: auto;
      height:318px !important;
      overflow-x:hidden; 
    }
-
+   .container-fluid {
+   /*  overflow:hidden;  */
+}
 .loadingErr{
 	position: fixed;
     margin-top: -202px;
@@ -1260,3 +1262,58 @@ overflow: auto;
     width: 100%;
     text-align: center;
 }
+.viewimage_links-active {
+   /*  color: #337ab7!important; */
+  /*   background-color: #337ab7; */
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 17px!important;
+}
+/* heat map */
+#panel,#panel1 {
+				position: absolute;
+				
+				left: 42%;
+				/*margin-left: -180px; */
+				z-index: 5;
+				background-color: #fff;
+				padding: 5px;
+				border: 1px solid #999;
+				
+			  }
+			  #panel1{
+			  padding-right: 19px;
+			  }
+			  	.mashupContainer2 {
+			position: absolute;
+			font-family: Calibri;
+			font-size: 15px;
+    z-index: 5;
+			margin: 3px;
+		}
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;text-align:center}
+		.tg td{font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#444;background-color:#F7FDFA;text-align:center}
+		.tg th{font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#fff;background-color:#26ADE4;text-align:center}
+		.tg .tg-s6z2{text-align:center}
+		.tg .tg-vn4c{background-color:#D2E4FC;text-align:center}
+		.tg .tg-xkia{color:#666699;text-align:center}
+		.tg .tg-5hgy{background-color:#D2E4FC;text-align:center}		  
+.form-controlInfo{
+font-size: 16px!important;
+
+}
+.form-controlInfo-box {
+font-size: 15px!important;
+display:inline;
+width:40%;
+height: 38px!important;
+
+}
+#heatmap-form{font-family:"Rajdhani-Regular"}
+.heatmap-heading{
+font-family: "Rajdhani-Bold";
+    font-size: 20px;
+    margin: 0;
+    text-align: left;
+    }
+    /* heat map*/

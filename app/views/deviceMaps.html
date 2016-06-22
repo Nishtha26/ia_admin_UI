@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
 <div ng-include="'app/views/header.html'"></div>
 	<!-- Header Ends -->
 	
@@ -15,8 +17,8 @@
 									<div class="availability_map_viewimage_content">
 										<span class="text-uppercase">Map View</span>
 										<div class="viewimage_links">
-											<a href="" ng-click = "ShowReplay()">Replay</a>
-											<a href="" ng-click = "ShowLive()">Live</a>
+											<a id="replayMapLink" href="" ng-click = "ShowReplay()">Replay</a>
+											<a id="liveMapLink" href="" ng-click = "ShowLive()">Live</a>
 										</div>
 										<img src="images/map_mobile.png" alt="Mobile">
 									</div>

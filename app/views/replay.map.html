@@ -1,9 +1,11 @@
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">	
   <div class="maincontent" style="width:100%;">
     <div class="container-fluid">
 	
-	<h3 style="text-align:center;margin-left:-190px;">Map Replay</h3>
+	<h3 style="text-align:center;margin-left:-190px;margin-bottom:0;margin-top:0;">Replay Map</h3>
   <div class="row" style="margin-left:5px;">
 						<!-- <div class='col-sm-2'><h4>User</h4></div> -->
 						<div class="col-sm-3"><h4>Device</h4></div>
@@ -19,7 +21,7 @@
 				<div class="form-group">
 					<select id="deviceId" name="deviceId" class="form-control" >
 
-						<option ng-repeat="device in devices" value={{device.deviceId}}>{{device.deviceId}}</option>
+						<option ng-repeat="device in devices" ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
 
 					</select> 
 		<!--

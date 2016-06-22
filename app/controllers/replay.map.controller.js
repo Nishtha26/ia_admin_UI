@@ -9,6 +9,14 @@ oTech.controller('replayMapsController', function($scope, $rootScope, $location,
 			/*
 			To get dashboard menu data
 		*/
+	$(document).ready(function(){
+
+		   $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
+		    $("#deviceId").select2({
+		    });
+		  
+		  });//script
+		});
 		$scope.getDashBoardMenu = function(){
 			if($rootScope.menuData == undefined){
 				$rootScope.getMenuData();
@@ -80,11 +88,17 @@ oTech.controller('replayMapsController', function($scope, $rootScope, $location,
 			function(data){  if(data.length > 0){
 				var lat = [];
 				var lon = [];
+				var deviceData = [];
 				for(var s in data){
-					lat[s] = data[s].deviceLogJson[1].Latitude;
-					lon[s] = data[s].deviceLogJson[2].Longitude;
+					if(data[s].deviceLogJson[1].Latitude!=0 && data[s].deviceLogJson[2].Longitude!=0){
+						deviceData.push(data[s]);
+					lat.push(data[s].deviceLogJson[1].Latitude);
+					lon.push(data[s].deviceLogJson[2].Longitude);
+					}
 				}  
-				MapServices.showReplayMap(lat, lon);
+			//	 console.log("from replay js");
+			//	 console.log("lon"+lon);
+				MapServices.showReplayMap(deviceData,lat, lon);
 				}
 				else{
 					     $scope.DefaultReplayMap = true ;

@@ -39,13 +39,23 @@ $scope.ShowReplay = function(){
 		$scope.ShowMapDiv = true;
 		$scope.one =true;
 		$scope.two =false;
+		$(document).ready(function(){
+
+			   $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
+			    $("#deviceId").select2({
+			    });
+			  
+			  });//script
+			});
 		MapServices.defaultRepalyMap();
 }
 /*Show Live Map*/
 
 $scope.ShowLive = function(){
 		$scope.ShowMapDiv = false;
-		$scope.ShowLiveMap = true;		
+		$scope.ShowLiveMap = true;	
+		$("#replayMapLink").removeClass("viewimage_links-active");
+		$("#liveMapLink").addClass("viewimage_links-active");
 }
 	
 /*To get Live Map Data */	
@@ -57,13 +67,18 @@ $scope.getMapData = function(){
 			function(data){
 				var lat = [];
 				var lon = [];
+				var deviceData=[];
 				for(var s in data){
 					if(data[s].deviceLogJson){
-					lat[s] =  data[s].deviceLogJson[1].Latitude;
-					lon[s] = data[s].deviceLogJson[2].Longitude;
+					if(data[s].deviceLogJson[1].Latitude!=0 && data[s].deviceLogJson[2].Longitude!=0){
+					lat.push(data[s].deviceLogJson[1].Latitude);
+					lon.push(data[s].deviceLogJson[2].Longitude);
+					deviceData[s]=data[s];
+					}
 				}
 				}
-				MapServices.DahsboardShowMap(lat, lon);
+				$("#liveMapLink").attr("class","viewimage_links-active");
+				MapServices.DahsboardShowMap(deviceData,lat, lon);
 			},
 			function(err){
 			}
@@ -145,11 +160,15 @@ $scope.checkAjaxCall =function(){
 			function(data){  if(data.length > 0){
 				var lat = [];
 				var lon = [];
+				var deviceData = [];
 				for(var s in data){
+					if(data[s].deviceLogJson[1].Latitude!=0 && data[s].deviceLogJson[2].Longitude!=0){
+						deviceData.push(data[s]);
 					lat[s] = data[s].deviceLogJson[1].Latitude;
 					lon[s] = data[s].deviceLogJson[2].Longitude;
+					}
 				}  
-				MapServices.showReplayMap(lat, lon);
+				MapServices.showReplayMap(deviceData,lat, lon);
 				}
 				else{
 					 alert('No Records Was Found')

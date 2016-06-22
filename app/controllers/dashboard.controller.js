@@ -163,13 +163,17 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 			function(data){
 				var lat = [];
 				var lon = [];
+				var deviceData=[];
 				for(var s in data){
 					if(data[s].deviceLogJson){
-					lat[s] = data[s].deviceLogJson[1].Latitude;
-					lon[s] = data[s].deviceLogJson[2].Longitude;
+				if(data[s].deviceLogJson[1].Latitude!=0 && data[s].deviceLogJson[2].Longitude!=0){
+					lat.push(data[s].deviceLogJson[1].Latitude);
+					lon.push(data[s].deviceLogJson[2].Longitude);
+					deviceData[s]=data[s];
+						}
 				}
 				}
-				MapServices.DahsboardShowMap(lat, lon);
+				MapServices.DahsboardShowMap(deviceData, lat, lon);
 			},
 			function(err){
 			}
@@ -310,8 +314,11 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	/* redirection to Live map*/
 	 $scope.gotoLiveMap = function(){
-		 
-          $location.path('/dashboard/deviceMaps');		
+
+		
+      $location.path('/dashboard/deviceMaps');	
+
+      
 	}
 
 	
