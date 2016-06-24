@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="oTech">
+<head>
+
+<style>
+		.mashupContainer {
+			position: absolute;
+			font-family: Calibri;
+			font-size: 15px;
+			border: 1px solid #87AFDA;
+			margin: 3px;
+		}
+		
+		.mashupContainer2{
+			position: absolute;
+			font-family: Calibri;
+			font-size: 15px;
+			border: 0px solid #87AFDA;
+			margin: 3px;
+		}
+		
+		.mashupTitle {
+			position: absolute;
+			background: #D4E6FC;
+			font-size: 16px;
+			font-weight: bold;
+			font-family: Calibri;
+			color: #224499;
+			padding: 3px;
+			border-bottom: 1px solid #87AFDA;
+		}
+		
+		.mashupContent {
+			position: absolute;
+			padding: 3px;
+		}
+		
+		
+		.container{
+			display:table;
+			width:45%;
+			border-collapse: collapse;
+		}
+		
+		.heading{
+			 font-weight: bold;
+			 display:table-row;
+			 background-color:#001622;
+			 text-align: center;
+			 line-height: 25px;
+			 font-size: 14px;
+			 font-family:georgia;
+			 color:#fff;
+			
+		}
+		.table-row{  
+			 display:table-row;
+			 text-align: center;
+		}
+		.col{
+			display:table-cell;
+			border: 1px solid #CCC;
+		}
+		
+</style>
+
+  <script src="../../js/jquery.min.js"></script><!--Including Jquery-->
+<script type="text/javascript">
+$( document ).ready(function() {
+	$("#dataLoading").show();
+ 	$.urlParam = function(name){
+	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	    if (results==null){
+	       return null;
+	    }
+	    else{
+	       return results[1] || 0;
+	    }
+	}; 
+	
+
+	//console.log($.urlParam('StartDateSelect'));  
+	var token=decodeURIComponent($.urlParam('token'));
+	var DeviceId=decodeURIComponent($.urlParam('DeviceIdSelect'));
+	var startDate=decodeURIComponent($.urlParam('StartDateSelect'));
+	var endDate=decodeURIComponent($.urlParam('EndDateSelect'));
+	var location=$.urlParam('location');
+	var x=$.urlParam('x');
+	var y=$.urlParam('y');
+	var r=$.urlParam('r');
+	var BASE_URL=$.urlParam('BASE_URL');
+	var field_x ;
+	var field_y ;
+	if(location=='indoor'){
+	 field_x = "x_indoor";
+	 field_y = "y_indoor";
+	}
+	else{
+		field_x = "x_param";
+		 field_y = "y_param";
+	}
+ var data = {
+	    
+		"DeviceId" : DeviceId,
+		"Start Date" : startDate,
+		"End Date" : endDate,
+		"Start Time":  ':00',
+		"End Time" :  ':00',
+		"field_x" : field_x,
+		"field_y" : field_y,
+		"x" : x,
+		"y" : y,
+		"r" : r
+	    };
+	 var dataJson=JSON.stringify(data);
+	
+
+$.ajax({
+    url : BASE_URL + "rest/heatMaps/geoDeviceHeatMap",
+    type: "POST",
+    data : {token:token,data:dataJson},
+	headers :{
+		/*'X-Auth-Token': token,*/
+		'Content-Type': 'application/x-www-form-urlencoded'
+		},
+    success: function(data)
+    {
+    	$("#dataLoading").hide();
+		$("#SummaryDiv").html(data);
+		
+    },
+    error: function (err)
+    {
+    	$("#dataLoading").hide();
+		alert("err"+err);
+    }
+});	
+
+
+});
+</script>
+
+
+
+	 
+<body>
+ 
+ <img src="../../images/loading.gif" style="position:relative;left:45%;top:40%;display:none;" id="dataLoading"></img>
+	  
+		<div class="mashupContent" id="SummaryDiv" style="top: 2px; left: 0px; width: 1520px; height: 1080px;overflow:auto;">
+			
+
+	
+	
+	</div>
+
+	
+</body>
+
+</html>

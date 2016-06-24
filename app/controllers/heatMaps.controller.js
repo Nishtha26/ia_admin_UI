@@ -45,7 +45,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     			var year = dateNow.getFullYear();
                                     			 time += dateNow.getHours() + ":";
                                     			time +=dateNow.getMinutes();
-                                    			var dateFormatted =   month + "/" +  day + "/" + year + " " + time;
+                                    			var dateFormatted =  year + "-" + month  + "-" + day + " " + time;
                                     			return dateFormatted;
                                     		}
                                     		$(function() {
@@ -186,7 +186,6 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 		}
                                 		$scope.showHeatMapCategory();         		
                                     		
-                                		/*To get Replay Map*/	
                                 		$scope.generateHeatMap =function(){
                                 			     var marketName = $('#marketName').val(); 
                                 			     var deviceId = $('#deviceId').val();
@@ -240,6 +239,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 							HeatMapsService.defaultHeatMap();
                                 				            	$scope.dataLoading3 = false;
                                 						    }
+                                						
                                 					},
                                 					function(err){
                                 					}

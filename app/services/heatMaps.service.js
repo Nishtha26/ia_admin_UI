@@ -5,6 +5,8 @@
 		/*
 			Function to get Market data
 		*/
+		
+	
 		service.GetMarketData = function(userId, token){
 			var deferred = $q.defer();
 			$.ajax({
@@ -193,7 +195,7 @@ var technology=heatMapInput.technology;
 	      					geocoder.geocode({ 'latLng': llng }, function (results, status) {
 	      						if (status == google.maps.GeocoderStatus.OK) {
 	      							if (results[1]) {
-	      								var address = results[1].formatted_address;
+//	      								var address = results[1].formatted_address;
 	      								infoWindow.setContent(deviceDetailBox(deviceDetail,device,kpi,startDate,endDate));
 	      								infoWindow.open(map, marker);
 	      							}
@@ -490,7 +492,7 @@ var technology=heatMapInput.technology;
 			
 		}
 	function deviceDetailContent(kpi,device,start_date,end_date, deviceInfo){
-		
+		var geoUrlWithParameter;
 		
 		var start_time=""; var end_time="";
 		var r = 0.0001;
@@ -509,7 +511,7 @@ var technology=heatMapInput.technology;
 				cellLabel = "PN";
 				cellValue = (deviceInfo.pn == 0 ? "" : ""+deviceInfo.pn);
 			}				
-			str = 
+			var str = 
 				 "<table class='tg'>                                       "+
 				 "  <tr>                                                   "+
 				 "    <th class='tg-s6z2' colspan='2'>Device ID<br></th>               "+
@@ -519,7 +521,9 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='2'> ";
 				 if("LTE"== deviceInfo.networkType){
-				 str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+","+deviceInfo.locationProvider+")><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					  geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+					 console.log("p"+geoUrlWithParameter);
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
 				 }else{
 					 str = str + device+"</td>";;
 				 }
@@ -587,7 +591,8 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='1'> ";
 				 if("LTE"== deviceInfo.networkType){
-				 	str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+				 	str = str + " <a onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -640,7 +645,8 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='4'> ";
 				 if("LTE"== deviceInfo.networkType){
-					 str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+					 str = str + " <a onClick=\"window.open("+geoUrlWithParameter+" )\"> <font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -712,7 +718,9 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='4'> ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					str = str + " <a onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</u></font></a></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -779,7 +787,9 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' > ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					str = str + " <a onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</u></font></a></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -820,7 +830,9 @@ var technology=heatMapInput.technology;
 					 "  <tr>                                                   "+
 					 "   <td class='tg-5hgy' > ";
 					 if("LTE"== deviceInfo.networkType){
-							str = str + "<div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+						 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+							
+							str = str + "<a onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></div></td>                  ";
 					 }else{
 						 str = str + device+"</td>";
 					 }
@@ -841,7 +853,11 @@ var technology=heatMapInput.technology;
 					//str += "    <td class='tg-5hgy'>"+deviceInfo.sinr+"dB</td>  ";
 				 str +="   <td class='tg-5hgy' > ";
 					 if("LTE"== deviceInfo.networkType){
-						str = str + "<div onclick=showDeviceView("+device+",'"+deviceInfo.startDate+"','"+deviceInfo.endDate+"','"+deviceInfo.startTime+"','"+deviceInfo.endTime+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+",1.0,"+deviceInfo.locationProvider+")><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.sinr+"dB</font></div></td>                  ";
+						 geoUrlWithParameter=showDeviceViewUrl(device,deviceInfo.startDate,deviceInfo.endDate,deviceInfo.startTime,deviceInfo.endTime,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+							
+						 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.sinr+"</font></u></a></td> ";
+						 
+//						str = str + "<div onclick=showDeviceView("+device+",'"+deviceInfo.startDate+"','"+deviceInfo.endDate+"','"+deviceInfo.startTime+"','"+deviceInfo.endTime+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+",1.0,"+deviceInfo.locationProvider+")><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.sinr+"dB</font></div></td>                  ";
 					 }else{
 						 str = str + deviceInfo.sinr+"dB</td>";
 					 }
@@ -867,7 +883,11 @@ var technology=heatMapInput.technology;
 						 "  <tr>                                                   "+
 						 "   <td class='tg-5hgy' > ";
 						 if("LTE"== deviceInfo.networkType){
-								str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+							 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+								
+							 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+							 
+//								str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 						 }else{
 							 str = str + device+"</td>";
 						 }
@@ -888,7 +908,10 @@ var technology=heatMapInput.technology;
 						//str += "    <td class='tg-5hgy'>"+deviceInfo.sinr+"dB</td>  ";
 						 str +="   <td class='tg-5hgy' > ";
 							 if("LTE"== deviceInfo.networkType){
-									str = str + " <div onclick=showDeviceView("+device+",'"+deviceInfo.startDate+"','"+deviceInfo.endDate+"','"+deviceInfo.startTime+"','"+deviceInfo.endTime+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+",1.0,"+deviceInfo.locationProvider+")><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.ecio+"dB</font></div></td>";
+								  geoUrlWithParameter=showDeviceViewUrl(device,deviceInfo.startDate,deviceInfo.endDate,deviceInfo.startTime,deviceInfo.endTime,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+									
+								 
+									str = str + " <div onClick=\"window.open("+geoUrlWithParameter+" )\")><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.ecio+"dB</font></div></td>";
 							 }else{
 								 str = str +deviceInfo.ecio+"dB</td>";
 							 }
@@ -898,7 +921,9 @@ var technology=heatMapInput.technology;
 						//str += "    <td class='tg-5hgy'>"+deviceInfo.sinr+"dB</td>  ";
 						 str +="   <td class='tg-5hgy' > ";
 							 if("LTE"== deviceInfo.networkType){
-									str = str + " <div onclick=showDeviceView("+device+",'"+deviceInfo.startDate+"','"+deviceInfo.endDate+"','"+deviceInfo.startTime+"','"+deviceInfo.endTime+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+",1.0,'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.pilotstr+"dB</font></div></td>";
+								  geoUrlWithParameter=showDeviceViewUrl(device,deviceInfo.startDate,deviceInfo.endDate,deviceInfo.startTime,deviceInfo.endTime,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+									
+									str = str + " <a onClick=\"window.open("+geoUrlWithParameter+" ><u><font color=#0000FF style='cursor:pointer'>"+deviceInfo.pilotstr+"dB</font></u></a></td>";
 							 }else{
 								 str = str +deviceInfo.pilotstr+"dB</td>";
 							 }
@@ -924,7 +949,10 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' > ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> "; 
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -960,7 +988,10 @@ var technology=heatMapInput.technology;
 				"  <tr>                                                   "+
 				 "   <td class='tg-5hgy' > ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1000,7 +1031,10 @@ var technology=heatMapInput.technology;
 				"  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='2'> ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1052,7 +1086,10 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='1'> ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1100,7 +1137,10 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='1'> ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1167,7 +1207,10 @@ var technology=heatMapInput.technology;
 				 "  <tr>                                                   "+
 				 "   <td class='tg-5hgy' colspan='1'> ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1220,7 +1263,10 @@ var technology=heatMapInput.technology;
 				 str += "  <tr>                                                   ";
 				 str += "   <td class='tg-5hgy' > ";
 				 if("LTE"== deviceInfo.networkType){
-					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
+					 geoUrlWithParameter=showDeviceViewUrl(device,start_date,end_date,start_time,end_time,deviceInfo.xParamR,deviceInfo.yParamR,r,deviceInfo.locationProvider);
+						
+					 str = str + " <a  onClick=\"window.open("+geoUrlWithParameter+" )\"><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></u></a></td> ";
+//					str = str + " <div onclick=showDeviceView("+device+",'"+start_date+"','"+end_date+"','"+start_time+"','"+end_time+"',"+deviceInfo.xParamR+","+deviceInfo.yParamR+","+r+",'"+deviceInfo.locationProvider+"')><u><font color=#0000FF style='cursor:pointer'>"+device+"</font></div></td>                  ";
 				 }else{
 					 str = str + device+"</td>";
 				 }
@@ -1268,11 +1314,16 @@ var technology=heatMapInput.technology;
 		}
 	return str;
 	}
-	function showDeviceView(deviceId, startDate, endDate,startTime,endTime,x,y,r,location_type){
-		window.open(oApp.config.BASE_URL+"/geo_device.html?DeviceIdSelect="+deviceId+"&StartDateSelect="+startDate+"&EndDateSelect="+endDate+"&StartTimeSelect="+startTime+"&EndTimeSelect="+endTime+"&x="+x+"&y="+y+"&r="+r+"&location="+location_type, 'mywin','left=180,top=180,width=1500,height=500,toolbar=1,resizable=0'); 
-		//window.open("geo_device_test.jsp?DeviceIdSelect="+deviceId+"&StartDateSelect="+startDate+"&EndDateSelect="+endDate+"&StartTimeSelect="+startTime+"&EndTimeSelect="+endTime+"&x="+x+"&y="+y+"&r="+r+"&location="+location_type, 'mywin','left=180,top=180,width=1500,height=500,toolbar=1,resizable=0'); 
-
-	}	
+	function showDeviceViewUrl(deviceId, startDate, endDate,startTime,endTime,x,y,r,location_type){
+		var appurlFull=window.location.href;
+		var edit = appurlFull.split('#');
+        var appurl = edit[0];
+     // console.log("appurl"+appurl);
+		var  geoUrlWithParameter="'"+appurl+"app/views/geo_device.html?BASE_URL="+oApp.config.BASE_URL+"&token="+token+"&DeviceIdSelect="+deviceId+"&StartDateSelect="+startDate+"&EndDateSelect="+endDate+"&StartTimeSelect="+startTime+"&EndTimeSelect="+endTime+"&x="+x+"&y="+y+"&r="+r+"&location="+location_type;
+//		window.open("http://localhost:8080/IAAPORTAL1/app/views/geo_device.html?token="+token+"&DeviceIdSelect="+deviceId+"&StartDateSelect="+startDate+"&EndDateSelect="+endDate+"&StartTimeSelect="+startTime+"&EndTimeSelect="+endTime+"&x="+x+"&y="+y+"&r="+r+"&location="+location_type, 'mywin','left=180,top=180,width=1500,height=500,toolbar=1,resizable=0'); 
+		geoUrlWithParameter+="', 'mywin','left=180,top=180,width=1500,height=auto,toolbar=1,resizable=0'";
+return geoUrlWithParameter;
+	}
 		
 	return service;
 }])
