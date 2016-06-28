@@ -5,11 +5,16 @@ oTech.controller('TestRunGrids',
         var token = sessionStorage.getItem('token');
         var TestPlanId = $cookieStore.get('TestPLANId');
         var TestRunName = $cookieStore.get('TestRunName');
+		var TestRunId = $cookieStore.get('TestRunId');
+		$scope.TestRunId = $cookieStore.get('TestRunId');
         $scope.TestRunName = $cookieStore.get('TestRunName');
         $scope.VirtualSelectedName = $cookieStore.get('VirtualDeviceNamesel');
         $scope.testRunName = $cookieStore.get('TestRunName');
         var TestRunSelectedData = $cookieStore.get('TestRunGridData');
         $rootScope.role = sessionStorage.getItem("role");
+		var TestRunID = $cookieStore.get('TestRuId');
+		$scope.TestRuId = TestRunID;
+
 
         $rootScope.slideContent();
         window.onresize = function (event) {
@@ -117,6 +122,7 @@ oTech.controller('TestRunGrids',
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 $rootScope.Rowgrid2 = row.entity;
                 var selectdata = row.entity.testrunId;
+				
                 console.log(JSON.stringify(row.entity))
                 $cookieStore.put('JobDeviceId', row.entity.deviceId);
             });
@@ -178,6 +184,7 @@ oTech.controller('TestRunGrids',
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 var testrunID = $cookieStore.get('TestRunId');
+				$scope.testRunID = $cookieStore.get('TestRunId');
                 //Get devices service
                 promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
                 promise.then(

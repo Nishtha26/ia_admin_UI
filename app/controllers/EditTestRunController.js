@@ -39,6 +39,7 @@ oTech.controller('editTestRunController',
 
 
         $scope.TestRunForTestPlans = function () {
+			$cookieStore.put('TestRunName', "");
             $location.path('/TestRunSelect/editCommandParameters/TestRunforTestplans')
         }
 		
