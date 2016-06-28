@@ -101,7 +101,7 @@ oTech.controller('createTestPlanController',
 		$scope.createTestPlanService = function () {
 			$scope.dataProcessing = true;
 			$(".btn-info").addClass("disabled");
-
+			$rootScope.uiTreeJSON = $rootScope.tree2;
             if (!$scope.createTestPlan.jobName) {
 				$scope.dataProcessing = false;
 				$(".btn-info").removeClass("disabled");

@@ -53,14 +53,7 @@ height: auto!important;
 								
 								 <div class="panel-body">
 									<div class="table-responsive">
-										<tree-grid tree-data = "tree_data" col-defs = "col_defs"
-																	   tree-control="my_tree" on-click = "my_tree_handler(branch, 'md')"
-																	   icon-leaf     = "glyphicon glyphicon-file"
-																	   icon-expand   = "glyphicon glyphicon-folder-close"
-																	   icon-collapse = "glyphicon glyphicon-folder-open"
-																	   expand-level= "4"
-															>
-									</tree-grid>
+										<div ng-include="'app/views/createdOrEdited.html'"></div>
 										 <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>

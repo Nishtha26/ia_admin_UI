@@ -10,15 +10,19 @@ oTech.controller('createTestRunController',
         var Devices = [];
         $scope.VirtualDevicelist1 = [];
         var VirtualDevicelist = [];
-        $rootScope.tree_data = $cookieStore.get('treedata');
         $scope.VirtualSelectedName = $cookieStore.get('VirtualDeviceNamesel');
         $scope.commandValues = ' ';
         $scope.TestplanName = $cookieStore.get('TestplanName');
         var TestRunName = $cookieStore.get('DependantTestRunName');
         var DeviceName = [];
         $rootScope.my_tree = {};
-		$(".btn-info").addClass("disabled");
-
+		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
+			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
+		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
+		}else{
+			$scope.uiTreeJSON= JSON.parse($.cookie("uiTreeJSON"));
+		}
+		
         $rootScope.slideContent();
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -57,98 +61,6 @@ oTech.controller('createTestRunController',
         $scope.getDashBoardMenu();
         $scope.getFavouriteReports();
 
-        //Global Tree Structure
-        var getTestplanService = function (token, userId, TestPlanId) {
-			$scope.dataLoading = true;
-			$(".btn-info").addClass("disabled");
-            //Calling getTestplan service and looping data as tree structure
-            $scope.NewTreeLst = [];
-            $rootScope.tree_data = $scope.NewTreeLst;
-            promise = testScriptService.getTestplan(token, userId, TestPlanId);
-            promise.then(
-                function (data) {
-                    $scope.TemptreeData = data;
-                    $scope.jobDeviceVOLst = [];
-                    angular.forEach($scope.TemptreeData.jobDeviceVOList, function (item1) {
-                        $scope.jobDeviceTaskExecutorVOLst = [];
-                        angular.forEach(item1.jobDeviceTaskExecutorVOList, function (item2) {
-                            $scope.jobDeviceCommandExecutorVOLst = [];
-                            angular.forEach(item2.jobDeviceCommandExecutorVOList, function (item3) {
-                                $scope.jobDeviceCommandExecutorCommandVOLst = [];
-                                angular.forEach(item3.jobDeviceCommandExecutorCommandVOList, function (item4) {
-                                    var jobDeviceCommandExecutorCommandout = {
-                                        "Name": item4.commandName,
-                                        "Loop": null,
-                                        "CommandParams": item4.commandParams,
-                                        "Sequence": item4.commandSeqNo,
-                                        "type": "jobDeviceCommandExecutorCommand",
-                                        "jobDeviceCommandExecutorCommandId": item4.jobDeviceCommandExecutorCommandId,
-                                        "commandId": item4.commandId,
-                                        "jobDeviceCommandExecutorId": item4.jobDeviceCommandExecutorId,
-                                        "commandExecutorCommandId": item4.commandExecutorCommandId,
-                                        "children": []
-                                    };
-                                    $scope.jobDeviceCommandExecutorCommandVOLst.push(jobDeviceCommandExecutorCommandout);
-                                });
-
-                                var jobDeviceCommandExecutorout = {
-                                    "Name": item3.commandExecutorName,
-                                    "Loop": item3.commandExecutorLoop,
-                                    "CommandParams": null,
-                                    "Sequence": item3.commandExecutorSeqNo,
-                                    "type": "jobDeviceCommandExecutor",
-                                    "children": $scope.jobDeviceCommandExecutorCommandVOLst
-                                };
-                                $scope.jobDeviceCommandExecutorVOLst.push(jobDeviceCommandExecutorout);
-                            });
-                            var jobDeviceTaskout = {
-                                "Name": item2.taskExecutorName,
-                                "Loop": item2.taskExecutorLoop,
-                                "CommandParams": null,
-                                "Sequence": item2.taskExecutorSeqNo,
-                                "type": "jobDeviceTask",
-                                "children": $scope.jobDeviceCommandExecutorVOLst
-                            };
-                            $scope.jobDeviceTaskExecutorVOLst.push(jobDeviceTaskout);
-                        });
-                        var jobDeviceout = {
-                            "id": item1.jobDeviceId,
-                            "Name": item1.deviceName,
-                            "Loop": item1.taskLoop,
-                            "CommandParams": null,
-                            "Sequence": null,
-                            "type": "JobDevice",
-                            "children": $scope.jobDeviceTaskExecutorVOLst
-                        };
-                    });
-                    var jobout = {
-                        "Name": $scope.TemptreeData.jobName,
-                        "type": "Job",
-                        "children": $scope.jobDeviceTaskExecutorVOLst
-                    };
-                    $scope.NewTreeLst.push(jobout);
-                    $scope.treedata = $scope.NewTreeLst;
-
-                    // for expanding tree
-                    if ($scope.treedata !== null && $scope.treedata !== undefined) {
-                        // if($scope.treedata.length){
-                        setTimeout(function () {
-                            $rootScope.$apply($rootScope.my_tree.expand_all);
-                        }, 10);
-
-                    }
-                    $cookieStore.put('treedata', $scope.treedata);
-					$scope.dataLoading = false;
-                },
-                function (err) {
-                    console.log(err);
-                }
-            );
-			$scope.dataLoading = false;
-			$(".btn-info").removeClass("disabled");
-        }
-
-        getTestplanService(token, userId, TestPlanId);
 
         //Grid options for test plan table
         $scope.TestPlanOptions = {
@@ -167,6 +79,8 @@ oTech.controller('createTestRunController',
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				$scope.dataProcessing = false;
+				$(".btn-info").addClass("disabled");
 
                 $rootScope.RowCreateTestrun = row.entity;
                 var TestPlanId = row.entity.testplanId;
@@ -192,73 +106,12 @@ oTech.controller('createTestRunController',
                 promise = testScriptService.getTestplan(token, userId, TestPlanId);
                 promise.then(
                     function (data) {
-						$scope.dataLoading = true;
-                        $scope.TemptreeData = data;
-                        $scope.jobDeviceVOLst = [];
-                        angular.forEach($scope.TemptreeData.jobDeviceVOList, function (item1) {
-                            $scope.jobDeviceTaskExecutorVOLst = [];
-                            angular.forEach(item1.jobDeviceTaskExecutorVOList, function (item2) {
-                                $scope.jobDeviceCommandExecutorVOLst = [];
-                                angular.forEach(item2.jobDeviceCommandExecutorVOList, function (item3) {
-                                    $scope.jobDeviceCommandExecutorCommandVOLst = [];
-                                    angular.forEach(item3.jobDeviceCommandExecutorCommandVOList, function (item4) {
-                                        var jobDeviceCommandExecutorCommandout = {
-                                            "Name": item4.commandName,
-                                            "Loop": null,
-                                            "CommandParams": item4.commandParams,
-                                            "Sequence": item4.commandSeqNo,
-                                            "type": "jobDeviceCommandExecutorCommand",
-                                            "jobDeviceCommandExecutorCommandId": item4.jobDeviceCommandExecutorCommandId,
-                                            "commandId": item4.commandId,
-                                            "jobDeviceCommandExecutorId": item4.jobDeviceCommandExecutorId,
-                                            "commandExecutorCommandId": item4.commandExecutorCommandId,
-                                            "children": []
-                                        };
-                                        $scope.jobDeviceCommandExecutorCommandVOLst.push(jobDeviceCommandExecutorCommandout);
-                                    });
-
-                                    var jobDeviceCommandExecutorout = {
-                                        "Name": item3.commandExecutorName,
-                                        "Loop": item3.commandExecutorLoop,
-                                        "CommandParams": null,
-                                        "Sequence": item3.commandExecutorSeqNo,
-                                        "type": "jobDeviceCommandExecutor",
-                                        "children": $scope.jobDeviceCommandExecutorCommandVOLst
-                                    };
-                                    $scope.jobDeviceCommandExecutorVOLst.push(jobDeviceCommandExecutorout);
-                                });
-                                var jobDeviceTaskout = {
-                                    "Name": item2.taskExecutorName,
-                                    "Loop": item2.taskExecutorLoop,
-                                    "CommandParams": null,
-                                    "Sequence": item2.taskExecutorSeqNo,
-                                    "type": "jobDeviceTask",
-                                    "children": $scope.jobDeviceCommandExecutorVOLst
-                                };
-                                $scope.jobDeviceTaskExecutorVOLst.push(jobDeviceTaskout);
-                            });
-                            var jobDeviceout = {
-                                "id": item1.jobDeviceId,
-                                "Name": item1.deviceName,
-                                "Loop": item1.taskLoop,
-                                "CommandParams": null,
-                                "Sequence": null,
-                                "type": "JobDevice",
-                                "children": $scope.jobDeviceTaskExecutorVOLst
-                            };
-                        });
-                        var jobout = {
-                            "Name": $scope.TemptreeData.jobName,
-                            "type": "Job",
-                            "children": $scope.jobDeviceTaskExecutorVOLst
-                        };
-                        $scope.NewTreeLst.push(jobout);
-                        $scope.treedata = $scope.NewTreeLst;
-
-
-                        $cookieStore.put('treedata', $scope.treedata);
-						$scope.dataLoading = false;
-                    },
+						$scope.uiTreeJSON = data.jobVO;
+						$rootScope.uiTreeJSON = data.jobVO;
+                        $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+						},
                     function (err) {
                         console.log(err);
                     }

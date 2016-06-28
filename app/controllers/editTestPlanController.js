@@ -9,8 +9,10 @@ oTech.controller('editTestPlanController',
 		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
 			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
 		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
+		$rootScope.uiTreeJSON = $scope.uiTreeJSON;
 		}else{
 			$scope.uiTreeJSON= JSON.parse($.cookie("uiTreeJSON"));
+			$rootScope.uiTreeJSON = $scope.uiTreeJSON;
 		}
 		
 		
@@ -69,6 +71,7 @@ oTech.controller('editTestPlanController',
             promise.then(
                 function (data) {
 						$rootScope.uiTreeJSON = data.jobVO;
+						$scope.uiTreeJSON = data.jobVO;
                         $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
 						$scope.dataProcessing = false;
 						$(".btn-info").removeClass("disabled");
