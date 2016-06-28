@@ -1,0 +1,111 @@
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
+
+.ui-grid-cell-contents {
+    text-align: left;
+	}
+.ui-grid-header-cell-wrapper{
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+
+.ui-grid-render-container{
+		width: 100%; 
+}
+
+.ui-grid-pager-panel
+{
+position: inherit; 
+  padding-top: 20px;
+}
+ 
+/*  .ui-grid-viewport{
+ min-height: 100%;
+height: auto!important;
+ } */
+
+</style>
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer">
+		<div class="maincontent">
+			<div class="container-fluid">
+				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
+				
+					<div class="tab-content">
+					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
+						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div ncy-breadcrumb></div>
+							
+								
+								 <div class="row">
+								  <div class="col-sm-12">
+									<table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="CreateTestRunVirtualDeviceOptions" ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ></table>
+								  </div>
+								</div>
+								<div class="row">
+								  <div class="col-sm-12">
+									<table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="CreateTestRunRealDeviceOptions" ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ></table>
+								  </div>
+								</div>
+									
+									
+										
+								</div>
+							</div>
+						</div>
+						<div class="row">
+						  <div class="col-xs-6 col-sm-4"></div>
+						  <div class="col-xs-6 col-sm-4"><a class="btn btn-info" ng-click="testscript()">Back</a>	</div>
+						  <!-- Optional: clear the XS cols if their content doesn't match in height -->
+						  <div class="clearfix visible-xs-block"></div>
+						  <div class="col-xs-6 col-sm-4"> <a class="btn btn-info" ng-click="ScheduleNext()">Next</a></div>
+						</div>
+					</div>
+				  </div>
+				 
+				</div>				
+				</div>
+					<!--<div ng-include="'app/views/favourites.html'"></div>-->
+					
+			</div>
+		</div>
+	</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>
+ <div ng-include="'app/views/popUp.html'"></div>
+	<div class="footer-div">
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
+<script>
+
+ function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $( window ).height();
+       // alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-158);
+   
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ })
+</script>

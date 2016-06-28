@@ -1,0 +1,73 @@
+<style>
+.taskSequenceNo {
+width:34px;
+}
+.taskLoop {
+width:34px;
+}
+
+.nodrop {
+    background-color: red;
+}
+</style>
+
+<script type="text/ng-template" id="nodrop_nodes_renderer.html">	
+	
+		
+	
+	<div class="tree-node">
+		
+		
+		<div class="tree-node-content">
+		<tr>
+		<td><a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
+		<span class="glyphicon" ng-class="{
+		'glyphicon-chevron-right': collapsed,
+		'glyphicon-chevron-down': !collapsed
+		}">
+		</span>
+		</a>
+
+		<input type="text" ng-model="node.Name"></td>
+		<td><input type="text" class="taskLoop"  ng-model="node.Loop"></td>
+	    <td><input type="text" class="taskSequenceNo"  ng-model="node.Sequence"></td>
+		<span>
+		<td> <input type="text"  ng-model="node.CommandParams"></td>
+		 </span>
+		</tr>
+		</div>
+		
+		
+	</div>
+  
+
+	<ol ng-if="node.nodrop" ui-tree-nodes="" data-nodrop-enabled="true" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+	</ol>
+	<ol ng-if="!node.nodrop" ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+	</ol>
+	
+</script>
+
+										<div class="col-md-8">
+												<h3>Task</h3>
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+														<th>Name</th>
+														<th>Loop</th>
+														<th>Seq No.</th>
+														<th>Default Params</th>
+														</tr>
+													</thead>
+												</table>
+
+													<table class="table table-bordered">	
+														<div ui-tree id="tree2-root" >
+														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
+														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+														</ol>
+													</div>
+												</table>
+											</div>

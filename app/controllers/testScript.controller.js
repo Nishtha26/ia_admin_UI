@@ -103,7 +103,7 @@ oTech.controller('testScriptController',
         }
 		
 		$scope.testRunEdit = function () {
-
+			cookieStore.put('TestRuId', "");
            $location.path('/TestRunSelect');
         }
 		

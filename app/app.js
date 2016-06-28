@@ -169,7 +169,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     templateUrl: "app/views/testPlanCreated.html",
                     controller: 'createTestRunController',
                     ncyBreadcrumb: {
-                        label: 'Test Plan'
+                        label: '{{TestplanName}}'
                     }
                 })
 				.state("testPlanEdited", {
@@ -177,7 +177,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     templateUrl: "app/views/testPlanEdited.html",
                     controller: 'editTestPlanController',
                     ncyBreadcrumb: {
-                        label: 'Test Plan'
+                        label: 'Test Plan Edited'
                     }
                 })
                 .state("EditTestplan", {
@@ -236,7 +236,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     url: '/createTestRunScheduleSel',
                     views: {
                         "@": {
-                            templateUrl: 'app/views/createTestRunScheduleSel.html',
+                            templateUrl: 'app/views/createTestRunScheduleSel1.html',
                             controller: 'createTestRunGridController'
                         }
                     },
@@ -265,7 +265,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                         }
                     },
                     ncyBreadcrumb: {
-                        label: '{{testRunName}}'
+                        label: '{{TestRuId}}'
                     }
                 })
                 .state('TestRunSelect.editCommandParameters', {
