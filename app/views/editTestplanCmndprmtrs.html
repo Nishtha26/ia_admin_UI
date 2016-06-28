@@ -47,32 +47,21 @@ height: auto!important;
 							</div>
 
 							<div class="row">
-								<div class="col-sm-6">
-									<tree-grid
-                                                    tree-data     = "tree_data"
-                                                    col-defs      = "col_defs"
-                                                    on-click      = "editTestPlanCmdPrmtrsPopup(branch, 'lg')"
-                                                    icon-leaf     = "glyphicon glyphicon-file"
-                                                    icon-expand   = "glyphicon glyphicon-folder-close"
-                                                    icon-collapse = "glyphicon glyphicon-folder-open"
-                                                    expand-level= "4"
-                                                    tree-control="my_tree"
-                                            >
-                                            </tree-grid>
-								</div>
-								<div class="col-sm-6">
-									 <div class="table-header">
-                                                <p style="color:#337ab7;">Virtual Devices</p>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <a href="" class="table-AdministrationAdd plus_align" ng-click="PlusVirtualDevice('sm')" style="top: 8px;right: 16px;"><img src="images/device-plus-icon.png" alt="add"></a>
-                                            <div id="firstGrid" ui-grid="VirtualDevicesOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
-								</div>
-							</div>
-							
+											<div ng-include="'app/views/commonTreeDataTemplate.html'"></div>
+											<div class="col-sm-4">
+												<div class="col-sm-6">
+												<h3 style="color:#337ab7;">Virtual Devices</h3>
+												 <a href="" class="table-AdministrationAdd plus_align" ng-click="PlusVirtualDevice('sm')" style="top: 8px;right: 16px;"><img src="images/device-plus-icon.png" alt="add"></a>
+												 <div id="firstGrid" ui-grid="VirtualDevicesOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
+												</div>
+											</div>
+									</div>
+							<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
 							<div class="row">
 									<div class="col-xs-8 col-sm-6">
-										<a  class="btn btn-info" ng-click="rePlanEdit();">Re-Plan Edit</a>
+										<a  class="btn btn-info" ng-click="rePlanEdit();">« Re-Plan Edit</a>
 									</div>
 									<div class="col-xs-4 col-sm-6">
 										<a  class="btn btn-info" ng-click="editTestplan('sm');">Next</a>
@@ -90,6 +79,7 @@ height: auto!important;
 		</div>
 	</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
+<div ng-include="'app/views/popUp.html'"></div>
 	<div class="footer-div">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>

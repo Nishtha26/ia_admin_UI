@@ -1,14 +1,47 @@
-<div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer" style="padding:15px">
-    <div class="maincontent">
-        <div class="container-fluid">
-            <div class="content-shadow">
-                <div class="ot-userAdministration">
-                    <div class="orchestra_devices_table" style="max-width:100%;margin-left:0px">
+<style>
+.ui-grid-sort-priority-number {
+font-size:0;
+}
 
-                        <div class="tab-content">
-                            <div id="devices" class="tab-pane fade in active">
-                                <div class="orchestra_devices_table" style="height: auto;max-width: 100%">
+.ui-grid-cell-contents {
+    text-align: left;
+	}
+.ui-grid-header-cell-wrapper{
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+
+.ui-grid-render-container{
+		width: 100%; 
+}
+
+.ui-grid-pager-panel
+{
+position: inherit; 
+  padding-top: 20px;
+}
+ 
+/*  .ui-grid-viewport{
+ min-height: 100%;
+height: auto!important;
+ } */
+
+</style>
+<div ng-include="'app/views/header.html'"></div>
+<div class="maincontainer">
+		<div class="maincontent">
+			<div class="container-fluid">
+				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
+				
+					<div class="tab-content">
+					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
+						 <div class="orchestra_devices_table" style="height: auto;max-width: 100%">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                              style="max-width:100%;margin-left: 10px;">
@@ -80,18 +113,41 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+				  </div>
+				 
+				</div>				
+				</div>
+					<!--<div ng-include="'app/views/favourites.html'"></div>-->
+					
+			</div>
+		</div>
+	</div>
+<div ng-include="'app/views/favouritesPopUp.html'"></div>
+ <div ng-include="'app/views/popUp.html'"></div>
+	<div class="footer-div">
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
+<script>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div ng-include="'app/views/favourites.html'"></div>
-<div ng-include="'app/views/popUp.html'"></div>
-
-
-
-
+ function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $( window ).height();
+       // alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-158);
+   
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ })
+</script>

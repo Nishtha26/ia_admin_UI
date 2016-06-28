@@ -196,16 +196,17 @@ oTech.service('testScriptService',
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/testPlan/getTestplan",
-                type: "POST",
-                data: {token: token, userId: userId, testplanId: testplanId, },
+				type: "POST",
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'testplanId': testplanId
                 },
                 success: function (data)
                 {
                     //alert("success");
-                    deferred.resolve(data);
+                    deferred.resolve($.parseJSON(data.items));
                 },
                 error: function (err)
                 {

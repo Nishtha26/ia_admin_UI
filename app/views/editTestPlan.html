@@ -56,7 +56,7 @@ height: auto!important;
 										 
 										 </table>
 										 <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
-											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
 									</div>
 									
 									
@@ -83,10 +83,10 @@ height: auto!important;
 						</div>
 						<div class="row">
 						  <div class="col-xs-6 col-sm-4"></div>
-						  <div class="col-xs-6 col-sm-4"> <a class="btn btn-info" ng-click="SelectTesplanEdit()">Next</a></div>
+						  <div class="col-xs-6 col-sm-4"><a class="btn btn-info" ng-click="testscript()">Back</a>	</div>
 						  <!-- Optional: clear the XS cols if their content doesn't match in height -->
 						  <div class="clearfix visible-xs-block"></div>
-						  <div class="col-xs-6 col-sm-4"></div>
+						  <div class="col-xs-6 col-sm-4"> <a class="btn btn-info" ng-click="SelectTesplanEdit()">Next</a></div>
 						</div>
 					</div>
 				  </div>
@@ -99,6 +99,7 @@ height: auto!important;
 		</div>
 	</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
+ <div ng-include="'app/views/popUp.html'"></div>
 	<div class="footer-div">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>

@@ -30,7 +30,6 @@ oTech.controller('createTestRunGridController',
             }
         );
 
-
         $rootScope.slideContent();
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -55,6 +54,11 @@ oTech.controller('createTestRunGridController',
 
         $scope.getDashBoardMenu();
         $scope.getFavouriteReports();
+		
+		$scope.testScript = function () {
+
+           $location.path('/dashboard/testScript');
+        }
 
 
 //Create Test Run Virtual Device

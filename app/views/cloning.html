@@ -1,44 +1,26 @@
-<style>
-.taskSequenceNo {
-width:34px;
-}
-.taskLoop {
-width:34px;
-}
-.nodrop {
-    background-color: red;
-}
-.btn {
-    margin-right: 0px;
-}
-.tree-handle {
-    padding: 10px;
-    background: #428bca;
-    color: #FFF;
-    margin-right: -29px;
-}
-</style>
-
 <script type="text/ng-template" id="nodes_renderer1.html">
   <div ui-tree-handle class="tree-node tree-node-content">
     <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-    <input type="text" ng-model="node.title">
+    <!--<input type="text" ng-model="node.title">-->
+	
+	{{node.title}}
 	
   </div>
-  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
-    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer1.html'">
-    </li>
-  </ol>
+  
+  <ol ng-if="!node.commandId" ui-tree-nodes="" data-drag-enabled="true" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer1.html'"></li>
+	</ol>
+	<ol ng-if="node.commandId" ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer1.html'"></li>
+	</ol>
 </script>
 
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">	
 		
 		
-	<div class="tree-node">
-		<div class="pull-left tree-handle" ui-tree-handle>
-		<span class="glyphicon glyphicon-list"></span>
-		</div>
-		<div class="tree-node-content">
+	<div ui-tree-handle class="tree-node tree-node-content">
+		
+		
 		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
 		<span class="glyphicon" ng-class="{
 		'glyphicon-chevron-right': collapsed,
@@ -51,44 +33,54 @@ width:34px;
 		<input type="text" class="taskLoop"  ng-model="node.loop">
 	    <input type="text" class="taskSequenceNo"  ng-model="node.sequenceNo">
 
-		<span ng-if="(node.id %100)!= 0">
+		<span ng-if="!node.commandId">
 			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
 			<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
 		</span>
-		</div>
+		<span ng-if="node.commandId">
+			<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this); test(this);"><span class="glyphicon glyphicon-remove"></span></a>
+			<!--<a ng-if="node.commandId == '-1'" class="pull-right btn btn-primary btn-xs addCommand{{node.id}}" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>-->
+		</span>
+		
 	</div>
   
-	<ol ng-if="node.nodrop" ui-tree-nodes="" data-nodrop-enabled="true" ng-model="node.nodes" ng-class="{hidden: collapsed}">
-		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+	<ol ng-if="!node.commandId" ui-tree-nodes="" data-drag-enabled="false" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node  ng-include="'nodrop_nodes_renderer.html'"></li>
 	</ol>
-	<ol ng-if="!node.nodrop" ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
-		<li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+	<ol ng-if="node.commandId" ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+		<li ng-repeat="node in node.nodes" ui-tree-node data-nodrag ng-include="'nodrop_nodes_renderer.html'"></li>
 	</ol>
 </script>
 
 
 <div class="row">
   <div class="col-sm-6">
-	<h3 style="color:#337ab7;">Available Commands</h3>
-    <div ui-tree id="tree1-root" data-clone-enabled="true" data-nodrop-enabled="true">
+	<h3 style="color:#337ab7;">Available Commands</h3></div>
+<div class="col-sm-3"><h3 style="color:#337ab7;">Name</h3></div>
+<div class="col-sm-1"><h3 style="color:#337ab7;">Loop</h3></div>
+<div class="col-sm-2"><h3 style="color:#337ab7;">Seq No.</h3></div>
+  
+</div>
+  
+  
+ <div class="row">
+<div class="col-sm-5">
+  
+    
+
+
+    <div ui-tree="optionsTree1"  id="tree1-root" data-clone-enabled="true" data-nodrop-enabled="true">
       <ol ui-tree-nodes="" ng-model="tree1">
         <li ng-repeat="node in tree1" data-collapsed="!tree1.expanded" ui-tree-node ng-include="'nodes_renderer1.html'"></li>
       </ol>
     </div>
-  </div>
-
-  
-  <div class="col-sm-6">
- <div class="row">
-  <div class="col-sm-9">
-  <h3 >Task</h3>
-    <div class="row"><div class="col-sm-3"><h5>Name</h5></div><div class="col-sm-3"><h5>Loop</h5></div><div class="col-sm-3"><h5>Seq No.</h5></div></div>
 	</div>
-</div>
-    <div ui-tree id="tree2-root" data-clone-enabled="true">
+	<div class="col-sm-7">
+    <div ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" >
       <ol ui-tree-nodes="" ng-model="tree2" >
-        <li ng-repeat="node in tree2"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+        <li ng-repeat="node in tree2" ui-tree-node data-nodrag  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
       </ol>
     </div>
+	</div>
   </div>
-</div>
+

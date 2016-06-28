@@ -143,14 +143,25 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                 .state("testScript", {
                     url: "/dashboard/testScript",
                     templateUrl: "app/views/testScript.html",
-                    controller: 'testScriptController'
+                    controller: 'testScriptController',
+					ncyBreadcrumb: {
+                        label: '{{testplan_name1}}'
+                    }
+                })
+				.state("initiateTestPlan", {
+                    url: "/dashboard/initiateTestPlan",
+                    templateUrl: "app/views/initiateTestPlan.html",
+                    controller: 'testScriptController',
+					ncyBreadcrumb: {
+                        label: 'Create Test Plan'
+                    }
                 })
                 .state("createTestPlan", {
-                    url: "/dashboard/testScript/createTestPlan",
+                    url: "/dashboard/initiateTestPlan/createTestPlan",
                     templateUrl: "app/views/createTestPlan.html",
                     controller: 'createTestPlanController',
                     ncyBreadcrumb: {
-                        label: 'Create Test Plan'
+                        label: 'Test Plan'
                     }
                 })
 				.state("testPlanCreated", {
@@ -245,11 +256,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                         label: 'Schedule'
                     }
                 })
-
                 .state("TestRunSelect", {
                     url: "/TestRunSelect",
-                    templateUrl: "app/views/SelectTestRun.html",
-                    controller: 'editTestRunController',
+					views: {
+                        "@": {
+                            templateUrl: "app/views/SelectTestRun.html",
+							controller: 'editTestRunController',
+                        }
+                    },
                     ncyBreadcrumb: {
                         label: '{{testRunName}}'
                     }

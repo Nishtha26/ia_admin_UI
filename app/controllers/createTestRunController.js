@@ -17,6 +17,7 @@ oTech.controller('createTestRunController',
         var TestRunName = $cookieStore.get('DependantTestRunName');
         var DeviceName = [];
         $rootScope.my_tree = {};
+		$(".btn-info").addClass("disabled");
 
         $rootScope.slideContent();
         window.onresize = function (event) {
@@ -48,13 +49,18 @@ oTech.controller('createTestRunController',
 		$scope.nextTestPlan = function(){
 			$location.path('/dashboard/testScript');
 		}
+		
+		$scope.testScript = function () {
+                $location.path('/dashboard/testScript');
+        }
 
         $scope.getDashBoardMenu();
         $scope.getFavouriteReports();
 
         //Global Tree Structure
         var getTestplanService = function (token, userId, TestPlanId) {
-
+			$scope.dataLoading = true;
+			$(".btn-info").addClass("disabled");
             //Calling getTestplan service and looping data as tree structure
             $scope.NewTreeLst = [];
             $rootScope.tree_data = $scope.NewTreeLst;
@@ -132,11 +138,14 @@ oTech.controller('createTestRunController',
 
                     }
                     $cookieStore.put('treedata', $scope.treedata);
+					$scope.dataLoading = false;
                 },
                 function (err) {
                     console.log(err);
                 }
             );
+			$scope.dataLoading = false;
+			$(".btn-info").removeClass("disabled");
         }
 
         getTestplanService(token, userId, TestPlanId);
@@ -183,6 +192,7 @@ oTech.controller('createTestRunController',
                 promise = testScriptService.getTestplan(token, userId, TestPlanId);
                 promise.then(
                     function (data) {
+						$scope.dataLoading = true;
                         $scope.TemptreeData = data;
                         $scope.jobDeviceVOLst = [];
                         angular.forEach($scope.TemptreeData.jobDeviceVOList, function (item1) {
@@ -247,6 +257,7 @@ oTech.controller('createTestRunController',
 
 
                         $cookieStore.put('treedata', $scope.treedata);
+						$scope.dataLoading = false;
                     },
                     function (err) {
                         console.log(err);

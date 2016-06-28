@@ -2,13 +2,20 @@ oTech.controller('editTestPlanController',
     function ($scope, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices,
               $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $timeout) {
 
-        $scope.TestplanName = $cookieStore.get('TestplanName');
-        $scope.NewTreeLst = [];
+
         $rootScope.editTestplanDevices = [];
         var TestPlanId = $cookieStore.get('TestPLANId');
-        $rootScope.tree_data = $cookieStore.get('treedata');
-        $rootScope.my_tree = {};
-        $rootScope.Row = null;
+		
+		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
+			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
+		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
+		}else{
+			$scope.uiTreeJSON= JSON.parse($.cookie("uiTreeJSON"));
+		}
+		
+		
+
+		$rootScope.Row = null;
         $rootScope.RowDevice = null;
 
         $rootScope.VirtualDevicesOptions = {
@@ -26,7 +33,6 @@ oTech.controller('editTestPlanController',
         var token = sessionStorage.getItem('token');
         $rootScope.role = sessionStorage.getItem("role");
         var commandName = [];
-        var TestPlanId = $cookieStore.get('tesplanId');
         $scope.Names = [];
 
 
@@ -59,79 +65,22 @@ oTech.controller('editTestPlanController',
             console.log(userId);
             console.log(token);
             console.log(TestPlanId);
-            $scope.NewTreeLst = [];
             promise = testScriptService.getTestplan(token, userId, TestPlanId);
             promise.then(
                 function (data) {
-                    console.log(JSON.stringify(data))
-                    $scope.TemptreeData = data;
-                    $scope.jobDeviceVOLst = [];
-                    angular.forEach($scope.TemptreeData.jobDeviceVOList, function (item1) {
-                        $scope.jobDeviceTaskExecutorVOLst = [];
-                        angular.forEach(item1.jobDeviceTaskExecutorVOList, function (item2) {
-                            $scope.jobDeviceCommandExecutorVOLst = [];
-                            angular.forEach(item2.jobDeviceCommandExecutorVOList, function (item3) {
-                                $scope.jobDeviceCommandExecutorCommandVOLst = [];
-                                angular.forEach(item3.jobDeviceCommandExecutorCommandVOList, function (item4) {
-                                    var jobDeviceCommandExecutorCommandout = {
-                                        "Name": item4.commandName,
-                                        "Loop": null,
-                                        "CommandParams": item4.commandParams,
-                                        "Sequence": item4.commandSeqNo,
-                                        "type": "jobDeviceCommandExecutorCommand",
-                                        "jobDeviceCommandExecutorCommandId": item4.jobDeviceCommandExecutorCommandId,
-                                        "commandId": item4.commandId,
-                                        "jobDeviceCommandExecutorId": item4.jobDeviceCommandExecutorId,
-                                        "commandExecutorCommandId": item4.commandExecutorCommandId,
-                                        "children": []
-                                    };
-                                    $scope.jobDeviceCommandExecutorCommandVOLst.push(jobDeviceCommandExecutorCommandout);
-                                });
-
-                                var jobDeviceCommandExecutorout = {
-                                    "Name": item3.commandExecutorName,
-                                    "Loop": item3.commandExecutorLoop,
-                                    "CommandParams": null,
-                                    "Sequence": item3.commandExecutorSeqNo,
-                                    "type": "jobDeviceCommandExecutor",
-                                    "children": $scope.jobDeviceCommandExecutorCommandVOLst
-                                };
-                                $scope.jobDeviceCommandExecutorVOLst.push(jobDeviceCommandExecutorout);
-                            });
-                            var jobDeviceTaskout = {
-                                "Name": item2.taskExecutorName,
-                                "Loop": item2.taskExecutorLoop,
-                                "CommandParams": null,
-                                "Sequence": item2.taskExecutorSeqNo,
-                                "type": "jobDeviceTask",
-                                "children": $scope.jobDeviceCommandExecutorVOLst
-                            };
-                            $scope.jobDeviceTaskExecutorVOLst.push(jobDeviceTaskout);
-                        });
-                        var jobDeviceout = {
-                            "id": item1.jobDeviceId,
-                            "Name": item1.deviceName,
-                            "Loop": item1.taskLoop,
-                            "CommandParams": null,
-                            "Sequence": null,
-                            "type": "JobDevice",
-                            "children": $scope.jobDeviceTaskExecutorVOLst
-                        };
-                    });
-                    var jobout = {
-                        "Name": $scope.TemptreeData.jobName,
-                        "type": "Job",
-                        "children": $scope.jobDeviceTaskExecutorVOLst
-                    };
-                    $scope.NewTreeLst.push(jobout);
-                    $scope.treedata = $scope.NewTreeLst;
-                    $rootScope.tree_data = $scope.NewTreeLst;
+						$rootScope.uiTreeJSON = data.jobVO;
+                        $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
                     if ($rootScope.tree_data) {
                         setTimeout(function () {
-                            $rootScope.$apply($rootScope.my_tree.expand_all());
+                            $rootScope.$apply($rootScope.uiTreeJSON.expand_all());
                         }, 10);
                     }
-                    $cookieStore.put('treedata', $scope.treedata);
+                    $cookieStore.put('uiTreeJSON', $scope.uiTreeJSON);
+					
+					$scope.dataProcessing = false;
+					$(".btn-info").removeClass("disabled");
                 },
                 function (err) {
                     console.log(err);
@@ -139,7 +88,7 @@ oTech.controller('editTestPlanController',
             );
         }
 
-        getTestplanService(token, userId, TestPlanId);
+       // getTestplanService(token, userId, TestPlanId);
 
         promise = testScriptService.FetchCommands(userId, token);
         promise.then(
@@ -151,17 +100,7 @@ oTech.controller('editTestPlanController',
                 console.log(err);
             }
         );
-        //Example
-        $scope.Data = [];
-        commandName.push({name: $scope.Data.commandName});
-
-        $scope.col_defs = [
-            {
-                field: "name",
-                displayName: "NAME",
-                cellTemplate: "<img ng-src='{{ row.branch[col.field] }}' />"
-            }
-        ];
+       
 
         //Edit Test plan table
         $scope.TestPlanOptions = {
@@ -188,8 +127,10 @@ oTech.controller('editTestPlanController',
                 $cookieStore.put('TestplanName', row.entity.testplanName);
                 $cookieStore.put('tesplanId', TestPlanId)
                 //Calling getTestplan service and looping data as tree structure
-                $rootScope.tree_data = $scope.NewTreeLst;
+                $rootScope.editTaskPlanJSON = $scope.editTaskPlanJSON;
                 // $rootScope.tree_data = $cookieStore.get('treedata');
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
                 getTestplanService(token, userId, TestPlanId);
 
                 $rootScope.Row = row.entity;
@@ -459,11 +400,13 @@ oTech.controller('editTestPlanController',
         promise = testScriptService.FetchingTestService(userId, token);
         promise.then(
             function (data) {
-                
+                $scope.dataLoading = true;
+				$(".btn-info").addClass("disabled");
 				$scope.totalRecords = data.length;
 				allOfTheData = data;
 				$scope.TestPlanOptions.data = data.slice( 0, $scope.itemsPerPage);
 				$scope.dataLoading = false;
+				$(".btn-info").removeClass("disabled");
             },
             function (err) {
                 console.log(err);
@@ -480,6 +423,9 @@ oTech.controller('editTestPlanController',
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
         promise.then(
             function (data) {
+				$scope.TestplanName =$cookieStore.get('TestplanName');
+				$scope.dataLoading = true;
+				$(".btn-info").addClass("disabled");
                 $rootScope.VirtualDevicesOptions.data = data;
 
                 $scope.PlusVirtualDevice = function (size) {
@@ -587,6 +533,8 @@ oTech.controller('editTestPlanController',
                         }
                     });
                 }
+				$scope.dataLoading = false;
+				$(".btn-info").removeClass("disabled");
             },
             function (err) {
                 console.log(err);
@@ -618,25 +566,131 @@ oTech.controller('editTestPlanController',
         };
 
         $scope.editTestplan = function (size) {
+			$scope.dataProcessing = true;
+			$(".btn-info").addClass("disabled");
             if ($rootScope.RowDevice != null) {
+			var jobVo = {};	
+			//prepare the edit test plan data 
+			
+            var superParentObject, parentObject = {}, childObject = {};
+            superParentObject = $scope.uiTreeJSON[0].nodes;
+            for (var i = 0; i < $scope.uiTreeJSON[0].nodes.length; i++) {
+                parentObject[i] = $scope.uiTreeJSON[0].nodes[i].nodes;
+                childObject[i] = {};
+                if ($scope.uiTreeJSON[0].nodes[i].nodes.length <= 0) {
+                    $scope.validateTestPlanData(" child's or not existed");
+                    return 0;
+                }
+
+                for (var j = 0; j < $scope.uiTreeJSON[0].nodes[i].nodes.length; j++) {
+                    childObject[i][j] = $scope.uiTreeJSON[0].nodes[i].nodes[j].nodes;
+
+                    if ($scope.uiTreeJSON[0].nodes[i].nodes[j].nodes.length <= 0) {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+                        $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
+                        return 0;
+
+                    }
+                    else if (!$scope.uiTreeJSON[0].nodes[i].nodes[j].nodes[0].id) {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+                        $scope.validateTestPlanData("Please Select Parameters ");
+                        return 0;
+
+                    }
+                }
+            }
+            jobVo.jobCreatedBy = userId;
+			jobVo.jobId = $scope.uiTreeJSON[0].jobId;
+            jobVo.jobDeviceVOList = [];
+            jobVo.jobDeviceVOList[0] = {};
+            jobVo.jobId = $scope.uiTreeJSON[0].jobId;
+
+            jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList = [];
+
+            var superParentObjectKeys = Object.keys(superParentObject);
+
+            for (var i = 0; i < superParentObjectKeys.length; i++) {
+
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i] = {};
+				
+				jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceTaskExecutorId = superParentObject[i].jobDeviceTaskExecutorId;
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].taskExecutorName = superParentObject[i].Name;
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].taskExecutorSeqNo = superParentObject[i].Sequence;
+				jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].taskExecutorLoop = superParentObject[i].Loop;
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceId = superParentObject[i].jobDeviceId;
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].taskExecutorId = superParentObject[i].taskExecutorId;
+
+            }
+
+            var parentObjectKeys = Object.keys(parentObject);
+            for (var i = 0; i < parentObjectKeys.length; i++) {
+                var childKeys = Object.keys(parentObject[parentObjectKeys[i]]);
+                jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList = [];
+                for (var j = 0; j < childKeys.length; j++) {
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j] = {};
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].jobDeviceCommandExecutorId = parentObject[parentObjectKeys[i]][childKeys[j]].jobDeviceCommandExecutorId;
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].commandExecutorName = parentObject[parentObjectKeys[i]][childKeys[j]].Name;
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].commandExecutorSeqNo = parentObject[parentObjectKeys[i]][childKeys[j]].Sequence;
+					jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].commandExecutorLoop = parentObject[parentObjectKeys[i]][childKeys[j]].Loop;
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].jobDeviceTaskExecutorId = parentObject[parentObjectKeys[i]][childKeys[j]].jobDeviceTaskExecutorId;
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[i].jobDeviceCommandExecutorVOList[j].commandExecutorId = parentObject[parentObjectKeys[i]][childKeys[j]].commandExecutorId;
+
+                }
+            }
+
+
+            var childSuperParentKeys = Object.keys(childObject);
+            for (var p = 0; p < childSuperParentKeys.length; p++) {
+                var childParentKeys = Object.keys(childObject[childSuperParentKeys[p]]);
+                for (var q = 0; q < childParentKeys.length; q++) {
+                    var childKeys = Object.keys(childObject[childSuperParentKeys[p]][childParentKeys[q]]);
+                    jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList = [];
+                    for (var r = 0; r < childKeys.length; r++) {
+                        jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r] = {};
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].jobDeviceCommandExecutorCommandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].jobDeviceCommandExecutorCommandId;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].commandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandId;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].commandSeqNo = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].Sequence;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].jobDeviceCommandExecutorId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].jobDeviceCommandExecutorId;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].commandParams = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].CommandParams;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].commandExecutorCommandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandExecutorCommandId;
+
+						jobVo.jobDeviceVOList[0].jobDeviceTaskExecutorVOList[p].jobDeviceCommandExecutorVOList[q].jobDeviceCommandExecutorCommandVOList[r].commandName = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].Name;
+                    }
+                }
+            }
+			
+            var jsonData = JSON.stringify(jobVo);
+				//end edit test plan data
+				
+				
+				
                 var editTestPlanData = JSON.stringify({
-                    "jobVo": {"jobId": TestPlanId},
+                    "jobVo": {"jobId": TestPlanId,"jobDeviceVOList":jobVo.jobDeviceVOList},
                     "virtualDeviceVoList":  $rootScope.editTestplanDevices
                 })
                 console.log()
-
+				
                 promise = testScriptService.editTestplan(editTestPlanData, token, userId);
                 promise.then(
                     function (data) {
 
                         if (data.status == 'success') {
-
+							$scope.dataProcessing = false;
+							$(".btn-info").removeClass("disabled");
 //                                        $rootScope.Message = "Test Plan Updated Successfully";
                             $location.path('/dashboard/testScript/createTestPlan/testPlanEdited');
                         }
                         if (data.status == 'error') {
                             $rootScope.Message = "Error occured while updating the testplan";
-
+							$scope.dataProcessing = false;
+							$(".btn-info").removeClass("disabled");
                             $('#MessageColor').css("color", "red");
                             $('#MessagePopUp').modal('show');
                             $timeout(function () {
@@ -653,6 +707,8 @@ oTech.controller('editTestPlanController',
             }
             else {
                 $rootScope.Message = "Please Select Device";
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
                 $('#MessageColor').css("color", "red");
                 $('#MessagePopUp').modal('show');
                 $timeout(function () {

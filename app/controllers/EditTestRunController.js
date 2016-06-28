@@ -4,15 +4,13 @@ oTech.controller('editTestRunController',
         var token = sessionStorage.getItem('token');
         var TestPlanId = $cookieStore.get('TestPLANId');
         $scope.TestPlanId = TestPlanId;
-        var TestRunName = $cookieStore.get('TestRunName');
-        $scope.testRunName = $cookieStore.get('TestRunName');
+        $scope.testRunName = $cookieStore.get('testRunName');
         $scope.Names = [];
         $scope.commandValues = ' ';
         $rootScope.tree_data = $cookieStore.get('NewTreeLst');
         $scope.notAvailableMsg = $cookieStore.get('notAvailableMsg')
         var TestRunID = $cookieStore.get('TestRuId');
         $rootScope.my_tree ={};
-
         $rootScope.role = sessionStorage.getItem("role");
         $rootScope.slideContent();
         window.onresize = function (event) {
@@ -43,6 +41,10 @@ oTech.controller('editTestRunController',
         $scope.TestRunForTestPlans = function () {
             $location.path('/TestRunSelect/editCommandParameters/TestRunforTestplans')
         }
+		
+		$scope.selectTestRun = function () {
+            $location.path('/TestRunSelect')
+        }
 
         //Test Run Grid
         $scope.TestRunGridOptions = {
@@ -55,42 +57,151 @@ oTech.controller('editTestRunController',
                 {field: 'testrunDescription', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader}
             ]
         };
+		
+		
+		// added for the pagination
+		
+		$scope.itemsPerPage = 10;
+					$scope.currentPage = 0;
+					$scope.endLimit=$scope.itemsPerPage;
+					var allOfTheData;
+					$scope.totalRecords=0;
+					
+					
+					$scope.range = function() {
+								var rangeSize = 6;
+								var ps = [];
+								var start;
+
+								start = $scope.currentPage;
+								if ( start > $scope.pageCount()-rangeSize ) {
+								start = $scope.pageCount()-rangeSize+1;
+								}
+
+								for (var i=start; i<start+rangeSize; i++) {
+								if(i>=0) 
+								ps.push(i);
+								}
+								return ps;
+							};
+
+							$scope.prevPage = function() {
+							if ($scope.currentPage > 0) {
+								$scope.setPagePrev($scope.currentPage-1);
+								//$scope.currentPage--;
+								}
+							};
+											
+							$scope.DisablePrevPage = function() {
+								return $scope.currentPage === 0 ? "disabled" : "";
+							 };
+							 
+							 $scope.pageCount = function() {
+								return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+							};
+							
+							$scope.nextPage = function() {
+								if ($scope.currentPage < $scope.pageCount()) {
+								$scope.setPageNext($scope.currentPage+1);
+								//$scope.currentPage++;
+								}
+							};
+							
+							$scope.DisableNextPage = function() {
+								return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+							};
+							
+							 $scope.setPage = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
+							
+							 $scope.setPagePrev = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*n);
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
+							 $scope.setPageNext = function(n) {
+								 $scope.dataLoading = true;
+								$scope.endLimit = ($scope.itemsPerPage*(n+1));
+								if($scope.endLimit > $scope.totalRecords){
+									var reminder = $scope.totalRecords % $scope.itemsPerPage;
+									if(reminder > 0){
+										$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+									}
+								}
+								 
+								startLimit = ($scope.itemsPerPage*(n));
+								$scope.createNewDatasource();
+								$scope.currentPage = n;
+							};
 
         promise = testScriptService.getAllTestRuns(token, userId);
         promise.then(
             function (data) {
-                $scope.TestRunGridOptions.data = data.testRunsForTestPlan;
-                console.log(JSON.stringify($scope.TestRunGridOptions.data));
+				$scope.dataLoading = true;
+				$scope.totalRecords = data.testRunsForTestPlan.length;
+				allOfTheData = data.testRunsForTestPlan;
+				$scope.TestRunGridOptions.data = data.testRunsForTestPlan.slice( 0, $scope.itemsPerPage);
+				$scope.dataLoading = false;
 
             },
             function (err) {
                 console.log(err);
             }
         );
+		
+		 $scope.createNewDatasource = function() {
+						$scope.dataLoading = true;
+						$scope.TestRunGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
+						$scope.dataLoading = false;
+					}
 
         $scope.TestRunGridOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
                 $rootScope.RowTestRunGrid = row.entity;
                 var TestRunGridData = row.entity;
+				$scope.testRunName = row.entity.testrunName;
                 console.log("Row Data: " + JSON.stringify(row.entity));
                 $cookieStore.put('TestRunGridData', TestRunGridData);
 //                    console.log("Row Selected: "+JSON.stringify(TestRunGridData))
                 var TestRuId = row.entity.testrunId;
                 $cookieStore.put('TestRuId', TestRuId);
-                var TestRunName = row.entity.testrunName;
-                $cookieStore.put('TestRunName', TestRunName);
+                var testrunName = row.entity.testrunName;
+                $cookieStore.put('testRunName', testrunName);
                 console.log(JSON.stringify(row.entity.testrunName));
-                var TestRunName = row.entity.testrunName;
-                $cookieStore.put('TestRunName', TestRunName);
-                console.log('TestRunName:' + TestRunName);
-
+				
+				$rootScope.Row = row.entity;
                 //Test Run tree
-                promise = testScriptService.getTestRunDependantData(token, TestRunName, userId);
+                promise = testScriptService.getTestRunDependantData(token, testrunName, userId);
                 promise.then(
                     function (data) {
                         $cookieStore.put('notAvailableMsg', data.status)
                         if (data.status == "No TestRun Exists") {
+							$scope.dataProcessing = false;
+							$(".btn-info").removeClass("disabled");
                             $scope.notAvailableMsg = "No test runs available for this device"
                         } else {
                             $scope.NewTreeLst = [];
@@ -159,14 +270,26 @@ oTech.controller('editTestRunController',
                             $rootScope.tree_data = $scope.NewTreeLst;
                             $cookieStore.put('NewTreeLst', $rootScope.tree_data);
                             console.log("tree_data: " + JSON.stringify($rootScope.tree_data))
+							// for expanding tree
+								if ($scope.tree_data !== null && $scope.tree_data !== undefined) {
+									// if($scope.treedata.length){
+									setTimeout(function () {
+										$rootScope.$apply($rootScope.my_tree.expand_all);
+									}, 10);
+
+								}
                         }
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
                     },
                     function (err) {
                         console.log(err);
                     }
                 );
             });
-            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+                var msg = 'rows changed ' + rows.length;
+
             });
 
         };

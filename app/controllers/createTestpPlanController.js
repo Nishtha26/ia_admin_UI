@@ -40,7 +40,7 @@ oTech.controller('createTestPlanController',
 		}
 
 		$scope.createTestPlanPrev = function () {
-                $location.path('/dashboard/testScript');
+                $location.path('/dashboard/initiateTestPlan');
         }
        
 
@@ -64,10 +64,12 @@ oTech.controller('createTestPlanController',
         };
 
         var fetchVirtualDevices = function (token, userId) {
+			$scope.dataLoading = true;
             promise2 = testScriptService.fetchVirtualDevices(token, userId);
             promise2.then(
                 function (data) {
                     $scope.virtualDeviceGridOptions.data = data;
+					$scope.dataLoading = false;
                 },
                 function (err) {
                     console.log(err);
@@ -97,13 +99,18 @@ oTech.controller('createTestPlanController',
         };
 		
 		$scope.createTestPlanService = function () {
-			
+			$scope.dataProcessing = true;
+			$(".btn-info").addClass("disabled");
 
             if (!$scope.createTestPlan.jobName) {
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
                 $scope.validateTestPlanData("Please Enter TestPlan Name");
                 return 0;
             }
             if (assignVirtualDevice_Data.virtualDeviceVoList.length <= 0) {
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
                 $scope.validateTestPlanData("Please Select Virtual Device");
                 return 0;
 
@@ -123,11 +130,15 @@ oTech.controller('createTestPlanController',
                     childObject[i][j] = $rootScope.tree2[0].nodes[i].nodes[j].nodes;
 
                     if ($rootScope.tree2[0].nodes[i].nodes[j].nodes.length <= 0) {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
                         $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
                         return 0;
 
                     }
                     else if (!$rootScope.tree2[0].nodes[i].nodes[j].nodes[0].id) {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
                         $scope.validateTestPlanData("Please Select Parameters ");
                         return 0;
 
@@ -226,6 +237,7 @@ oTech.controller('createTestPlanController',
                     function (data) {
                         if (data.status == "success") {
                             $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
+							$scope.dataProcessing = false;
                         }
                         else {
                             $rootScope.Message = " " + data.status;
