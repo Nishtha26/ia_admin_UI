@@ -7,18 +7,12 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     	    }	
                                     		var token = sessionStorage.token;
                                     		var userId = sessionStorage.userId;
+                                    		$rootScope.role = sessionStorage.role;
                                     		$scope.dataLoading3 = true;
                                     				/*
                                     				To get dashboard menu data
                                     			*/
-                                    	/*	$(document).ready(function(){
-
-                                    			   $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
-                                    			    $("#deviceId").select2({
-                                    			    });
-                                    			  
-                                    			  });//script
-                                    			});*/
+                                  
                                     			$scope.getDashBoardMenu = function(){
                                     				if($rootScope.menuData == undefined){
                                     					$rootScope.getMenuData();
