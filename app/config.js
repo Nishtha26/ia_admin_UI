@@ -807,7 +807,7 @@ addUsergroupsGridOptions :{
 		columnDefs: [
 			{ name: 'userGroupId' ,width:200},
 			{ name: 'userGroupName',width:250 },
-			{ name: 'createdBy',width:200 },
+			{ name: 'createdBy',field:"createdByName", width:200 },
 			{ name: 'createdDate',width:230 }		
 		]	
 	},

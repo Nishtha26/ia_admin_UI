@@ -161,7 +161,7 @@
 					<span class="link_name">{{key}}</span>
 					<em class="glyphicon glyphicon-menu-down"></em>
 				</a>
-				<ul class="nav sub-nav map-subnav-icons" style="{{headerStyle[key]}}" >
+				<ul ng-if = "key != 'Reports'"class="nav sub-nav map-subnav-icons" style="{{headerStyle[key]}}" >
 					<li ng-repeat="x in menuData[key]">
 						<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
 						<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
