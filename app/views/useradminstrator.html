@@ -108,54 +108,54 @@ display: inline!important;
                       <!--   <div class="orchestra_devices_table"> -->
                            <div class="row">
                               <div class="col-xs-12">
-									<form id="myForm" name="myForm" class="form-horizontal ng-dirty ng-valid-required ng-valid ng-valid-match" role="form" name="myForm" novalidate>
+									<form id="myForm" name="myForm" class="form-horizontal" role="form" name="myForm" novalidate>
 									  <div class="col-xs-12" style="width:75%;">
 									
 										  <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="firstname">Name <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
 											  <input type="text" class="form-control name-inline font-adduser" name="firstname" id="firstname" placeholder="First Name"  ng-model="firstname" required ng-minlength="6" />
-											  <input type="text" class="form-control name-inline" id="lastname" placeholder="Last Name" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35);float:right;">
-												<span ng-show="myForm.firstname.$error.required" class="errors"> **Firstname field should not be empty</span>
-												<span ng-show="myForm.firstname.$error.minlength" class="errors"> **Firstname field length should not be less than 6 characters</span>
+											  <input type="text" class="form-control name-inline font-adduser" id="lastname" placeholder="Last Name" style="float:right;">
+												<span ng-show="myForm.firstname.$dirty && myForm.firstname.$error.required" class="errors"> **Firstname field should not be empty</span>
+												<span ng-show="myForm.firstname.$dirty && myForm.firstname.$error.minlength" class="errors"> **Firstname field length should not be less than 6 characters</span>
 											</div>
 										  </div>
 										  	  <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="username-7">Username <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-									<input type="text" class="form-control" name="userName" id="username-7" ng-model="usernamefield"
+									<input type="text" class="form-control" name="userName" id="username-7" ng-model="userName"
 				 					 required ng-minlength="6">
-											  <span ng-show="myForm.userName.$error.required" class="errors"> **User name field should not be empty</span>
-												<span ng-show="myForm.userName.$error.minlength" class="errors"> **User name field length should not be less than 6 characters</span>
+											  <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors"> **User name field should not be empty</span>
+												<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors"> **User name field length should not be less than 6 characters</span>
 											</div>
 										  </div>
 										  <!-- ng-class="{'has-error':!myForm.password.$valid}" -->
 										  <div class="form-group" >
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="password">Password <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="password" class="form-control ng-dirty ng-valid ng-valid-required font-adduser" id="password" name="password" required ng-model="password" ng-trim="true" >
-											   <span class="help-block errors" ng-show="myForm.password.$error.required">**Password field should not be empty</span>
+											  <input type="password" class="form-control  font-adduser" id="password" name="password" required ng-model="password" ng-trim="true" >
+											   <span class="help-block errors" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span>
 											</div>
 										  </div>
 										  <!-- ng-class="{'has-error':!myForm.passwordConfirmation.$valid}" -->
 										  <div class="form-group" >
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="passwordConfirmation">Confirm Password <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="password" class="form-control ng-isolate-scope ng-dirty ng-valid-required ng-valid ng-valid-match font-adduser" type="password" id="cnfpassword" name="passwordConfirmation" required ng-model="passwordConfirmation" ng-trim="true" password-confirm="" match-target="password" >
-											   <span class="help-block ng-hide errors" ng-show="myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span>
+											  <input type="password" class="form-control ng-valid-match font-adduser" type="password" id="cnfpassword" name="passwordConfirmation" required ng-model="passwordConfirmation" ng-trim="true" password-match="password" >
+											   <span class="help-block ng-hide errors" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span>
 											  <!--div style="color:red" ng-show="errormsg"> Password do not match </div-->
-											  <div class="help-block errors" ng-show="myForm.passwordConfirmation.$error.match">Passwords do not match.</div>
+											  <div class="help-block errors" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.passwordMatch">Passwords do not match.</div>
 										 
-											<span class="control-label col-sm-5 col-md-4 col-lg-4"  data-ng-show="emailReg2.$error.match">Passwords have to match!</span>
+										<!-- 	<span class="control-label col-sm-5 col-md-4 col-lg-4"  data-ng-show="emailReg2.$error.match">Passwords have to match!</span> -->
 											</div>
 										  </div>
 									
 										    <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="email-8">Email <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-									 <input type="email" name="mail" class="form-control font-adduser" id="email-8"  ng-model="emailField" required>
-											  <span ng-show="myForm.mail.$error.required" class="errors"> **Email field should not be empty</span>
-												<span ng-show="myForm.mail.$error.email" class="errors"> **Email is invalid</span>
+									 <input type="email" name="mail" class="form-control font-adduser" id="email-8"  ng-model="mail" required/>
+											  <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors"> **Email field should not be empty</span>
+												<span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors"> **Email is invalid</span>
 											</div>
 										  </div>
 											
