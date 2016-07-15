@@ -1,106 +1,169 @@
+
 <style>
-.ui-grid-sort-priority-number {
-font-size:0;
+.name-inline{
+width: 48%!important;
+display: inline!important;
 }
+
+
 </style>
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">
  <div ng-include="'app/views/header.html'"></div>
-      <div class="maincontainer">
+      <div class="maincontainer" style="min-height:100%;">
          <div class="maincontent">
             <div class="container-fluid">
-				<div class="content-shadow">	
-               <div class="ot-userAdministration">
-                  <ul class="nav nav-tabs">
-                     <li class="active" ><a data-toggle="tab" href="">User Administration</a></li>
+			<!-- 	<div class="content-shadow">	 -->
+               <div class="ot-deviceData devicedata-height user-admin-sc" style="background-color: #fff;margin: 0 auto 4px; height: 504px; ">
+                <!--   <ul class="nav nav-tabs">
+                     <li class="active heading-space" ><a data-toggle="tab" href="">User Administration</a></li>
                      
-                  </ul>
+                  </ul> -->
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="table-header" >
+									<p style="color:#57bdde;">User Administration</p>
+									<div class="clearfix"></div>
+							</div>
                   <div class="tab-content">
-                     <div id="User" class="tab-pane fade in active">
-                        <div class="orchestra_devices_table">
+                     <div id="User" class="tab-pane fade in active"> 
+                    <!--     <div class="orchestra_devices_table"> -->
                            <div class="row">
                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								 <div class="table-header">
-									<ul class="userAdministration-btn">
-									</ul>
+									<!-- <ul class="userAdministration-btn">
+									</ul> -->
 
 									<div class="tab-content">
 									  <div id="home" class="tab-pane fade in active">
 										<div class="device-table">
-									<div class="">
-									<a href="" class="table-AdministrationAdd" ng-click="toCreateNewUserAccount()"><img src="images/device-plus-icon.png" alt="add"/></a>
+									<!-- <div class=""> -->
+							<!-- 		<a href="" class="table-AdministrationAdd" ng-click="toCreateNewUserAccount()"><img src="images/device-plus-icon.png" alt="add"/></a> -->
 										
-									</div>
+								<!-- 	</div> -->
                                     <div class="table-responsive">
-									<div ui-grid="userTableGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%; font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)"></div>
+                                     <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+									<div ui-grid="userTableGridOptions" ui-grid-selection ui-grid-cellNav class="grid" ></div>
 
                                     </div>
+                                    <div class="col-sm-6">
+									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
+									</div>
+									<div class="col-sm-6">
+										<div   class="pagination-div">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">« Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next »</a>
+											</li>
+										  </ul>
+										</div>
+									</div>	
+									
+								<div class="col-sm-6 pg-button-div" align="center">
+								 <div class="clearfix"></div>
+								<a  class="btn btn-info ot-btn" href="" class="table-AdministrationAdd" ng-click="toCreateNewUserAccount()"><img src="images/device-plus-icon.png" alt="add"/> </a>
+								 <button class="btn btn-info update-btn ot-btn" ng-click="UpdateUserBtn()" ng-disabled="isUpdateDisabled" ng-model="isUpdateDisabled" >Edit</button>
+								 <span class="" ng-show="{{role == 'ROLE_OTADMIN'}}">
+								  <button  class="btn btn-info delete-btn ot-btn" ng-click="DeleteUserBtn()" ng-disabled="isDeleteDisabled" ng-model="isDeleteDisabled" style="width:145px;" ><!-- Delete -->{{deleteLabel}}</button>
+								</span>
+								</div>
                                  </div>
 									  </div>
 									 
 
 									</div>
                                     <div class="clearfix"></div>
-									<div class="sort-priority">{{col.sort.priority >= 0 ? col.sort.priority + 1 : ''}}</div>
+								<!-- 	<div class="sort-priority">{{col.sort.priority >= 0 ? col.sort.priority + 1 : ''}}</div> -->
                                  </div>
                               </div>
                            </div>
-                        </div>
-                     </div>
+                    <!--     </div> -->
+                 </div>
 
 
                   </div>
                </div>
-			   <div class="ot-userAdministration" ng-show="accountDiv"  >
-                  <ul class="nav nav-tabs" >
-                     <li class="active"><a >User Account</a></li>
+	
+				<!-- </div> -->
+				<!-- <div ng-include="'app/views/favourites.html'"></div> -->
+			</div>
+         </div>
+         		   <div class="ot-userAdministration user-account-cl" ng-show="accountDiv" style="margin-bottom:4px; margin-left:15px; margin-top:4px;width:98.2%" >
+                 <!--  <ul class="nav nav-tabs" >
+                     <li class="active heading-space"><a >User Account</a></li>
                    
-                  </ul>
-                  <div class="tab-content">
+                  </ul> -->
+                  <div class="table-header" >
+									<p style="color:#57bdde;">User Account</p>
+									<div class="clearfix"></div>
+					</div>
+                  <div class="tab-content"  style="margin-left: 25%;">
+                
                      <div id="account" class="tab-pane fade in active" >
-                        <div class="orchestra_devices_table">
+                      <!--   <div class="orchestra_devices_table"> -->
                            <div class="row">
-                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<form name="myForm" class="form-horizontal ng-dirty ng-valid-required ng-valid ng-valid-match" role="form" name="myForm" novalidate>
-									  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                              <div class="col-xs-12">
+									<form id="myForm" name="myForm" class="form-horizontal ng-dirty ng-valid-required ng-valid ng-valid-match" role="form" name="myForm" novalidate>
+									  <div class="col-xs-12" style="width:75%;">
+									
 										  <div class="form-group">
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="username-7">Username</label>
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="firstname">Name <span class="error-star"></span></label>
+											<div class="col-sm-7 col-md-8 col-lg-8">
+											  <input type="text" class="form-control name-inline font-adduser" name="firstname" id="firstname" placeholder="First Name"  ng-model="firstname" required ng-minlength="6" />
+											  <input type="text" class="form-control name-inline" id="lastname" placeholder="Last Name" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35);float:right;">
+												<span ng-show="myForm.firstname.$error.required" class="errors"> **Firstname field should not be empty</span>
+												<span ng-show="myForm.firstname.$error.minlength" class="errors"> **Firstname field length should not be less than 6 characters</span>
+											</div>
+										  </div>
+										  	  <div class="form-group">
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="username-7">Username <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
 									<input type="text" class="form-control" name="userName" id="username-7" ng-model="usernamefield"
-				 					style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" required ng-minlength="6">
-											  <span ng-show="myForm.userName.$error.required" style="color:red"> **User name field should not be empty</span>
-												<span ng-show="myForm.userName.$error.minlength" style="color:red"> **User name field length should not be less than 6 characters</span>
+				 					 required ng-minlength="6">
+											  <span ng-show="myForm.userName.$error.required" class="errors"> **User name field should not be empty</span>
+												<span ng-show="myForm.userName.$error.minlength" class="errors"> **User name field length should not be less than 6 characters</span>
 											</div>
 										  </div>
-										  <div class="form-group">
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="firstname">Firstname</label>
+										  <!-- ng-class="{'has-error':!myForm.password.$valid}" -->
+										  <div class="form-group" >
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="password">Password <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="text" class="form-control" id="firstname" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)">
-
+											  <input type="password" class="form-control ng-dirty ng-valid ng-valid-required font-adduser" id="password" name="password" required ng-model="password" ng-trim="true" >
+											   <span class="help-block errors" ng-show="myForm.password.$error.required">**Password field should not be empty</span>
 											</div>
 										  </div>
-										  <div class="form-group" ng-class="{'has-error':!myForm.password.$valid}">
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="password">Password</label>
+										  <!-- ng-class="{'has-error':!myForm.passwordConfirmation.$valid}" -->
+										  <div class="form-group" >
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="passwordConfirmation">Confirm Password <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="password" class="form-control ng-dirty ng-valid ng-valid-required" id="password" required="" ng-model="password" ng-trim="true" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)">
-											   <span class="help-block ng-hide" ng-show="myForm.password.$error.required">Required</span>
-											</div>
-										  </div>
-										  <div class="form-group" ng-class="{'has-error':!myForm.passwordConfirmation.$valid}">
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="passwordConfirmation">Confirm Password</label>
-											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="password" class="form-control ng-isolate-scope ng-dirty ng-valid-required ng-valid ng-valid-match" type="password" id="cnfpassword" name="passwordConfirmation" required ng-model="passwordConfirmation" ng-trim="true" password-confirm="" match-target="password" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)">
-											   <span class="help-block ng-hide" ng-show="myForm.passwordConfirmation.$error.required">Required</span>
+											  <input type="password" class="form-control ng-isolate-scope ng-dirty ng-valid-required ng-valid ng-valid-match font-adduser" type="password" id="cnfpassword" name="passwordConfirmation" required ng-model="passwordConfirmation" ng-trim="true" password-confirm="" match-target="password" >
+											   <span class="help-block ng-hide errors" ng-show="myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span>
 											  <!--div style="color:red" ng-show="errormsg"> Password do not match </div-->
-											</div>
-										  </div>
-										   <div class="help-block" ng-show="myForm.passwordConfirmation.$error.match">Passwords do not match.</div>
+											  <div class="help-block errors" ng-show="myForm.passwordConfirmation.$error.match">Passwords do not match.</div>
 										 
 											<span class="control-label col-sm-5 col-md-4 col-lg-4"  data-ng-show="emailReg2.$error.match">Passwords have to match!</span>
+											</div>
+										  </div>
+									
+										    <div class="form-group">
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="email-8">Email <span class="error-star"></span></label>
+											<div class="col-sm-7 col-md-8 col-lg-8">
+									 <input type="email" name="mail" class="form-control font-adduser" id="email-8"  ng-model="emailField" required>
+											  <span ng-show="myForm.mail.$error.required" class="errors"> **Email field should not be empty</span>
+												<span ng-show="myForm.mail.$error.email" class="errors"> **Email is invalid</span>
+											</div>
+										  </div>
 											
 									
 										  <div class="form-group" ng-show="role1">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="role">Role</label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											<select class="form-control" id="role" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)">
+											<select class="form-control font-adduser" id="role" >
 												<option  ng-repeat="item in roleList[role]" >{{item}}</option>
 											</select>
 											</div>
@@ -108,16 +171,70 @@ font-size:0;
 										   <div class="form-group" ng-show="role2">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="role">Role</label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											<select class="form-control" id="role" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)">
-												<option>{{tablerole}}</option>
+											<select class="form-control edit-role font-adduser" id="role" data-ng-model="tablerole" >
+												<!-- <option>{{tablerole}}</option> -->
+												<option  ng-repeat="item in roleList[role]" >{{item}}</option>
 											</select>
 											</div>
 										  </div>
+										   <div class="form-group" >
+											<div class="" ng-show="{{role == 'ROLE_OTADMIN'}}">
+												
+												<a href="" class=" table-emailAdd  " data-toggle="dropdown" ng-show="addCustomer" style="right: 98px;">
+												+
+													</a>
+													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd">
+														<form class="form-horizontal" name="customerform">
+															<div class="col-sm-12">
+															<br/>
+																<div class="form-group">
+																	<label for="customer_name" class="col-sm-4 control-label" style="width:24%;">Customer Name</label>
+																	
+																	<div class="col-sm-8">
+														<input type="text" class="form-control font-adduser" id="customer_name"  >
+														  <span id="customer_name-msg"  class="errors"> **Customer field should not be empty</span>
+																	</div>
+																	
+																</div>
+																<div class="user-btns">
+																 <img class="loading" src="images/ajax-loader.gif"  ng-show="dataLoadingCustomer"></img>	<button class="btn btn-info ot-btn" type="button"  ng-click="createCustomer()">Save</button>
+																	<button class="btn btn-info ot-btn" type="button" ng-click="closerCreatePop()">Cancel</button>
+																</div>
+															</div>
+														</form>
+													</div>
+										
+												</div>
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="customer-8">Customer</label>
+											<div class="col-sm-8 col-md-8 col-lg-8" >
+									<!-- <input type="text" name="company" class="form-control" id="customer-8"  > --> 
+									<select id="customer-8" name="company" class="form-control font-adduser"   >
+									<option value="">Select </option>
+									<option ng-repeat="customer in customers" ng-model="customer">{{customer}}</option>
+									</select>
+											  <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span>
+	  										</div>
+											
+										  </div>
+										  <div class="form-group"  ng-show="{{role == 'ROLE_OTADMIN'}}">
+											<label class="control-label col-sm-3 col-md-2 col-lg-2 usergroup-label" >User Group </label>
+											<div class="col-sm-7 col-md-8 col-lg-8 usergroup-list">
+											<div style="margin-top: 6px;"></div>
+												<span ng-repeat="userGroup in activeUserGroups" >
+												<span class="usergroup-label">
+												<input type="checkbox" class=" checkbox-ug userGroup font-adduser" ng-checked="selectedUserGroup.indexOf(userGroup.userGroupName) > -1" checklist-value="userGroup.userGroupName" ng-click="getCheckedUserGroup(userGroup.userGroupName)"></span>
+												<span class="usergroup-checkbox">{{userGroup.userGroupName}}</span> <br/>
+												</span>
+											</div>
+											</div>
 									  </div>
-									   <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<!--    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 										  <div class="form-group hidden-xs">
 											<label class="control-label col-sm-2 col-md-2 col-lg-2" for="username">&nbsp;</label>
-											<div class="col-sm-8 col-md-8 col-lg-8">&nbsp;</div>
+											<div class="col-sm-8 col-md-8 col-lg-8">
+											
+												&nbsp;&nbsp;
+											</div>
 										  </div>
 										  <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="lastname">Lastname</label>
@@ -134,8 +251,9 @@ font-size:0;
 													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd">
 														<form class="form-horizontal">
 															<div class="col-sm-12">
+															<br/>
 																<div class="form-group">
-																	<label for="customer_name" class="col-sm-4 control-label">Customer Name</label>
+																	<label for="customer_name" class="col-sm-4 control-label" style="width:24%;">Customer Name</label>
 																	
 																	<div class="col-sm-8">
 														<input type="text" class="form-control" id="customer_name" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" >
@@ -151,42 +269,62 @@ font-size:0;
 														</form>
 													</div>
 										
-												</div>
+												</div> 
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="customer-8">Customer</label>
-											<div class="col-sm-8 col-md-8 col-lg-8" >
+											<div class="col-sm-7 col-md-8 col-lg-8" >
 									<input type="text" name="company" class="form-control" id="customer-8" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" > 
-
-											  <span ng-show="myForm.company.$error.required" style="color:red"> **customer field should not be empty</span>
+									 <select id="customer-8" name="company" class="form-control" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" >
+									<option value="">Select </option>
+									<option ng-repeat="customer in customers" ng-selected="customer.selected" ng-model="customer">{{customer}}</option>
+									</select>
+											  <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span> 
 	  										</div>
 											
-										  </div>
+										  </div> 
 										  <div class="form-group">
 											
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="email-8">Email</label>
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="email-8"><!-- Email <span class="error-star"></span> </label>
 											<div class="col-sm-8 col-md-8 col-lg-8">
 											  <input type="email" name="mail" class="form-control" id="email-8" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" ng-model="emailField" required>
-											  <span ng-show="myForm.mail.$error.required" style="color:red"> **Email field should not be empty</span>
-												<span ng-show="myForm.mail.$error.email" style="color:red"> **Email is invalid</span>
+											  <span ng-show="myForm.mail.$error.required" class="errors"> **Email field should not be empty</span>
+												<span ng-show="myForm.mail.$error.email" class="errors"> **Email is invalid</span> 
 											</div>
 										  </div>
 										  <div class="form-group" ng-show="status">
-											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="role-8">Status</label>
+											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="role-8"><!-- Status --><!-- </label>
 											<div class="col-sm-8 col-md-8 col-lg-8">
-												<select class="form-control" id="role-8" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" >
+												 <select class="form-control" id="role-8" style="font-family: Rajdhani-Medium; font-size: 14px;color:rgb(35, 35, 35)" >
 													<option value="ACTIVE" selected>ACTIVE</option>
-												</select>
+												</select> 
 											</div>
 										  </div> 
                                          
 									  </div>
+					-->
+				<!-- 			<div class="row" style="width:100%; clear:both;">
+									   	  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									   	  <div class="form-group">
+											<label class="control-label col-sm-3 col-md-2 col-lg-2 usergroup-label" >User Group </label>
+											<div class="col-sm-7 col-md-8 col-lg-8 usergroup-list">
+											<div style="margin-top: 6px;"></div>
+												<span ng-repeat="userGroup in activeUserGroups" >
+												<span class="usergroup-label">
+												<input type="checkbox" class=" checkbox-ug userGroup" ng-checked="selectedUserGroup.indexOf(userGroup.userGroupName) > -1" checklist-value="userGroup.userGroupName" ng-click="getCheckedUserGroup(userGroup.userGroupName)"></span>
+												<span class="usergroup-checkbox">{{userGroup.userGroupName}}</span> <br/>
+												</span>
+											</div>
+											</div>
+										  </div>
+							 </div> -->
+							
 									  <div class="form-group ot-btn-data" ng-show="updateButton"> 
-										<div class="col-sm-offset-2 col-sm-10  text-center">
-										  <button type="button" class="btn btn-info ot-btn" ng-click="UpdateUser()">Save</button>
+										<div class="col-sm-10  text-center">
+										  <button type="button" class="btn btn-info ot-btn"  ng-click="UpdateUser()">Save</button>
 										  <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button>
 										</div>
 									  </div>
 									  <div class="form-group ot-btn-data" ng-show="createButton"> 
-										<div class="col-sm-offset-2 col-sm-10  text-center">
+										<div class=" col-sm-10  text-center">
 										  <button type="button" class="btn btn-info ot-btn" ng-disabled="myForm.$invalid" ng-click="CreateUser()">Save</button>
 										  
 										  <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button>
@@ -195,16 +333,40 @@ font-size:0;
 									</form>
                               </div>
                            </div>
-                        </div>
+                     <!--    </div> -->
                      </div>
 		
 		
                   </div>
                </div>
-				</div>
-				<div ng-include="'app/views/favourites.html'"></div>
-			</div>
-         </div>
       </div>
 	  <div ng-include="'app/views/favouritesPopUp.html'"></div>
 	  <div ng-include="'app/views/popUp.html'"></div>
+	  	<div class="footer-div" >
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
+	 </div>
+	 <script>
+
+/*  function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $( window ).height();
+       // alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-158);
+   
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ }) */
+</script>

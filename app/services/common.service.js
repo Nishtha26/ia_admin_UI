@@ -1580,6 +1580,94 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
-
+		service.GetActiveuserGroupsData = function(userId, token){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/usergroup/getAllActiveUserGroups",
+				    type: "POST",
+					data : {token:token},
+					headers :{
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.deleteUserAdministration = function(token,usernames,accountEnableStatus){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/usergroup/deleteUser",
+				    type: "POST",
+					data : {token:token , usernames:usernames,accountEnableStatus:accountEnableStatus},
+				/*	headers :{
+					'X-Auth-Token': token,	
+					"Content-Type" : "application/json"
+					}*/
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.updateUsergroupData = function(token , userGroupId,groupName){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/usergroup/updateUserGroup",
+				    type: "POST",
+					data : {token:token , userGroupId:userGroupId,groupName:groupName},
+				/*	headers :{
+					'X-Auth-Token': token,	
+					"Content-Type" : "application/json"
+					}*/
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.deleteUsergroupData = function(token , userGroupId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/usergroup/deleteUserGroup",
+				    type: "POST",
+					data : {token:token , userGroupId:userGroupId},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
 	return service; 		
 }])

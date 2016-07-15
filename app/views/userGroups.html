@@ -7,27 +7,72 @@ font-size:0;
 <div>
 	<div class="maincontent">
 		<div class="container-fluid">
-			<div class="content-shadow">
-			<div class="ot-userAdministration">
-			<div class="orchestra_devices_table">
+		<!-- 	<div class="content-shadow"> -->
+		   <div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
+		<!-- 	<div class="orchestra_devices_table"> -->
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="table-header">
-							<p style="color:#337ab7;">User Groups</p>
+							<p style="color:#57bdde;">User Groups</p>
 							<div class="clearfix"></div>
 						</div>
 						<div style="position: relative;top: 10px;">
 							<div class="table-responsive">
-								<div ui-grid="userGroupsGridOptions" ui-grid-selection class="grid" style="margin:0 auto;max-width:100%; font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)" ></div>
+								<div ui-grid="userGroupsGridOptions" ui-grid-selection class="grid"  ></div>
 							</div>
+							         <div class="col-sm-6">
+									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
+									</div>
+									<div class="col-sm-6">
+										<div   class="pagination-div">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">« Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next »</a>
+											</li>
+										  </ul>
+										</div>
+									</div>
 						</div>
 					</div>
 				</div>
-			</div>
+		<!-- 	</div> -->
 		</div>
-	</div>
-			<div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div>
+	<!-- </div> -->
+			<!-- <div ng-include="'app/views/favourites.html'" style="position: relative;top: 30px;"></div> -->
 		</div>
 	</div>
 </div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
+	<div class="footer-div">
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
+	 	 <script>
+
+ function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $( window ).height();
+       // alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-158);
+   
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ })
+</script>

@@ -132,7 +132,8 @@ oApp.config = {
 	],
 	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
 	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
-
+	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
+REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
@@ -740,21 +741,33 @@ oApp.config = {
 	},
 	
 	userTableGridOptions : {
-		paginationPageSizes: [1,25, 50, 75],
-		paginationPageSize: 25,
+	/*	paginationPageSizes: [1,25, 50, 75],
+		paginationPageSize: 1,
 		enableRowSelection: true,  // for selection
-		enableColumnMenus: false, //to hide ascending and descending colomn menu names
+		enableColumnMenus: false, //to hide ascending and descending column menu names
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: true,  // for searching
-		multiSelect:false,
+		multiSelect:false,*/
+		 paginationPageSizes: [20, 40, 60],
+			paginationPageSize: 20,
+			enableSorting: true,
+		    enableFilter: true,
+		    enableColResize: true,
+			enableRowSelection: true,  // for selection
+			enableColumnMenus: true, //to hide ascending and descending column menu names
+			enableRowHeaderSelection: false, // this is for check box to appear on grid options
+			enableFiltering: true,
+			enableGridMenu: true,		// for searching
+			multiSelect:true,
+			enableVerticalScrollbar :0,
 		columnDefs: [
-			{ name: 'username' ,width:150},
-			{ name: 'status',width:150 },
-			{ name: 'firstName' ,width:150},
-			{ name: 'lastName' ,width:150},			
-			{ name: 'email' ,width:150},
-			{ name: 'roleName' ,width:150},
-			{ name: 'companyName' ,width:150},
+			{ name: 'username' ,width:"14%"},
+			{ name: 'status',width:"14%" },
+			{ name: 'firstName' ,width:"14%"},
+			{ name: 'lastName' ,width:"14%"},			
+			{ name: 'email' ,width:"15%"},
+			{ name: 'roleName' ,width:"14%"},
+			{ name: 'companyName' ,width:"14.8%"},
 			
 		/*	{ name: 'username' ,width:"20%"},
 			{ name: 'status',width:"10%" },
@@ -775,10 +788,10 @@ oApp.config = {
 		enableFiltering: true,  // for searching
 		multiSelect:false,
 		columnDefs: [
-			{ name: 'userGroupId' ,width:200},
-			{ name: 'userGroupName',width:250 },
-			{ name: 'createdBy',width:200 },
-			{ name: 'createdDate',width:230 }
+			{ name: 'userGroupId' ,width:'25%'},
+			{ name: 'userGroupName',width:'25%' },
+			{ name: 'createdBy',field:"createdByName",width:'24%' },
+			{ name: 'createdDate',width:'24%' }
 			
 		]
 	},
@@ -797,18 +810,30 @@ oApp.config = {
 		]
 	},
 addUsergroupsGridOptions :{
-		paginationPageSizes: [1,25, 50, 75],
+		/*paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
 		enableColumnMenus: false, //to hide ascending and descending column menu names
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: true,  // for searching
+		multiSelect:false,*/
+	 paginationPageSizes: [20, 40, 60],
+		paginationPageSize: 20,
+		enableSorting: true,
+	    enableFilter: true,
+	    enableColResize: true,
+		enableRowSelection: true,  // for selection
+		enableColumnMenus: true, //to hide ascending and descending column menu names
+		enableRowHeaderSelection: false, // this is for check box to appear on grid options
+		enableFiltering: true,
+		enableGridMenu: true,		// for searching
 		multiSelect:false,
+		enableVerticalScrollbar :0,
 		columnDefs: [
-			{ name: 'userGroupId' ,width:200},
-			{ name: 'userGroupName',width:250 },
-			{ name: 'createdBy',field:"createdByName", width:200 },
-			{ name: 'createdDate',width:230 }		
+			{ name: 'userGroupId' ,width:"25%"},
+			{ name: 'userGroupName',width:"25%" },
+			{ name: 'createdBy',field:"createdByName", width:"24%" },
+			{ name: 'createdDate',width:"24%" }		
 		]	
 	},
 
@@ -900,32 +925,48 @@ quickrunGridOptions : {
 		]
 	},
 		allusersgroupGridOptions : {
-		paginationPageSizes: [1,25, 50, 75],
-		paginationPageSize: 25,
+//		paginationPageSizes: [1,25, 50, 75],
+		paginationPageSize: 6,
 		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,  // for searching
 		multiSelect:false,
+//		 paginationPageSizes: [20, 40, 60],
+//			paginationPageSize: 20,
+			enableSorting: true,
+		    enableFilter: true,
+//		    enableColResize: true,
+//			enableRowSelection: true,  // for selection
+//			enableColumnMenus: true, //to hide ascending and descending column menu names
+//			enableRowHeaderSelection: false, // this is for check box to appear on grid options
+			enableFiltering: true,
+//			enableGridMenu: true,		// for searching
+			multiSelect:false,
+			enableVerticalScrollbar :2,
 		columnDefs: [
-			{ name: 'username' ,width:100},
-			{ name: 'firstName',width:100 },
-			{ name: 'lastName' ,width:100},
+			{ name: 'username' ,width:"33%"},
+			{ name: 'firstName',width:"31%"},
+			{ name: 'lastName' ,width:"32%"},
 		]
 	},
 		existingusersGridOptions : {
-		paginationPageSizes: [1,25, 50, 75],
-		paginationPageSize: 25,
+//		paginationPageSizes: [1,25, 50, 75],
+		paginationPageSize: 6,
 		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,  // for searching
 		multiSelect:false,
+		enableSorting: true,
+	    enableFilter: true,
+		enableFiltering: true,
+	    enableVerticalScrollbar :2,
 		columnDefs: [
 			//{ name: 'userGroupName' ,width:100},
-			{ name: 'username',width:100 },
-			{ name: 'firstName',width:100 },
-			{ name: 'lastName' ,width:100}
+			{ name: 'username',width:"33%" },
+			{ name: 'firstName',width:"31%" },
+			{ name: 'lastName' ,width:"32%"}
 			
 			
 		]

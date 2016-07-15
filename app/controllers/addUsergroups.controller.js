@@ -6,8 +6,12 @@ oTech.controller('addUsergroupsController',
 		$rootScope.role = sessionStorage.role;
 		var userGroupId,groupName,customerId,luserId,lusername,lastName;
 		var usergroup = "";
+		$scope.loading = true;
 		$scope.assignuser= true;
 		$rootScope.slideContent();
+		
+		var deletePopupMsg="Are you want to delete this user group?";
+		$scope.currentRow;
 		window.onresize = function(event) {
 			$rootScope.slideContent();
 		}
@@ -30,31 +34,155 @@ oTech.controller('addUsergroupsController',
 		}
 		$scope.getDashBoardMenu();
 		$scope.getFavouriteReports();
+	/* pagination code  start ****************/
 		
+		var startLimit = 1;
+		$scope.itemsPerPage = 10;
+		$scope.currentPage = 0;
+		$scope.endLimit=$scope.itemsPerPage;
+		var allOfTheData;
+		$scope.totalRecords=0;
+
+
+		$scope.range = function() {
+					var rangeSize = 6;
+					var ps = [];
+					var start;
+
+					start = $scope.currentPage;
+					if ( start > $scope.pageCount()-rangeSize ) {
+					start = $scope.pageCount()-rangeSize+1;
+					}
+
+					for (var i=start; i<start+rangeSize; i++) {
+					if(i>=0) 
+					ps.push(i);
+					}
+					return ps;
+				};
+
+				$scope.prevPage = function() {
+				if ($scope.currentPage > 0) {
+					$scope.setPagePrev($scope.currentPage-1);
+					//$scope.currentPage--;
+					}
+				};
+								
+				$scope.DisablePrevPage = function() {
+					return $scope.currentPage === 0 ? "disabled" : "";
+				 };
+				 
+				 $scope.pageCount = function() {
+					return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+				};
+				
+				$scope.nextPage = function() {
+					if ($scope.currentPage < $scope.pageCount()) {
+					$scope.setPageNext($scope.currentPage+1);
+					//$scope.currentPage++;
+					}
+				};
+				
+				$scope.DisableNextPage = function() {
+					return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+				};
+				
+				 $scope.setPage = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*n);
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+				
+				 $scope.setPagePrev = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*n);
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+				 $scope.setPageNext = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*(n));
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+
+	
+		
+		/* pagination code  end ***********************/
 			$scope.addUsergroupsGridOptions = oApp.config.addUsergroupsGridOptions;
 			$scope.addUsergroupsGridOptions.onRegisterApi = function( gridApi ) { 
 			$scope.gridApi = gridApi;
 			$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
 				console.log(row);
+				
+				console.log("row select status "+row.isSelected);
+				if(row.isSelected){
+				$scope.currentRow=row.entity;
 				userGroupId = row.entity.userGroupId ;
 				groupName = row.entity.userGroupName;
-				$scope.allusersgroupData();
-				$scope.existingusersData();
+				$scope.isUpdateDisabled = false;
+				$scope.isDeleteDisabled = false;
+				$scope.isAssignDisabled = false;
+				
+				}
+				else{
+					$scope.pageReset();	
+				}
+				$scope.assignuser= false;
+//				$scope.allusersgroupData();
+//				$scope.existingusersData();
+				
 			}); 
 	     };
 
 		//  for displaying usergroups list
 		
+	 	$scope.pageReset=function(){
+			$scope.isUpdateDisabled = true;
+			$scope.isDeleteDisabled = true;
+			$scope.isAssignDisabled = true;
+				 
+		}
+	 	$scope.pageReset();
 		$scope.availableUsergroupsGrid = function(){
+			  $scope.userDataLoading = true;
 		promise = AppServices.getAvailableUsergroupsData(userId, token);
 		promise.then(
 			function(data){
-				
+				$scope.totalRecords = data.length;
 				$scope.addUsergroupsGridOptions.data = data;
-				$scope.gridApi.selection.selectRow($scope.addUsergroupsGridOptions.data[0]); 
+				allOfTheData = data;
+				$scope.addUsergroupsGridOptions.data = data.slice( 0, $scope.itemsPerPage);
+				$scope.gridApi.selection.selectRow($scope.addUsergroupsGridOptions.data[0]);
+				  $scope.userDataLoading = false;
 			},
 			function(err){
-				
+				  $scope.userDataLoading = false;
 			}
 		);
 	   }
@@ -65,13 +193,15 @@ oTech.controller('addUsergroupsController',
 	  $scope.showUsergroups =function(){
 		   $scope.userDiv =true;
 		  $scope.assignuser= false;
-	   }
+		  $scope.updateButton =false;
+		 $scope.createButton =true;
+	  }
 	   
 	   /*Cancel button */
 	   
 	  $scope.cancel =function(){
 		   $scope.userDiv =false;
-		   $scope.assignuser= true;
+		   $scope.assignuser= false;
 		   $scope.user_group="";
 	   }
 	   /*Function Call  to create New User groups */
@@ -80,11 +210,13 @@ oTech.controller('addUsergroupsController',
 		   usergroup =$("#user_group").val();
 		   var userid =userId; //$("#user_id").val();
 	       console.log("user group"+":"+usergroup + ","+"userid"+":"+userid);
+	       $scope.userDataLoading = true;
 		    promise = AppServices.addUsers(token,usergroup,userid);
 	       promise.then(
 			function(data){
 				
 				$scope.availableUsergroupsGrid();
+				$scope.pageReset();
 				if(data.status=="success"){
 				 $rootScope.Message = "successfully created the usergroup";
 				 $('#MessageColor').css("color", "green");
@@ -98,6 +230,7 @@ oTech.controller('addUsergroupsController',
 				 $('#MessagePopUp').modal('show');
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				 $scope.cancel();
+				  $scope.userDataLoading = false;
 			},
 			function(err){
 				
@@ -105,6 +238,7 @@ oTech.controller('addUsergroupsController',
 				 $('#MessageColor').css("color", "red");
 				 $('#MessagePopUp').modal('show');
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				  $scope.userDataLoading = false;
 			}
 		);
 	   }
@@ -139,14 +273,16 @@ oTech.controller('addUsergroupsController',
 
 		
 		$scope.allusersgroupData = function(){
+			$scope.userDataLoading=true;
 		promise = AppServices.GetallusersgroupData( token , userGroupId);
 		promise.then(
 		function(data){
 				$scope.allusersgroupGridOptions.data = data;
 				$scope.gridApi.selection.selectRow($scope.allusersgroupGridOptions.data[0]); //extra code
+				$scope.userDataLoading=false;
 			},
 			function(err){
-				
+				$scope.userDataLoading=false;
 			}
 		);
 	   }
@@ -174,7 +310,7 @@ oTech.controller('addUsergroupsController',
 
 		
 		$scope.existingusersData = function(){
-			
+			$scope.userDataLoading=true;
 		promise = AppServices.GetexistingusersData( token,userGroupId,groupName);
 		promise.then(
 			function(data){
@@ -182,9 +318,10 @@ oTech.controller('addUsergroupsController',
 				$scope.existingusersGridOptions.data = data;
 				
 				$scope.gridApi.selection.selectRow($scope.existingusersGridOptions.data[0]); //extra code
+				$scope.userDataLoading=false;
 			},
 			function(err){
-				
+				$scope.userDataLoading=false;
 			}
 		);
 	   }
@@ -192,7 +329,7 @@ oTech.controller('addUsergroupsController',
 				Function for adding user to already existing users
 	   */
 	   $scope.addinguserData = function(){
-		   
+		   $scope.userDataLoading=true;
 		var adddata ={userGroupName:groupName,username:lusername,lastName:lastName};
 		promise = AppServices.GetadduserData( token,groupName,luserId,customerId);
 		promise.then(
@@ -206,12 +343,13 @@ oTech.controller('addUsergroupsController',
 					//$scope.existingusersGridOptions.data.push(adddata);
 				}
 				
-				else
-					console.log(data.status);
+				else{
+					console.log(data.status);}
+				$scope.userDataLoading=false;
 				
 			},
 			function(err){
-				
+				$scope.userDataLoading=false;
 			}
 		);
 	   }
@@ -222,7 +360,7 @@ oTech.controller('addUsergroupsController',
 		   console.log(token);
 		   console.log(groupName);
 		   console.log(luserId);
-		   
+			$scope.userDataLoading=true;  
 		var adddata ={userGroupName:groupName,username:lusername,lastName:lastName};
 		promise = AppServices.GetunassignUserData( token,groupName,luserId);
 		
@@ -236,15 +374,121 @@ oTech.controller('addUsergroupsController',
 					}
 				else
 					console.log(error);
-				
+				$scope.userDataLoading=false;
 			},
 			function(err){
-				
+				$scope.userDataLoading=false;
 			}
 		);
 	   } 
 	   
 	    $scope.availableUsergroupsGrid();
 	//	$scope.allusersgroupData();
-	
+	    
+	    $scope.assignUsersLoad=function(){
+	    	  $scope.userDiv =false;
+	    	 $scope.assignuser= true;
+	    	$scope.allusersgroupData();
+			$scope.existingusersData();
+	    }
+	    
+	    $scope.UpdateUserGroupBtn=function(){
+	    	
+	    	  $scope.userDiv =true;
+			  $scope.assignuser= false;
+			  $scope.updateButton =true;
+			  $scope.createButton =false;
+			  $("#user_group").val(groupName);
+	    }
+	    $scope.updateUserGroup=function(){
+	    //	userGroupId
+	    	 /* $scope.userDiv =true;
+			  $scope.assignuser= false;
+			  $scope.updateButton =true;
+			  $scope.createButton =false;
+			  $("#user_group").val(groupName);*/
+	    	  $scope.userDataLoading = true;
+	    	var groupNameNew= $("#user_group").val();
+			promise = AppServices.updateUsergroupData( token , userGroupId,groupNameNew);
+			promise.then(
+			function(data){
+				
+				$scope.availableUsergroupsGrid();
+				$scope.pageReset();
+				if(data.status=="success"){
+				 $rootScope.Message = "successfully update the usergroup";
+				 $('#MessageColor').css("color", "green");
+				 $scope.user_group="";
+			//	 $scope.cancel();
+				 }
+				 if(data.status=="failure"){
+				 $rootScope.Message = "error occured while creating the usergroup";
+				 $('#MessageColor').css("color", "red");
+				 }
+				 $('#MessagePopUp').modal('show');
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				 $scope.cancel();
+				  $scope.userDataLoading = false;
+			},
+			function(err){
+				
+				$rootScope.Message = "error occured while creating the usergroup";
+				 $('#MessageColor').css("color", "red");
+				 $('#MessagePopUp').modal('show');
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				  $scope.userDataLoading = false;
+			}
+			);
+			
+	    }
+	    $scope.deleteUsergroup=function(){
+	    	  $scope.userDataLoading = true;
+				promise = AppServices.deleteUsergroupData( token , userGroupId);
+				promise.then(
+				function(data){
+					
+					$scope.availableUsergroupsGrid();
+					$scope.pageReset();
+					if(data.status=="success"){
+					 $rootScope.Message = "Successfully delete the usergroup";
+					 $('#MessageColor').css("color", "green");
+					 $scope.user_group="";
+				//	 $scope.cancel();
+					 }
+					 if(data.status=="failure"){
+					 $rootScope.Message = "Error occured while creating the usergroup";
+					 $('#MessageColor').css("color", "red");
+					 }
+					 $('#MessagePopUp').modal('show');
+					$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+					 $scope.cancel();
+					  $scope.userDataLoading = false;
+				},
+				function(err){
+					
+					$rootScope.Message = "Error occured while creating the usergroup";
+					 $('#MessageColor').css("color", "red");
+					 $('#MessagePopUp').modal('show');
+					$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+					  $scope.userDataLoading = false;
+				}
+				);
+				
+		    }    
+	    
+	    $scope.DeleteUserGroupBtn=function(){
+	    	if(userGroupId!=''){
+	   	 if ( window.confirm(deletePopupMsg) ) {
+	   		 $scope.deleteUsergroup();
+	        }
+	    	}
+	    	else{
+	    		$rootScope.Message = "Usergroup is not selected ";
+				 $('#MessageColor').css("color", "red");
+				 $('#MessagePopUp').modal('show');
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+	    	}
+	   		 
+	   }
+
 });

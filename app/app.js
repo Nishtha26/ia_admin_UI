@@ -131,9 +131,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     controller: 'ReportsController'
                 })
                 .state("reportCategory", {
-                    url: "/dashboard/reportsCategory",
+                	url: "/dashboard/reportsCategory",
                     templateUrl: "app/views/reportsCategory.html",
                     controller: 'ReportscategoryController'
+                   
+                }).state("reportTableau", {
+                	 url: "/dashboard/reportsTableau",
+                     templateUrl: "app/views/reportsTableau.html",
+                     controller: 'ReportsTableauController'
                 })
                 .state("myDevices", {
                     url: "/dashboard/myDevices",
@@ -436,7 +441,10 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
                 $(e.currentTarget).parent().children('a').children('em').removeClass('glyphicon-minus').addClass('glyphicon-plus');
             }
         } else if (key == 'Reports') {
-            $location.path('/dashboard/reportsCategory');
+          //  $location.path('/dashboard/reportsCategory');
+        	sessionStorage.setItem('REPORT_HOST_URL', oApp.config.REPORT_HOST_URL);
+        	$location.path('/dashboard/reportsTableau');
+        	
         } else if (key == 'Measurements') {
             $location.path('/dashboard/deviceMeasurements');
         }
