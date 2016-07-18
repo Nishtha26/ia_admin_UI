@@ -28,8 +28,12 @@
 		}">
 		</span>
 		</a>
-
+		<span ng-if="node.commandId && node.commandId!=-1">
+		<input type="text" ng-model="node.title" readonly>
+		</span>
+		<span ng-if="!node.commandId || node.commandId < 0">
 		<input type="text" ng-model="node.title">
+		</span>
 		<input type="text" class="taskLoop"  ng-model="node.loop">
 	    <input type="text" class="taskSequenceNo"  ng-model="node.sequenceNo">
 

@@ -1028,8 +1028,8 @@ quickrunGridOptions : {
 		enableFiltering: false,  // for searching
 		multiSelect:true,
 		columnDefs: [
-			{ name: 'id' ,width:100},
-			{ name: 'name' ,width:100},
+			{ name: 'id' },
+			{ name: 'name'},
 			
 		]
 	},

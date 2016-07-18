@@ -58,15 +58,25 @@ height: auto!important;
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Virtual Devices</strong>
                                                     </h4>
                                                     <div ui-grid="VirtualDevicesOptions" ui-grid-selection
-                                                         ui-grid-cellNav class="grid"></div>
+                                                         ui-grid-cellNav class="grid">
+														 <img class="loading" src="images/loading.gif"  ng-show="dataLoading1"></img>
+														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+														<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing1"></img>
+														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+														 </div>
                                                 </div>
 
                                                 <div class="col-md-3 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Real Devices</strong></h4>
                                                     <div ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav
-                                                         class="grid"></div>
+                                                         class="grid">
+														<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+														<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+														 </div>
                                                 </div>
-                                                <div class="col-md-1 arrow_center">
+                                               <!-- <div class="col-md-1 arrow_center">
                                                     <div class="ot-toggle">
                                                         <div class="Absolute-Center">
                                                             <button type="button" class=""
@@ -75,40 +85,48 @@ height: auto!important;
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <div class="col-md-4 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Devices Mapping</strong>
                                                     </h4>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
-                                                            <th>Virtual Devices</th>
+                                                           <th>Virtual Devices Id</th>
+															<th>Virtual Devices</th>
+															<th>Real Devices Id</th>
                                                             <th>Real Devices</th>
-                                                            <th>Action</th>
+                                                            <!--<th>Action</th>-->
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr ng-repeat="Device in DeviceMapping | unique:'VirtulaDeviceName'">
-                                                            <td ng-model="Device.VirtulaDeviceName">
-                                                                {{Device.VirtulaDeviceName}}
+                                                        <tr ng-repeat="Device in DeviceMapping">
+															 <td ng-model="Device.VirtualDeviceId">
+                                                                {{Device.VirtualDeviceId}}
+                                                            </td>
+															 <td ng-model="Device.VirtualDeviceName">
+                                                                {{Device.VirtualDeviceName}}
+                                                            </td>
+															 <td ng-model="Device.RealDeviceId">
+                                                                {{Device.RealDeviceId}}
                                                             </td>
                                                             <td ng-model="Device.RealDeviceName">
                                                                 {{Device.RealDeviceName}}
                                                             </td>
-                                                            <td>
+                                                           <!-- <td>
                                                                 <button type="button" class="btn btn-danger"
                                                                         ng-click="deleteDevices(Device)">Delete
                                                                 </button>
-                                                            </td>
+                                                            </td>-->
                                                         </tr>
                                                         </tbody>
                                                     </table>
                                                     <p>{{msg}}</p>
                                                 </div>
                                             </div>
-                                            <div style="width:100%;height:50px;margin:0px 40%;margin-top: 30px; ">
-                                                <a class="btn btn-info center" ng-click="CreateTestrun()"
-                                                   style="margin-left: 52px;">Next</a>
+											<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
+                                                <input type="button"  name="button" ng-click="nextTestPlan()" value="« Re-plan" class="btn btn-info"/>
+												<input type="button"  name="button" ng-click="CreateTestrun()" value="Next »" class="btn btn-info"/>
                                             </div>
                                         </div>
                                     </div>

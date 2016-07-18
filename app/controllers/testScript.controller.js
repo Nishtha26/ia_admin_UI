@@ -10,7 +10,15 @@ oTech.controller('testScriptController',
         $scope.TestRunName = $cookieStore.get('TestRunName');
         $rootScope.role = sessionStorage.getItem("role");
         console.log('Role: '+$rootScope.role)
-
+		var usecaselist = [];
+		
+		if($.cookie("testPlanName") != undefined && $.cookie("testPlanDescription") != undefined && $.cookie("usecaseId") != undefined){
+				$scope.testPlanName = $.cookie("testPlanName");
+				$scope.testPlanDescription = $.cookie("testPlanDescription");
+				$scope.usecaseVal = $.cookie("usecaseId");
+		}else{
+			$scope.usecaseVal= "1";
+		}
 
         //To remove cookies on go
         $scope.removeCookies = function () {
@@ -46,12 +54,46 @@ oTech.controller('testScriptController',
 		getTreeDataForCommands();
 		
 		 $scope.createTestPlan = function () {
+				 $cookieStore.remove('testPlanName');
+				 $cookieStore.remove('testPlanDescription');
+				 $cookieStore.remove('usecaseId');
+				 $cookieStore.remove('usecaseDescription');
                 $location.path('/dashboard/initiateTestPlan');
         }
 		
 		$scope.planTest = function () {
+				if (!$scope.testPlanName) {
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
+                $scope.validateTestPlanData("Please Enter TestPlan Name");
+                return 0;
+				}else{
+					$rootScope.testPlanName=$scope.testPlanName;
+					$.cookie("testPlanName", $scope.testPlanName);
+					$rootScope.usecaseId=$scope.usecaseVal;
+					$.cookie("usecaseId", $scope.usecaseVal);
+					//$rootScope.usecaseDescription=$scope.usecaseList.label;
+					//$.cookie("usecaseDescription", $scope.usecaseList.label);
+					$rootScope.testPlanDescription=$scope.testPlanDescription;
+					$.cookie("testPlanDescription", $scope.testPlanDescription);
+				}
+				
+				
+			
                 $location.path('/dashboard/initiateTestPlan/createTestPlan');
         }
+		
+		$scope.validateTestPlanData = function (flag) {
+
+
+            $rootScope.Message = flag;
+            $('#MessageColor').css("color", "red");
+            $('#MessagePopUp').modal('show');
+            $timeout(function () {
+                $('#MessagePopUp').modal('hide');
+            }, 2000);
+
+        };
 		
 		$scope.SelectTesplanEdit = function () {
             console.log($rootScope.Row)
@@ -282,7 +324,8 @@ oTech.controller('testScriptController',
 function getTreeDataForCommands1(data){
 	$scope.tree1 = data;
 }
-      $rootScope.tree2 = [{
+      
+	  $rootScope.tree2 = [{
         "id": 1,
         "title": 'Task Plan_name ' + new Date(),
 		"nodrop": true,
@@ -324,6 +367,8 @@ function getTreeDataForCommands1(data){
             columnDefs: [
                 {field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader},
                 {field: 'testplanName', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };
 
@@ -549,7 +594,55 @@ function getTreeDataForCommands1(data){
 
 								//alert(scope);
 							};
+							
+							 //feching usecase list
+							promise = testScriptService.fetchingUseCaseService(userId, token);
+							promise.then(
+								function (data) {
+									$scope.dataLoading = true;
+									$(".btn-info").addClass("disabled");
+									
+									$scope.usecases=data;
+									$scope.dataLoading = false;
+									$(".btn-info").removeClass("disabled");
+								},
+								function (err) {
+									$scope.dataLoading = false;
+									console.log(err);
+								}
+							);
 		
+		$scope.createCloneTestPlan = function () {
+            if ($rootScope.TestplanId != undefined) {
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
+				promise = testScriptService.createCloneTestplan(token, userId, $rootScope.TestplanId);
+                promise.then(
+                    function (data) {
+						$scope.totalRecords = data.length;
+						allOfTheData = data;
+						$scope.TestPlanOptions.data = [];
+						$scope.TestPlanOptions.data = data.slice( 0, $scope.itemsPerPage);
+						$scope.dataProcessing = false;
+						sessionStorage.setItem('TestplanId', data.testplanId);
+						//Fetching test plans
+						$(".btn-info").removeClass("disabled");
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+                
+            } else {
+                $rootScope.Message = "Please Select Test Plan";
+                $('#MessageColor').css("color", "red");
+                $('#MessagePopUp').modal('show');
+                $timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+            }
+        }
+							
 		
 	   
 });

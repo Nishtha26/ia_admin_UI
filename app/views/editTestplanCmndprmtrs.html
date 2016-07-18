@@ -43,30 +43,38 @@ height: auto!important;
 					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
 						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'"> <h4 style='font-weight:bold; color:black'><div ncy-breadcrumb></div>   </h4></div> 
-							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'"> <div style="width:100%;" ncy-breadcrumb></div> 
+							
 
 							<div class="row">
-											<div ng-include="'app/views/commonTreeDataTemplate.html'"></div>
-											<div class="col-sm-4">
-												<div class="col-sm-6">
-												<h3 style="color:#337ab7;">Virtual Devices</h3>
-												 <a href="" class="table-AdministrationAdd plus_align" ng-click="PlusVirtualDevice('sm')" style="top: 8px;right: 16px;"><img src="images/device-plus-icon.png" alt="add"></a>
-												 <div id="firstGrid" ui-grid="VirtualDevicesOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
-												</div>
+											<div ng-include="'app/views/commonTreeDataTemplateForEdit.html'"></div>
+											<div class="col-md-4">
+												 <table class="table table-bordered">
+													<thead>
+														<tr>
+														<th style="color:#337ab7;">Virtual Devices</th>
+														<th style="top:2px;right: 41px;text-align: center;"><a href="" class="table-AdministrationAdd plus_align" ng-click="PlusVirtualDevice('sm')" style="top: 2px;right: 46px;"><img src="images/device-plus-icon.png" alt="add"></a></th>
+														</tr>
+													</thead>
+												</table>
+
+												 <div id="firstGrid" ui-grid="VirtualDevicesOptions" ui-grid-selection ui-grid-cellNav class="grid">
+													<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+													<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+													<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+												 </div>
+											</div>
+											
+									</div>
+									
+									<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
+                                                <input type="button"  name="button" ng-click="testscript();" value="« Re-plan" class="btn btn-info"/>
+												<input type="button"  name="button" ng-click="editTestplan('sm');" value="Next »" class="btn btn-info"/>
+                                            </div>
 											</div>
 									</div>
-							<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
-											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
-							<div class="row">
-									<div class="col-xs-8 col-sm-6">
-										<a  class="btn btn-info" ng-click="rePlanEdit();">« Re-Plan Edit</a>
-									</div>
-									<div class="col-xs-4 col-sm-6">
-										<a  class="btn btn-info" ng-click="editTestplan('sm');">Next</a>
-									</div>
-								</div>
+							
+							
 						
 					</div>
 				  </div>

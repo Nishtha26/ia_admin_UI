@@ -57,6 +57,31 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+		
+		service.createCloneTestplan = function (token,userId, TestPlanId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/createCloneTestplan",
+                type: "POST",
+                data: {token: token, testplanId: TestPlanId, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
         // service.ViewTestRunService = function (TestRunName, userId) {
         //     var deferred = $q.defer();
         //     $.ajax({
@@ -554,7 +579,130 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+		service.getVirtualJob = function (token,userId, jobId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualJobs",
+			type: "POST",
+                data: {token: token, userId: userId, jobId:jobId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
 
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		service.getVirtualDevicesForJob = function (token,userId, jobId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualDevicesForJob",
+			type: "POST",
+                data: {token: token, userId: userId, jobId:jobId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		service.getVirtualJobsTask = function (token, userId, jobId, jobDeviceId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualJobsTask",
+				type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'jobDeviceId': jobDeviceId,
+					'jobId': jobId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                   deferred.resolve($.parseJSON(data.items));
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		service.updateCommandParametersJobDevice = function (token, userId, createData, jobId, jobDeviceId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/updateCommandParametersJobDevice",
+				type: "POST",
+				 data: createData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'jobDeviceId': jobDeviceId,
+					'jobId': jobId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                   deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		service.fetchingUseCaseService = function (userId, token) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/fetchUseCase ",
+                type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId
+                },
+                success: function (data)
+                {
+                    deferred.resolve($.parseJSON(data.items));
+                
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 
         return service;
     }])

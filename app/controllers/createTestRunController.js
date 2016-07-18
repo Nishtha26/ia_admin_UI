@@ -16,10 +16,12 @@ oTech.controller('createTestRunController',
         var TestRunName = $cookieStore.get('DependantTestRunName');
         var DeviceName = [];
         $rootScope.my_tree = {};
+		$scope.dataLoading = true;
+		$scope.dataLoading1 = true;
 		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
 			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
 		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
-		}else{
+		}else if($.cookie("uiTreeJSON")!='undefined'){
 			$scope.uiTreeJSON= JSON.parse($.cookie("uiTreeJSON"));
 		}
 		
@@ -399,6 +401,7 @@ oTech.controller('createTestRunController',
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
         promise.then(
             function (data) {
+				$scope.dataLoading1 = false;
                 $scope.VirtualDevicesOptions.data = data;
             },
             function (err) {
@@ -409,11 +412,13 @@ oTech.controller('createTestRunController',
         $scope.VirtualDevicesOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				$scope.msg="";
                 $rootScope.RowVirtualDevices = row.entity;
 
                 $rootScope.VirtualDeviceId = row.entity.deviceId;
-                $cookieStore.put('JobDeviceId', row.entity.jobDeviceId);
-                $cookieStore.put('virtulaDevice', row.entity.deviceName);
+                $cookieStore.put('JobDeviceId', row.entity.deviceId);
+				$cookieStore.put('VirtualDeviceId', row.entity.deviceId);
+                $cookieStore.put('VirtualDeviceName', row.entity.deviceName);
                 if ($scope.VirtualDevicelist1.indexOf(row.entity.deviceName) == -1) {
                     $scope.VirtualDevicelist1.push(row.entity.deviceName);
                 }
@@ -428,7 +433,7 @@ oTech.controller('createTestRunController',
             enableFiltering: true,
             enableRowHeaderSelection: false,
             enableRowSelection: true,
-            multiSelect: false,
+            multiSelect: true,
             columnDefs: [
                 {field: 'deviceId', name: 'RealDevice Id', headerCellClass: $scope.highlightFilteredHeader},
                 {field: 'deviceName', name: 'RealDevice Name', headerCellClass: $scope.highlightFilteredHeader},
@@ -437,6 +442,7 @@ oTech.controller('createTestRunController',
         promise = testScriptService.getRealDevices(token, userId);
         promise.then(
             function (data) {
+				$scope.dataLoading = false;
                 $scope.RealDevicesOptions.data = data.devicesList;
             },
             function (err) {
@@ -447,17 +453,53 @@ oTech.controller('createTestRunController',
         $scope.RealDevicesOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				$scope.dataProcessing = true;
+				$scope.msg="";
                 $rootScope.RowRealDevices = row.entity;
 
                 $rootScope.RealDeviceId = row.entity.deviceId;
-                $scope.addRealDevices = function () {
-                    var VirtualDevicName = $cookieStore.get('virtulaDevice');
-                    var RealDeviceName = row.entity.deviceName;
-                    var RealDeviceId =  row.entity.deviceId;
-                    if (VirtualDevicName != null) {
+				var VirtualDeviceName = $cookieStore.get('VirtualDeviceName');
+				var VirtualDeviceId = $cookieStore.get('VirtualDeviceId');
+				var RealDeviceName = row.entity.deviceName;
+				var RealDeviceId =  row.entity.deviceId;
+				if(row.isSelected){
+				Devices.push({
+                                'VirtualDeviceName': VirtualDeviceName,
+								'VirtualDeviceId': VirtualDeviceId,
+                                'RealDeviceName': RealDeviceName,
+                                'RealDeviceId': RealDeviceId,
+								'row' : row
+                            });
+					VirtualDevicelist.push({
+								'testplanId': TestPlanId,
+								'testrunId': 0,
+								'virtualDeviceId': VirtualDeviceId,
+								'realDeviceId': RealDeviceId
+					});
+				}else{
+					for (var i = 0; i < Devices.length; i++){
+						if(Devices[i].RealDeviceId == row.entity.deviceId){
+							Devices.splice(i, 1);
+							VirtualDevicelist.splice(i, 1);
+						}
+					}
+				}
+				$scope.DeviceMapping = Devices;
+				
+				$scope.TestRunCreate_Data(VirtualDevicelist);				 
+                $scope.dataProcessing = false;
+            });
+            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+            });
+        };
+		
+		/*$scope.addRealDevices = function () {
+                    var VirtualDeviceName = $cookieStore.get('virtulaDevice');
+					
+                    if (VirtualDeviceName != null) {
                         var dataCheck = true;
                         for (var i = 0; i < Devices.length; i++) {
-                            if (Devices[i].VirtulaDeviceName == VirtualDevicName) {
+                            if (Devices[i].VirtualDeviceName == VirtualDeviceName) {
                                 dataCheck = false;
                                 $scope.msg = "Duplicate Virtual Devices Names are Entered";
                                 break;
@@ -470,13 +512,9 @@ oTech.controller('createTestRunController',
 
                         }
                         if (dataCheck) {
-                            $rootScope.RealDevice = row.entity.deviceName;
+                            
                             $cookieStore.put('RealDevice', row.entity.deviceName);
-                            Devices.push({
-                                'VirtulaDeviceName': VirtualDevicName,
-                                'RealDeviceName': RealDeviceName,
-                                'RealDeviceId': RealDeviceId
-                            });
+                           
                             var VirtualDevicName = $cookieStore.get('virtulaDevice');
                             DeviceName.push(VirtualDevicName)
                             $scope.VirtualSelectedName = DeviceName.join(',');
@@ -484,21 +522,12 @@ oTech.controller('createTestRunController',
                         }
                         console.log(Devices)
                     }
-                    $scope.DeviceMapping = Devices;
-                }
-            });
-            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-            });
-        };
+                   
+                }*/
 
         //Create Testrun
-        $scope.TestRunCreate_Data = function () {
-            VirtualDevicelist.push({
-                "testplanId": TestPlanId,
-                "testrunId": 0,
-                "virtualDeviceId": $rootScope.VirtualDeviceId,
-                "realDeviceId": $rootScope.RealDeviceId
-            })
+        $scope.TestRunCreate_Data = function (VirtualDevicelist) {
+			
 
             $rootScope.CreateTestRun_Data = JSON.stringify({
                 "testplanVo": {"testplanId": TestPlanId},

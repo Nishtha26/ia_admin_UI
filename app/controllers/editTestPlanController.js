@@ -5,7 +5,7 @@ oTech.controller('editTestPlanController',
 
         $rootScope.editTestplanDevices = [];
         var TestPlanId = $cookieStore.get('TestPLANId');
-		
+		$scope.dataLoading = true;
 		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
 			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
 		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
@@ -58,6 +58,11 @@ oTech.controller('editTestPlanController',
             if ($rootScope.Favourites == undefined) {
                 $rootScope.getFavouriteReports();
             }
+        }
+		
+		$scope.testScript = function () {
+
+           $location.path('/dashboard/testScript');
         }
 
         $scope.getDashBoardMenu();
@@ -129,6 +134,7 @@ oTech.controller('editTestPlanController',
                 $scope.TestplanName = row.entity.testplanName;
                 $cookieStore.put('TestplanName', row.entity.testplanName);
                 $cookieStore.put('tesplanId', TestPlanId)
+				$rootScope.tesplanId = TestPlanId;
                 //Calling getTestplan service and looping data as tree structure
                 $rootScope.editTaskPlanJSON = $scope.editTaskPlanJSON;
                 // $rootScope.tree_data = $cookieStore.get('treedata');
@@ -427,7 +433,6 @@ oTech.controller('editTestPlanController',
         promise.then(
             function (data) {
 				$scope.TestplanName =$cookieStore.get('TestplanName');
-				$scope.dataLoading = true;
 				$(".btn-info").addClass("disabled");
                 $rootScope.VirtualDevicesOptions.data = data;
 
@@ -550,15 +555,17 @@ oTech.controller('editTestPlanController',
                 console.log(row.entity.deviceName)
                 $rootScope.VirtualDeviceId = row.entity.deviceId;
                 $rootScope.RowDevice = row.entity;
-                var flag = true;
-                for (var y = 0; y < $rootScope.editTestplanDevices.length; y++) {
-                    if ($rootScope.editTestplanDevices[y].name == row.entity.deviceName) {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    $rootScope.editTestplanDevices.push({"name": row.entity.deviceName});
-                }
+				
+				var deviceName = row.entity.deviceName;
+				if(row.isSelected){
+                $rootScope.editTestplanDevices.push({"name": row.entity.deviceName});
+				}else{
+					for (var i = 0; i < $rootScope.editTestplanDevices.length; i++){
+						if($rootScope.editTestplanDevices[i].name == deviceName){
+							$rootScope.editTestplanDevices.splice(i, 1);
+						}
+					}
+				}
 
             });
 
@@ -685,6 +692,7 @@ oTech.controller('editTestPlanController',
                     function (data) {
 
                         if (data.status == 'success') {
+							$rootScope.tesplanId = TestPlanId;
 							$scope.dataProcessing = false;
 							$(".btn-info").removeClass("disabled");
 //                                        $rootScope.Message = "Test Plan Updated Successfully";

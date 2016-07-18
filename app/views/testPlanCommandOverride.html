@@ -44,26 +44,26 @@ height: auto!important;
 						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div ncy-breadcrumb></div>
+							<div style="width:100%;" ncy-breadcrumb></div>
 							<div class="table-header" >
-									<p style="color:#57bdde;">Test Plan</p>
+									<p style="color:#57bdde;">Virtual Jobs Table</p>
 									<div class="clearfix"></div>
 							</div>
 								
 								 <div class="panel-body">
 									<div class="table-responsive">
-										 <table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="TestPlanOptions" ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning >
-										 
-										 </table>
-										 <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+										 <table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="VirtualJobsOptions" ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning >
+										  <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+										 </table>
+										
 									</div>
 									
 									
-									<div class="col-sm-6">
+									<!-- <div class="col-sm-6">
 									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
-									</div>
+									</div> 
 									<div class="col-sm-6">
 									<div   class="pagination-div">
 									  <ul class="pagination">
@@ -78,18 +78,10 @@ height: auto!important;
 										</li>
 									  </ul>
 									</div>
-									</div>	
+									</div> -->	
 								</div>
-								<div style="width:100%;height:50px;margin:0px 64%;margin-top: 30px; ">
-                                                <input type="button"  name="button" ng-click="createTestPlan();" value="Create Test Plan »" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="createCloneTestPlan();" value="Cloning »" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="SelectTesplanEdit();" value="Edit Test Plan »" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="testrunNext();" value="Create Test Run »" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="scheduleTestRun();" value="Test Runs »" class="btn btn-info"/>
-                                            </div>
 							</div>
 						</div>
-						
 					</div>
 				  </div>
 				 

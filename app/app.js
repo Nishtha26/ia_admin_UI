@@ -172,15 +172,15 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 				.state("testPlanCreated", {
                     url: "/dashboard/testScript/createTestPlan/testPlanCreated",
                     templateUrl: "app/views/testPlanCreated.html",
-                    controller: 'createTestRunController',
+                    controller: 'testPlanCommandOverride',
                     ncyBreadcrumb: {
                         label: '{{TestplanName}}'
                     }
                 })
 				.state("testPlanEdited", {
                     url: "/dashboard/testScript/createTestPlan/testPlanEdited",
-                    templateUrl: "app/views/testPlanEdited.html",
-                    controller: 'editTestPlanController',
+                    templateUrl: "app/views/testPlanCreated.html",
+                    controller: 'testPlanCommandOverride',
                     ncyBreadcrumb: {
                         label: 'Test Plan Edited'
                     }
@@ -241,7 +241,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     url: '/createTestRunScheduleSel',
                     views: {
                         "@": {
-                            templateUrl: 'app/views/createTestRunScheduleSel1.html',
+                            templateUrl: 'app/views/createTestRunScheduleSel.html',
                             controller: 'createTestRunGridController'
                         }
                     },

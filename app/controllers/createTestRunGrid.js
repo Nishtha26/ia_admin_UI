@@ -4,7 +4,7 @@ oTech.controller('createTestRunGridController',
         var userId = sessionStorage.getItem('userId');
         var token = sessionStorage.getItem('token');
         $rootScope.role = sessionStorage.getItem("role");
-
+		$scope.dataLoading = true;
         var TestPlanId = $cookieStore.get('TestPLANId');
 
         $scope.TestPlanId = TestPlanId;
@@ -22,6 +22,7 @@ oTech.controller('createTestRunGridController',
         promise = testScriptService.getTestRunDependantData(token, TestRunName, userId);
         promise.then(
             function (data) {
+				$scope.dataLoading = false;
                 $scope.CreateTestRunVirtualDeviceOptions.data = [data.testRunDependantData];
                 console.log($scope.CreateTestRunVirtualDeviceOptions.data)
             },
@@ -101,7 +102,7 @@ oTech.controller('createTestRunGridController',
 
 
         $scope.CreateTestRunVirtualDeviceOptions.onRegisterApi = function (gridApi) {
-
+			$scope.dataProcessing = true;
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -119,7 +120,7 @@ oTech.controller('createTestRunGridController',
                 promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
                 promise.then(
                     function (data) {
-
+						$scope.dataProcessing = false;
                         console.log(JSON.stringify(data.testRunDeviceData));
                         $scope.CreateTestRunRealDeviceOptions.data = data.testRunDeviceData;
 
@@ -139,7 +140,7 @@ oTech.controller('createTestRunGridController',
 
 
         $scope.CreateTestRunRealDeviceOptions.onRegisterApi = function (gridApi) {
-
+			$scope.dataProcessing = true;
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -154,6 +155,7 @@ oTech.controller('createTestRunGridController',
 
 
             });
+			$scope.dataProcessing = false;
         };
 
 
@@ -199,6 +201,7 @@ oTech.controller('createTestRunGridController',
                 console.log(JSON.stringify(data));
                 $scope.ScheduleVirtualDevices.data = data.testRunsForTestPlan;
 //                        console.log($scope.CreateTestRunVirtualDeviceOptions.data)
+				$scope.dataLoading = false;
             },
             function (err) {
                 console.log(err);
@@ -210,6 +213,7 @@ oTech.controller('createTestRunGridController',
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				$scope.dataProcessing = true;
                 $rootScope.RowScheduleVirtual = row.entity;
                 $scope.TestRunName = row.entity.testrunName;
                 $cookieStore.put('TestRunName', $scope.TestRunName);
@@ -225,7 +229,7 @@ oTech.controller('createTestRunGridController',
 
                         console.log(JSON.stringify(data.testRunDeviceData));
                         $scope.ScheduleRealDevices.data = data.testRunDeviceData;
-
+						$scope.dataProcessing = false;
 
                     },
                     function (err) {
