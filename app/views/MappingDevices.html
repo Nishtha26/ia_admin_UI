@@ -45,7 +45,7 @@ height: auto!important;
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                              style="max-width:100%;margin-left: 10px;">
-                                            <div ncy-breadcrumb></div>
+                                            <div style="width:100%;" ncy-breadcrumb></div>
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <h3 class="margin_0 lead" style="color:#337ab7;"><strong>TestRun</strong></h3>
@@ -54,7 +54,7 @@ height: auto!important;
                                             </div>
                                             <div class="row">
 
-                                                <div class="col-md-3 margin_top">
+                                                <div class="col-md-2 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Virtual Devices</strong>
                                                     </h4>
                                                     <div ui-grid="VirtualDevicesOptions" ui-grid-selection
@@ -66,7 +66,7 @@ height: auto!important;
 														 </div>
                                                 </div>
 
-                                                <div class="col-md-3 margin_top">
+                                                <div class="col-md-10 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Real Devices</strong></h4>
                                                     <div ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav
                                                          class="grid">
@@ -86,24 +86,26 @@ height: auto!important;
 
                                                     </div>
                                                 </div>-->
-                                                <div class="col-md-4 margin_top">
+                                                <div class="col-md-12 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Devices Mapping</strong>
                                                     </h4>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
-                                                           <th>Virtual Devices Id</th>
+                                                           <!--<th>Virtual Devices Id</th>-->
 															<th>Virtual Devices</th>
-															<th>Real Devices Id</th>
+															<th>Real Devices Id's</th>
                                                             <th>Real Devices</th>
-                                                            <!--<th>Action</th>-->
+                                                            <th>Model</th>
+															<th>Manufacturer</th>
+															<th>Network</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         <tr ng-repeat="Device in DeviceMapping">
-															 <td ng-model="Device.VirtualDeviceId">
+															<!-- <td ng-model="Device.VirtualDeviceId">
                                                                 {{Device.VirtualDeviceId}}
-                                                            </td>
+                                                            </td>-->
 															 <td ng-model="Device.VirtualDeviceName">
                                                                 {{Device.VirtualDeviceName}}
                                                             </td>
@@ -112,6 +114,15 @@ height: auto!important;
                                                             </td>
                                                             <td ng-model="Device.RealDeviceName">
                                                                 {{Device.RealDeviceName}}
+                                                            </td>
+															 <td ng-model="Device.Model">
+                                                                {{Device.Model}}
+                                                            </td>
+															 <td ng-model="Device.Manufacturer">
+                                                                {{Device.Manufacturer}}
+                                                            </td>
+															<td ng-model="Device.Network">
+                                                                {{Device.Network}}
                                                             </td>
                                                            <!-- <td>
                                                                 <button type="button" class="btn btn-danger"

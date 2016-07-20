@@ -414,7 +414,7 @@ oTech.controller('createTestRunController',
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 				$scope.msg="";
                 $rootScope.RowVirtualDevices = row.entity;
-
+				if(row.isSelected){
                 $rootScope.VirtualDeviceId = row.entity.deviceId;
                 $cookieStore.put('JobDeviceId', row.entity.deviceId);
 				$cookieStore.put('VirtualDeviceId', row.entity.deviceId);
@@ -422,6 +422,11 @@ oTech.controller('createTestRunController',
                 if ($scope.VirtualDevicelist1.indexOf(row.entity.deviceName) == -1) {
                     $scope.VirtualDevicelist1.push(row.entity.deviceName);
                 }
+				}else{
+					$cookieStore.remove('JobDeviceId');
+					$cookieStore.remove('VirtualDeviceId');
+					$cookieStore.remove('VirtualDeviceName');
+				}
             });
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
 
@@ -437,6 +442,11 @@ oTech.controller('createTestRunController',
             columnDefs: [
                 {field: 'deviceId', name: 'RealDevice Id', headerCellClass: $scope.highlightFilteredHeader},
                 {field: 'deviceName', name: 'RealDevice Name', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'model', name: 'model', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'msisdn', name: 'msisdn', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };
         promise = testScriptService.getRealDevices(token, userId);
@@ -456,18 +466,24 @@ oTech.controller('createTestRunController',
 				$scope.dataProcessing = true;
 				$scope.msg="";
                 $rootScope.RowRealDevices = row.entity;
-
                 $rootScope.RealDeviceId = row.entity.deviceId;
 				var VirtualDeviceName = $cookieStore.get('VirtualDeviceName');
 				var VirtualDeviceId = $cookieStore.get('VirtualDeviceId');
+				if(VirtualDeviceName == undefined && VirtualDeviceId == undefined){
+				$scope.msg = "Please select Virtual Device First";
+				$scope.dataProcessing = false;
+				}
 				var RealDeviceName = row.entity.deviceName;
 				var RealDeviceId =  row.entity.deviceId;
-				if(row.isSelected){
+				if(row.isSelected && VirtualDeviceName != undefined){
 				Devices.push({
                                 'VirtualDeviceName': VirtualDeviceName,
 								'VirtualDeviceId': VirtualDeviceId,
                                 'RealDeviceName': RealDeviceName,
                                 'RealDeviceId': RealDeviceId,
+								'Model': row.entity.model,
+								'Manufacturer': row.entity.manufacturer,
+								'Network': row.entity.network,
 								'row' : row
                             });
 					VirtualDevicelist.push({
@@ -540,11 +556,15 @@ oTech.controller('createTestRunController',
 
         $scope.CreateTestrun = function () {
             if ($rootScope.RowRealDevices != null && $rootScope.RowVirtualDevices != null) {
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
                 var TestRunData = $rootScope.CreateTestRun_Data;
                 promise = testScriptService.CreateTestRun(TestRunData, token, userId);
                 promise.then(
                     function (data) {
-                        var DependantTestRunName = data.NewTestRun.jobName
+                        var DependantTestRunName = data.NewTestRun.jobName;
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
                         $cookieStore.put('DependantTestRunName', DependantTestRunName);
                         $location.path('/CreateTestRun/MappingTestRun/MappingDevices/createTestRunScheduleSel');
 
@@ -556,7 +576,8 @@ oTech.controller('createTestRunController',
             }
             else {
                 $rootScope.Message = "Please Select Devices";
-
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
                 $('#MessageColor').css("color", "red");
                 console.log($('#MessageColor').css("color", "red"))
                 $('#MessagePopUp').modal('show');

@@ -5,6 +5,8 @@ oTech.controller('testPlanCommandOverride',
 		var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
 		$rootScope.role = sessionStorage.getItem("role");
+		var overrideNode;
+		var commandIndex = 0;
 		 var sendCreateData = {};
 		 var VirtualJobsOptions = [];
 		 $scope.dataLoading = true;
@@ -291,15 +293,23 @@ oTech.controller('testPlanCommandOverride',
 			
 			
 		}
-		$scope.createFrom = function (inputFiledId, commandParameters) {
+		$scope.createFrom = function (scope) {
+				overrideNode= scope;
+				var updateCommandParameters = scope.$modelValue.CommandParams;
 				$("#updateCommandParametersForm").empty();
-				$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
-				commandParameters.split(",").forEach(function(commandParameters){
+				//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
+				updateCommandParameters.split(",").forEach(function(updateCommandParameters){
 						
-							$("#updateCommandParametersForm").append('<div>'+commandParameters.split("=")[0]+' : <input name="'+commandParameters.split("=")[0]+'" type="text" value="'+commandParameters.split("=")[1]+'" /></div><br/>');
+							$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
 						
 					  });
+					  commandIndex++;
 				 
+        }
+		
+		$scope.addField = function (formID) {
+			$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+			 commandIndex++;
         }
 		
 		$scope.updateCommandParametersAction = function (formID) {
@@ -307,26 +317,12 @@ oTech.controller('testPlanCommandOverride',
 			$('#'+formID+' input').each(
 				function(index){  
 				var input = $(this);
-				//alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
-				if(input.attr('type')!='hidden')
-				updatedParametrs+=input.attr('name')+'='+input.val()+",";
+				if(input.attr('type')!='hidden' && input.val() !='' && input.val() != undefined)
+				updatedParametrs+=input.val()+",";
 			}
 			);
-			
-			var id = $('#test').val();
-			$('#'+id)[0].value=updatedParametrs;
-			var e = $.Event("keyup");
-			e.keyCode = 8; // # Some key code value
-			 $('#'+id).focus();
-			$('#'+id).trigger(e);
-			
-			
-		
-
-				 
+			 overrideNode.$modelValue.CommandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
         }
-		
-		
 		
 		
 		$scope.testPlanGoForTestRun = function () {
