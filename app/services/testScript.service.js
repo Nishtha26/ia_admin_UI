@@ -704,6 +704,96 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+
+		service.showDeviceLogDetails = function(userId, token,deviceId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/testRun/getIaDeviceLog",
+				    type: "POST",
+					data : {token:token, userId:userId,deviceId:deviceId},
+					headers :{
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+				    success: function(data)
+				    {
+						
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
+		service.showDeviceStatusDetails = function(userId, token,deviceId,jobId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/testRun/getIaDeviceStatus",
+				    type: "POST",
+					data : {token:token, userId:userId,deviceId:deviceId,jobId:jobId},
+					headers :{
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+				    success: function(data)
+				    {
+						
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.showDeviceNotificationLogDetails = function(userId, token,deviceId,jobId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/testRun/getIaDeviceNotifications",
+				    type: "POST",
+					data : {token:token, userId:userId,deviceId:deviceId,jobId:jobId},
+					headers :{
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+				    success: function(data)
+				    {
+						
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
+		service.commonServiceForJobSheduling = function(ScheduleData, userId, token){
+			var deferred = $q.defer();
+			$.ajax({
+				url: oApp.config.BASE_URL + "rest/testRun/performJobFunction",
+                type: "POST",
+                data: ScheduleData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+
         return service;
     }])
 
