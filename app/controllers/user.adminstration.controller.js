@@ -211,7 +211,7 @@ oTech.controller('userAdminstrationController',
 						$("#customer-8").val("");	
 					}
 					$scope.selectedUserGroup=[];
-					$(".errors").hide();
+				//	$(".errors").hide();
 			 }
 			 $('.table-emailAdd').click(function(){
 				
@@ -281,13 +281,22 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			$scope.status =false;
 			/* To Display Values in Form Elements  When Table Row is Clicked*/
 			$scope.activeUserGroups=	userGroupList;
-			$("#firstname").val(row[0].firstName) ;
+			//$("#firstname").val(row[0].firstName) ;
+			$scope.firstname=row[0].firstName;
+//			$scope.firstname=row[0].firstName;
 			$("#lastname").val(row[0].lastName) ;
-			$("#password").val(row[0].password) ;
-			$("#cnfpassword").val(row[0].password) ;
-			$("#email-8").val(row[0].email) ;
+//			$scope.lastname=row[0].lastName;
+//			$("#password").val(row[0].password) ;
+			$scope.password=row[0].password;
+//			$("#cnfpassword").val(row[0].password) ;
+			$scope.passwordConfirmation=row[0].password;
+			$("#orgPassword").val(row[0].password) ;// for check password is change for not
+			
+//			$("#email-8").val(row[0].email) ;
+			$scope.mail=row[0].email;
 			$('#email-8').attr('readonly', true);
-			$("#username-7").val(row[0].username) ;
+//			$("#username-7").val(row[0].username) ;
+			$scope.userName=row[0].username;
 			$("#username-7").attr('readonly', true) ;
 //			$("#customer-8").val(row.entity.companyName);
 			
@@ -302,9 +311,9 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		//	$('#customer-8').attr('readonly', true);
 			$("#role-8").val(row[0].status);
 			$scope.selectedUserGroup=row[0].userGroupName;
-			$(".errors").hide();
+//			$(".errors").hide();
 			if($scope.myForm.$invalid){
-				$(this).parent().parent().find(".errors").show();
+		//		$(this).parent().parent().find(".errors").show();
 			}
 			
 
@@ -324,6 +333,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			 var companyId        =	 $("#companyId").val();
 			 var email            =	$("#email-8").val() ;	
 			 var roleName         =	$(".edit-role").val() ;
+			 var dbPassword         =	$("#orgPassword").val() ;
 //			 var companyName      = $("#customer-8").select2().select2('val');
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
@@ -333,13 +343,15 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 					companyName=	$("#customer-8").val();
 				}
 			 var userGroupName=$scope.selectedUserGroup;
-			
+			 $scope.dataLoading=true;
 			/*To Update User in Useradminstration*/
 			if(clickedItem =="createuser"){
 			}
 			else{
 				
-				 var data ={username:username,password :password ,confirmPassword:matchingPassword,firstName:firstName,lastName:lastName,email:email,companyName:companyName,userGroupName:userGroupName,roleName:roleName};	
+			
+				if($scope.myForm.$valid){
+				 var data ={username:username,password :password ,confirmPassword:matchingPassword,firstName:firstName,lastName:lastName,email:email,companyName:companyName,userGroupName:userGroupName,roleName:roleName,dbPassword:dbPassword};	
 		          console.log(data);			    
 				promise = AppServices.UpdateUserInUserAdminstration(data,token);
 		         promise.then(
@@ -357,7 +369,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 				 $('#MessagePopUp').modal('show');
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				
-			
+				 $scope.dataLoading=false;
 		          
 			     },
 			     function(err){
@@ -365,9 +377,15 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 				 $('#MessageColor').css("color", "green");
 				 $('#MessagePopUp').modal('show');
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
-					
+				 $scope.dataLoading=false;
 			     }
 		       );
+			}	
+				else{
+					
+					$(this).parent().parent().find(".errors").show();
+					 $scope.dataLoading=false;
+				}
 				
 			} 
 		}
@@ -418,6 +436,7 @@ $scope.CreateUser =function(){
 				 $('#MessageColor').css("color", "green");
 				 $('#MessagePopUp').modal('show');
 				 $scope.cancel();
+				 $scope.userTableData();
 				 }
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				

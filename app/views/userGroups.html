@@ -27,13 +27,13 @@ font-size:0;
 										<div   class="pagination-div">
 										  <ul class="pagination">
 											<li ng-class="DisablePrevPage()">
-											  <a href ng-click="prevPage()">« Prev</a>
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
 											</li>
 											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 											  <a href="">{{n+1}}</a>
 											</li>
 											<li ng-class="DisableNextPage()">
-											  <a href ng-click="nextPage()">Next »</a>
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
 											</li>
 										  </ul>
 										</div>

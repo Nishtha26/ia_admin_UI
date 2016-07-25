@@ -19,7 +19,7 @@ font-size:0;
 								
 									<div class="table-responsive">
 										<!-- style="margin:0 auto;max-width:100%; font-family: Rajdhani-SemiBold; font-size: 14px;color:rgb(35, 35, 35)" -->
-										<div ui-grid="userTableGridOptions" ui-grid-selection class="grid" ></div>
+										<div ui-grid="userTableGridOptions" ui-grid-selection class="grid" style="overflow: hidden;"></div>
 									</div>
 							    <div class="col-sm-6">
 									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
@@ -28,13 +28,13 @@ font-size:0;
 										<div   class="pagination-div">
 										  <ul class="pagination">
 											<li ng-class="DisablePrevPage()">
-											  <a href ng-click="prevPage()">« Prev</a>
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
 											</li>
 											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 											  <a href="">{{n+1}}</a>
 											</li>
 											<li ng-class="DisableNextPage()">
-											  <a href ng-click="nextPage()">Next »</a>
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
 											</li>
 										  </ul>
 										</div>

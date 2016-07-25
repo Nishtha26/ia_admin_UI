@@ -61,18 +61,18 @@ color:rgb(35, 35, 35);
 										<div   class="pagination-div">
 										  <ul class="pagination">
 											<li ng-class="DisablePrevPage()">
-											  <a href ng-click="prevPage()">« Prev</a>
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
 											</li>
 											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 											  <a href="">{{n+1}}</a>
 											</li>
 											<li ng-class="DisableNextPage()">
-											  <a href ng-click="nextPage()">Next »</a>
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
 											</li>
 										  </ul>
 										</div>
 									</div>
-										<div class="col-sm-6 pg-button-div" align="center">
+										<div class="col-sm-6 user-pagination" align="center">
 								 <div class="clearfix"></div>
 								  <img class="loading" src="images/ajax-loader.gif" style="width: auto;height: auto;" ng-show="userDataLoading"  ></img>
 								<a  class="btn btn-info ot-btn" href="" class="table-AdministrationAdd" ng-click="showUsergroups()"><img src="images/device-plus-icon.png" alt="add"/> </a>

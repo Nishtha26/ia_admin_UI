@@ -18,7 +18,7 @@
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">	
 		
 		
-	<div ui-tree-handle class="tree-node tree-node-content">
+	<div ui-tree-handle class="tree-node tree-node-content" >
 		
 		
 		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
@@ -29,13 +29,13 @@
 		</span>
 		</a>
 		<span ng-if="node.commandId && node.commandId!=-1">
-		<input type="text" ng-model="node.title" readonly>
+		<input type="text" class="create-tp-input" ng-model="node.title" readonly>
 		</span>
 		<span ng-if="!node.commandId || node.commandId < 0">
-		<input type="text" ng-model="node.title">
+		<input type="text" class="create-tp-input" ng-model="node.title">
 		</span>
-		<input type="text" class="taskLoop"  ng-model="node.loop">
-	    <input type="text" class="taskSequenceNo"  ng-model="node.sequenceNo">
+		<input type="text" class="taskLoop create-tp-input"  ng-model="node.loop">
+	    <input type="text" class="create-tp-input" class="taskSequenceNo"  ng-model="node.sequenceNo">
 
 		<span ng-if="!node.commandId">
 			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
@@ -59,16 +59,16 @@
 
 <div class="row">
   <div class="col-sm-6">
-	<h3 style="color:#337ab7;">Available Commands</h3></div>
-<div class="col-sm-3"><h3 style="color:#337ab7;">Name</h3></div>
-<div class="col-sm-1"><h3 style="color:#337ab7;">Loop</h3></div>
-<div class="col-sm-2"><h3 style="color:#337ab7;">Seq No.</h3></div>
+	<h3 style="color:#337ab7;width:45%;">Available Commands</h3></div>
+<div class="col-sm-3" style="width: 17%;"><h3 style="color:#337ab7;">Name</h3></div>
+<div class="col-sm-1" style="width: 15%;"><h3 style="color:#337ab7;">Loop</h3></div>
+<div class="col-sm-2" ><h3 style="color:#337ab7;">Seq No.</h3></div>
   
 </div>
   
   
  <div class="row">
-<div class="col-sm-5">
+<div class="col-sm-5 create-tp-scroll-commands">
   
     
 
@@ -79,8 +79,8 @@
       </ol>
     </div>
 	</div>
-	<div class="col-sm-7">
-    <div ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" >
+	<div class="col-sm-7 create-tp-scroll-commands">
+    <div ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" style=" padding-bottom: 75px;">
       <ol ui-tree-nodes="" ng-model="tree2" >
         <li ng-repeat="node in tree2" ui-tree-node data-nodrag  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
       </ol>

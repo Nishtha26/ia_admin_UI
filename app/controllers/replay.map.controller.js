@@ -101,10 +101,11 @@ oTech.controller('replayMapsController', function($scope, $rootScope, $location,
 				MapServices.showReplayMap(deviceData,lat, lon);
 				}
 				else{
+					   MapServices.clearReplayMap();
 					     $scope.DefaultReplayMap = true ;
 	  	                $scope.rePlayMap =false ;
 					    alert('No Records Was Found')
-					 	
+					 
 				    }
 			},
 			function(err){

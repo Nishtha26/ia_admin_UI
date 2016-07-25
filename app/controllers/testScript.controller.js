@@ -53,13 +53,21 @@ oTech.controller('testScriptController',
 		
 		getTreeDataForCommands();
 		
-		 $scope.createTestPlan = function () {
-				 $cookieStore.remove('testPlanName');
-				 $cookieStore.remove('testPlanDescription');
-				 $cookieStore.remove('usecaseId');
-				 $cookieStore.remove('usecaseDescription');
-                $location.path('/dashboard/initiateTestPlan');
-        }
+
+	 $scope.createTestPlan = function() {
+						$cookieStore.remove('testPlanName');
+						$cookieStore.remove('testPlanDescription');
+						$cookieStore.remove('usecaseId');
+						$cookieStore.remove('usecaseDescription');
+						$rootScope.testPlanName = "";
+						$rootScope.testPlanDescription = "";
+						$rootScope.usecaseId = '';
+						$.removeCookie('testPlanName');
+						$.removeCookie('usecaseId');
+						$.removeCookie('testPlanDescription');
+
+						$location.path('/dashboard/initiateTestPlan');
+		}
 		
 		$scope.planTest = function () {
 				if (!$scope.testPlanName) {
@@ -123,7 +131,18 @@ oTech.controller('testScriptController',
                 }, 2000);
             }
         }
-		
+		$scope.createTestRunNext = function () {
+            if ($rootScope.RowCreateTestrun) {
+                $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
+            } else {
+                $rootScope.Message = "Please Select Test Plan";
+                $('#MessageColor').css("color", "red");
+                $('#MessagePopUp').modal('show');
+                $timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+            }
+        }
 		$scope.scheduleTestRun = function(){
 			$location.path('/Schedule');
 		}
@@ -365,10 +384,12 @@ function getTreeDataForCommands1(data){
             enableRowSelection: true,
             multiSelect: false,
             columnDefs: [
-                {field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'testplanName', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
+                {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader},
+                {name:'Name',field: 'testplanName', headerCellClass: $scope.highlightFilteredHeader},
+                {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
+            	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
+				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader},
+			
             ]
         };
 

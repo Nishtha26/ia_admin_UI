@@ -759,7 +759,9 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			enableFiltering: true,
 			enableGridMenu: true,		// for searching
 			multiSelect:true,
-			enableVerticalScrollbar :0,
+			enableScrollbars : false,
+			enableHorizontalScrollbar : 0,
+			enableVerticalScrollbar : 0,
 		columnDefs: [
 			{ name: 'username' ,width:"14%"},
 			{ name: 'status',width:"14%" },
@@ -787,6 +789,9 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: true,  // for searching
 		multiSelect:false,
+		enableScrollbars : false,
+		enableHorizontalScrollbar : 0,
+		enableVerticalScrollbar : 0,
 		columnDefs: [
 			{ name: 'userGroupId' ,width:'25%'},
 			{ name: 'userGroupName',width:'25%' },
@@ -828,7 +833,9 @@ addUsergroupsGridOptions :{
 		enableFiltering: true,
 		enableGridMenu: true,		// for searching
 		multiSelect:false,
-		enableVerticalScrollbar :0,
+		enableScrollbars : false,
+		enableHorizontalScrollbar : 0,
+		enableVerticalScrollbar : 0,
 		columnDefs: [
 			{ name: 'userGroupId' ,width:"25%"},
 			{ name: 'userGroupName',width:"25%" },

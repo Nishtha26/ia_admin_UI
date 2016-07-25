@@ -56,7 +56,7 @@ width:34px;
 			<h3 style="color:#337ab7;">Task</h3>
 				 <table class="table table-bordered">
 					<thead>
-					  <tr>
+					  <tr class="create-tp-tree-header">
 						<th>Name</th>
 						<th>Loop</th>
 						<th>Seq No.</th>
@@ -66,7 +66,7 @@ width:34px;
 				</table>
 					
 					<table class="table table-bordered">	
-						<div ui-tree id="tree2-root" >
+						<div ui-tree id="tree2-root" class="create-tp-tree-root" >
 							<ol ui-tree-nodes="" ng-model="tree2" >
 								<li ng-repeat="node in tree2"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 							</ol>

@@ -1396,3 +1396,64 @@ overflow-x: hidden;
 	font-size: 14px;
 	color:rgb(35, 35, 35);
 }
+.user-pagination{
+	clear:both;
+    margin-left: 19%;
+    text-align: center;
+    
+}
+.col-sm-3-replay{
+	width: 30%;
+}
+.replay-button{
+	
+    margin-top: 1px;
+    width: 6%;
+	
+}
+.map-dim{
+	
+    height:425px!important;
+    width:99.8%;
+	
+}
+.bg-right-block{
+	background-color: #fff!important;
+	margin: 0 auto 4px!important;
+	
+}
+#fetchReplay .select2-container .select2-choice{
+	 height: 34px;
+    line-height: 35px;
+    font-size: 15px;
+	
+}
+.create-tp-scroll-commands{
+   height: 373px;
+    overflow-y:scroll;
+border-bottom: 1px solid;
+ border-top: 1px solid;
+	
+}
+.create-tp-input{
+	width: 29%;
+}
+.create-tp-tree-header th{
+	text-align: center;
+    width: 25%;
+}
+.create-tp-tree-root input:first-child{
+	width: 26%;
+	
+	
+}
+.create-tp-tree-root input{
+	width: 23%;
+}
+.created-tp-tree-root input{
+	width: 22%;
+}
+.created-tp-tree-header th{
+	width: 25%;
+	text-align: center;
+}

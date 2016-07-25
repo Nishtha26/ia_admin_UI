@@ -89,10 +89,13 @@
 				
 				device=deviceData[i];
 				var boxText = document.createElement("div");
-				boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); ";
+			
+				boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);border-radius: 10px; ";
 				deviceDataHTML='<table class="table table-striped">'
 					+ '<thead><tr>' + '<th>Device Details</th>'
 					+ '</tr></thead>' + '<tbody>'
+					+ '<tr><td>Active Date (MM/dd/yyyy hh:mm) </td><td>' + getFormattedDate(device.lastMsgRecvTimeStamp)
+					+ '</td></tr>' 
 					+ '<tr><td>Device ID           </td><td>' + device.deviceId
 					+ '</td></tr>' + '<tr><td>Latitude            </td><td>'
 					+ device.deviceLogJson[1].Latitude + '</td></tr>'
@@ -118,9 +121,9 @@
 					,boxStyle: { 
 						background: "url('images/tipbox.gif') no-repeat"
 						/*,opacity: 0.75*/
-						,width: "280px"
+						,width: "290px"
 					}
-					,closeBoxMargin: "10px 2px 2px 2px"
+					,closeBoxMargin: "10px 19px 2px 2px"
 					,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
 					,infoBoxClearance: new google.maps.Size(1, 1)
 					,isHidden: false
@@ -180,7 +183,7 @@
         	
             var data = deviceData[i];
             markers.push({lat:data.deviceLogJson[1].Latitude,lng:data.deviceLogJson[2].Longitude});
-            console.log("Lat :"+data.deviceLogJson[1].Latitude+"Long "+data.deviceLogJson[2].Longitude)
+//            console.log("Lat :"+data.deviceLogJson[1].Latitude+"Long "+data.deviceLogJson[2].Longitude)
             var myLatlng = new google.maps.LatLng(data.deviceLogJson[1].Latitude, data.deviceLogJson[2].Longitude );
             lat_lng.push(myLatlng);
             var marker = new google.maps.Marker({
@@ -302,7 +305,7 @@
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
 
-		map = new google.maps.Map(document.getElementById("DefaultReplayMap"), mapProp);
+	var	map = new google.maps.Map(document.getElementById("DefaultReplayMap"), mapProp);
 		google.maps.event.addListenerOnce(map, 'idle', function() {
         google.maps.event.trigger(map, 'resize');
        });
@@ -310,5 +313,32 @@
 		$("#liveMapLink").removeClass("viewimage_links-active");
 		
 	}
+		service.clearReplayMap = function(){
+			var myCenter = new google.maps.LatLng(39.8333, -98.5833);
+			 var mapProp = {
+				center : myCenter,
+				zoom : 13,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+
+		var	map = new google.maps.Map(document.getElementById("rePlayMap"), mapProp);
+			google.maps.event.addListenerOnce(map, 'idle', function() {
+	        google.maps.event.trigger(map, 'resize');
+	       });
+			$("#replayMapLink").addClass("viewimage_links-active");
+			$("#liveMapLink").removeClass("viewimage_links-active");
+			
+		}
+		function getFormattedDate(strDate) {
+			 var time = '';
+		     var deviceDate = new Date(strDate);
+		     var day = deviceDate.getDate();
+		     var month = deviceDate.getMonth() + 1;
+		     var year = deviceDate.getFullYear();
+		     time += deviceDate.getHours() + ":";
+		     time +=deviceDate.getMinutes();
+		     var dateFormatted =   month + "/" +  day + "/" + year + " " + time;
+		     return dateFormatted;
+}
 	return service;
 }])

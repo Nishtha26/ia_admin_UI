@@ -295,32 +295,48 @@ oTech.controller('testPlanCommandOverride',
 		}
 		$scope.createFrom = function (scope) {
 				overrideNode= scope;
+				commandIndex=0;
 				var updateCommandParameters = scope.$modelValue.CommandParams;
 				$("#updateCommandParametersForm").empty();
 				//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
-				updateCommandParameters.split(",").forEach(function(updateCommandParameters){
+				updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
 						
-							$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+					//		$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+//console.log("updateCommandParameters"+updateCommandParameters);
+					if (updateCommandParameters.indexOf("=") >= 0){
 						
+						var commandParam=updateCommandParameters.split('=');
+						console.log("commandParam: "+commandParam);
+						$("#updateCommandParametersForm").append('<div><input name="commandLabel[' + i + '].Name" type="text" value="'+commandParam[0]+'" />=<input name="command[' + i + '].Name" type="text" value="'+commandParam[1]+'" /></div><br/>');
+
+					}
+				//	$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+					commandIndex=i;
 					  });
-					  commandIndex++;
+					  
 				 
         }
 		
 		$scope.addField = function (formID) {
-			$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+//			$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
 			 commandIndex++;
+			$("#updateCommandParametersForm").append('<div><input name="commandLabel[' + commandIndex + '].Name" type="text" value="" />=<input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+			$("input[name='commandLabel["+ commandIndex +"].Name']").focus(); 
         }
 		
 		$scope.updateCommandParametersAction = function (formID) {
 			var updatedParametrs = "";
-			$('#'+formID+' input').each(
+		/*	$('#'+formID+' input').each(
 				function(index){  
 				var input = $(this);
 				if(input.attr('type')!='hidden' && input.val() !='' && input.val() != undefined)
 				updatedParametrs+=input.val()+",";
 			}
-			);
+			);*/
+			for(var index=0;index<=commandIndex;index++){
+				updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
+			}
+		//	console.log("updatedParametrs"+updatedParametrs);
 			 overrideNode.$modelValue.CommandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
         }
 		

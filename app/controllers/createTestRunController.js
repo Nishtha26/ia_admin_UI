@@ -18,6 +18,8 @@ oTech.controller('createTestRunController',
         $rootScope.my_tree = {};
 		$scope.dataLoading = true;
 		$scope.dataLoading1 = true;
+		$scope.isPlanDetialView = false;
+		$scope.dataProcessingCommandParams=false;
 		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON !='undefined')	 {
 			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
 		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
@@ -395,7 +397,11 @@ oTech.controller('createTestRunController',
             enableRowSelection: true,
             multiSelect: false,
             columnDefs: [
-                {field: 'deviceName', name: 'Device Name', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceName',
+                	name: 'Device Name',
+                	headerCellClass: $scope.highlightFilteredHeader,
+                	cellTemplate:' <div  >{{row.entity.deviceName}}<div data-toggle="modal" data-target="#CommandDetails"   class="btn btn-info view-detail-link" ng-click="grid.appScope.viewTaskDetail()" >View Test Plan</div></div>'
+                	},
             ]
         };
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
@@ -416,16 +422,22 @@ oTech.controller('createTestRunController',
                 $rootScope.RowVirtualDevices = row.entity;
 				if(row.isSelected){
                 $rootScope.VirtualDeviceId = row.entity.deviceId;
+             
                 $cookieStore.put('JobDeviceId', row.entity.deviceId);
 				$cookieStore.put('VirtualDeviceId', row.entity.deviceId);
                 $cookieStore.put('VirtualDeviceName', row.entity.deviceName);
                 if ($scope.VirtualDevicelist1.indexOf(row.entity.deviceName) == -1) {
                     $scope.VirtualDevicelist1.push(row.entity.deviceName);
                 }
+                
 				}else{
 					$cookieStore.remove('JobDeviceId');
 					$cookieStore.remove('VirtualDeviceId');
 					$cookieStore.remove('VirtualDeviceName');
+				}
+				if($scope.isPlanDetialView){
+					$scope.taskDetail();
+					
 				}
             });
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
@@ -620,6 +632,66 @@ oTech.controller('createTestRunController',
 
         }
 
+		 var VirtualJobsOptions = [];
+			var JobId =  $cookieStore.get('TestPLANId');
+	        promise = testScriptService.getVirtualJob(token, userId, JobId);
+					promise.then(
+	                    function (data) {
+						
+							sessionStorage.setItem('JobId', data.jobId);
+							for (var i = 0; i < data.length; i++){
+							VirtualJobsOptions.push({
+	                                'jobId': data[i].jobId,
+									'jobName': data[i].jobName,
+	                                'jobDescription': data[i].jobDescription,
+	                                'jobCreateDate': data[i].jobCreateDate,
+									'jobCreatedByName': data[i].jobCreatedByName,
+									'useCaseName': data[i].useCaseName,
+									
+	                            });
+							}
+							
+							$scope.VirtualJob = VirtualJobsOptions;
+							
+							$(".btn-info").removeClass("disabled");
+	                    },
+	                    function (err) {
+	                        console.log(err);
+	                    }
+	                );
+        
+					$scope.viewTaskDetail=function(){
+						
+						$scope.isPlanDetialView=true;
+					}
+					  $scope.taskDetail=function(){  
+//					function taskDetail(){
+					$scope.dataProcessingCommandParams = true;
+					$scope.isPlanDetialView=false;
+						$(".btn-info").addClass("disabled");
+		                //$rootScope.RowCreateTestrun = row.entity;	
+		                $('.treeSection').css("display", "none");
+						var jobDeviceId =  $rootScope.RowVirtualDevices.jobDeviceId;
+						var jobId =  $rootScope.RowVirtualDevices.jobId;
+					
+						promise = testScriptService.getVirtualJobsTask(token, userId, jobId, jobDeviceId);
+						promise.then(
+		                    function (data) {
+		                        $scope.uiTreeJSON = data.jobVO;
+								$rootScope.uiTreeJSON = data.jobVO;
+								$scope.dataProcessingCommandParams = false;
+								$(".btn-info").removeClass("disabled");
+								$('.treeSection').css("display", "block");
+		                    },
+		                    function (err) {
+		                    	$scope.dataProcessingCommandParams = false;
+		                        console.log(err);
+		                    }
+		                );
+						
+						
+					}
+					
 
     });
 

@@ -741,6 +741,34 @@ oTech.controller('editTestPlanController',
 		$scope.testPlanGoForTestRun = function(){
 			$location.path('/CreateTestRun/MappingTestRun/MappingDevices');
 		}
+		 var VirtualJobsOptions = [];
+		var JobId =  $cookieStore.get('TestPLANId');
+        promise = testScriptService.getVirtualJob(token, userId, JobId);
+				promise.then(
+                    function (data) {
+						$scope.dataLoading = false;
+						sessionStorage.setItem('JobId', data.jobId);
+						for (var i = 0; i < data.length; i++){
+						VirtualJobsOptions.push({
+                                'jobId': data[i].jobId,
+								'jobName': data[i].jobName,
+                                'jobDescription': data[i].jobDescription,
+                                'jobCreateDate': data[i].jobCreateDate,
+								'jobCreatedByName': data[i].jobCreatedByName,
+								'useCaseName': data[i].useCaseName,
+								
+                            });
+						}
+						
+						$scope.VirtualJob = VirtualJobsOptions;
+						$scope.dataLoading = false;
+						$(".btn-info").removeClass("disabled");
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+				
     })
 
 

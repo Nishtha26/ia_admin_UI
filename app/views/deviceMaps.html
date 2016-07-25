@@ -8,7 +8,7 @@
 	<div class="maincontainer">
 		<div class="maincontent" style="width:98%;">
 			<div class="container-fluid">
-				<div class="orch-rep-dashboards boxshdw" style="margin-bottom:10px;">
+				<div class="orch-rep-dashboards boxshdw devicedata-height" style="margin-bottom:10px;">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:650px;">
 							<div class="device_availability_map boxshdw">
@@ -24,22 +24,22 @@
 									</div>
 								</div>
 								<div class="device_availability_map" ng-show ="ShowLiveMap" style="heigth:1000px;">
-									<div id="Map"  style="height:540px;width:1500px"></div>
+									<div id="Map"  class="map-dim"></div>
 									
 								</div>
 <div class="device_availability_map"  ng-show ="ShowMapDiv " style="heigth:1000px;">
  <div class="row" style="margin-left:5px;">
 						
-						<div class="col-sm-3"><h4>Device</h4></div>
-						<div class="col-sm-3"><h4>From</h4></div>
-						<div class="col-sm-3"><h4>To</h4></div>
+						<div class="col-sm-3 col-sm-3-replay"><h4>Device</h4></div>
+						<div class="col-sm-3 col-sm-3-replay"><h4>From</h4></div>
+						<div class="col-sm-3 col-sm-3-replay"><h4>To</h4></div>
 						
   </div>
 					
 					
 <form id="fetchReplay" >
 						 
-	 <div class="col-sm-3">
+	 <div class="col-sm-3 col-sm-3-replay">
 				<div class="form-group">
 			<select id="deviceId" name="deviceId" class="form-control">
 
@@ -50,7 +50,7 @@
  				</div>
  	 </div>
  						
-	 <div class="col-sm-3">
+	 <div class="col-sm-3 col-sm-3-replay">
 				<div class="form-group">
 					   <div class="input-group date " id="datetimepicker1">
 							<input id="fromDate" name="fromDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
@@ -59,7 +59,7 @@
 				</div>
 	 </div>
 	 
-	 <div class="col-sm-3">
+	 <div class="col-sm-3 col-sm-3-replay">
 			    <div class="form-group">
 					 <div class="input-group date " id="datetimepicker2">
 							<input id="toDate" name="toDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
@@ -68,22 +68,50 @@
 				</div>
 	 </div>
 							
-	 <div class="col-sm-3">															
-				<input class="btn btn-success btn-sm" type="button" value="Replay" ng-click="checkAjaxCall()">								
+	 <div class="col-sm-3 replay-button">															
+				<input class="btn btn-success btn-sm" type="button" value="Replay" ng-click="checkAjaxCall()">	
+				 <img class="loading" src="images/ajax-loader.gif" style="width: auto;height: auto;" ng-show="dataLoading"  ></img>							
 	 </div>
 						
 
 </form>	
-								<div id="DefaultReplayMap" ng-show ="one" style="height:425px;width:1500px"></div>
-								<div id="rePlayMap" ng-show ="two" style="height:425px;width:1500px"></div>
+								<div id="DefaultReplayMap" ng-show ="one" class="map-dim"></div>
+					 		<div id="rePlayMap" ng-show ="two" class="map-dim"></div> 
 							    </div>
 							</div>
 						</div>
 					</div>
 				
 				</div>
-				<div ng-include="'app/views/favourites.html'" ></div>
+				<!-- <div ng-include="'app/views/favourites.html'" ></div> -->
 			</div>
 		</div>
 	</div>
 	<div ng-include="'app/views/favouritesPopUp.html'"></div>
+		<div class="footer-div">
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
+	  <script>
+
+ function setEqualHeight(e) {
+	// alert("sdf");
+     var t = e.height();
+   //  e.each(function () {
+         currentHeight = $( window ).height();
+       // alert("t:"+t+"currentHeight"+currentHeight)
+         if (currentHeight > t) {
+        	 
+             t = currentHeight
+         }
+   //  });
+     $(".devicedata-height").height(currentHeight-158);
+   
+ }
+ $(window).resize(function () {
+	
+	    setEqualHeight( $('.ui-grid-viewport') );
+	});
+ $(document).ready(function () {
+     setEqualHeight($(".ui-grid-viewport"))
+ })
+</script>

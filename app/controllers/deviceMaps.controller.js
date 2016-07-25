@@ -8,6 +8,9 @@ oTech.controller('deviceMapsController', function($scope, $rootScope, $location,
     };	
 	var token = sessionStorage.token;
 	var userId = sessionStorage.userId;
+	$scope.loading = true;
+
+	
 			/*
 			To get dashboard menu data
 		*/
@@ -30,6 +33,7 @@ $scope.getDashBoardMenu = function(){
 	/*To Make live map as ddefault visible*/	
 	
 	$scope.ShowLiveMap = true;
+	
 	/*
 		To get Map data
 		
@@ -48,6 +52,8 @@ $scope.ShowReplay = function(){
 			  });//script
 			});
 		MapServices.defaultRepalyMap();
+		$scope.dataLoading = false;
+		
 }
 /*Show Live Map*/
 
@@ -132,10 +138,12 @@ $(function() {
 			function(data){
 				$scope.DeviceList = data;
 				$scope.devices = data.devicesList;
+				$scope.dataLoading = false;
 				
 			},
 			function(err){
 				console.log(err);
+				$scope.dataLoading = false;
 			}
 		);
 	}
@@ -154,10 +162,11 @@ $scope.checkAjaxCall =function(){
 		     $scope.ShowMapDiv = true;
 		     $scope.one =false;
 		     $scope.two =true;
-		
+		     $scope.dataLoading=true;
 		promise = MapServices.getreplay(token,data);
 		promise.then(
-			function(data){  if(data.length > 0){
+			function(data){  
+				if(data.length > 0){
 				var lat = [];
 				var lon = [];
 				var deviceData = [];
@@ -171,12 +180,16 @@ $scope.checkAjaxCall =function(){
 				MapServices.showReplayMap(deviceData,lat, lon);
 				}
 				else{
+					  MapServices.clearReplayMap();
 					 alert('No Records Was Found')
-					 	$scope.one =true;
-		                $scope.two =false;
+					 //	$scope.one =true;
+		                $scope.two =true;
+		              
 				    }
+				$scope.dataLoading=false;
 			},
 			function(err){
+				$scope.dataLoading=false;
 			}
 		);
 }

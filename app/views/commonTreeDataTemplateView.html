@@ -15,7 +15,7 @@ width:34px;
 	
 		
 	
-	<div class="tree-node">
+	<div class="tree-node" >
 		
 		
 		<div class="tree-node-content">
@@ -27,12 +27,25 @@ width:34px;
 		}">
 		</span>
 		</a>
-
-		<input type="text" ng-model="node.Name"></td>
-		<td><input type="text" class="taskLoop"  ng-model="node.Loop"></td>
-	    <td><input type="text" class="taskSequenceNo"  ng-model="node.Sequence"></td>
+		<span ng-if="node.CommandParams == ''">
+		
+<label class="templete-td-label" ng-model="node.Name"> {{node.Name}}</label>
+		</span>
 		<span ng-if="node.CommandParams != ''">
-		<td> <input type="text"  ng-model="node.CommandParams"></td>
+		<label class="templete-td-label" ng-model="node.Name">{{node.Name}} </label>
+		</span></td>
+		<td><label class="templete-td-label taskLoop" ng-model="Name"> {{node.Loop}}</label></td>
+	    <td><label class="templete-td-label taskSequenceNo" ng-model="node.Sequence"> {{node.Sequence}} </label></td>
+		<span ng-if="node.CommandParams != ''">
+			<td> 
+			<label class="templete-td-label templete-td-params" id="commandId{{node.commandId}}"   ng-model="node.CommandParams">{{node.CommandParams}} </label>
+				
+			</td>
+			<td> 
+			</td>
+			
+			
+		
 		 </span>
 		</tr>
 		</div>
@@ -50,10 +63,10 @@ width:34px;
 	
 </script>
 
-									<div class="col-md-8">
+									<div class="col-md-13">
 												<table class="table table-bordered">
 													<thead>
-														<tr class="create-tp-tree-header">
+														<tr>
 														<th>Name</th>
 														<th>Loop</th>
 														<th>Seq No.</th>
@@ -63,7 +76,7 @@ width:34px;
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" class="create-tp-tree-root" >
+														<div ui-tree id="tree2-root" >
 														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
 														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>

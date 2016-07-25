@@ -44,8 +44,48 @@ height: auto!important;
 						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'"> <div style="width:100%;" ncy-breadcrumb></div> 
-							
-
+							        <div class="row">
+                                               <div class="col-md-12 margin_top">
+                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Test Plan</strong>
+                                                    </h4>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                           <th>Test Plan Id</th>
+															<th>Test Plan Name</th>
+															<th>Test Plan Description</th>
+                                                            <th>Test Plan Created On</th>
+                                                            <th>Test Plan Created By</th>
+															<th>Use case Name</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:normal;">
+                                                        <tr ng-repeat="testPlan in VirtualJob">
+															 <td ng-model="testPlan.jobId">
+                                                                {{testPlan.jobId}}
+                                                            </td>
+															 <td ng-model="testPlan.jobName">
+                                                                {{testPlan.jobName}}
+                                                            </td>
+															 <td ng-model="testPlan.jobDescription">
+                                                                {{testPlan.jobDescription}}
+                                                            </td>
+                                                            <td ng-model="testPlan.jobCreateDate">
+                                                                {{testPlan.jobCreateDate}}
+                                                            </td>
+															<td ng-model="testPlan.jobCreatedByName">
+                                                                {{testPlan.jobCreatedByName}}
+                                                            </td>
+															<td ng-model="testPlan.useCaseName">
+                                                                {{testPlan.useCaseName}}
+                                                            </td>
+															
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                       </div>
+<br/>
 							<div class="row">
 											<div ng-include="'app/views/commonTreeDataTemplateForEdit.html'"></div>
 											<div class="col-md-4">

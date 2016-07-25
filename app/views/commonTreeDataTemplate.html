@@ -65,7 +65,7 @@ width:34px;
 									<div class="col-md-13">
 												<table class="table table-bordered">
 													<thead>
-														<tr>
+														<tr class="created-tp-tree-header">
 														<th>Name</th>
 														<th>Loop</th>
 														<th>Seq No.</th>
@@ -75,7 +75,7 @@ width:34px;
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" >
+														<div ui-tree id="tree2-root" class="created-tp-tree-root input" >
 														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
 														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>
