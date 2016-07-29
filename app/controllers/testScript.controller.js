@@ -144,6 +144,7 @@ oTech.controller('testScriptController',
             }
         }
 		$scope.scheduleTestRun = function(){
+			$cookieStore.remove('TestPLANId');
 			$location.path('/Schedule');
 		}
 		
@@ -181,6 +182,10 @@ oTech.controller('testScriptController',
             } else {
                 $location.path('/dashboard/testScript/EditTestplan');
             }
+        }
+		
+		$scope.quickRun = function () {
+               $location.path('/dashboard/quickRun');
         }
 
         $scope.testRunGo = function () {
@@ -384,11 +389,11 @@ function getTreeDataForCommands1(data){
             enableRowSelection: true,
             multiSelect: false,
             columnDefs: [
-                {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader},
-                {name:'Name',field: 'testplanName', headerCellClass: $scope.highlightFilteredHeader},
+                {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader,headerCellClass: $scope.highlightFilteredHeader},
+                {name:'Name',field: 'testplanName',headerCellClass: $scope.highlightFilteredHeader},
                 {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
             	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
-				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader},
+				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:' <div>{{row.entity.createdByName}}<div style ="float: right;margin-right: 10px;" class="btn btn-primary" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})" >View Test Runs</div></div>'},
 			
             ]
         };
@@ -663,6 +668,32 @@ function getTreeDataForCommands1(data){
                 }, 2000);
             }
         }
+		
+		$scope.viewTestPlanTestRun = function (TestPlanId) {
+			$cookieStore.put('TestPLANId', TestPlanId);
+			promise = testScriptService.getTestRuns(token, TestPlanId, userId);
+			promise.then(
+				function (data) {
+					if(data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0){
+					$rootScope.Message = "No Test Run Exists";
+					$('#MessageColor').css("color", "red");
+					$('#MessagePopUp').modal('show');
+					$timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+				$scope.dataLoading = false;
+					}else{
+						$rootScope.getTestRuns = data.testRunsForTestPlan;
+						$location.path('/Schedule');
+					}
+					
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
+			
+		}
 							
 		
 	   

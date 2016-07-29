@@ -211,18 +211,37 @@ oTech.controller('createTestRunGridController',
             ]
         };
 
-        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
-        promise.then(
-            function (data) {
-                console.log(JSON.stringify(data));
-                $scope.ScheduleVirtualDevices.data = data.testRunsForTestPlan;
-//                        console.log($scope.CreateTestRunVirtualDeviceOptions.data)
+        
+		
+		if($scope.TestPlanId != undefined){
+			if($rootScope.getTestRuns != undefined){
 				$scope.dataLoading = false;
-            },
-            function (err) {
-                console.log(err);
-            }
-        );
+				$scope.ScheduleVirtualDevices.data = $rootScope.getTestRuns;
+			}else{
+			promise = testScriptService.getTestRuns(token, TestPlanId, userId);
+			promise.then(
+				function (data) {
+					$scope.dataLoading = false;
+					$scope.ScheduleVirtualDevices.data = data.testRunsForTestPlan;
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
+			}
+		} else {
+				promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+				promise.then(
+					function (data) {
+						console.log(JSON.stringify(data));
+						$scope.ScheduleVirtualDevices.data = data.testRunsForTestPlan;
+						$scope.dataLoading = false;
+					},
+					function (err) {
+						console.log(err);
+					}
+				);
+		}
 
         $scope.ScheduleVirtualDevices.onRegisterApi = function (gridApi) {
 

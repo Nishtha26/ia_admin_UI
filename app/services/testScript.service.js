@@ -578,6 +578,29 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+		
+		service.getTestRuns = function (token,TestPlanId, userId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testRun/getTestRuns",
+                type: "POST",
+                data: {token: token, userId: userId,testPlanId:TestPlanId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 
 		service.getVirtualJob = function (token,userId, jobId) {
             var deferred = $q.defer();
