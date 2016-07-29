@@ -230,6 +230,7 @@ oTech
 
 					/* call to grid view for device list */
 					$scope.createNewDatasource = function() {
+						$scope.devicesMeasurementGridOptions.data = [];
 						$scope.devicesMeasurementGridOptions.data = allOfTheData;
 					}
 
@@ -238,6 +239,7 @@ oTech
 					$scope.getmeasurementList();
 					$scope.showDeviceList(link);
 					$scope.openDevicedata = function(e) {
+						$scope.devicesMeasurementGridOptions.data = [];
 						$scope.dataLoading = true;
 						link = $(e.currentTarget).text();
 						$scope.listItem = link;

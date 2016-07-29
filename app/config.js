@@ -130,8 +130,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://localhost:8080/IAPORTAL/',
+	MEASUREMENT_URL :'http://localhost:8080/IAPORTAL/rest/measurement/',
 	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
 REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
@@ -470,9 +470,9 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			{headerName: "deviceTime", field: "deviceTime"},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
 			{headerName: "nodeType", field: "nodeType"},
-			{headerName: "serverIp", field: "serverIp"},
+			{headerName: "serverIP", field: "serverIP"},
 			{headerName: "serverPort", field: "serverPort"},
-			{headerName: "clientIp", field: "clientIp"},
+			{headerName: "clientIP", field: "clientIP"},
 			{headerName: "clientPort", field: "clientPort"},
 			{headerName: "timeDuration", field: "timeDuration"},
 			{headerName: "dataTransfered", field: "dataTransfered"},
@@ -644,7 +644,7 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			{headerName: "testcaseId", field: "testcaseId"},
 			{headerName: "ipAddress", field: "ipAddress"},
 			{headerName: "bytes", field: "bytes"},
-			{headerName: "sentOrRevice", field: "sentOrRevice"}
+			{headerName: "sentOrReceive", field: "sentOrReceive"}
 			
 		],
 		columnDefsvideo : [
@@ -893,7 +893,7 @@ quickrunGridOptions : {
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: true,  // for searching
-		multiSelect:false,
+		multiSelect:true,
 		columnDefs: [
 			{ name: 'deviceId' ,width:250},
 			{ name: 'deviceName',width:250 },
@@ -924,7 +924,7 @@ quickrunGridOptions : {
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: true,  // for searching
-		multiSelect:false,
+		multiSelect:true,
 		columnDefs: [
 			
 			{ name: 'commandName',width:"100%" }
