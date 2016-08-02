@@ -1429,10 +1429,11 @@ overflow-x: hidden;
 	
 }
 .create-tp-scroll-commands{
-   height: 373px;
-    overflow-y:scroll;
-border-bottom: 1px solid;
- border-top: 1px solid;
+ height: 373px;
+ overflow: auto;
+ border-bottom: 1px solid #ccc;
+ border-top: 1px solid #ccc;
+ padding: 10px; 
 	
 }
 .create-tp-input{
@@ -1451,9 +1452,40 @@ border-bottom: 1px solid;
 	width: 23%;
 }
 .created-tp-tree-root input{
-	width: 22%;
+	width: 21%;
+}
+.edit-tp-tree-root input{
+	width: 23%;
 }
 .created-tp-tree-header th{
 	width: 25%;
 	text-align: center;
 }
+.tp-loop-wd{
+	margin-left: 10%;
+	width: 9%!important;
+	margin-right: 10%;
+	
+	
+}
+.tp-seq-wd{
+	margin-left: 10%;
+	width: 9%!important;
+	margin-right: 10%;
+}
+.ed-tp-loop-seq-wd{
+	margin-left: 8%;
+	width: 8%!important;
+	margin-right: 8%;
+	
+	
+}
+
+.create-tp-label{
+  background-color: white;
+    border: 2px solid #fff;
+    }
+    .ctp-mar-left{
+    margin-left: 4%!important;
+   
+    }

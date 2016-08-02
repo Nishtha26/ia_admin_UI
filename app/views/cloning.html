@@ -29,13 +29,15 @@
 		</span>
 		</a>
 		<span ng-if="node.commandId && node.commandId!=-1">
-		<input type="text" class="create-tp-input" ng-model="node.title" readonly>
+	<!--	<input type="text" class="create-tp-input" ng-model="node.title" readonly>-->
+<label class="create-tp-input create-tp-label" ng-model="node.title">{{node.title}}</label>
 		</span>
 		<span ng-if="!node.commandId || node.commandId < 0">
 		<input type="text" class="create-tp-input" ng-model="node.title">
 		</span>
-		<input type="text" class="taskLoop create-tp-input"  ng-model="node.loop">
-	    <input type="text" class="create-tp-input" class="taskSequenceNo"  ng-model="node.sequenceNo">
+<span class="create-tp-span">
+		<input type="text" class="taskLoop tp-loop-wd"  ng-model="node.loop"></span>
+	    <input type="text" class="taskSequenceNo tp-seq-wd"  ng-model="node.sequenceNo">
 
 		<span ng-if="!node.commandId">
 			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>

@@ -29,8 +29,8 @@ width:34px;
 		</a>
 
 		<input type="text" ng-model="node.Name"></td>
-		<td><input type="text" class="taskLoop"  ng-model="node.Loop"></td>
-	    <td><input type="text" class="taskSequenceNo"  ng-model="node.Sequence"></td>
+		<td><input type="text" class="taskLoop ed-tp-loop-seq-wd"  ng-model="node.Loop"></td>
+	    <td><input type="text" class="taskSequenceNo ed-tp-loop-seq-wd"  ng-model="node.Sequence"></td>
 		<span ng-if="node.CommandParams != ''">
 		<td> <input type="text"  ng-model="node.CommandParams"></td>
 		 </span>
@@ -63,7 +63,7 @@ width:34px;
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" class="create-tp-tree-root" >
+														<div ui-tree id="tree2-root" class="edit-tp-tree-root" >
 														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
 														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>
