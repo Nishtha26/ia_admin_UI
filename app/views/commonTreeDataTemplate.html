@@ -9,6 +9,11 @@ width:34px;
 .nodrop {
     background-color: red;
 }
+.tp-seq-wd {
+    margin-left: 8%;
+    width: 9%!important;
+    margin-right: 8%;
+}
 </style>
 
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">	
@@ -27,20 +32,18 @@ width:34px;
 		}">
 		</span>
 		</a>
-		<span ng-if="node.CommandParams == ''">
-		<input type="text" ng-model="node.Name">
-		</span>
-		<span ng-if="node.CommandParams != ''">
-		<input type="text" ng-model="node.Name" readonly/>
-		</span></td>
-		<td><input type="text" class="taskLoop tp-loop-wd ctp-mar-left"  ng-model="node.Loop"></td>
-	    <td><input type="text" class="taskSequenceNo tp-seq-wd ctp-mar-left"  ng-model="node.Sequence"></td>
+		
+
+		<label class="create-tp-input create-tp-label" style="width: 25%;" ng-model="node.title">{{node.Name}}</label>
+		</td>
+		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width: 18%;" ng-model="node.Loop">{{node.Loop}}</label></td>
+	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
 		<span ng-if="node.CommandParams != ''">
 			<td> 
 				<input type="text" id="commandId{{node.commandId}}"  ng-model="node.CommandParams"/>
 			</td>
 			<td> 
-				<a class="pull-right btn btn-primary btn-xs" data-toggle="modal" data-target="#commandPramameter" data-nodrag ng-click="createFrom(this)" style="background-color:#337ab7;;margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+				<a class="pull-right btn btn-primary btn-xs" data-toggle="modal" data-target="#commandPramameter" data-nodrag ng-click="createFrom(this)" style="background-color:#337ab7;;margin-right: 8px;padding: 3px 5px;line-height: 1.2;"><span class="glyphicon glyphicon-plus-sign"></span></a>
 			</td>
 			
 			

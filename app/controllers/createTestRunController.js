@@ -396,12 +396,15 @@ oTech.controller('createTestRunController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
+			enableVerticalScrollbar :0,
+			enableHorizontalScrollbar:0,
             columnDefs: [
                 {field: 'deviceName',
                 	name: 'Device Name',
                 	headerCellClass: $scope.highlightFilteredHeader,
-                	cellTemplate:' <div  >{{row.entity.deviceName}}<div data-toggle="modal" data-target="#CommandDetails"   class="btn btn-info view-detail-link" ng-click="grid.appScope.viewTaskDetail()" >View Test Plan</div></div>'
+                	
                 	},
+					{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >View Task</a>'},
             ]
         };
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
@@ -451,6 +454,8 @@ oTech.controller('createTestRunController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: true,
+			enableVerticalScrollbar :1,
+			enableHorizontalScrollbar:0,
             columnDefs: [
                 {field: 'deviceId', name: 'RealDevice Id', headerCellClass: $scope.highlightFilteredHeader},
                 {field: 'deviceName', name: 'RealDevice Name', headerCellClass: $scope.highlightFilteredHeader},

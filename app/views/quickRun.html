@@ -142,13 +142,17 @@ height: auto!important;
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Available Commands in Task
                                                    </strong>
                                                     </h4>
-                                                    <div ui-grid="quickrunTaskDependantOptions" ui-grid-cellNav ui-grid-selection ui-grid-resize-columns	 class="grid" >
+                                                    <!--<div ui-grid="quickrunTaskDependantOptions" ui-grid-cellNav ui-grid-selection ui-grid-resize-columns	 class="grid" >-->
+													<div class="grid" >
 														 <img class="loading" src="images/loading.gif"  ng-show="dataLoading2"></img>
 														<div class ="loadingErr" ng-show ="err2"> No Data Found </div>
 														<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
 														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+															<div id="tree-container"></div>
+													  
 														 </div>
                                                 </div>
+												
 
                                                
                                               

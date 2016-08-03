@@ -11,7 +11,9 @@ oTech.controller('testScriptController',
         $rootScope.role = sessionStorage.getItem("role");
         console.log('Role: '+$rootScope.role)
 		var usecaselist = [];
-		
+		$scope.isAction = false;
+		$scope.createTestPlan = {};
+        var sendCreateData = {};
 		if($.cookie("testPlanName") != undefined && $.cookie("testPlanDescription") != undefined && $.cookie("usecaseId") != undefined){
 				$scope.testPlanName = $.cookie("testPlanName");
 				$scope.testPlanDescription = $.cookie("testPlanDescription");
@@ -105,10 +107,17 @@ oTech.controller('testScriptController',
 		
 		$scope.SelectTesplanEdit = function () {
             console.log($rootScope.Row)
-            if ($rootScope.Row != null) {
+            if ($rootScope.Row != null && $rootScope.isMappedTestPlanTestRun == "notExist") {
                 $location.path('/dashboard/testScript/EditTestplan/EditCommandParameters')
             }
-            else {
+            else if($rootScope.isMappedTestPlanTestRun == "isExist"){
+                $rootScope.Message = "You can't edit, Test Plan having Test Runs!!";
+                $('#MessageColor').css("color", "red");
+                $('#MessagePopUp').modal('show');
+                $timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+            } else {
                 $rootScope.Message = "Please Select Testplan";
                 $('#MessageColor').css("color", "red");
                 $('#MessagePopUp').modal('show');
@@ -388,12 +397,16 @@ function getTreeDataForCommands1(data){
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
+			enableVerticalScrollbar :0,
+			enableHorizontalScrollbar:0,
             columnDefs: [
                 {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader,headerCellClass: $scope.highlightFilteredHeader},
                 {name:'Name',field: 'testplanName',headerCellClass: $scope.highlightFilteredHeader},
                 {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
             	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
-				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:' <div>{{row.entity.createdByName}}<div style ="float: right;margin-right: 10px;" class="btn btn-primary" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})" >View Test Runs</div></div>'},
+				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader,},
+				   {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
+                   '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},
 			
             ]
         };
@@ -403,6 +416,34 @@ function getTreeDataForCommands1(data){
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				if($scope.isAction){
+					$scope.dataLoading = true;
+					row.isSelected = false;
+					$scope.isAction = false;
+					$cookieStore.put('TestPLANId', row.entity.testplanId);
+			promise = testScriptService.getTestRuns(token, row.entity.testplanId, userId);
+			promise.then(
+				function (data) {
+					if(data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0){
+					$rootScope.Message = "No Test Run Exists";
+					$('#MessageColor').css("color", "red");
+					$('#MessagePopUp').modal('show');
+					$timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+				$scope.dataLoading = false;
+					}else{
+						$rootScope.getTestRuns = data.testRunsForTestPlan;
+						$location.path('/Schedule');
+					}
+					
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
+					
+				}else{
 				$scope.dataProcessing = true;
 				$(".btn-info").addClass("disabled");
                 $rootScope.RowCreateTestrun = row.entity;
@@ -425,11 +466,15 @@ function getTreeDataForCommands1(data){
                 $scope.testplanId_selected = $cookieStore.get('selected_testplanid');
                 var msg = 'row selected ' + row.isSelected;
                 //Calling getTestplan service and looping data as tree structure
+				if(row.isSelected){
                 promise = testScriptService.getTestplan(token, userId, TestPlanId);
                 promise.then(
                     function (data) {
                         $scope.treedata = data.jobVO;
 						$rootScope.uiTreeJSON = data.jobVO;
+						if(data.isMappedTestPlanTestRun.length > 0){
+						$rootScope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
+						}
                         $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
 						$scope.dataProcessing = false;
 						$(".btn-info").removeClass("disabled");
@@ -438,6 +483,8 @@ function getTreeDataForCommands1(data){
                         console.log(err);
                     }
                 );
+				}
+				}
 
 
             });
@@ -670,29 +717,179 @@ function getTreeDataForCommands1(data){
         }
 		
 		$scope.viewTestPlanTestRun = function (TestPlanId) {
-			$cookieStore.put('TestPLANId', TestPlanId);
-			promise = testScriptService.getTestRuns(token, TestPlanId, userId);
-			promise.then(
-				function (data) {
-					if(data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0){
-					$rootScope.Message = "No Test Run Exists";
-					$('#MessageColor').css("color", "red");
-					$('#MessagePopUp').modal('show');
-					$timeout(function () {
-                    $('#MessagePopUp').modal('hide');
-                }, 2000);
-				$scope.dataLoading = false;
-					}else{
-						$rootScope.getTestRuns = data.testRunsForTestPlan;
-						$location.path('/Schedule');
-					}
-					
-				},
-				function (err) {
-					console.log(err);
-				}
-			);
+			$scope.isAction = true;
 			
+		}
+		
+		$scope.createTestPlanService = function () {
+			$scope.dataProcessing = true;
+			$(".btn-info").addClass("disabled");
+			$rootScope.uiTreeJSON = $scope.tree2;
+		var vd = ["VD1" , "VD2" , "VD3" , "VD4" , "VD5" , "VD6" , "VD7" , "VD8" , "VD9" , "VD10"];
+			var assignVirtualDevice_Data = {};
+		assignVirtualDevice_Data.virtualDeviceVoList = [];
+			
+			for(var i=0; i< $scope.noOfVirtualDevice ; i++){
+				 assignVirtualDevice_Data.virtualDeviceVoList.push({"name": vd[i]});
+			}
+            if ($scope.testPlanName == "" || $scope.testPlanName == undefined) {
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
+                $scope.validateTestPlanData("Please Enter TestPlan Name");
+                return 0;
+            }
+            if (assignVirtualDevice_Data.virtualDeviceVoList.length <= 0) {
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
+                $scope.validateTestPlanData("Please Select Virtual Device");
+                return 0;
+
+            }
+
+            var superParentObject, parentObject = {}, childObject = {};
+            superParentObject = $scope.tree2[0].nodes;
+            for (var i = 0; i < $scope.tree2[0].nodes.length; i++) {
+                parentObject[i] = $scope.tree2[0].nodes[i].nodes;
+                childObject[i] = {};
+                if ($scope.tree2[0].nodes[i].nodes.length <= 0) {
+                    $scope.validateTestPlanData(" child's or not existed");
+                    return 0;
+                }
+
+                for (var j = 0; j < $scope.tree2[0].nodes[i].nodes.length; j++) {
+                    childObject[i][j] = $scope.tree2[0].nodes[i].nodes[j].nodes;
+
+                    if ($scope.tree2[0].nodes[i].nodes[j].nodes.length <= 0) {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+                        $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
+                        return 0;
+
+                    }
+                    else if ($scope.tree2[0].nodes[i].nodes[j].nodes[0].title == "Add Command") {
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+                        $scope.validateTestPlanData("Please Add Commands !!!");
+                        return 0;
+
+                    }
+                }
+            }
+            sendCreateData.jobName = $scope.testPlanName;
+			sendCreateData.jobDescription = $scope.testPlanDescription;
+            sendCreateData.jobCreatedBy = userId;
+            sendCreateData.taskVOList = [];
+            sendCreateData.taskVOList[0] = {};
+            sendCreateData.taskVOList[0].taskName = $scope.tree2[0].title;
+            sendCreateData.taskVOList[0].taskLoop = $scope.tree2[0].loop;
+			sendCreateData.taskVOList[0].useCaseId = $scope.usecaseVal;
+			$rootScope.usecaseId=$scope.usecaseVal;
+			$.cookie("usecaseId", $scope.usecaseVal);
+
+            sendCreateData.taskVOList[0].taskCreatedBy = userId;
+            sendCreateData.taskVOList[0].taskExecutorVOList = [];
+
+            var superParentObjectKeys = Object.keys(superParentObject);
+
+            for (var i = 0; i < superParentObjectKeys.length; i++) {
+
+                sendCreateData.taskVOList[0].taskExecutorVOList[i] = {};
+                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorName = superParentObject[i].title;
+                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorLoop = superParentObject.loop;
+                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorSeqNo = 1;
+
+                //  sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList =[];
+
+
+            }
+
+            var parentObjectKeys = Object.keys(parentObject);
+            for (var i = 0; i < parentObjectKeys.length; i++) {
+                var childKeys = Object.keys(parentObject[parentObjectKeys[i]]);
+                sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList = [];
+                for (var j = 0; j < childKeys.length; j++) {
+                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j] = {};
+                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorName = parentObject[parentObjectKeys[i]][childKeys[j]].title;
+                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorLoop = parentObject[parentObjectKeys[i]][childKeys[j]].loop;
+                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorSeqNo = parentObject[parentObjectKeys[i]][childKeys[j]].sequenceNo;
+
+                }
+            }
+
+
+            var childSuperParentKeys = Object.keys(childObject);
+            for (var p = 0; p < childSuperParentKeys.length; p++) {
+                var childParentKeys = Object.keys(childObject[childSuperParentKeys[p]]);
+                for (var q = 0; q < childParentKeys.length; q++) {
+                    var childKeys = Object.keys(childObject[childSuperParentKeys[p]][childParentKeys[q]]);
+                    sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList = [];
+                    for (var r = 0; r < childKeys.length; r++) {
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r] = {};
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandId;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandSeqNo = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandSeqNo;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandParams = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandParams;
+                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandName = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandName;
+                    }
+                }
+            }
+
+
+            var jsonData = JSON.stringify(sendCreateData);
+            promise = testScriptService.CreateSrvc(userId, jsonData, token);
+
+
+            promise.then(
+                function (data) {
+                    if (data.status == "Success") {
+                        assignVirtualDevice_Data.jobVo = {"jobId": data.NewTestPlan.jobId};
+                        $cookieStore.put('TestPLANId', data.NewTestPlan.jobId);
+                        $cookieStore.put('TestplanName', data.NewTestPlan.jobName);
+                        assignVirtualDevice(token, assignVirtualDevice_Data);
+                    }
+                    else {
+                        $rootScope.Message = " " + data.status;
+                        $('#MessageColor').css("color", "red");
+                        $('#MessagePopUp').modal('show');
+                        $timeout(function () {
+                            $('#MessagePopUp').modal('hide');
+                        }, 2000);
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+                    }
+
+
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+
+
+            var assignVirtualDevice = function assignVirtualDevice(token, assignVirtualDevice_Data) {
+
+                promise1 = testScriptService.assignVirtualDevice(userId, token, JSON.stringify(assignVirtualDevice_Data));
+                promise1.then(
+                    function (data) {
+                        if (data.status == "success") {
+                            $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
+							$scope.dataProcessing = false;
+                        }
+                        else {
+                            $rootScope.Message = " " + data.status;
+                            $('#MessageColor').css("color", "red");
+                            $('#MessagePopUp').modal('show');
+                            $timeout(function () {
+                                $('#MessagePopUp').modal('hide');
+                            }, 2000);
+
+                        }
+
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+            }
 		}
 							
 		

@@ -28,11 +28,13 @@ width:34px;
 		</span>
 		</a>
 
-		<input type="text" ng-model="node.Name"></td>
-		<td><input type="text" class="taskLoop ed-tp-loop-seq-wd"  ng-model="node.Loop"></td>
-	    <td><input type="text" class="taskSequenceNo ed-tp-loop-seq-wd"  ng-model="node.Sequence"></td>
+		
+		<label class="create-tp-input create-tp-label" style="width: 18%;" ng-model="node.title">{{node.Name}}</label>
+		</td>
+		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width: 18%;" ng-model="node.Loop">{{node.Loop}}</label></td>
+	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
 		<span ng-if="node.CommandParams != ''">
-		<td> <input type="text"  ng-model="node.CommandParams"></td>
+		<td> <label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.CommandParams">{{node.CommandParams}}</label></td>
 		 </span>
 		</tr>
 		</div>

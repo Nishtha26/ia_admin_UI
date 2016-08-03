@@ -130,8 +130,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://localhost:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://localhost:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://localhost:8080/IAPORTAL1/',
+	MEASUREMENT_URL :'http://localhost:8080/IAPORTAL1/rest/measurement/',
 	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
 REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
@@ -1034,6 +1034,8 @@ quickrunGridOptions : {
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,  // for searching
 		multiSelect:true,
+		enableVerticalScrollbar :0,
+		enableHorizontalScrollbar:0,
 		columnDefs: [
 			{ name: 'id' },
 			{ name: 'name'},

@@ -56,32 +56,25 @@ height: auto!important;
 									
 										<div class="row">
 											<div class="col-xs-12">
-												<table class="table table-bordered">
+												<table class="table">
 													<thead>
 													<tr>
-													   <th>Test Plan</th>
-														<th>Use Case</th>
+													   <th colspan='2'>Test Plan/ 	Use Case</th>
 														<th>Description</th>
 													</tr>
 													</thead>
 													<tbody>
 													<tr>
-														 <td style="text-align: left;"><input type="text" ng-model="testPlanName" style="height:33px;width:200px;"/></td>
+														 <td style="text-align: left;" colspan='2'><input type="text" ng-model="testPlanName" class='form-control' placeholder='Enter test plan name (required)' required='required' /></td>
+														 <td rowspan='2'>
+															<textarea ng-model="testPlanDescription" class='form-control' rows='4' placeholder='Enter description (optional)'></textarea>
+														 </td>
+													</tr>
+													<tr>
 														 <td>
-															<!--<select class="form-control"  style="font-family: Rajdhani-Medium;width:300px;font-size: 14px;color:rgb(35, 35, 35)">
-															<option  ng-repeat="usecase in usecases" ng-model="usecase.Id">{{usecase.name}}</option>
-															</select>-->
-															<!--<select ng-model="useaseList"  
-																	ng-options="usecase as usecase.label for usecase in useCases  track by usecase.id" style="font-family: Rajdhani-Medium;width:300px;height:33px;font-size: 14px;color:rgb(35, 35, 35)">           
-															</select>-->
-															<select ng-model='usecaseVal' ng-options='k as v for (k,v) in usecases' style="font-family: Rajdhani-Medium;width:300px;height:33px;font-size: 14px;color:rgb(35, 35, 35)"></select>
-															
-															
+															<select ng-model='usecaseVal' ng-options='k as v for (k,v) in usecases' class='form-control'></select>
 														</td>
-														 <td>
-															<textarea ng-model="testPlanDescription" style= "width:250px;height:37px;"></textarea>
-														</td>
-														
+														<td><input type="text" ng-model="noOfVirtualDevice" class='form-control' placeholder='Number of Virtual Devices(required)' required='required' /></td>
 													</tr>
 													</tbody>
 												</table>
@@ -91,11 +84,13 @@ height: auto!important;
 										<div ng-include="'app/views/cloning.html'"></div>
 										<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 									</div>
 								</div>
 								<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
                                                 <button type="button" class="btn btn-info ot-btn" ng-click = "testScript()">« Back</button>
-												<button type="button" class="btn btn-info ot-btn" ng-click = "planTest()">Next »</button>
+												<button type="button" class="btn btn-info ot-btn" ng-click = "createTestPlanService()">Next »</button>
                                             </div>
 							</div>
 						</div>

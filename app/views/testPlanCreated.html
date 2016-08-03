@@ -50,7 +50,7 @@ height: auto!important;
                                                <div class="col-md-12 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Test Plan</strong>
                                                     </h4>
-                                                    <table class="table table-bordered">
+                                                    <table class="table ">
                                                         <thead>
                                                         <tr>
                                                            <th>Test Plan Id</th>
@@ -91,8 +91,8 @@ height: auto!important;
 
                                                 
 
-                                                <div class="col-md-6">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Test Plan Devices</strong></h4>
+                                                <div class="col-md-2">
+                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Virtual Devices</strong></h4>
                                                     <div ui-grid="VirtualJobsDevicesOptions" ui-grid-selection ui-grid-cellNav
                                                          class="grid">
 														<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
@@ -102,7 +102,7 @@ height: auto!important;
                                                 </div>
 												
 												
-												<div class="col-md-6 treeSection" style="display:none;">
+												<div class="col-md-10 treeSection" style="display:none;">
 												<h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Task Details</strong></h4>
 													<div ng-include="'app/views/commonTreeDataTemplate.html'">
 													

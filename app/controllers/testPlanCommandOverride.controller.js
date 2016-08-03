@@ -10,6 +10,7 @@ oTech.controller('testPlanCommandOverride',
 		 var sendCreateData = {};
 		 var VirtualJobsOptions = [];
 		 $scope.dataLoading = true;
+		 $scope.isUpdatable = false;
 		if($rootScope.tesplanId !=null && $rootScope.tesplanId !='undefined')	 {
 			
 		$scope.tesplanId = $rootScope.tesplanId;
@@ -121,9 +122,11 @@ oTech.controller('testPlanCommandOverride',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
+			enableVerticalScrollbar :0,
+		enableHorizontalScrollbar:0,
 			columnDefs: [
-                {headerName: "Virtual Device Id", field: 'deviceId', headerCellClass: $scope.highlightFilteredHeader},
-				{ name: 'Virtual Device Name', field: 'deviceName', haderCellClass: $scope.highlightFilteredHeader},
+                {name: 'Id',headerName: "Id", field: 'deviceId', headerCellClass: $scope.highlightFilteredHeader},
+				{ name: 'Name', field: 'deviceName', haderCellClass: $scope.highlightFilteredHeader},
             ]
 		};
 		
@@ -337,7 +340,11 @@ oTech.controller('testPlanCommandOverride',
 				updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
 			}
 		//	console.log("updatedParametrs"+updatedParametrs);
+		if(overrideNode.$modelValue.CommandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
 			 overrideNode.$modelValue.CommandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
+			 $scope.isUpdatable =true;
+			 
+		}
         }
 		
 		
