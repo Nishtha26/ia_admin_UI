@@ -20,6 +20,7 @@
 		
 	<div ui-tree-handle class="tree-node tree-node-content" >
 		
+
 		
 		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
 		<span class="glyphicon" ng-class="{
@@ -35,6 +36,7 @@
 		<span ng-if="!node.commandId || node.commandId < 0">
 		<input type="text" class="create-tp-input" ng-model="node.title">
 		</span>
+	
 <span class="create-tp-span">
 		<input type="text" class="taskLoop tp-loop-wd"  ng-model="node.loop"></span>
 	    <input type="text" class="taskSequenceNo tp-seq-wd"  ng-model="node.sequenceNo">
@@ -49,13 +51,14 @@
 		</span>
 		
 	</div>
-  
+ 
 	<ol ng-if="!node.commandId" ui-tree-nodes="" data-drag-enabled="false" ng-model="node.nodes" ng-class="{hidden: collapsed}">
 		<li ng-repeat="node in node.nodes" ui-tree-node  ng-include="'nodrop_nodes_renderer.html'"></li>
 	</ol>
 	<ol ng-if="node.commandId" ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
 		<li ng-repeat="node in node.nodes" ui-tree-node data-nodrag ng-include="'nodrop_nodes_renderer.html'"></li>
 	</ol>
+
 </script>
 
 
@@ -70,7 +73,7 @@
   
   
  <div class="row">
-<div class="col-sm-5 create-tp-scroll-commands">
+<div class="col-sm-5 create-tp-scroll-commands ">
   
     
 

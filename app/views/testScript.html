@@ -31,7 +31,10 @@ position: inherit;
  min-height: 100%;
 height: auto!important;
  } */
-
+ .btn-group-xs>.btn, .btn-xs {
+   
+    margin-top: 4px;
+}
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
@@ -80,14 +83,14 @@ height: auto!important;
 									</div>
 									</div>	
 								</div>
-								<div style="width:100%;height:50px;margin:0px 55%;margin-top: 30px; ">
+								<div style="width:100%;height:50px;margin:0px 78%;margin-top: 30px; ">
                                                 <input type="button"  name="button" ng-click="createTestPlan();" value="Create Test Plan" class="btn btn-info"/>
-                                                <input type="button"  name="button" ng-click="SelectTesplanEdit();" value="Edit Test Plan" class="btn btn-info"/>
-                                                <input type="button"  name="button" ng-click="createTestRunNext();" value="Create Test Run" class="btn btn-info"/>
+                                              <!--  <input type="button"  name="button" ng-click="SelectTesplanEdit();" value="Edit Test Plan" class="btn btn-info"/>
+                                                <input type="button"  name="button" ng-click="createTestRunNext();" value="Create Test Run" class="btn btn-info"/>-->
                                                 <input type="button"  name="button" ng-click="scheduleTestRun();" value="All Test Runs" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="createCloneTestPlan();" value="Clone Test Plan" class="btn btn-info"/>
+												<!--<input type="button"  name="button" ng-click="createCloneTestPlan();" value="Clone Test Plan" class="btn btn-info"/>-->
 												<input type="button"  name="button" ng-click="quickRun();" value="Quick Test Run" class="btn btn-info"/>
-                                            </div>
+												
 							</div>
 						</div>
 						

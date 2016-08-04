@@ -12,6 +12,7 @@ oTech.controller('testScriptController',
         console.log('Role: '+$rootScope.role)
 		var usecaselist = [];
 		$scope.isAction = false;
+		$scope.commandError=false;
 		$scope.createTestPlan = {};
         var sendCreateData = {};
 		if($.cookie("testPlanName") != undefined && $.cookie("testPlanDescription") != undefined && $.cookie("usecaseId") != undefined){
@@ -72,6 +73,7 @@ oTech.controller('testScriptController',
 		}
 		
 		$scope.planTest = function () {
+		
 				if (!$scope.testPlanName) {
 				$scope.dataProcessing = false;
 				$(".btn-info").removeClass("disabled");
@@ -91,6 +93,7 @@ oTech.controller('testScriptController',
 				
 			
                 $location.path('/dashboard/initiateTestPlan/createTestPlan');
+
         }
 		
 		$scope.validateTestPlanData = function (flag) {
@@ -395,20 +398,28 @@ function getTreeDataForCommands1(data){
 		$scope.TestPlanOptions = {
             enableFiltering: true,
             enableRowHeaderSelection: false,
-            enableRowSelection: true,
+            enableRowSelection: false,
             multiSelect: false,
 			enableVerticalScrollbar :0,
 			enableHorizontalScrollbar:0,
             columnDefs: [
-                {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader,headerCellClass: $scope.highlightFilteredHeader},
-                {name:'Name',field: 'testplanName',headerCellClass: $scope.highlightFilteredHeader},
-                {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
-            	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
-				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader,},
-				   {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
-                   '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},
-			
-            ]
+                         {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader,headerCellClass: $scope.highlightFilteredHeader},
+                         {name:'Name',field: 'testplanName',headerCellClass: $scope.highlightFilteredHeader},
+                         {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
+                     	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
+         				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader,},
+         				  /* {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
+                            '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},*/
+         				   {name:'Take Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
+                            '<select class="btn btn-default btn-xs btn-group dropdown" style=" border-color: #eaeaea;" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
+         					  '<option value="">Action</option>' +
+         					  '<option value="{{row.entity.testplanId}}-View">View Test Runs</option>'+
+         					  '<option value="{{row.entity.testplanId}}-Create">Create Test Run</option>'+
+         					  '<option value="{{row.entity.testplanId}}-Edit">Edit Test Plan</option> '+
+         					  '<option value="{{row.entity.testplanId}}-Clone">Clone Test Plan</option> '+
+         					'</select>'},
+         			
+                     ]
         };
 
         //Row selection
@@ -646,6 +657,7 @@ function getTreeDataForCommands1(data){
 							
 							$scope.optionsTree2 = {
 							   accept: function(sourceNodeScope, destNodesScope, destIndex) {
+								   $scope.commandError=false;
 									if(destNodesScope.$modelValue[0].commandId >= 0 && sourceNodeScope.$modelValue.commandId){
 										if(destNodesScope.$modelValue[0].title == "Add Command"){
 										destNodesScope.$modelValue[0].title = sourceNodeScope.$modelValue.title;
@@ -722,6 +734,7 @@ function getTreeDataForCommands1(data){
 		}
 		
 		$scope.createTestPlanService = function () {
+			if($scope.createtestplan.$valid){
 			$scope.dataProcessing = true;
 			$(".btn-info").addClass("disabled");
 			$rootScope.uiTreeJSON = $scope.tree2;
@@ -769,7 +782,10 @@ function getTreeDataForCommands1(data){
                     else if ($scope.tree2[0].nodes[i].nodes[j].nodes[0].title == "Add Command") {
 						$scope.dataProcessing = false;
 						$(".btn-info").removeClass("disabled");
-                        $scope.validateTestPlanData("Please Add Commands !!!");
+						$("#command_error").text("Please Add Commands !!!")
+						$scope.commandError=true;
+						
+                      //  $scope.validateTestPlanData("Please Add Commands !!!");
                         return 0;
 
                     }
@@ -891,8 +907,116 @@ function getTreeDataForCommands1(data){
                 );
             }
 		}
-							
-		
+			else{
+				  $scope.createtestplan.submitted=true;  
+			}
+		}						
+		$scope.update = function(selectedContext,row) {
+			var viewAction = row.entity.testplanId+"-View";
+			var createAction = row.entity.testplanId+"-Create";
+			var editAction = row.entity.testplanId+"-Edit";
+			var cloneAction = row.entity.testplanId+"-Clone";
+			if(viewAction == selectedContext.actions){
+				$scope.dataProcessing = true;
+			$cookieStore.put('TestPLANId', row.entity.testplanId);
+			$(".btn-info").addClass("disabled");
+			promise = testScriptService.getTestRuns(token, row.entity.testplanId, userId);
+			promise.then(
+				function (data) {
+					if(data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0){
+					$rootScope.Message = "No Test Run Exists";
+					$('#MessageColor').css("color", "red");
+					$('#MessagePopUp').modal('show');
+					$timeout(function () {
+                    $('#MessagePopUp').modal('hide');
+                }, 2000);
+				$scope.dataProcessing = false;
+				$(".btn-info").removeClass("disabled");
+					}else{
+						$rootScope.getTestRuns = data.testRunsForTestPlan;
+						$location.path('/Schedule');
+					}
+					
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
+			}
+			if(createAction == selectedContext.actions){
+				$rootScope.RowCreateTestrun = row.entity;
+                $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
+			}
+			if(editAction == selectedContext.actions){
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
+                $rootScope.RowCreateTestrun = row.entity;
+                var TestPlanId = row.entity.testplanId;
+
+                $cookieStore.put('TestPLANId', TestPlanId);
+                $rootScope.TestplanId = row.entity.testplanId;
+                $cookieStore.put('TestPLANId', row.entity.testplanId);
+
+                $scope.testplan_name = row.entity.testplanName;
+				$scope.testplan_name1 = row.entity.testplanName;
+                $cookieStore.put('TestplanName', row.entity.testplanName);
+
+                $cookieStore.put('TestPlan_Name', $scope.testplan_name);
+				$rootScope.Row = row.entity;
+
+                promise = testScriptService.getTestplan(token, userId, TestPlanId);
+                promise.then(
+                    function (data) {
+                        $scope.treedata = data.jobVO;
+						$rootScope.uiTreeJSON = data.jobVO;
+						if(data.isMappedTestPlanTestRun.length > 0){
+						$rootScope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
+						}
+                        $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
+						$scope.dataProcessing = false;
+						$(".btn-info").removeClass("disabled");
+					   if ($rootScope.isMappedTestPlanTestRun == "notExist") {
+							$location.path('/dashboard/testScript/EditTestplan/EditCommandParameters')
+						}
+						else if($rootScope.isMappedTestPlanTestRun == "isExist"){
+							$rootScope.Message = "You can't edit, Test Plan having Test Runs!!";
+							$('#MessageColor').css("color", "red");
+							$('#MessagePopUp').modal('show');
+							$timeout(function () {
+								$('#MessagePopUp').modal('hide');
+							}, 2000);
+						} 
+								},
+								function (err) {
+									console.log(err);
+								}
+							);
+				
+			}
+			
+			if(cloneAction == selectedContext.actions){
+				$scope.dataProcessing = true;
+				$(".btn-info").addClass("disabled");
+				promise = testScriptService.createCloneTestplan(token, userId, row.entity.testplanId);
+                promise.then(
+                    function (data) {
+						$scope.totalRecords = data.length;
+						allOfTheData = data;
+						$scope.TestPlanOptions.data = [];
+						$scope.TestPlanOptions.data = data.slice( 0, $scope.itemsPerPage);
+						$scope.dataProcessing = false;
+						sessionStorage.setItem('TestplanId', data.testplanId);
+						//Fetching test plans
+						$(".btn-info").removeClass("disabled");
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+				
+			}
+			
+		}
 	   
 });
 

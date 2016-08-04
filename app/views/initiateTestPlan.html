@@ -43,6 +43,7 @@ height: auto!important;
 					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
 						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
+						<form name="createtestplan" method="post" ng-class="{submitted:createtestplan.submitted}" novalidate>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div style="width:100%;" ncy-breadcrumb></div>
 								
@@ -59,13 +60,18 @@ height: auto!important;
 												<table class="table">
 													<thead>
 													<tr>
-													   <th colspan='2'>Test Plan/ 	Use Case</th>
+													   <th colspan='2'>Test Plan/ 	Use Case<span class="error-star"></span></th>
+													
 														<th>Description</th>
 													</tr>
 													</thead>
 													<tbody>
 													<tr>
-														 <td style="text-align: left;" colspan='2'><input type="text" ng-model="testPlanName" class='form-control' placeholder='Enter test plan name (required)' required='required' /></td>
+														 <td style="text-align: left;" colspan='2'>
+														 <input type="text" ng-model="testPlanName" name="testPlanName"  class='form-control' placeholder='Enter test plan name (required)' required='required'  />
+														  <div ng-show="createtestplan.testPlanName.$touched || createtestplan.$submitted" ng-messages="createtestplan.testPlanName.$error" class="errors"> 
+														 <div ng-message="required">**This field should not be empty</div></div>
+														 </td>
 														 <td rowspan='2'>
 															<textarea ng-model="testPlanDescription" class='form-control' rows='4' placeholder='Enter description (optional)'></textarea>
 														 </td>
@@ -74,7 +80,16 @@ height: auto!important;
 														 <td>
 															<select ng-model='usecaseVal' ng-options='k as v for (k,v) in usecases' class='form-control'></select>
 														</td>
-														<td><input type="text" ng-model="noOfVirtualDevice" class='form-control' placeholder='Number of Virtual Devices(required)' required='required' /></td>
+														<td>
+														  <input  ng-model="noOfVirtualDevice" name="noOfVirtualDevice" class='form-control' 
+														  placeholder='Number of Virtual Devices(required)' required='required' type="number" min="1" />
+														  <div ng-show="createtestplan.noOfVirtualDevice.$touched || createtestplan.$submitted" ng-messages="createtestplan.noOfVirtualDevice.$error" class="errors" > 
+														 <div ng-message="required">**This field should not be empty</div>
+														  	  <div ng-message="number">**You did not enter a valid number</div>
+														  	   <div ng-message="min">Your field value is lesser minimum value</div>
+														 </div>
+													
+														</td>
 													</tr>
 													</tbody>
 												</table>
@@ -82,6 +97,7 @@ height: auto!important;
 										</div>
 									
 										<div ng-include="'app/views/cloning.html'"></div>
+										 <span id="command_error" class ="errors animate-show" style="position: absolute; margin-left: 44%;margin-top:-7%;" ng-show="commandError" ng-model="command-border" >Error</span>
 										<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
@@ -90,9 +106,10 @@ height: auto!important;
 								</div>
 								<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
                                                 <button type="button" class="btn btn-info ot-btn" ng-click = "testScript()">« Back</button>
-												<button type="button" class="btn btn-info ot-btn" ng-click = "createTestPlanService()">Next »</button>
+												<button type="submit" class="btn btn-info ot-btn"  ng-click = "createTestPlanService()">Next »</button>
                                             </div>
 							</div>
+							</form>
 						</div>
 					
 					</div>
