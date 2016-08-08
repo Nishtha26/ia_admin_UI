@@ -1452,7 +1452,7 @@ overflow-x: hidden;
 	width: 23%;
 }
 .created-tp-tree-root input{
-	width: 21%;
+	width: 35%;
 }
 .edit-tp-tree-root input{
 	width: 23%;
@@ -1484,6 +1484,7 @@ overflow-x: hidden;
 .create-tp-label{
  /* background-color: white;
     border: 2px solid #fff;*/
+   word-wrap: break-word;
     }
     .ctp-mar-left{
     margin-left: 3%!important;
@@ -1496,4 +1497,96 @@ form.submitted .ng-invalid
 }
 .command-border{
 	  border:1px solid #f00;
+}
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    cursor:pointer;
+    display:block;
+    width:8px;
+    color: #333;
+    text-align:center;
+    position:relative;
+}
+
+input[type=number]::-webkit-inner-spin-button:before,
+input[type=number]::-webkit-inner-spin-button:after {
+    content: "^";
+    position:absolute;
+    right: 0;
+    font-family:monospace;
+    line-height:
+}
+
+input[type=number]::-webkit-inner-spin-button:before {
+    top:0px;
+}
+
+input[type=number]::-webkit-inner-spin-button:after {
+    bottom:0px;
+    -webkit-transform: rotate(180deg);
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.created-td-scroll{
+	border:1px solid #ddd;
+	border-top:none;
+	max-height: 340px;
+    overflow: auto;
+}
+.edit-td-scroll{
+	border:1px solid #ddd;
+	border-top:none;
+	max-height: 378px;
+    overflow: auto;
+}
+.tree-footer-margin{
+	margin-bottom:20px;
+}
+
+ .templete-td-label{
+   /*  background-color: white;
+    border: 1px solid #fff;
+    border-radius: 3px;
+     */
+    
+    line-height: 1.7;	
+    max-width: 100px;
+    width:100%;
+    vertical-align: top;
+        font-size: 15px;
+    word-wrap: break-word;
+    
+    }
+    .templete-td-params{
+    word-wrap: break-word;max-width:227px;width:100%;
+    max-width: 345px;
+    width: 100%;
+    }
+    .templete-label-loop{
+    max-width: 50px!important;
+    }
+    
+    
+    
+    .create-input:focus{
+     background-color: white !important;
+    border: 2px solid white;
+    border-radius: 3px;
+    line-height: 25px;
+    }
+     .create-input:hover{
+     background-color: white !important;
+    border: 2px solid white;
+    border-radius: 3px;
+    line-height: 25px;
+    }
+  .create-input {
+    background-color: #f8faff;
+    border: 0 none;
+    }
+    #tree2-root .angular-ui-tree-handle:hover input {
+    background: #f4f6f7 none repeat scroll 0 0;
+   
 }

@@ -34,12 +34,12 @@
 <label class="create-tp-input create-tp-label" ng-model="node.title">{{node.title}}</label>
 		</span>
 		<span ng-if="!node.commandId || node.commandId < 0">
-		<input type="text" class="create-tp-input" ng-model="node.title">
+		<input type="text" class="create-tp-input create-input" ng-model="node.title">
 		</span>
 	
 <span class="create-tp-span">
-		<input type="text" class="taskLoop tp-loop-wd"  ng-model="node.loop"></span>
-	    <input type="text" class="taskSequenceNo tp-seq-wd"  ng-model="node.sequenceNo">
+		<input type="text" class="taskLoop tp-loop-wd create-input"  ng-model="node.loop"></span>
+	    <input type="text" class="taskSequenceNo tp-seq-wd create-input"  ng-model="node.sequenceNo">
 
 		<span ng-if="!node.commandId">
 			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
@@ -84,7 +84,7 @@
       </ol>
     </div>
 	</div>
-	<div class="col-sm-7 create-tp-scroll-commands">
+	<div id="scroll_commands" class="col-sm-7 create-tp-scroll-commands">
     <div ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" style=" padding-bottom: 75px;">
       <ol ui-tree-nodes="" ng-model="tree2" >
         <li ng-repeat="node in tree2" ui-tree-node data-nodrag  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>

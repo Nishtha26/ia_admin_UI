@@ -10,9 +10,9 @@ width:34px;
     background-color: red;
 }
 .tp-seq-wd {
-    margin-left: 8%;
+    margin-left: 3%;
     width: 9%!important;
-    margin-right: 8%;
+    margin-right: 5%;
 }
 </style>
 
@@ -34,10 +34,10 @@ width:34px;
 		</a>
 		
 
-		<label class="create-tp-input create-tp-label" style="width: 25%;" ng-model="node.title">{{node.Name}}</label>
+		<label class="create-tp-input create-tp-label" style="width:23%;" ng-model="node.title">{{node.Name}}</label>
 		</td>
-		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width: 18%;" ng-model="node.Loop">{{node.Loop}}</label></td>
-	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
+		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width:9%;" ng-model="node.Loop">{{node.Loop}}</label></td>
+	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width:6%;margin-right:3%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
 		<span ng-if="node.CommandParams != ''">
 			<td> 
 				<input type="text" id="commandId{{node.commandId}}"  ng-model="node.CommandParams"/>
@@ -69,19 +69,21 @@ width:34px;
 												<table class="table table-bordered">
 													<thead>
 														<tr class="created-tp-tree-header">
-														<th>Name</th>
-														<th>Loop</th>
-														<th>Seq No.</th>
+														<th style="width:17%;">Name</th>
+														<th style="width:10%;">Loop</th>
+														<th style="width:10%;">Seq No.</th>
 														<th>Default Params</th>
 														</tr>
 													</thead>
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" class="created-tp-tree-root input" >
+														<div ui-tree id="tree2-root" class="created-tp-tree-root created-td-scroll" >
+														<div style="margin-bottom:20px;">
 														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
 														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>
+														</div>
 													</div>
 													
 												</table>

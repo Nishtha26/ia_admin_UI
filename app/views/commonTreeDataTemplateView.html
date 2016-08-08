@@ -34,8 +34,8 @@ width:34px;
 		<span ng-if="node.CommandParams != ''">
 		<label class="templete-td-label" ng-model="node.Name">{{node.Name}} </label>
 		</span></td>
-		<td><label class="templete-td-label taskLoop" ng-model="Name"> {{node.Loop}}</label></td>
-	    <td><label class="templete-td-label taskSequenceNo" ng-model="node.Sequence"> {{node.Sequence}} </label></td>
+		<td><label class="templete-td-label taskLoop templete-label-loop" ng-model="Name"> {{node.Loop}}</label></td>
+	    <td><label class="templete-td-label taskSequenceNo templete-label-loop" ng-model="node.Sequence"> {{node.Sequence}} </label></td>
 		<span ng-if="node.CommandParams != ''">
 			<td> 
 			<label class="templete-td-label templete-td-params" id="commandId{{node.commandId}}"   ng-model="node.CommandParams">{{node.CommandParams}} </label>

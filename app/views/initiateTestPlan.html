@@ -68,12 +68,12 @@ height: auto!important;
 													<tbody>
 													<tr>
 														 <td style="text-align: left;" colspan='2'>
-														 <input type="text" ng-model="testPlanName" name="testPlanName"  class='form-control' placeholder='Enter test plan name (required)' required='required'  />
+														 <input type="text" ng-model="testPlanName" name="testPlanName"  class='form-control' placeholder='Test plan name (required)' required='required'  />
 														  <div ng-show="createtestplan.testPlanName.$touched || createtestplan.$submitted" ng-messages="createtestplan.testPlanName.$error" class="errors"> 
 														 <div ng-message="required">**This field should not be empty</div></div>
 														 </td>
 														 <td rowspan='2'>
-															<textarea ng-model="testPlanDescription" class='form-control' rows='4' placeholder='Enter description (optional)'></textarea>
+															<textarea ng-model="testPlanDescription" class='form-control' rows='4' placeholder='Description (optional)'></textarea>
 														 </td>
 													</tr>
 													<tr>

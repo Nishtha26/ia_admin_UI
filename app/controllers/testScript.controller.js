@@ -665,6 +665,7 @@ function getTreeDataForCommands1(data){
 										destNodesScope.$modelValue[0].commandId = sourceNodeScope.$modelValue.commandId;
 										return false;
 										}else if(destNodesScope.$modelValue[0].commandId != sourceNodeScope.$modelValue.commandId){
+											$scope.scrollTreeDown("scroll_commands");
 										return true;
 										}
 									}else{
@@ -1016,6 +1017,13 @@ function getTreeDataForCommands1(data){
 				
 			}
 			
+		}
+		
+		$scope.scrollTreeDown=function(id){
+			
+			var wtf = $('#'+id);
+		    var height = wtf[0].scrollHeight;
+		    wtf.scrollTop(height);
 		}
 	   
 });

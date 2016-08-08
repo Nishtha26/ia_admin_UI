@@ -404,7 +404,7 @@ oTech.controller('createTestRunController',
                 	headerCellClass: $scope.highlightFilteredHeader,
                 	
                 	},
-					{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >View Task</a>'},
+					{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >Cmd Definition</a>'},
             ]
         };
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
@@ -457,12 +457,12 @@ oTech.controller('createTestRunController',
 			enableVerticalScrollbar :1,
 			enableHorizontalScrollbar:0,
             columnDefs: [
-                {field: 'deviceId', name: 'RealDevice Id', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'deviceName', name: 'RealDevice Name', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'model', name: 'model', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'msisdn', name: 'msisdn', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
+				//{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
+				//{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
 				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };

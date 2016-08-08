@@ -34,7 +34,7 @@ width:34px;
 		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width: 18%;" ng-model="node.Loop">{{node.Loop}}</label></td>
 	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
 		<span ng-if="node.CommandParams != ''">
-		<td> <label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.CommandParams">{{node.CommandParams}}</label></td>
+		<td> <label class="create-tp-input create-tp-label" style="width: 18%;" ng-model="node.CommandParams">{{node.CommandParams}}</label></td>
 		 </span>
 		</tr>
 		</div>
@@ -65,10 +65,12 @@ width:34px;
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" class="edit-tp-tree-root" >
+														<div ui-tree id="tree2-root" class="edit-tp-tree-root edit-td-scroll" >
+														<div class="tree-footer-margin">
 														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
 														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>
+														</div>
 													</div>
 													
 												</table>
