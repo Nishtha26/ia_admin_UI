@@ -31,7 +31,19 @@ position: inherit;
  min-height: 100%;
 height: auto!important;
  } */
+#wizard-step-container {
+  margin: 20px 0;
+}
 
+#wizard-content-container {
+  margin: 20px 0;
+}
+
+#wizard-navigation-container {
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+  padding-top: 20px;
+}
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
@@ -61,24 +73,33 @@ height: auto!important;
 									</div>
 									
 									
-									<!-- <div class="col-sm-6">
-									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
-									</div> 
-									<div class="col-sm-6">
-									<div   class="pagination-div">
-									  <ul class="pagination">
-										<li ng-class="DisablePrevPage()">
-										  <a href ng-click="prevPage()">« Prev</a>
-										</li>
-										<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
-										  <a href="">{{n+1}}</a>
-										</li>
-										<li ng-class="DisableNextPage()">
-										  <a href ng-click="nextPage()">Next »</a>
-										</li>
-									  </ul>
+									<div class="row">
+										<div class="col-md-12">
+										<h1>Simple wizard in AngularJS and Bootstrap</h1>
+										<div id="wizard-container">
+
+											<div id="wizard-step-container">
+											  <ul class="nav nav-pills nav-justified">
+												<li ng-repeat="step in steps" ng-class="{'active':step.step == currentStep}"><a ng-click="gotoStep(step.step)" href="">{{step.step}}. {{step.name}}</a></li>
+											  </ul>
+											</div>
+
+											<div id="wizard-content-container">
+											  <ng-include src="getStepTemplate()"></ng-include>
+											</div>
+
+											<div id="wizard-navigation-container">
+											  <div class="pull-right">
+												<span class="btn-group">
+												  <button ng-disabled="vm.currentStep <= 1" class="btn btn-default" name="previous" type="button" ng-click="gotoStep(currentStep - 1)"><i class="fa fa-arrow-left"></i> Previous step</button>
+												  <button ng-disabled="currentStep >= steps.length" class="btn btn-primary" name="next" type="button" ng-click="gotoStep(currentStep + 1)">Next step <i class="fa fa-arrow-right"></i></button>
+												</span>
+												<button ng-disabled="currentStep != steps.length" class="btn btn-success" name="next" type="button" ng-click="save()"> <i class="fa fa-floppy-o"></i> Save</button>
+											  </div>
+											</div>
+										</div>
+										</div>
 									</div>
-									</div> -->	
 								</div>
 							</div>
 						</div>

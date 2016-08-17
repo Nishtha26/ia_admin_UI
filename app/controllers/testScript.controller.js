@@ -15,7 +15,7 @@ oTech.controller('testScriptController',
 		$scope.commandError=false;
 		$scope.createTestPlan = {};
         var sendCreateData = {};
-		if($.cookie("testPlanName") != undefined && $.cookie("testPlanDescription") != undefined && $.cookie("usecaseId") != undefined){
+		if($.cookie("testPlanName") != undefined){
 				$scope.testPlanName = $.cookie("testPlanName");
 				$scope.testPlanDescription = $.cookie("testPlanDescription");
 				$scope.usecaseVal = $.cookie("usecaseId");
@@ -301,16 +301,17 @@ oTech.controller('testScriptController',
 	  $scope.newSubItem = function (scope) {
         var nodeData = scope.$modelValue;
 		if(nodeData.id >=1 && nodeData.id< 10){
+			var nodenamePostFix=nodeData.nodes.length+1;
 			 nodeData.nodes.push({
 				 "id": (nodeData.nodes.length+1)*10,
-					"title": "Task Executor",
+					"title": "Task Case #"+nodenamePostFix,
 					"nodrop": true,
 					"sequenceNo":1,
 					"loop":1,
 					"nodes": [
 					  {
 						"id": (nodeData.nodes.length+1)*100,
-						"title": "Command Executor",
+						"title": "Command Group",
 						"sequenceNo":1,
 						"loop":1,
 						"commandId":-1,
@@ -329,7 +330,7 @@ oTech.controller('testScriptController',
 			}
 			if(nodeData.id >=10 && nodeData.id < 100){
 			 nodeData.nodes.push({ "id": (nodeData.nodes.length+1)*100,
-				"title": "Command Executor",
+				"title": "Command Group",
 				"sequenceNo":1,
 				"loop":1,
 				"commandId":-1,
@@ -363,20 +364,20 @@ function getTreeDataForCommands1(data){
       
 	  $rootScope.tree2 = [{
         "id": 1,
-        "title": 'Task Plan_name ' + new Date(),
+        "title": 'Test Plan name',
 		"nodrop": true,
 		"sequenceNo":1,
 		"loop":1,
         "nodes": [{
 				"id": 10,
-				"title": "Task Executor",
+				"title": "Task Case #1",
 				"nodrop": true,
 				"sequenceNo":1,
 				"loop":1,
 				"nodes": [
 					  {
 						"id": 100,
-						"title": "Command Executor",
+						"title": "Command Group",
 						"sequenceNo":1,
 						"loop":1,
 						"commandId":-1,
@@ -402,16 +403,16 @@ function getTreeDataForCommands1(data){
             multiSelect: false,
 			enableVerticalScrollbar :0,
 			enableHorizontalScrollbar:0,
-            columnDefs: [
-                         {name:'Id',field: 'testplanId', headerCellClass: $scope.highlightFilteredHeader,headerCellClass: $scope.highlightFilteredHeader},
-                         {name:'Name',field: 'testplanName',headerCellClass: $scope.highlightFilteredHeader},
-                         {name:'Use Case',field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
-                     	{name:'Created Date',field: 'createdDate', headerCellClass: $scope.highlightFilteredHeader},
-         				{name:'Created By',field: 'createdByName', headerCellClass: $scope.highlightFilteredHeader,},
+          columnDefs: [
+                         {name:'Id',field: 'testplanId', width: '10%'},
+                         {name:'Name',field: 'testplanName',width: '25%'},
+                         {name:'Use Case',field: 'useCaseName', width: '20%'},
+                     	{name:'Created Date',field: 'createdDate', width: '15%'},
+         				{name:'Created By',field: 'createdByName', width: '15%'},
          				  /* {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
                             '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},*/
-         				   {name:'Take Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
-                            '<select class="btn btn-default btn-xs btn-group dropdown" style=" border-color: #eaeaea;" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
+         				   {name:'Take Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
+                            '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 50%;height:75%;padding-top:1%" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
          					  '<option value="">Action</option>' +
          					  '<option value="{{row.entity.testplanId}}-View">View Test Runs</option>'+
          					  '<option value="{{row.entity.testplanId}}-Create">Create Test Run</option>'+
@@ -552,7 +553,7 @@ function getTreeDataForCommands1(data){
 		
 		// added for the pagination
 		
-		$scope.itemsPerPage = 10;
+		$scope.itemsPerPage = 15;
 					$scope.currentPage = 0;
 					$scope.endLimit=$scope.itemsPerPage;
 					var allOfTheData;
@@ -659,12 +660,15 @@ function getTreeDataForCommands1(data){
 							   accept: function(sourceNodeScope, destNodesScope, destIndex) {
 								   $scope.commandError=false;
 									if(destNodesScope.$modelValue[0].commandId >= 0 && sourceNodeScope.$modelValue.commandId){
-										if(destNodesScope.$modelValue[0].title == "Add Command"){
+										if(destNodesScope.$modelValue[0].title == "Add Command" && destNodesScope.$modelValue.length == 1){
 										destNodesScope.$modelValue[0].title = sourceNodeScope.$modelValue.title;
 										destNodesScope.$modelValue[0].commandParams = sourceNodeScope.$modelValue.commandParams;
 										destNodesScope.$modelValue[0].commandId = sourceNodeScope.$modelValue.commandId;
 										return false;
-										}else if(destNodesScope.$modelValue[0].commandId != sourceNodeScope.$modelValue.commandId){
+										}else if(destNodesScope.$modelValue.length == 1 && destNodesScope.$modelValue[0].title != "Add Command"){
+											$scope.scrollTreeDown("scroll_commands");
+										return true;
+										}else if(destNodesScope.$modelValue.length > 1){
 											$scope.scrollTreeDown("scroll_commands");
 										return true;
 										}
@@ -739,27 +743,24 @@ function getTreeDataForCommands1(data){
 			$scope.dataProcessing = true;
 			$(".btn-info").addClass("disabled");
 			$rootScope.uiTreeJSON = $scope.tree2;
-		var vd = ["VD1" , "VD2" , "VD3" , "VD4" , "VD5" , "VD6" , "VD7" , "VD8" , "VD9" , "VD10"];
-			var assignVirtualDevice_Data = {};
-		assignVirtualDevice_Data.virtualDeviceVoList = [];
-			
-			for(var i=0; i< $scope.noOfVirtualDevice ; i++){
-				 assignVirtualDevice_Data.virtualDeviceVoList.push({"name": vd[i]});
-			}
+			$rootScope.testPlanName=$scope.testPlanName;
+			$.cookie("testPlanName", $scope.testPlanName);
+			$rootScope.usecaseId=$scope.usecaseVal;
+			$.cookie("usecaseId", $scope.usecaseVal);
+			$.cookie("usecaseDescription", $scope.usecases[$scope.usecaseVal]);
+			$rootScope.usecaseDescription=$scope.usecases[$scope.usecaseVal];
+			$rootScope.testPlanDescription=$scope.testPlanDescription;
+			$.cookie("testPlanDescription", $scope.testPlanDescription);
+
+		
             if ($scope.testPlanName == "" || $scope.testPlanName == undefined) {
 				$scope.dataProcessing = false;
 				$(".btn-info").removeClass("disabled");
                 $scope.validateTestPlanData("Please Enter TestPlan Name");
                 return 0;
             }
-            if (assignVirtualDevice_Data.virtualDeviceVoList.length <= 0) {
-				$scope.dataProcessing = false;
-				$(".btn-info").removeClass("disabled");
-                $scope.validateTestPlanData("Please Select Virtual Device");
-                return 0;
-
-            }
-
+           
+			sendCreateData.jobName = $scope.testPlanName;
             var superParentObject, parentObject = {}, childObject = {};
             superParentObject = $scope.tree2[0].nodes;
             for (var i = 0; i < $scope.tree2[0].nodes.length; i++) {
@@ -792,86 +793,23 @@ function getTreeDataForCommands1(data){
                     }
                 }
             }
-            sendCreateData.jobName = $scope.testPlanName;
-			sendCreateData.jobDescription = $scope.testPlanDescription;
-            sendCreateData.jobCreatedBy = userId;
-            sendCreateData.taskVOList = [];
-            sendCreateData.taskVOList[0] = {};
-            sendCreateData.taskVOList[0].taskName = $scope.tree2[0].title;
-            sendCreateData.taskVOList[0].taskLoop = $scope.tree2[0].loop;
-			sendCreateData.taskVOList[0].useCaseId = $scope.usecaseVal;
-			$rootScope.usecaseId=$scope.usecaseVal;
-			$.cookie("usecaseId", $scope.usecaseVal);
-
-            sendCreateData.taskVOList[0].taskCreatedBy = userId;
-            sendCreateData.taskVOList[0].taskExecutorVOList = [];
-
-            var superParentObjectKeys = Object.keys(superParentObject);
-
-            for (var i = 0; i < superParentObjectKeys.length; i++) {
-
-                sendCreateData.taskVOList[0].taskExecutorVOList[i] = {};
-                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorName = superParentObject[i].title;
-                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorLoop = superParentObject.loop;
-                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorSeqNo = 1;
-
-                //  sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList =[];
-
-
-            }
-
-            var parentObjectKeys = Object.keys(parentObject);
-            for (var i = 0; i < parentObjectKeys.length; i++) {
-                var childKeys = Object.keys(parentObject[parentObjectKeys[i]]);
-                sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList = [];
-                for (var j = 0; j < childKeys.length; j++) {
-                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j] = {};
-                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorName = parentObject[parentObjectKeys[i]][childKeys[j]].title;
-                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorLoop = parentObject[parentObjectKeys[i]][childKeys[j]].loop;
-                    sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList[j].commandExecutorSeqNo = parentObject[parentObjectKeys[i]][childKeys[j]].sequenceNo;
-
-                }
-            }
-
-
-            var childSuperParentKeys = Object.keys(childObject);
-            for (var p = 0; p < childSuperParentKeys.length; p++) {
-                var childParentKeys = Object.keys(childObject[childSuperParentKeys[p]]);
-                for (var q = 0; q < childParentKeys.length; q++) {
-                    var childKeys = Object.keys(childObject[childSuperParentKeys[p]][childParentKeys[q]]);
-                    sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList = [];
-                    for (var r = 0; r < childKeys.length; r++) {
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r] = {};
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandId = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandId;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandSeqNo = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandSeqNo;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandParams = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandParams;
-                        sendCreateData.taskVOList[0].taskExecutorVOList[p].commandExecutorVOList[q].commandExecutorCommandVOList[r].commandName = childObject[childSuperParentKeys[p]][childParentKeys[q]][childKeys[r]].commandName;
-                    }
-                }
-            }
-
-
             var jsonData = JSON.stringify(sendCreateData);
-            promise = testScriptService.CreateSrvc(userId, jsonData, token);
+            promise = testScriptService.isTestPlanExist(userId, jsonData, token);
 
-
+			$scope.dataProcessing = true;
+			$(".btn-info").addClass("disabled");
+			
             promise.then(
                 function (data) {
                     if (data.status == "Success") {
-                        assignVirtualDevice_Data.jobVo = {"jobId": data.NewTestPlan.jobId};
-                        $cookieStore.put('TestPLANId', data.NewTestPlan.jobId);
-                        $cookieStore.put('TestplanName', data.NewTestPlan.jobName);
-                        assignVirtualDevice(token, assignVirtualDevice_Data);
+                       $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
                     }
                     else {
-                        $rootScope.Message = " " + data.status;
-                        $('#MessageColor').css("color", "red");
-                        $('#MessagePopUp').modal('show');
-                        $timeout(function () {
-                            $('#MessagePopUp').modal('hide');
-                        }, 2000);
 						$scope.dataProcessing = false;
 						$(".btn-info").removeClass("disabled");
+						$("#jobIsExitsError").text(data.status)
+						$scope.jobIsExitsError=true;
+						
                     }
 
 
@@ -880,33 +818,6 @@ function getTreeDataForCommands1(data){
                     console.log(err);
                 }
             );
-
-
-            var assignVirtualDevice = function assignVirtualDevice(token, assignVirtualDevice_Data) {
-
-                promise1 = testScriptService.assignVirtualDevice(userId, token, JSON.stringify(assignVirtualDevice_Data));
-                promise1.then(
-                    function (data) {
-                        if (data.status == "success") {
-                            $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
-							$scope.dataProcessing = false;
-                        }
-                        else {
-                            $rootScope.Message = " " + data.status;
-                            $('#MessageColor').css("color", "red");
-                            $('#MessagePopUp').modal('show');
-                            $timeout(function () {
-                                $('#MessagePopUp').modal('hide');
-                            }, 2000);
-
-                        }
-
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-            }
 		}
 			else{
 				  $scope.createtestplan.submitted=true;  
@@ -946,6 +857,10 @@ function getTreeDataForCommands1(data){
 			}
 			if(createAction == selectedContext.actions){
 				$rootScope.RowCreateTestrun = row.entity;
+				var TestPlanId = row.entity.testplanId;
+				$cookieStore.put('TestplanName', row.entity.testplanName);
+
+                $cookieStore.put('TestPLANId', TestPlanId);
                 $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
 			}
 			if(editAction == selectedContext.actions){
@@ -965,33 +880,9 @@ function getTreeDataForCommands1(data){
                 $cookieStore.put('TestPlan_Name', $scope.testplan_name);
 				$rootScope.Row = row.entity;
 
-                promise = testScriptService.getTestplan(token, userId, TestPlanId);
-                promise.then(
-                    function (data) {
-                        $scope.treedata = data.jobVO;
-						$rootScope.uiTreeJSON = data.jobVO;
-						if(data.isMappedTestPlanTestRun.length > 0){
-						$rootScope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
-						}
-                        $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
-					   if ($rootScope.isMappedTestPlanTestRun == "notExist") {
+               
 							$location.path('/dashboard/testScript/EditTestplan/EditCommandParameters')
-						}
-						else if($rootScope.isMappedTestPlanTestRun == "isExist"){
-							$rootScope.Message = "You can't edit, Test Plan having Test Runs!!";
-							$('#MessageColor').css("color", "red");
-							$('#MessagePopUp').modal('show');
-							$timeout(function () {
-								$('#MessagePopUp').modal('hide');
-							}, 2000);
-						} 
-								},
-								function (err) {
-									console.log(err);
-								}
-							);
+						
 				
 			}
 			
@@ -1025,6 +916,10 @@ function getTreeDataForCommands1(data){
 		    var height = wtf[0].scrollHeight;
 		    wtf.scrollTop(height);
 		}
+		
+		$scope.copyToTestPlanName = function() {
+        $scope.tree2[0].title=$scope.testPlanName;
+      };
 	   
 });
 

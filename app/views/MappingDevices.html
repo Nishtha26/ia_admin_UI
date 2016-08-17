@@ -126,7 +126,7 @@ height: auto!important;
                                             <div class="row" >
 
                                                 <div class="col-md-2 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Virtual Devices 
+                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Device Profiles 
                                                    </strong>
                                                     </h4>
                                                     <div ui-grid="VirtualDevicesOptions" ui-grid-selection
@@ -138,8 +138,8 @@ height: auto!important;
 														 </div>
                                                 </div>
 
-                                                <div class="col-md-10 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Real Devices</strong></h4>
+                                                <div class="col-md-5 margin_top">
+                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Devices</strong></h4>
                                                     <div ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav
                                                          class="grid">
 														<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
@@ -148,36 +148,37 @@ height: auto!important;
 														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 														 </div>
                                                 </div>
-                                               <!-- <div class="col-md-1 arrow_center">
+                                               <div class="col-md-1 arrow_center">
                                                     <div class="ot-toggle">
                                                         <div class="Absolute-Center">
                                                             <button type="button" class=""
                                                                     ng-click="addVirtualDevices();addRealDevices();">
                                                                 &gt;</button>
+                                                                <button type="button" class=""
+                                                                    ng-click="removeMappings();">
+                                                                &lt;</button>
                                                         </div>
 
                                                     </div>
-                                                </div>-->
-                                                <div class="col-md-12 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Virtual - Real Devices</strong>
+                                                </div>
+                                                <div class="col-md-4 margin_top">
+                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Mappings</strong>
                                                     </h4>
-                                                    <table class="table">
+                                                    <div ui-grid="DeviceMapping" ui-grid-selection ui-grid-cellNav
+                                                         class="grid">
+													</div>
+                                                    <!-- <table class="table">
                                                         <thead>
                                                         <tr>
-                                                           <!--<th>Virtual Devices Id</th>-->
-															<th>Virtual Devices</th>
-															<th>Real Devices Id's</th>
-                                                            <th>Real Devices</th>
+															<th>Device Profile</th>
+															<th>Devices Id</th>
+                                                            <th>Name</th>
                                                             <th>Model</th>
 															<th>Manufacturer</th>
-															<th>Network</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr ng-repeat="Device in DeviceMapping">
-															<!-- <td ng-model="Device.VirtualDeviceId">
-                                                                {{Device.VirtualDeviceId}}
-                                                            </td>-->
+                                                        <tr ng-repeat="Device in DeviceMapping | unique:'RealDeviceId'">
 															 <td ng-model="Device.VirtualDeviceName">
                                                                 {{Device.VirtualDeviceName}}
                                                             </td>
@@ -193,17 +194,9 @@ height: auto!important;
 															 <td ng-model="Device.Manufacturer">
                                                                 {{Device.Manufacturer}}
                                                             </td>
-															<td ng-model="Device.Network">
-                                                                {{Device.Network}}
-                                                            </td>
-                                                           <!-- <td>
-                                                                <button type="button" class="btn btn-danger"
-                                                                        ng-click="deleteDevices(Device)">Delete
-                                                                </button>
-                                                            </td>-->
                                                         </tr>
                                                         </tbody>
-                                                    </table>
+                                                    </table>-->
                                                     <p>{{msg}}</p>
                                                 </div>
                                             </div>

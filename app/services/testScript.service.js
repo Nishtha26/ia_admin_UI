@@ -33,6 +33,31 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+		
+		 service.isTestPlanExist = function (userId, createData, token) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/isTestPlanExist",
+                type: "POST",
+                data: createData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 
         service.FetchingTestService = function (userId, token) {
             var deferred = $q.defer();
@@ -605,7 +630,7 @@ oTech.service('testScriptService',
 		service.getVirtualJob = function (token,userId, jobId) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualJobs",
+                url: oApp.config.BASE_URL + "rest/testPlanCommandOverride/getVirtualJobs",
 			type: "POST",
                 data: {token: token, userId: userId, jobId:jobId},
                 headers: {
@@ -629,7 +654,7 @@ oTech.service('testScriptService',
 		service.getVirtualDevicesForJob = function (token,userId, jobId) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualDevicesForJob",
+                url: oApp.config.BASE_URL + "rest/testPlanCommandOverride/getVirtualDevicesForJob",
 			type: "POST",
                 data: {token: token, userId: userId, jobId:jobId},
                 headers: {
@@ -653,7 +678,7 @@ oTech.service('testScriptService',
 		service.getVirtualJobsTask = function (token, userId, jobId, jobDeviceId) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + "rest/testPlan/getVirtualJobsTask",
+                url: oApp.config.BASE_URL + "rest/testPlanCommandOverride/getVirtualJobsTask",
 				type: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -676,18 +701,16 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 		
-		service.updateCommandParametersJobDevice = function (token, userId, createData, jobId, jobDeviceId) {
+		service.updateCommandParametersJobDevice = function (token, userId, createData) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + "rest/testPlan/updateCommandParametersJobDevice",
+                url: oApp.config.BASE_URL + "rest/testPlanCommandOverride/updateCommandParametersJobDevice",
 				type: "POST",
 				 data: createData,
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Auth-Token': token,
-                    'userId': userId,
-					'jobDeviceId': jobDeviceId,
-					'jobId': jobId
+                    'userId': userId
                 },
                 success: function (data)
                 {

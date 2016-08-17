@@ -31,20 +31,47 @@ position: inherit;
  min-height: 100%;
 height: auto!important;
  } */
+#wizard-step-container {
+  margin: 20px 0;
+}
 
+#wizard-content-container {
+  margin: 20px 0;
+}
+
+#wizard-navigation-container {
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+  padding-top: 20px;
+}
+
+.nav-tabs > li > a{
+	cursor:pointer;
+}
+
+.nav-tabs li a span:hover {
+    color: red;
+	cursor:pointer;
+}
+
+.tabRemoveClass {
+    margin-left: 10px;
+}
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
+				<div class="ot-deviceData " style="background-color: #fff;margin: 0 auto 4px;">
 				
 					<div class="tab-content">
 					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%;font-weight:bold;'"> <div style="width:100%;" ncy-breadcrumb></div> 
-							        <div class="row">
+						 <div class="orchestra_devices_table" style="height: auto;max-width: 100%;background-color: #fff;">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                             style="max-width:100%;margin-left: 10px;">
+                                            <div style="width:100%;" ncy-breadcrumb></div>
+                                             <div class="row">
                                                <div class="col-md-12 margin_top">
                                                     <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Test Plan</strong>
                                                     </h4>
@@ -85,52 +112,75 @@ height: auto!important;
                                                     </table>
                                                 </div>
                        </div>
-<br/>
-							<div class="row">
-											<div ng-include="'app/views/commonTreeDataTemplateForEdit.html'"></div>
-											<div class="col-md-4">
-												 <table class="table table-bordered">
-													<thead>
-														<tr>
-														<th style="color:#337ab7;">Virtual Devices</th>
-														<th style="top:2px;right: 41px;text-align: center;"><a href="" class="table-AdministrationAdd plus_align" ng-click="PlusVirtualDevice('sm')" style="top: 2px;right: 46px;"><img src="images/device-plus-icon.png" alt="add"></a></th>
-														</tr>
-													</thead>
-												</table>
-
-												 <div id="firstGrid" ui-grid="VirtualDevicesOptions" ui-grid-selection ui-grid-cellNav class="grid">
-													<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
-													<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-													<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
-												 </div>
-											</div>
-											
-									</div>
-									
-									<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
-                                                <input type="button"  name="button" ng-click="testscript();" value="« Re-plan" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="editTestplan('sm');" value="Next »" class="btn btn-info"/>
-                                            </div>
-											</div>
-									</div>
-							
-							
-						
-					</div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
 				  </div>
 				 
-				</div>				
+				</div>	
+																							
 				</div>
-					<!--<div ng-include="'app/views/favourites.html'"></div>-->
-					
+					<div role="tabpanel" >
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" ng-repeat="tab in tabs" ng-click="selectTab($index)" ng-class="{'active':selectedTab == $index}">
+					<a data-target="#tab" aria-controls="home" role="tab" data-toggle="tab">{{tab.deviceProfileName}} <span ng-click="deleteTab($index)" class="glyphicon glyphicon-remove tabRemoveClass"></span></a>
+				</li>
+				<li role="presentation" ng-click="addTab()">
+					<a aria-controls="home" role="tab" data-toggle="tab">( + )</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="tab">
+				<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
+				<img class="loading" src="images/please_wait.gif"
+													ng-show="dataProcessing"></img>
+					<div ng-include="'app/views/commonTreeDataTemplateForEdit.html'"></div>
+				</div>
 			</div>
 		</div>
+		<div id="wizard-navigation-container">
+										<span id="jobIsExitsError" class="errors animate-show"
+													style="margin-left: 24%; margin-top:11%;"
+													ng-show="jobIsExitsError" ng-model="command-border">Error</span>
+												<span id="jobIsExitsSuccess" class="successOtClass animate-show"
+													style="margin-left: 24%; margin-top:11%;"
+													ng-show="jobIsExitsSuccess" ng-model="command-border">Error</span>
+											  <div class="pull-right">
+												
+												 <button type="button" class="btn btn-info ot-btn" ng-click = "testScript()">« Back</button>
+												<button  class="btn btn-info ot-btn" name="next" type="button" ng-click="update()"> <i class="fa fa-floppy-o"></i> Update</button>
+											  </div>
+											</div>
+			</div>
+		</div>
+		
 	</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
-<div ng-include="'app/views/popUp.html'"></div>
+ <div ng-include="'app/views/popUp.html'"></div>
 	<div class="footer-div">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>
+	 <div class="modal fade" id="commandPramameter" role="dialog" data-backdrop="static" data-keyboard="false">								
+	<div class="modal-dialog" style="width:364px;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#337ab7;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" style="color:#FFFFFF;">Command Params</h4>
+			</div>
+			
+			<div class="modal-body" id="updateCommandParametersForm" >
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default"  ng-click="addField('updateCommandParametersForm');" >Add</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateCommandParametersAction('updateCommandParametersForm');" >Update</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
 
  function setEqualHeight(e) {

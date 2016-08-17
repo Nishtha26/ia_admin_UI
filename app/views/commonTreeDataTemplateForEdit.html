@@ -5,10 +5,39 @@ width:34px;
 .taskLoop {
 width:34px;
 }
-
+.create-tp-input {
+    width: 21%;
+}
 .nodrop {
     background-color: red;
 }
+.tp-loop-wd {
+    margin-left: 10%;
+    width: 3%!important;
+    margin-right: 4%;
+}
+
+.ctp-mar-left {
+    margin-left: 9%!important;
+}
+
+.created-tp-tree-root input {
+    width: 23%;
+}
+.tp-seq-wd {
+    margin-left: 3%;
+    width: 3%!important;
+    margin-right: 5%;
+}
+.angular-ui-tree-handle:hover {
+    color: #438eb9;
+    background: #80d6f7;
+    border-color: #80d6f7;
+}
+.tree-node {
+    background-color: #fff;
+}
+
 </style>
 
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">	
@@ -27,14 +56,23 @@ width:34px;
 		}">
 		</span>
 		</a>
-
-		
-		<label class="create-tp-input create-tp-label" style="width: 18%;" ng-model="node.title">{{node.Name}}</label>
+		<label class="create-tp-input create-tp-label" ng-model="node.title">{{node.title}}</label>
 		</td>
-		<td><label class="create-tp-input create-tp-label tp-seq-wd" style="width: 18%;" ng-model="node.Loop">{{node.Loop}}</label></td>
-	    <td><label class="create-tp-input create-tp-label tp-seq-wd ctp-mar-left" style="width: 18%;" ng-model="node.Sequence">{{node.Sequence}}</label></td>
-		<span ng-if="node.CommandParams != ''">
-		<td> <label class="create-tp-input create-tp-label" style="width: 18%;" ng-model="node.CommandParams">{{node.CommandParams}}</label></td>
+		<td><input type="text" class="taskLoop tp-loop-wd ctp-mar-left"  ng-model="node.loop"></td>
+	    <td><input type="text" class="taskSequenceNo tp-seq-wd ctp-mar-left" ng-model="node.sequenceNo"></td>
+		<span ng-if="node.commandParams">
+			<td> 
+				<input type="text" style="width: 38%;" id="commandId{{node.commandId}}"   ng-model="node.commandParams" />
+			</td>
+			<td> 
+			
+				<a class="pull-right btn btn-primary btn-xs" data-toggle="modal"  data-target="#commandPramameter" ng-click="createFrom(this)" style="background-color:#337ab7;;margin-right: 8px;padding: 3px 5px;line-height: 1.2;position: relative;"><span class="glyphicon glyphicon-plus-sign"></span></a>
+
+				
+			</td>
+			
+			
+		
 		 </span>
 		</tr>
 		</div>
@@ -52,23 +90,23 @@ width:34px;
 	
 </script>
 
-									<div class="col-md-8">
+									<div class="col-md-13">
 												<table class="table table-bordered">
 													<thead>
-														<tr class="create-tp-tree-header">
-														<th>Name</th>
-														<th>Loop</th>
-														<th>Seq No.</th>
+														<tr class="created-tp-tree-header">
+														<th style="width:17%;">Name</th>
+														<th style="width:10%;">Loop</th>
+														<th style="width:10%;">Seq No.</th>
 														<th>Default Params</th>
 														</tr>
 													</thead>
 												</table>
 
 													<table class="table table-bordered">	
-														<div ui-tree id="tree2-root" class="edit-tp-tree-root edit-td-scroll" >
-														<div class="tree-footer-margin">
-														<ol ui-tree-nodes="" ng-model="uiTreeJSON" >
-														<li ng-repeat="node in uiTreeJSON"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
+														<div ui-tree id="tree2-root" class="created-tp-tree-root created-td-scroll" >
+														<div style="margin-bottom:20px;">
+														<ol ui-tree-nodes="" ng-model="tabs[selectedTab].content" >
+														<li ng-repeat="node in tabs[selectedTab].content"  ui-tree-node ng-include="'nodrop_nodes_renderer.html'"></li>
 														</ol>
 														</div>
 													</div>
