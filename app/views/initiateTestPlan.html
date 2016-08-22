@@ -1,76 +1,159 @@
+
+<link rel="stylesheet" href="css/templete/app.css" />
+
+<link rel="stylesheet" href="css/templete/bootstrap.css" />
 <style>
 .ui-grid-sort-priority-number {
-font-size:0;
+	font-size: 0;
 }
 
 .ui-grid-cell-contents {
-    text-align: left;
-	}
-.ui-grid-header-cell-wrapper{
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
+	text-align: left;
+}
+
+.ui-grid-header-cell-wrapper {
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
 }
 
 .table-responsive {
-    overflow-x: visible;
+	overflow-x: visible;
 }
 
-
-.ui-grid-render-container{
-		width: 100%; 
+.ui-grid-render-container {
+	width: 100%;
 }
 
-.ui-grid-pager-panel
-{
-position: inherit; 
-  padding-top: 20px;
+.ui-grid-pager-panel {
+	position: inherit;
+	padding-top: 20px;
 }
- 
+
+.angular-ui-tree-handle {
+	background-color: #fff;
+}
+
+.icon-green {
+	color: green;
+	font-size: 15px;
+}
+
+.maincontainer {
+	font-family: Source Sans Pro, sans-serif;
+}
 /*  .ui-grid-viewport{
  min-height: 100%;
 height: auto!important;
  } */
+.angular-ui-tree-handle:hover {
+	color: #438eb9;
+	background: #80d6f7;
+	border-color: #80d6f7;
+}
 
+.angular-ui-tree-handle input:focus {
+	color: #438eb9;
+	background: #80d6f7;
+	border-color: #80d6f7;
+}
+
+.breadcrumb {
+	margin-bottom: 4px !important;
+}
 </style>
 <div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer">
-		<div class="maincontent">
-			<div class="container-fluid">
-				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
-				
-					<div class="tab-content">
-					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
+<div class="maincontainer ">
+	<div class="maincontent">
+		<div class="container-fluid panel panel-default" style="width: 98%;margin-top:2px;">
+			<div class="ot-deviceData devicedata-height"
+				style="background-color: #fff; margin: 0 auto 0px;">
+
+				<!-- 	<div class="tab-content"> -->
+				<div id="devices" class="tab-pane fade in active"
+					style="background-color: #fff;">
+					<div class="orchestra_devices_table"
+						style="background-color: #fff; width: 100%;">
 						<div class="row">
-						<form name="createtestplan" method="post" ng-class="{submitted:createtestplan.submitted}" novalidate>
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div style="width:100%;" ncy-breadcrumb></div>
-								
-									
-								
-								 <div class="panel-body">
-								 
-										
-								 
-									<div class="table-responsive">
-									
-										<div class="row">
-											<div class="col-xs-12">
-												<table class="table">
+							<form name="createtestplan" method="post"
+								ng-class="{submitted:createtestplan.submitted}" novalidate>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<fieldset>
+										<legend>
+											<div
+												style="background-color: #fff; width: 100%; padding: 5px 0px;"
+												ncy-breadcrumb></div>
+										</legend>
+									</fieldset>
+									<div class="panel-body margin-zero">
+										<!-- <div class="table-responsive"> -->
+										<form class="form-horizontal ng-pristine ng-valid">
+											<div class="row">
+												<div class="form-group" style="margin-bottom:5px;">
+													<div class="col-md-8">
+														<label style="margin-left:4px;">Test Plan <span
+															class="error-star"></span></label>
+													</div>
+													<div class="col-md-4">
+														<label  style="margin-left:4px;"> Use Case <span
+															class="error-star"></label>
+													</div>
+												</div>
+												<div class="row">
+													<div class="form-group">
+														<div class="col-md-8" style="padding-left: 33px;">
+															<input type="text" ng-model="testPlanName"
+																name="testPlanName" ng-change="copyToTestPlanName()" class='form-control'
+																placeholder='Test plan name (required)'
+																required='required' />
+															<div
+																ng-show="createtestplan.testPlanName.$touched || createtestplan.$submitted"
+																ng-messages="createtestplan.testPlanName.$error"
+																class="errors">
+																<div ng-message="required">**This field should not
+																	be empty</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<select ng-model='usecaseVal'
+																ng-options='k as v for (k,v) in usecases'
+																class='form-control'></select>
+														</div>
+													</div>
+												</div>
+												<div class="form-group" style="padding-left:20px;">
+													<label style="margin-left:0px;">Description</label>
+
+													<textarea ng-model="testPlanDescription"
+														class='form-control' rows='2'
+														placeholder='Description (optional)'></textarea>
+												</div>
+												<!-- 	<div class="row">
+											<div class="col-xs-12"> -->
+												<!-- 	<table class="table">
 													<thead>
-													<tr>
-													   <th colspan='2'>Test Plan/ 	Use Case<span class="error-star"></span></th>
-													
-														<th>Description</th>
+													<tr> -->
+
+
+												<!-- 		<div class="form-group">
+													<label >
+												Number of Virtual Devices<span class="error-star"></span></label>
+															  <input  ng-model="noOfVirtualDevice" name="noOfVirtualDevice" class='form-control' 
+														  placeholder='Number of Virtual Devices(required)' required='required' type="number" min="1" />
+														  <div ng-show="createtestplan.noOfVirtualDevice.$touched || createtestplan.$submitted" ng-messages="createtestplan.noOfVirtualDevice.$error" class="errors" > 
+														 <div ng-message="required">**This field should not be empty</div>
+														  	  <div ng-message="number">**You did not enter a valid number</div>
+													</div>
+													</div> -->
+
+
+												<!-- 	<th>Description</th>
 													</tr>
 													</thead>
 													<tbody>
 													<tr>
 														 <td style="text-align: left;" colspan='2'>
-														 <input type="text" ng-model="testPlanName" name="testPlanName"  class='form-control' placeholder='Test plan name (required)' required='required'  />
-														  <div ng-show="createtestplan.testPlanName.$touched || createtestplan.$submitted" ng-messages="createtestplan.testPlanName.$error" class="errors"> 
-														 <div ng-message="required">**This field should not be empty</div></div>
+														
 														 </td>
 														 <td rowspan='2'>
 															<textarea ng-model="testPlanDescription" class='form-control' rows='4' placeholder='Description (optional)'></textarea>
@@ -78,76 +161,82 @@ height: auto!important;
 													</tr>
 													<tr>
 														 <td>
-															<select ng-model='usecaseVal' ng-options='k as v for (k,v) in usecases' class='form-control'></select>
+															
 														</td>
 														<td>
-														  <input  ng-model="noOfVirtualDevice" name="noOfVirtualDevice" class='form-control' 
-														  placeholder='Number of Virtual Devices(required)' required='required' type="number" min="1" />
-														  <div ng-show="createtestplan.noOfVirtualDevice.$touched || createtestplan.$submitted" ng-messages="createtestplan.noOfVirtualDevice.$error" class="errors" > 
-														 <div ng-message="required">**This field should not be empty</div>
-														  	  <div ng-message="number">**You did not enter a valid number</div>
+												
 														  	   <div ng-message="min">Your field value is lesser minimum value</div>
 														 </div>
 													
-														</td>
-													</tr>
+														</td> -->
+												<!-- 	</tr>
 													</tbody>
-												</table>
-											</div>
+												</table> -->
+												<!-- 	</div>
 										</div>
-									
-										<div ng-include="'app/views/cloning.html'"></div>
-										 <span id="command_error" class ="errors animate-show" style="position: absolute; margin-left: 44%;margin-top:-7%;" ng-show="commandError" ng-model="command-border" >Error</span>
-										<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
-											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
-														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
+									 -->
+												<div ng-include="'app/views/cloning.html'"></div>
+												<span id="command_error" class="errors animate-show"
+													style="position: absolute; margin-left: 44%; margin-top: -7%;"
+													ng-show="commandError" ng-model="command-border">Error</span>
+												<img class="loading" src="images/loading.gif"
+													ng-show="dataLoading"></img>
+												<div class="loadingErr" ng-show="err">No Data Found</div>
+												<img class="loading" src="images/please_wait.gif"
+													ng-show="dataProcessing"></img>
+												<div class="loadingErr" ng-show="err">No Data Found</div>
+												<!-- 	</div> -->
+											</div>
+											<div
+												style="width: 100%;  margin-top: 10px;" align="right">
+												
+											<span id="jobIsExitsError" class="errors animate-show"
+													style="margin-left: 64%; margin-top: 3%;"
+													ng-show="jobIsExitsError" ng-model="command-border">Error</span>
+												<button type="button" class="mb-sm btn btn-primary"
+													ng-click="testScript()">« Back</button>
+												<button type="submit" class="mb-sm btn btn-primary"
+													ng-click="createTestPlanService()">Next »</button>
+											</div>
+										</form>
 									</div>
+
 								</div>
-								<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
-                                                <button type="button" class="btn btn-info ot-btn" ng-click = "testScript()">« Back</button>
-												<button type="submit" class="btn btn-info ot-btn"  ng-click = "createTestPlanService()">Next »</button>
-                                            </div>
-							</div>
-							</form>
 						</div>
-					
 					</div>
-				  </div>
-				 
-				</div>				
+
+					<!-- 	</div>	 -->
 				</div>
-					<!--<div ng-include="'app/views/favourites.html'"></div>-->
-					
+				<!--<div ng-include="'app/views/favourites.html'"></div>-->
+
 			</div>
 		</div>
 	</div>
-<div ng-include="'app/views/favouritesPopUp.html'"></div>
-	<div class="footer-div">
-	 <div ng-include="'app/views/footer.html'"></div>
-	 </div>
-	  <div ng-include="'app/views/popUp.html'"></div>
-<script>
+	<div ng-include="'app/views/favouritesPopUp.html'"></div>
+	<div class="footer-div" style="position: absolute; bottom: 0px;">
+		<div ng-include="'app/views/footer.html'"></div>
+	</div>
+	<div ng-include="'app/views/popUp.html'"></div>
+	<script>
+		function setEqualHeight(e) {
+			// alert("sdf");
+			var t = e.height();
+			//  e.each(function () {
+			currentHeight = $(window).height();
+			// alert("t:"+t+"currentHeight"+currentHeight)
+			if (currentHeight > t) {
 
- function setEqualHeight(e) {
-	// alert("sdf");
-     var t = e.height();
-   //  e.each(function () {
-         currentHeight = $( window ).height();
-       // alert("t:"+t+"currentHeight"+currentHeight)
-         if (currentHeight > t) {
-        	 
-             t = currentHeight
-         }
-   //  });
-     $(".devicedata-height").height(currentHeight-158);
-   
- }
- $(window).resize(function () {
-	
-	    setEqualHeight( $('.ui-grid-viewport') );
-	});
- $(document).ready(function () {
-     setEqualHeight($(".ui-grid-viewport"))
- })
-</script>
+				t = currentHeight
+			}
+			//  });
+			$(".devicedata-height").height(currentHeight - 158);
+
+		}
+		$(window).resize(function() {
+
+			//  setEqualHeight( $('.ui-grid-viewport') );
+		});
+		$(document).ready(function() {
+			//    setEqualHeight($(".ui-grid-viewport"))
+		})
+	</script>

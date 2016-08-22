@@ -1,9 +1,10 @@
 <script type="text/ng-template" id="nodes_renderer1.html">
   <div ui-tree-handle class="tree-node tree-node-content">
-    <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+    <a  data-nodrag ng-click="toggle(this)"><span class="glyphicon icon-green" ng-class="{'glyphicon glyphicon-plus-sign': collapsed,
+		'glyphicon glyphicon-minus-sign': !collapsed}"></span></a>
     <!--<input type="text" ng-model="node.title">-->
 	
-	{{node.title}}
+	<label class="tree-label">{{node.title}}</label>
 	
   </div>
   
@@ -18,14 +19,15 @@
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">	
 		
 		
-	<div ui-tree-handle class="tree-node tree-node-content" >
+	<div ui-tree-handle class="tree-node tree-node-content tree-label" >
 		
 
+
 		
-		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)">
-		<span class="glyphicon" ng-class="{
-		'glyphicon-chevron-right': collapsed,
-		'glyphicon-chevron-down': !collapsed
+		<a data-nodrag ng-click="toggle(this)">
+		<span class="glyphicon icon-green" ng-class="{
+		'glyphicon glyphicon-plus-sign': collapsed,
+		'glyphicon glyphicon-minus-sign': !collapsed
 		}">
 		</span>
 		</a>
@@ -34,7 +36,7 @@
 <label class="create-tp-input create-tp-label" ng-model="node.title">{{node.title}}</label>
 		</span>
 		<span ng-if="!node.commandId || node.commandId < 0">
-		<input type="text" class="create-tp-input create-input" ng-model="node.title">
+		<input type="text" class="create-tp-input create-input tree-label" ng-model="node.title">
 		</span>
 	
 <span class="create-tp-span">
@@ -64,15 +66,15 @@
 
 <div class="row">
   <div class="col-sm-6">
-	<h3 style="color:#337ab7;width:45%;">Available Commands</h3></div>
-<div class="col-sm-3" style="width: 17%;"><h3 style="color:#337ab7;">Name</h3></div>
-<div class="col-sm-1" style="width: 15%;"><h3 style="color:#337ab7;">Loop</h3></div>
-<div class="col-sm-2" ><h3 style="color:#337ab7;">Seq No.</h3></div>
+	<span style="width:45%;margin-left: 0;"><label>Available Commands</label></span></div>
+<div class="col-sm-3" style="width: 16%;"><label>Name</label></div>
+<div class="col-sm-1" style="width: 14%;"><label>Loop</label></div>
+<div class="col-sm-2" ><label>Seq No.</label></div>
   
 </div>
   
   
- <div class="row">
+ <div class="row" style="margin-left:0px;margin-right:0px;">
 <div class="col-sm-5 create-tp-scroll-commands ">
   
     

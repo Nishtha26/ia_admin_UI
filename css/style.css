@@ -40,7 +40,7 @@ src: url('../fonts/Rajdhani-SemiBold.eot?#iefix') format('embedded-opentype'), u
 
 /* Header Styles
 ---------------------------------------------------------------*/
-header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
+header {background-color: #fff; margin-bottom: 1px; padding: 3px 0;}
 .orchestra_header .logo  {overflow: hidden; position: relative;}
 .orchestra_header .logo a {height: auto;}
 
@@ -87,7 +87,7 @@ header {background-color: #fff; margin-bottom: 10px; padding: 3px 0;}
 
 .dropdown-menu ul.settings_menu li.landing a span {margin-top: 12px;}
 
-.user_profile {float: left; margin: 5px 0 0 20px;}
+.user_profile {float: left; margin: 5px 10px 0 2px;}
 .user_profile a {display: block;}
 
 .user_profile .dropdown-menu {margin-top: 8px; right: 14px;}
@@ -1235,7 +1235,7 @@ overflow: auto;
    background-repeat: repeat;
    margin:auto;
    
-    height: 56px;
+    height: auto;
    /* margin-right:16px;*/
     position: relative;
    width: 100%
@@ -1429,7 +1429,7 @@ overflow-x: hidden;
 	
 }
 .create-tp-scroll-commands{
- height: 373px;
+ height: 414px;
  overflow: auto;
  border-bottom: 1px solid #ccc;
  border-top: 1px solid #ccc;
@@ -1462,16 +1462,16 @@ overflow-x: hidden;
 	text-align: center;
 }
 .tp-loop-wd{
-	margin-left: 10%;
+	margin-left: 9%;
 	width: 9%!important;
-	margin-right: 10%;
+	margin-right: 9%;
 	
 	
 }
 .tp-seq-wd{
-	margin-left: 10%;
+	margin-left: 9%;
 	width: 9%!important;
-	margin-right: 10%;
+	margin-right: 9%;
 }
 .ed-tp-loop-seq-wd{
 	margin-left: 8%;
@@ -1583,10 +1583,89 @@ input[type="number"] {
     line-height: 25px;
     }
   .create-input {
-    background-color: #f8faff;
+    background-color: #fff;
     border: 0 none;
     }
     #tree2-root .angular-ui-tree-handle:hover input {
     background: #f4f6f7 none repeat scroll 0 0;
    
 }
+.btn-align{
+	text-align:right;
+	
+}
+.btn-align .btn{
+	margin-right:0px;
+}
+.margin-zero{
+	padding:0px!important;
+	margin:0px!important;
+}
+.tree-label{
+	color: #656565!important;
+	font-size:14px!important;
+}
+.logo-align{
+	padding-top:9px;
+}
+.first-letter{
+	/* float: left;
+    font-family: "Times New Roman",Times,serif;
+    font-size: 26px;
+    text-transform: uppercase;
+    color:white; */
+    float: left;
+    font-family: "Times New Roman",Times,serif;
+    font-size: 27px;
+    text-transform: uppercase;
+    color: #4f545a;
+    width: 30px;
+    height: 30px;
+    background-color: #00bfe8;
+    border-radius: 250px;
+    line-height: 1.1;
+    margin-left: 0px;
+    padding-left: 5px;
+    margin-top: 12px;
+}
+.footer-bottom-touch{
+	
+	position: absolute;bottom:0px;
+}
+.circle
+    {
+    width:25px;
+    height:25px;
+    border-radius:250px;
+    font-size:50px;
+    color:#fff;
+    line-height:500px;
+    text-align:center;
+    background:#000
+    }
+    .ui-grid{
+    max-width:1614px;}
+    @media only screen and (min-width: 1320px) and (max-width: 1440px) {
+   .ui-grid{
+   max-width:1110px!important;
+   min-width:1110px!important;
+   }
+   body{
+   overflow-y: auto;
+   font-size: 12px!important;
+   }
+   
+.create-tp-scroll-commands{
+height: 318px!important;	
+}
+
+.table-uigrid.ui-grid .ui-grid-cell, .table-uigrid.ui-grid .ui-grid-row {
+    min-height: 33px!important;
+}
+
+}
+
+.successOtClass{
+    color: #0ae80e;
+    }
+

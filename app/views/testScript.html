@@ -1,5 +1,8 @@
+   <link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/templete/app.css"/>
+	<!--Css file for dashboard page-->
 <style>
-.ui-grid-sort-priority-number {
+.ui-grid-sort-priority-number{
 font-size:0;
 }
 
@@ -35,27 +38,48 @@ height: auto!important;
    
     margin-top: 4px;
 }
+.ui-grid-viewport {
+    height: auto!important;
+    overflow-x: hidden;
+}
+.ui-grid {
+    height:auto!important;
+}
+.table-header p{
+padding: 0px;
+}
+.ui-grid{
+font-family: Source Sans Pro,sans-serif;
+}
+
+
 </style>
 <div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer">
+<div class="maincontainer" style="font-family: Source Sans Pro,sans-serif!important;background-color:#f5f7fa;overflow:hidden;">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
+				<div class="ot-deviceData devicedata-height" style="/* background-color: #fff; */margin: 0 auto 4px;">
 				
-					<div class="tab-content">
-					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
+					<div class="tab-content" style="padding-top:1px;">
+					  <div id="devices" class="tab-pane fade in active" style="/* background-color: #fff; */">
+						<div class="orchestra_devices_table" style="background-color: #f5f7fa; width:100%;  ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div ncy-breadcrumb></div>
-							<div class="table-header" >
-									<p style="color:#57bdde;">Test Plan</p>
+						<!-- 	<div ncy-breadcrumb></div> -->
+							<div class="table-header" style="background-color: #f5f7fa;" >
+									<p >Test Plan</p>
+									 <div class="btn-align">
+								 	<div class="form-group" style="padding:0px;margin: 0px;width:100%;">
+								 	<button type="button" class="btn btn-labeled btn-success" ng-click="createTestPlan();">
+								 	<span class="btn-label"><em class="fa fa-plus"></em></span>Add Test Plan</button></div>
+									</div>
 									<div class="clearfix"></div>
 							</div>
 								
-								 <div class="panel-body">
+								 <div class="panel-body" style="padding:0px;">
+								
 									<div class="table-responsive">
-										 <table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="TestPlanOptions" ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning >
+										 <table class="table-uigrid grid" id="dataTables-example"  ui-grid="TestPlanOptions" ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning  >
 										 
 										 </table>
 										 <img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
@@ -83,15 +107,16 @@ height: auto!important;
 									</div>
 									</div>	
 								</div>
-								<div style="width:100%;height:50px;margin:0px 78%;margin-top: 30px; ">
-                                                <input type="button"  name="button" ng-click="createTestPlan();" value="Create Test Plan" class="btn btn-info"/>
+							<!-- 	<div style="width:100%;height:50px;margin:0px 78%;margin-top: 30px; "> -->
+                                           <!--      <input type="button"  name="button" ng-click="createTestPlan();" value="Create Test Plan" class="btn btn-info"/> -->
                                               <!--  <input type="button"  name="button" ng-click="SelectTesplanEdit();" value="Edit Test Plan" class="btn btn-info"/>
                                                 <input type="button"  name="button" ng-click="createTestRunNext();" value="Create Test Run" class="btn btn-info"/>-->
-                                                <input type="button"  name="button" ng-click="scheduleTestRun();" value="All Test Runs" class="btn btn-info"/>
-												<!--<input type="button"  name="button" ng-click="createCloneTestPlan();" value="Clone Test Plan" class="btn btn-info"/>-->
-												<input type="button"  name="button" ng-click="quickRun();" value="Quick Test Run" class="btn btn-info"/>
+                                       <!-- use         <input type="button"  name="button" ng-click="scheduleTestRun();" value="All Test Runs" class="btn btn-info"/>
+ -->												<!--<input type="button"  name="button" ng-click="createCloneTestPlan();" value="Clone Test Plan" class="btn btn-info"/>-->
+									<!-- 			<input type="button"  name="button" ng-click="quickRun();" value="Quick Test Run" class="btn btn-info"/>
+											
 												
-							</div>
+							</div> -->
 						</div>
 						
 					</div>
@@ -101,12 +126,12 @@ height: auto!important;
 				</div>
 					<!--<div ng-include="'app/views/favourites.html'"></div>-->
 					
-			</div>
+		 	</div>
 		</div>
 	</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
  <div ng-include="'app/views/popUp.html'"></div>
-	<div class="footer-div">
+	<div class="footer-div footer-bottom-touch">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>
 <script>
@@ -127,9 +152,9 @@ height: auto!important;
  }
  $(window).resize(function () {
 	
-	    setEqualHeight( $('.ui-grid-viewport') );
+	//    setEqualHeight( $('.ui-grid-viewport') );
 	});
  $(document).ready(function () {
-     setEqualHeight($(".ui-grid-viewport"))
+  //   setEqualHeight($(".ui-grid-viewport"))
  })
 </script>
