@@ -653,19 +653,28 @@ function getTreeDataForCommands1(data){
 									   return true;
 								   
 									
-								}
-							};
+								},
 							
+							dragStart: function(event) {
+								$scope.isFirstNode=false;
+						    }
+							};
+							$scope.isFirstNode=false;
 							$scope.optionsTree2 = {
+									
 							   accept: function(sourceNodeScope, destNodesScope, destIndex) {
 								   $scope.commandError=false;
+								   if(destNodesScope.$modelValue[0].title == "Add Command"){
+									   $scope.isFirstNode=true;
+								   }
+								   
 									if(destNodesScope.$modelValue[0].commandId >= 0 && sourceNodeScope.$modelValue.commandId){
 										if(destNodesScope.$modelValue[0].title == "Add Command" && destNodesScope.$modelValue.length == 1){
 										destNodesScope.$modelValue[0].title = sourceNodeScope.$modelValue.title;
 										destNodesScope.$modelValue[0].commandParams = sourceNodeScope.$modelValue.commandParams;
 										destNodesScope.$modelValue[0].commandId = sourceNodeScope.$modelValue.commandId;
 										return false;
-										}else if(destNodesScope.$modelValue.length == 1 && destNodesScope.$modelValue[0].title != "Add Command"){
+										}else if(destNodesScope.$modelValue.length == 1 && destNodesScope.$modelValue[0].title != "Add Command" && !$scope.isFirstNode){
 											$scope.scrollTreeDown("scroll_commands");
 										return true;
 										}else if(destNodesScope.$modelValue.length > 1){
@@ -677,7 +686,15 @@ function getTreeDataForCommands1(data){
 									}
 									
 									
-								}
+								},
+							
+							dropped: function(event) {
+									
+						    },
+						    beforeDrop: function(event) {
+						    	$scope.isFirstNode=false;
+						    }
+
 							};
 							
 							$scope.test = function (scope) {

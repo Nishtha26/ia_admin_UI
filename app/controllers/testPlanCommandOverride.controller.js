@@ -607,7 +607,10 @@ oTech.controller('testPlanCommandOverride',
                         $cookieStore.put('TestplanName', data.NewTestPlan.jobName);
 						$scope.dataProcessing = false;
 						$(".btn-info").removeClass("disabled");
-						$("#jobIsExitsSuccess").text("Test plan has been created successfully with Id :"+data.NewTestPlan.jobId+" ...")
+						$("#jobIsExitsSuccess").text("Test plan has been created successfully with Id :"+data.NewTestPlan.jobId+" ...");
+						 $timeout(function () {
+							 $location.path('/dashboard/testScript');
+	                        }, 4000);
 						$scope.jobIsExitsSuccess=true;
                     }
                     else {

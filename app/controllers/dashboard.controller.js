@@ -1,5 +1,4 @@
-﻿
-oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $location, AppServices, $stateParams, MapServices, GraphServices, $timeout,$interval){
+﻿oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $location, AppServices, $stateParams, MapServices, GraphServices, $timeout,$interval){
 	$rootScope.name = sessionStorage.getItem("username");
 	$scope.email = sessionStorage.getItem("email");
 	$rootScope.role = sessionStorage.getItem("role");

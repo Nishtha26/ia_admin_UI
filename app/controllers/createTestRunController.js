@@ -499,6 +499,10 @@ oTech.controller('createTestRunController',
 								'manufacturer': row.entity.manufacturer,
 								'msisdn': row.entity.msisdn,
 								'row' : row,
+								'testplanId': TestPlanId,
+								'testrunId': 0,
+								'virtualDeviceId': VirtualDeviceId,
+								'realDeviceId': RealDeviceId
                             });
 					VirtualDevicelist.push({
 								'testplanId': TestPlanId,
@@ -508,7 +512,7 @@ oTech.controller('createTestRunController',
 					});
 				}else{
 					for (var i = 0; i < Devices.length; i++){
-						if(Devices[i].RealDeviceId == row.entity.deviceId){
+						if(Devices[i].realDeviceId == row.entity.deviceId){
 							Devices.splice(i, 1);
 							VirtualDevicelist.splice(i, 1);
 						}
@@ -523,7 +527,7 @@ oTech.controller('createTestRunController',
 					      });
 		                }
 				
-				$scope.TestRunCreate_Data(VirtualDevicelist);				 
+				//$scope.TestRunCreate_Data(VirtualDevicelist);				 
                 $scope.dataProcessing = false;
             });
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
@@ -536,7 +540,7 @@ oTech.controller('createTestRunController',
                 enableRowHeaderSelection: false,
                 enableRowSelection: true,
                 multiSelect: true,
-    			enableVerticalScrollbar :1,
+    			enableVerticalScrollbar :0,
     			enableHorizontalScrollbar:0,
                 columnDefs: [
                     {field: 'VirtualDeviceName', name: 'Device Profile', headerCellClass: $scope.highlightFilteredHeader},
@@ -584,6 +588,21 @@ oTech.controller('createTestRunController',
         }
 
         $scope.CreateTestrun = function () {
+        	VirtualDevicelist = [];
+        	for(var i=0; i < $scope.DeviceMapping.data.length; i++){
+		        	VirtualDevicelist.push({
+						'testplanId': $scope.DeviceMapping.data[i].testplanId,
+						'testrunId': 0,
+						'virtualDeviceId': $scope.DeviceMapping.data[i].VirtualDeviceId,
+						'realDeviceId': $scope.DeviceMapping.data[i].realDeviceId
+		        	});
+        	}
+        	$rootScope.CreateTestRun_Data = JSON.stringify({
+                "testplanVo": {"testplanId": TestPlanId},
+                "jobVo": {},
+                "virtualRealDeviceList": VirtualDevicelist
+            });
+        	
             if ($rootScope.RowRealDevices != null && $rootScope.RowVirtualDevices != null) {
 				$scope.dataProcessing = true;
 				$(".btn-info").addClass("disabled");
