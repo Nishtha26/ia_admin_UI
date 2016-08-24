@@ -493,7 +493,7 @@ oTech.controller('testPlanCommandOverride',
                 sendCreateData.taskVOList[0].taskExecutorVOList[i] = {};
                 sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorName = superParentObject[i].title;
                 sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorLoop = superParentObject[i].loop;
-                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorSeqNo = 1;
+                sendCreateData.taskVOList[0].taskExecutorVOList[i].taskExecutorSeqNo = superParentObject[i].sequenceNo;
 
                 //  sendCreateData.taskVOList[0].taskExecutorVOList[i].commandExecutorVOList =[];
 
@@ -535,6 +535,7 @@ oTech.controller('testPlanCommandOverride',
 				sendCreateData.jobDeviceVOList[i] = {};
 				sendCreateData.jobDeviceVOList[i].deviceId = $scope.tabs[i].deviceId;
 				sendCreateData.jobDeviceVOList[i].deviceName = $scope.tabs[i].id;
+				sendCreateData.jobDeviceVOList[i].taskLoop = $scope.tabs[i].content[0].loop;
 				
 				var superParentObject, parentObject = {}, childObject = {};
 				superParentObject = $scope.tabs[i].content[0].nodes;
@@ -554,7 +555,7 @@ oTech.controller('testPlanCommandOverride',
                 sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j] = {};
                 sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorName = superParentObject[j].title;
                 sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorLoop = superParentObject[j].loop;
-                sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorSeqNo = 1;
+                sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorSeqNo = superParentObject[j].sequenceNo;
 
 
             }
