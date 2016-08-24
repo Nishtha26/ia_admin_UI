@@ -1,144 +1,198 @@
 oTech.service('GraphMaximizeServices',
-    ['$http', '$rootScope', '$timeout', '$location' , function ( $http,  $location, $rootScope,  $timeout) {
+    ['$http', '$rootScope', '$timeout', '$location'  ,'$q', function ( $http,  $location, $rootScope,  $timeout, $q) {
 		var service = {};
-		
+		var token = sessionStorage.getItem("token");
 		/*
+		Function to get the device availability data and device id
+	*/
+	service.GetDeviceAvailabilityDataPerDevice = function(userId,token,deviceId,startDate,endDate){
+		var deferred = $q.defer();
+		$.ajax({
+			    url : oApp.config.BASE_URL + "rest/devices/deviceAvailabilityDataPerDevice",
+			    type: "POST",
+				data : {token:token,userId:userId,deviceId:deviceId,startDate:startDate,endDate:endDate},
+				headers :{
+				'Content-Type': 'application/x-www-form-urlencoded'
+				},
+			    success: function(data)
+			    {
+					deferred.resolve(data);
+			    },
+			    error: function (err)
+			    {
+					deferred.reject(err);
+			    }
+		    });	
+		return deferred.promise; 
+	}
+	
+	
+	/*
 			Function to show Device availability graph
 		*/
 		service.DahsboardDevicesAvailability = function(data){
-			var chartConfig = {
-				chart: {
-					type: 'pie'
-				},
-				credits: {
-					enabled: false
-				},
-				title: {
-					text: null
-				},
-				plotOptions: {
-					series: {
-						center: ['47%', '47%'],
-						borderWidth: 0,
-						dataLabels: {
-							enabled: false
-						}
-					}
-				},
-				tooltip: {
-					useHTML: true,
-					formatter: function() {
-						if(this.key != undefined)
-							return ("<div class='toolti'>" + this.point.msg + ':  ' + this.key + "</div>");
-						else
-							return false;
-					}
-				},
-				xAxis: {
-					labels: {
-						enabled: false
-					}
-				},
-				yAxis: {
-					labels: {
-						enabled: false
-					}
-				},
-				series: [
-					{
-						name: 'Inner',
-						data: [],
-						size: '18%',
-						innerSize: '70%',
-						slicedOffset: 0
-					},
-					{
-						name: 'Outer',
-						data: [],
-						size: '31%',
-						innerSize: '80%',
-						slicedOffset: 0
-					},
-					{
-						name: 'Outer1',
-						data: [],
-						size: '44%',
-						innerSize: '90%',
-						slicedOffset: 0
-					},
-					{
-						name: 'Outer2',
-						data: [],
-						size: '57%',
-						innerSize: '95%',
-						slicedOffset: 0
-					}
-				]
-			},
-			rgb = function (color) {
-				return 'rgb(' + color + ')';
-			};
+			console.log("data.");
+			var dataDevice = data.deviceAvailabilityData;
+			var startDate=new Date(data.startDateTime);
+			var endDate=new Date(data.endDateTime);
+			var chartData = "";
+			$.each(dataDevice, function(i, point) {
+				var row  = point.split(',');
+//			  var date = row[0].split('-');
+			  var x    = row[0];
+			  var y    = row[1];
+			  var val  = row[2];
+			  chartData=chartData+x+","+y+","+val+"\n";
+				//chartData.push([x,y,val]);
+			});
+			console.log(chartData);
+		
+//			$('#device_availability_device').highcharts({
+			var chartConfig ={
+				  data:	
+				  {
+		            csv: chartData
+				  }
+		        ,
 
-			var data = {
-				inner: [{
-					y: (351/data.registered)*100,
-					msg: 1,
-					color: rgb('255, 135, 97'),
-					sliced: true,
-					name:'Active'
-				},
-				{
-					y: 100-((351/data.registered)*100),
-					msg: 1,
-					color: rgb('255,255,255'),
-					sliced: true,
-					name:''
-				}],
-				outer: [{
-					y: (351/data.registered)*100, 
-					msg: 1,
-					color: rgb('87, 189, 222'),
-					sliced: true,
-					name:'Availabile'
-				},
-				{
-					y: 100-((351/data.registered)*100),
-					msg: 1,
-					color: rgb('255,255,255'),
-					sliced: true,
-					name:''
-				}],
-				outer1: [{
-					y: (data.approved/data.registered)*100, 
-					msg: data.approved,
-					color: rgb('177, 152, 220'),
-					sliced: true,
-					name:'Licenced'
-				},
-				{
-					y: 100-((data.approved/data.registered)*100),
-					msg: 1,
-					color: rgb('255,255,255'),
-					sliced: true,
-					name:''
-				}],
-				outer2: [{
-					y: data.registered, 
-					msg: data.registered,
-					color: rgb('255, 153, 0'),
-					sliced: true,
-					name:'Registered'
-				}]
-			};
+		        chart: {
+		            type: 'heatmap'/*,
+		            inverted: true*/
+		           /* ,  
+		            backgroundColor: {
+		                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+		                stops: [
+		                    [0, '#fff'],
+		                    [1, '#57bdde']
+		                ]
+		            }*/
+		        },
+
+
+		        title: {
+		            text: ''
+		        },
+
+		        subtitle: {
+		            text: ''
+		           
+		        },
+
+		        xAxis: {
+		        	 /*labels:
+                        {
+                            enabled: false
+                        } */ 
+//		             tickPixelInterval: 150,
+		        	 lineColor:'#000',
+			         lineWidth:1,
+			       //  tickPositions: [1],
+			      //      tickWidth: 0,
+//		            tickPixelInterval: 50,
+			      /*      dateTimeLabelFormats: {
+			                day: '%b %e',
+			                week: '%b %e',
+			                
+			            },*/
+			      /*  tickInterval: 60 * 1000,
+		            min: Date.UTC(2016, 7, 18),
+		            max: Date.UTC(2016, 7,19)*/
+			         type: 'datetime',
+			            tickInterval: 3600 * 1000,
+			            min: Date.UTC(startDate.getFullYear(),startDate.getMonth(),startDate.getDate(),startDate.getHours(),startDate.getMinutes()),
+			            max: Date.UTC(endDate.getFullYear(),endDate.getMonth(),endDate.getDate(),endDate.getHours(),endDate.getMinutes())
+		        },
+
+		        yAxis: {
+		            title: {
+		                text: null
+		            },
+		            labels: {
+		                format: '{value}'
+		            },
+		            lineColor:'#000',
+		            lineWidth:1,
+		            minPadding: 0,
+		            maxPadding: 0,
+		            
+		     //       startOnTick: false,
+		   //         endOnTick: false,
+		            categories: [''],
+		            tickWidth: 0/*,
+		            min: 0,
+		            max: 23*/
+		        },
+
+		   /*     colorAxis: {
+		            stops: [
+		                [0, '#FFC300'],
+		                [1, '#FF5733'],
+		                [2, '#DAF7A6']
+		            ]
+		            
+		        },*/
+		        
+		        colorAxis: {
+		        	
+                    dataClasses: [{
+                        from: 1,
+                        to: 1,
+                        color: '#2eb82e',
+                        
+                        name: 'Heart Beat'
+                    }, 
+                    {
+                        from: 0,
+                        to: 0,
+                        color: '#FFF',
+                        name: 'Inactive'
+                    },
+                    {
+                        from: 2,
+                        to: 2,
+                      
+                        color: '#1a1aff',
+                        name: 'Job Running'
+                    }
+                    ]
+                },
+
+		        series: [{
+		            borderWidth: 1,
+		            borderColor:'#FFFFFF',
+		            colsize: 600 * 1000,
+		        //    pointInterval: 3600 * 1000,// one day
+//		            pointStart: Date.UTC(2016, 08, 18),
+		          //  pointInterval: 24 * 900 * 1000 ,
+//		            pointInterval: 24 * 3600 * 1000, // one day
+		            
+		            tooltip: {
+		                headerFormat: 'Date : <br/>',
+		                pointFormat: '{point.x:%e %b, %Y %H:%M}'
+		            }
+		        }]
+
+		    };
 			var chart1 = $.extend({}, chartConfig);
+			$('#device_availability_device').highcharts(chart1);
+			if(chartData==""){
+			
+				var chart = $('#device_availability_device').highcharts();
+				if(chart!=undefined){
+		        var seriesLength = chart.series.length;
+		        for(var i = seriesLength -1; i > -1; i--) {
+		            chart.series[i].remove();
+		        }
+				}
+			}
+			else{
+				
+			$('#device_availability_device').highcharts(chart1);
+			}
+	console.log("done");
 
-			chart1.series[0].data = data.inner;
-			chart1.series[1].data = data.outer;
-			chart1.series[2].data = data.outer1;
-			chart1.series[3].data = data.outer2;
-
-			$('#chart1').highcharts(chart1);
 		}
+	
 		
 		
 				return service;

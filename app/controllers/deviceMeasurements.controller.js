@@ -190,15 +190,16 @@ oTech
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdatausage;
 						else if($scope.listItem == 'video')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsvideo;
-						else if($scope.listItem == 'clickscreanimage')
-							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreanimage;
+						else if($scope.listItem == 'clickscreenimage')
+							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreenimage;
 						else if($scope.listItem == 'audio')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsaudio;
-						else if($scope.listItem == 'clickscreanxy')
-							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreanxy;
+						else if($scope.listItem == 'ClickScreenXY')
+							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreenxy;
 						else if($scope.listItem == 'download')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdownload;
-
+						else if($scope.listItem == 'radio')
+							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsradio;
 						promise = AppServices.GetMeasurementsapnData(userId,
 								token, $scope.itemsPerPage, startLimit, link);
 						promise.then(function(data) {
@@ -230,7 +231,6 @@ oTech
 
 					/* call to grid view for device list */
 					$scope.createNewDatasource = function() {
-						$scope.devicesMeasurementGridOptions.data = [];
 						$scope.devicesMeasurementGridOptions.data = allOfTheData;
 					}
 
@@ -239,7 +239,6 @@ oTech
 					$scope.getmeasurementList();
 					$scope.showDeviceList(link);
 					$scope.openDevicedata = function(e) {
-						$scope.devicesMeasurementGridOptions.data = [];
 						$scope.dataLoading = true;
 						link = $(e.currentTarget).text();
 						$scope.listItem = link;

@@ -1,40 +1,76 @@
 <div ng-include="'app/views/header.html'"></div>
 	<!-- Header Ends -->
-	
-	
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">	
+
 	<!-- Main Content Starts -->
 	<div class="maincontainer">
 		<div class="maincontent" style="width:100%;">
 			<div class="container-fluid">
 				<div class="orch-rep-dashboards boxshdw" style="margin-bottom:10px;">
+				<div class="row" style="padding-top: 4px;">
+
+	<!-- 												 <div class="col-xs-6 col-xs-5 col-sm-3">
+				<div class="form-group" style="line-height:2.0;float:right;">
+				Select Device
+ 				</div>
+ 	 </div> -->
+									 <div class="col-xs-6 col-xs-3">
+				<div class="form-group">
+					<select id="deviceId" name="deviceId" class="form-control" >
+
+						<option ng-repeat="device in devices" ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
+
+					</select> 
+					 <img align="middle" class="loading" src="images/loading.gif"  ng-show="dataLoading" style="width:30px;height:30px;position:absolute;"></img>
+ 				</div>
+ 				
+ 	 </div>
+ 	 					 <div class="col-sm-3">
+				<div class="form-group">
+					   <div class="input-group date " id="datetimepicker1">
+							<input id="fromDate" name="fromDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					   </div>
+				</div>
+	 </div>
+		 <div class="col-sm-3">
+			    <div class="form-group">
+					 <div class="input-group date " id="datetimepicker2">
+							<input id="toDate" name="toDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					</div>
+				</div>
+	 </div>
+				</div>
 					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:650px;">
-						<!--	<div class="device_usage_graph device_availability boxshdw" style="padding: 10px 0px 250px 12px;">-->
+
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:550px;">
+						<div class="device_usage_graph device_availability boxshdw" style="padding:2px 0px 0px 6px;">
 								
 								<div class="device_heading text-uppercase" style="margin-left:20px;">
 									<h4>Device Availability <!--<a href="#" class="refresh"><img src="images/refresh-icon.png" alt="refresh"></a>--></h4>
+									 <img id="dataLoadingMap" align="middle" class="loading" src="images/loading.gif"  style="position:absolute;width:100px;height:100px;display:none;"></img>
 								</div>
-								<div class="device_availability_pi_chart" style="height:80%;width:80%;">
-									<div id="chart1" class="chart" style="width:100%;height:250%;margin-left:20px;"></div>
-								</div>
-								<div id="circles" style="height:auto;width:30%;float:right;position:relative;top:-90px;left:0px;">
-									<div>
-										<div style="width:20px;height:20px;border-radius:10px;background:rgb(255, 153, 0);float:left;"></div><p style="margin-left:40px;">Registered</p>
-										<div style="width:20px;height:20px;border-radius:10px;background:rgb(177, 152, 220);float:left;"></div><p style="margin-left:40px;">Licensed</p>
-										<div style="width:20px;height:20px;border-radius:10px;background:rgb(87, 189, 222);float:left;"></div><p style="margin-left:40px;">Available</p>
-										<div style="width:20px;height:20px;border-radius:10px;background:rgb(255, 135, 97);float:left;"></div><p style="margin-left:40px;">Active</p>
+								
+									<div id="device_availability_device" class="chart" style="height:350px; max-width:98%; margin: 0 auto;" >
+									
 									</div>
-								</div>
-								<div class="device_availability_content" >
+
+								<!-- <div class="device_availability_content" > -->
 									<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore, magna aliqua. Ut</p>-->
-								</div>
+								<!-- </div> -->
 							</div>
-						<!--</div>-->
+					</div>
 					</div>
 				</div>
-				<div ng-include="'app/views/favourites.html'" ></div>
+			
 			</div>
 		</div>
+			  	
 	</div>
+	<div class="footer-div footer-bottom-touch">
+	 <div ng-include="'app/views/footer.html'"></div>
+	 </div>
 	<!-- Main Content Ends -->
 <div ng-include="'app/views/favouritesPopUp.html'"></div>

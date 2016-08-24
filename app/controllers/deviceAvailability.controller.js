@@ -5,7 +5,8 @@ oTech.controller('deviceAvailabilityController',
 			var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
 		$rootScope.role = sessionStorage.getItem("role");
-		
+		$scope.loading = true;
+		$scope.dataLoading=false;
 		$rootScope.slideContent();
 		window.onresize = function(event) {
 			$rootScope.slideContent();
@@ -36,18 +37,96 @@ oTech.controller('deviceAvailabilityController',
 		/*
 		To get device availability data
 	*/
-	$scope.getDeviceAvailabilityData = function(){
-		promise = GraphServices.GetDeviceAvailabilityData(userId, token);
-		promise.then(
-			function(data){
+		$(document).ready(function(){
+
+			   $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
+			    $("#deviceId").select2({
+			    });
+			  
+			  });//script
+			   
+			   
+			   $("#deviceId").on("change", function(e) {
+			     //  alert("you selected :" +);	
+				   $scope.dataLoadingMap=true;
+				   $("#dataLoadingMap").show();
+			       $scope.getDeviceAvailabilityData( $(this).val());
+			   });
+			});
+		$(function() {
+			
+			$('#datetimepicker1').datetimepicker({
+				format : 'MM/DD/YYYY HH:mm'
+			});
+		
+			var dateNow = new Date();
+			dateNow.setDate(dateNow.getDate() - 1);
+			$('#fromDate').val(getFormattedDate(dateNow));
+		
+			$("#datetimepicker1").on("dp.change", function(e) {
+				$('#datetimepicker1').data("DateTimePicker");
+			});
+			
+			
+			$('#datetimepicker2').datetimepicker({
+				format : 'MM/DD/YYYY HH:mm'
+			});
+			var dateNow = new Date();
+			$('#toDate').val(getFormattedDate(dateNow));
+		
+			$("#datetimepicker2").on("dp.change", function(e) {
+				$('#datetimepicker2').data("DateTimePicker");
+			});
+		});	
+		   function getFormattedDate( dateNow) {
+				var time = '';
+				//var dateNow = new Date();
+				var day = dateNow.getDate();
+				var month = dateNow.getMonth() + 1;
+				var year = dateNow.getFullYear();
+				 time += dateNow.getHours() + ":";
+				time +=dateNow.getMinutes();
+				var dateFormatted =   month + "/" +  day + "/" + year + " " + time;
+				return dateFormatted;
+			}
+	$scope.getDeviceAvailabilityData = function(deviceId){
+//		 var deviceId = $('#deviceId').val(); 
+//		var data="";
+		var startDate=$("#fromDate").val();
+		var endDate=$("#toDate").val();
+		promise = GraphMaximizeServices.GetDeviceAvailabilityDataPerDevice(userId, token,deviceId,startDate,endDate);
+	
+	promise.then(
+		function(data){
 				$scope.DeviceAvailabilityData = data;
-				GraphMaximizeServices.DahsboardDevicesAvailability(data);
+				GraphMaximizeServices.DahsboardDevicesAvailability(data,startDate,endDate);
+				$scope.dataLoadingMap=false;
+				  $("#dataLoadingMap").hide();
 				$('.highcharts-container').css({"height":"500px"});
+				
 			},
 			function(err){
-			
+				$scope.dataLoadingMap=false;
 			}
-		);
+	);
 	}
-		$scope.getDeviceAvailabilityData();
+	
+		
+		$scope.showDeviceList = function(){
+			$scope.dataLoading = true;
+			promise = AppServices.GetDeviceData(userId, token);
+			promise.then(
+				function(data){
+					$scope.DeviceList = data;
+					$scope.devices = data.devicesList;
+					$scope.dataLoading=false;
+				},
+				function(err){
+					console.log(err);
+				}
+			);
+		}
+		$scope.showDeviceList();
+//		$scope.getDeviceAvailabilityData('1409');
+		
 	});

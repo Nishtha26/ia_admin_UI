@@ -93,6 +93,7 @@ oTech.service('GraphServices',
 			Function to show Device availability graph
 		*/
 		service.DahsboardDevicesAvailability = function(data){
+		
 			var chartConfig = {
 				chart: {
 					type: 'pie'
