@@ -1643,18 +1643,25 @@ input[type="number"] {
     text-align:center;
     background:#000
     }
-    .ui-grid{
-    max-width:1614px;}
-    @media only screen and (min-width: 1320px) and (max-width: 1440px) {
+  
+    @media only screen and (min-width: 1300px) and (max-width: 1440px) {
    .ui-grid{
-   max-width:1110px!important;
-   min-width:1110px!important;
+      /* max-width:1110px!important;
+   min-width:1110px!important; */
+  width: 1050px!important;
+   /*  max-height: 552px!important; */
+    
+    
    }
    body{
-   overflow-y: auto;
-   font-size: 12px!important;
+   overflow-y: hidden;
+   font-size: small!important;
    }
-   
+.main-cont-height{
+	max-height: 654px;
+    overflow-y: auto!important;
+    overflow-x:hidden; 
+   }
 .create-tp-scroll-commands{
 height: 318px!important;	
 }
@@ -1664,8 +1671,9 @@ height: 318px!important;
 }
 
 }
+  .ui-grid{
+    max-width:1614px;}
 
-.successOtClass{
+    .successOtClass{
     color: #0ae80e;
     }
-

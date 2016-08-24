@@ -1,5 +1,7 @@
 var oApp = oApp || {};
-
+oApp.constant={
+	    GRID_DATE_TIME_FORMAT:'MM/dd/yy h:mm:ss a'
+}
 oApp.config = {
 
 	programmingSkills:[
@@ -133,7 +135,7 @@ oApp.config = {
 	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
 	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
 	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
-REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
+    REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
@@ -320,8 +322,8 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 		   
 			{headerName: "timeStamp", field: "timeStamp", width: 90},
 		 
-			{headerName: "apnName", field: "apnName", width: 110},
-			{headerName: "apnRss", field: "apnRss", width: 100},
+			{headerName: "appName", field: "appName", width: 110},
+			{headerName: "appRss", field: "appRss", width: 100},
 			{headerName: "appBatteryLevel", field: "appBatteryLevel", width: 150},
 			{headerName: "appCpuUsage", field: "appCpuUsage", width: 100},
 			{headerName: "appDlVolumn", field: "appDlVolumn", width: 100},
@@ -359,13 +361,15 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
+			{headerName: "jobId", field: "jobId"},
 			{headerName: "testcaseId", field: "testcaseId"},
 		   {headerName: "jobStartTime", field: "jobStartTime"},
 			{headerName: "jobStartTimeMs", field: "jobStartTimeMs"},
 			{headerName: "pci", field: "pci"},
 			{headerName: "cellId", field: "cellId"},
 			{headerName: "cellName", field: "cellName"},
-			{headerName: "channelBandWidth", field: "channelBandWidth"}
+			{headerName: "channelBandWidth", field: "channelBandWidth"},
+			{headerName: "fileUrl", field: "fileUrl"}
 		],
 		columnDefslocation : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -668,7 +672,7 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			{headerName: "testCaseId", field: "testCaseId"}
 			
 		],
-		columnDefsclickscreanimage : [
+		columnDefsclickscreenimage : [
 			// this row just shows the row index, doesn't use any data from the row
 			
 			
@@ -715,7 +719,28 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			
 			
 		],
-		columnDefsclickscreanxy : [
+		columnDefsradio: [
+		         			// this row just shows the row index, doesn't use any data from the row
+		         			
+		         			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
+		         			{headerName: "deviceId", field: "deviceId"},
+		         		   {headerName: "cellId", field: "cellId"},
+		         			{headerName: "lacId", field: "lacId"},
+		         			{headerName: "downloadTimeZone", field: "downloadTimeZone"},/* signal2noise*/
+		         			{headerName: "mcc", field: "mcc"},
+		         			{headerName: "mnc", field: "mnc"},
+		         			{headerName: "downloadType", field: "downloadType"},
+		         			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
+		         			{headerName: "downloadProgress", field: "downloadProgress"},
+		         			{headerName: "downloadFileUrl", field: "downloadFileUrl"},
+		         			{headerName: "downloadedFileSize", field: "downloadedFileSize"},
+		         			{headerName: "downloadTotalFileSize", field: "downloadTotalFileSize"},
+		         			{headerName: "sessionId", field: "sessionId"},
+		         			{headerName: "testcaseId", field: "testcaseId"}
+		         			
+		         			
+		         		],
+		columnDefsclickscreenxy : [
 			// this row just shows the row index, doesn't use any data from the row
 			
 			
@@ -796,7 +821,7 @@ REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 			{ name: 'userGroupId' ,width:'25%'},
 			{ name: 'userGroupName',width:'25%' },
 			{ name: 'createdBy',field:"createdByName",width:'24%' },
-			{ name: 'createdDate',width:'24%' }
+			{ name: 'createdDate',width:'24%' ,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" }
 			
 		]
 	},
@@ -840,7 +865,7 @@ addUsergroupsGridOptions :{
 			{ name: 'userGroupId' ,width:"25%"},
 			{ name: 'userGroupName',width:"25%" },
 			{ name: 'createdBy',field:"createdByName", width:"24%" },
-			{ name: 'createdDate',width:"24%" }		
+			{ name: 'createdDate',width:"24%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  }		
 		]	
 	},
 
@@ -1092,7 +1117,7 @@ quickrunGridOptions : {
 			{ name: 'deviceId' ,width:150,pinnedLeft:true},
 			{ name: 'deviceName',width:150 },
 			{ name: 'deviceType' ,width:150},
-			{ name: 'Carrier' ,width:150},
+			{ headerName: 'Carrier' ,width:150,field:'carrier'},
 			{ name: 'model' ,width:"20%"},
 			{ name: 'manufacturer' ,width:"10%"},
 			{ name: 'imsi' ,width:150},

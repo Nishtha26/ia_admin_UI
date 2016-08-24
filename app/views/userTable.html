@@ -22,7 +22,7 @@ font-size:0;
 										<div ui-grid="userTableGridOptions" ui-grid-selection class="grid" style="overflow: hidden;"></div>
 									</div>
 							    <div class="col-sm-6">
-									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{itemsPerPage*currentPage}} to {{endLimit}} of {{totalRecords}} entries</div>
+									<div class="dataTables_info" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
 									</div>
 									<div class="col-sm-6">
 										<div   class="pagination-div">

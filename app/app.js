@@ -697,6 +697,12 @@ oTech.filter('capitalize', function () {
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
+oTech.filter('capitalizeFirstWord', function () {
+    return function (input) {
+        return (!!input) ? input.charAt(0).toUpperCase()  : '';
+    }
+});
+
 oTech.directive('passwordMatch', [function () {
     return {
         restrict: 'A',

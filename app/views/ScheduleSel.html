@@ -1,3 +1,5 @@
+   <link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/templete/app.css"/>
 <style>
 .ui-grid-sort-priority-number {
 font-size:0;
@@ -34,27 +36,42 @@ height: auto!important;
 
 </style>
 <div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer">
+<div class="maincontainer" style="font-family: Source Sans Pro,sans-serif!important;background-color:#f5f7fa;overflow:hidden;">
 		<div class="maincontent">
 			<div class="container-fluid">
-				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
-				
-					<div class="tab-content">
-					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div style="width:100%;" ncy-breadcrumb></div>
+				<div id="exTab2" style="width:100%;" class="container">
+								  <ul class="nav nav-tabs">
+								    <li >
+								      <a  ng-click="selectTab('Test Plan')" data-toggle="tab">Test Plan</a>
+								    </li>
+								    <li class="active"><a ng-click="selectTab('Test Run')" data-toggle="tab">Test Run</a>
+								    </li>
+								  </ul>
+								  <div class="table-header" style="background-color: #f5f7fa;">
+								<div class="btn-align">
+			
+									<div class="form-group"
+										style="padding: 0px; margin: 0px; width: 50%; float: right; margin-top: -38px;">
+										<button type="button" class="btn btn-labeled btn-success"
+											ng-click="createTestPlan();">
+											<span class="btn-label"><em class="fa fa-plus"></em></span> Add
+											Test Plan
+										</button>
+									</div>
+			
+								</div>
+								<div class="clearfix"></div>
+							</div>
 								
-								 
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="max-width:100%">
-
-											<div id="thirdGrid" ui-grid="ScheduleVirtualDevices" ui-grid-selection ui-grid-cellNav class="grid" style="max-width:100%">
+								  <div class="tab-content" style="padding:20px;">
+								    <div class="tab-pane active" >
+								    <div class="row">
+								      <div id="thirdGrid" ui-grid="ScheduleVirtualDevices" ui-grid-selection ui-grid-cellNav class="table-uigrid  grid" style="max-width:100%">
 											<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
 											</div>
-											<div id="secondGrid" ui-grid="ScheduleRealDevices" ui-grid-selection ui-grid-cellNav class="grid">
+											<div id="secondGrid" ui-grid="ScheduleRealDevices" ui-grid-selection ui-grid-cellNav class="table-uigrid  grid" style="height:302px;">
 											<img class="loading" src="images/loading.gif"  ng-show="dataLoading1"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
@@ -63,21 +80,13 @@ height: auto!important;
 											   <input type="button"  name="button" ng-click="startJob()" value="Start" class="btn btn-info"/>
 												<input type="button"  name="button" ng-click="stopJob()" value="Stop" class="btn btn-info"/>
 												<input type="button"  name="button" ng-click="reStartJob()" value="Re-start" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="getJobStatus()" value="Get Status" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="reStartIAC()" value="Re-start IAC" class="btn btn-info"/>
+												<!-- <input type="button"  name="button" ng-click="getJobStatus()" value="Get Status" class="btn btn-info"/>
+												<input type="button"  name="button" ng-click="reStartIAC()" value="Re-start IAC" class="btn btn-info"/> -->
 											</div>
-
-										</div>
-										 
-								 	
+											</div>
+								    </div>
+							  </div>
 							</div>
-						</div>
-					</div>
-				  </div>
-				 
-				</div>				
-				</div>
-					<!--<div ng-include="'app/views/favourites.html'"></div>-->
 					
 			</div>
 		</div>

@@ -937,6 +937,18 @@ function getTreeDataForCommands1(data){
 		$scope.copyToTestPlanName = function() {
         $scope.tree2[0].title=$scope.testPlanName;
       };
+      
+      $scope.selectTab=function(event){
+			if(event == 'Test Plan'){
+				$location.path('/dashboard/testScript');
+			}
+			if(event == 'Test Run'){
+				 $cookieStore.remove('TestPLANId');
+				$location.path('/Schedule');
+			}
+		}
+      
+      
 	   
 });
 

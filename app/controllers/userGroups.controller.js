@@ -124,7 +124,11 @@ oTech.controller('UserGroupsController',
 					$scope.createNewDatasource();
 					$scope.currentPage = n;
 				};
-
+				   $scope.createNewDatasource = function() {
+						$scope.dataLoading = true;
+						$scope.userTableGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
+						$scope.dataLoading = false;
+					}
 	
 		
 		/* pagination code  end ***********************/

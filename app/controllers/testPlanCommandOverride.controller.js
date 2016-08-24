@@ -412,7 +412,7 @@ oTech.controller('testPlanCommandOverride',
 			temp['deviceProfileName'] = "Device Profile Name "+$scope.counter;
 			temp['id'] = deepCopyObject[$scope.tabs.length].id;
 			temp['deviceId'] = deepCopyObject[$scope.tabs.length].deviceId;
-			temp['content'] = deepCopyObject[$scope.tabs.length].content;
+			temp['content'] = jQuery.extend(true, new Object(), deepCopyObject[$scope.tabs.length].content);
 			$scope.tabs.push(temp);
 			$scope.selectedTab = $scope.tabs.length - 1; 
 		}

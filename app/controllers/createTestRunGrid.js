@@ -62,6 +62,15 @@ oTech.controller('createTestRunGridController',
            $location.path('/dashboard/testScript');
         }
 
+		
+		  $scope.selectTab=function(event){
+				if(event == 'Test Plan'){
+					$location.path('/dashboard/testScript');
+				}
+				if(event == 'Test Run'){
+					$location.path('/Schedule');
+				}
+			}
 
 //Create Test Run Virtual Device
         $scope.CreateTestRunVirtualDeviceOptions = {
@@ -174,12 +183,13 @@ oTech.controller('createTestRunGridController',
 			enableVerticalScrollbar :0,
 		    enableHorizontalScrollbar:0,
             columnDefs: [
-                {field: 'testrunId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'testrunId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader,width: '10%'},
                 {field: 'testrunName', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader},
                 {
                     field: 'taskId',
                     name: 'Task Id',
-                    headerCellClass: $scope.highlightFilteredHeader
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: '10%'
                 },
                 {
                     field: 'taskName',
@@ -189,12 +199,14 @@ oTech.controller('createTestRunGridController',
 				{
                     field: 'testrunUserName',
                     name: 'User',
-                    headerCellClass: $scope.highlightFilteredHeader
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: '10%'
                 },
 				{
                     field: 'testrunCreatedDate',
                     name: 'Created On',
-                    headerCellClass: $scope.highlightFilteredHeader
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: '25%'
                 },
             ]
         };
@@ -214,8 +226,8 @@ oTech.controller('createTestRunGridController',
 				{field: 'jobStatusName', name: ' Job status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceStatus_List" ng-click="grid.appScope.showDeviceLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.jobStatusName}}</a>' +'</div>'},
 				{field: 'action', name: 'Action', cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrl}}" target="_blank">{{row.entity.action}}</a>' +'</div>' },
 				{field: 'deviceLogLevel', name: ' Device Log Level', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'notificationType', name: ' Device Notification Type', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'runNumDesc', name: ' Command Counts', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrlForRunNum}}" target="_blank">{{row.entity.runNumDesc}}</a>' +'</div>'},
+				/*{field: 'notificationType', name: ' Device Notification Type', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'runNumDesc', name: ' Command Counts', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrlForRunNum}}" target="_blank">{{row.entity.runNumDesc}}</a>' +'</div>'},*/
             ]
         };
 
