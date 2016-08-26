@@ -615,7 +615,7 @@ oTech.controller('createTestRunController',
                 "virtualRealDeviceList": VirtualDevicelist
             });
         	
-            if ($rootScope.RowRealDevices != null && $rootScope.RowVirtualDevices != null) {
+            if ($rootScope.RowRealDevices != null) {
 				$scope.dataProcessing = true;
 				$(".btn-info").addClass("disabled");
                 var TestRunData = $rootScope.CreateTestRun_Data;
