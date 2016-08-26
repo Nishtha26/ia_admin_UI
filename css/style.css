@@ -1688,3 +1688,6 @@ div[contentEditable] {
 margin: 55px 0px 0px 20px;
  }
 
+    .device-av-label{
+    line-height: 2;
+    }
