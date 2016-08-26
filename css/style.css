@@ -1648,8 +1648,10 @@ input[type="number"] {
   max-width: 1240px!important;
 
    }
-  
-   
+   body{
+   overflow-y: hidden;
+   font-size: small!important;
+   }
 .main-cont-height{
 	max-height: 654px;
     overflow-y: auto!important;
