@@ -396,19 +396,29 @@ oTech.controller('createTestRunController',
 			enableVerticalScrollbar :0,
 			enableHorizontalScrollbar:0,
             columnDefs: [
-                {field: 'deviceName',
-                	name: 'Device Profile',
+                {field: 'deviceProfileName',
+                	name: 'Device Profile Name',
                 	headerCellClass: $scope.highlightFilteredHeader,
                 	
                 	},
-					{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >Cmd Definition</a>'},
+					/*{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >Cmd Definition</a>'},*/
             ]
         };
+        $scope.deviceProfileList = [];
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
         promise.then(
             function (data) {
 				$scope.dataLoading1 = false;
                 $scope.VirtualDevicesOptions.data = data;
+                for(var i=0; i < data.length; i++){
+                var temp = {};
+				temp['deviceProfileName'] = data[i].deviceProfileName;
+				temp['deviceId'] = data[i].deviceId;
+				temp['row'] = data[i];
+				$scope.deviceProfileList.push(temp);
+				$scope.selectedOption = $scope.deviceProfileList[0];
+                }
+               
             },
             function (err) {
                 console.log(err);
@@ -451,16 +461,16 @@ oTech.controller('createTestRunController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: true,
-			enableVerticalScrollbar :1,
-			enableHorizontalScrollbar:0,
+			enableVerticalScrollbar :2,
+			enableHorizontalScrollbar:2,
             columnDefs: [
-                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader,width:"10%"},
+                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader,width:"20%"},
+                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader,width:"40%"},
 				//{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
+				//{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
 				//{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
+				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"30%"},
             ]
         };
         promise = testScriptService.getRealDevices(token, userId);
@@ -481,8 +491,9 @@ oTech.controller('createTestRunController',
 				$scope.msg="";
                 $rootScope.RowRealDevices = row.entity;
                 $rootScope.RealDeviceId = row.entity.deviceId;
-				var VirtualDeviceName = $cookieStore.get('VirtualDeviceName');
-				var VirtualDeviceId = $cookieStore.get('VirtualDeviceId');
+				var VirtualDeviceName = $scope.selectedOption.row.deviceName;
+				var VirtualDeviceId = $scope.selectedOption.row.deviceId;
+				var deviceProfileName = $scope.selectedOption.row.deviceProfileName;
 				if(VirtualDeviceName == undefined && VirtualDeviceId == undefined){
 				$scope.msg = "Please select Virtual Device First";
 				$scope.dataProcessing = false;
@@ -492,6 +503,7 @@ oTech.controller('createTestRunController',
 				if(row.isSelected && VirtualDeviceName != undefined){
 				Devices.push({
                                 'VirtualDeviceName': VirtualDeviceName,
+                                'deviceProfileName': deviceProfileName,
 								'VirtualDeviceId': VirtualDeviceId,
                                 'deviceName': RealDeviceName,
                                 'deviceId': RealDeviceId,
@@ -543,10 +555,10 @@ oTech.controller('createTestRunController',
     			enableVerticalScrollbar :0,
     			enableHorizontalScrollbar:0,
                 columnDefs: [
-                    {field: 'VirtualDeviceName', name: 'Device Profile', headerCellClass: $scope.highlightFilteredHeader},
+                    {field: 'deviceProfileName', name: 'Device Profile', headerCellClass: $scope.highlightFilteredHeader},
     				{field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader},
                     {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader},
-                    {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
+                    //{field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
     				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
                 ]
             };

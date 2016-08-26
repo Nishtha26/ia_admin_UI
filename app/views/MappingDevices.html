@@ -1,48 +1,49 @@
+   <link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/templete/app.css"/>
 <style>
 .ui-grid-sort-priority-number {
-font-size:0;
+	font-size: 0;
 }
 
 .ui-grid-cell-contents {
-    text-align: left;
-	}
-.ui-grid-header-cell-wrapper{
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
+	text-align: left;
+}
+
+.ui-grid-header-cell-wrapper {
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
 }
 
 .table-responsive {
-    overflow-x: visible;
+	overflow-x: visible;
 }
 
-
-.ui-grid-render-container{
-		width: 100%; 
+.ui-grid-render-container {
+	width: 100%;
 }
 
-.ui-grid-pager-panel
-{
-position: inherit; 
-  padding-top: 20px;
+.ui-grid-pager-panel {
+	position: inherit;
+	padding-top: 20px;
 }
- 
-/*  .ui-grid-viewport{
- min-height: 100%;
-height: auto!important;
- } */
- .view-detail-link{
-   float: right;
-    line-height: 0.9;
-    margin-top: 1px;
-    cursor: pointer;
-    }
-    .loading-plan-detail-img{
-      position: relative;
-    text-align: center;
-    width: 15%;
-    }
-  /*  .templete-td-label{
+
+.table-uigrid{
+  width:100%;
+ } 
+.view-detail-link {
+	float: right;
+	line-height: 0.9;
+	margin-top: 1px;
+	cursor: pointer;
+}
+
+.loading-plan-detail-img {
+	position: relative;
+	text-align: center;
+	width: 15%;
+}
+/*  .templete-td-label{
     background-color: white;
     border: 1px solid #fff;
     border-radius: 3px;
@@ -59,213 +60,198 @@ height: auto!important;
     max-width: 345px;
     width: 100%;
     }*/
-    .td-col{
-    display: inline;}
+.td-col {
+	display: inline;
+}
 
 </style>
 <div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer">
-		<div class="maincontent">
-			<div class="container-fluid">
-				<div class="ot-deviceData devicedata-height" style="background-color: #fff;margin: 0 auto 4px;">
-				
-					<div class="tab-content">
-					  <div id="devices" class="tab-pane fade in active" style="background-color: #fff;">
-						 <div class="orchestra_devices_table" style="height: auto;max-width: 100%;background-color: #fff;">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                             style="max-width:100%;margin-left: 10px;">
-                                            <div style="width:100%;" ncy-breadcrumb></div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <h3 class="margin_0 lead" style="color:#337ab7;"><strong>Test Run</strong></h3>
-                                                </div>
-                                                <div class="col-md-1">{{TestRuns}}<!-- <input type="text" class="width_50 text-center" value="{{TestRuns}}" ng-readonly="true" style="background-color: #f5f5f5;"> --></div>
-                                            </div>
-                                            <div class="row">
-                                               <div class="col-md-12 margin_top">
-                                               
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                           <th>Test Plan Id</th>
-															<th>Test Plan Name</th>
-															<th>Test Plan Description</th>
-                                                            <th>Test Plan Created On</th>
-                                                            <th>Test Plan Created By</th>
-															<th>Use case Name</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody style="font-weight:normal;">
-                                                        <tr ng-repeat="testPlan in VirtualJob">
-															 <td ng-model="testPlan.jobId">
-                                                                {{testPlan.jobId}}
-                                                            </td>
-															 <td ng-model="testPlan.jobName">
-                                                                {{testPlan.jobName}}
-                                                            </td>
-															 <td ng-model="testPlan.jobDescription">
-                                                                {{testPlan.jobDescription}}
-                                                            </td>
-                                                            <td ng-model="testPlan.jobCreateDate">
-                                                                {{testPlan.jobCreateDate}}
-                                                            </td>
-															<td ng-model="testPlan.jobCreatedByName">
-                                                                {{testPlan.jobCreatedByName}}
-                                                            </td>
-															<td ng-model="testPlan.useCaseName">
-                                                                {{testPlan.useCaseName}}
-                                                            </td>
-															
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                       </div>
-<br/>
-                                            <div class="row" >
+<div class="maincontainer main-cont-height"
+	style="font-family: Source Sans Pro, sans-serif !important; background-color: #f5f7fa; overflow: hidden;">
+	<div class="maincontent">
+		<div class="container-fluid">
+			<div class="ot-deviceData devicedata-height"
+				style="background-color: #fff; margin: 0 auto 4px;">
 
-                                                <div class="col-md-2 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Device Profiles 
-                                                   </strong>
-                                                    </h4>
-                                                    <div ui-grid="VirtualDevicesOptions" ui-grid-selection
-                                                         ui-grid-cellNav class="grid">
-														 <img class="loading" src="images/loading.gif"  ng-show="dataLoading1"></img>
-														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-														<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing1"></img>
-														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-														 </div>
-                                                </div>
+				<div class="tab-content">
+					<div id="devices" class="tab-pane fade in active"
+						style="background-color: #fff;">
+						<div class="orchestra_devices_table"
+							style="height: auto; max-width: 100%; background-color: #fff;">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+									style="max-width: 100%; margin-left: 10px;">
+									<div style="width: 100%;" ncy-breadcrumb></div>
+									<!-- <div class="row">
+										<div class="col-md-2">
+											<h3 class="margin_0 lead" style="color: #337ab7;">
+												<strong>Test Run</strong>
+											</h3>
+										</div>
+										<div class="col-md-1">
+											{{TestRuns}}
+											<input type="text" class="width_50 text-center" value="{{TestRuns}}" ng-readonly="true" style="background-color: #f5f5f5;">
+										</div>
+									</div> -->
+									<div class="row">
+										<div class="col-md-12 margin_top">
 
-                                                <div class="col-md-5 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Devices</strong></h4>
-                                                    <div ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav
-                                                         class="grid">
-														<img class="loading" src="images/loading.gif"  ng-show="dataLoading"></img>
-														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-														<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
-														<div class ="loadingErr" ng-show ="err"> No Data Found </div>
-														 </div>
-                                                </div>
-                                               <div class="col-md-1 arrow_center">
-                                                    <div class="ot-toggle">
-                                                        <div class="Absolute-Center">
-                                                            <button type="button" class=""
-                                                                    ng-click="addVirtualDevices();addRealDevices();">
-                                                                &gt;</button>
-                                                                <button type="button" class=""
-                                                                    ng-click="removeMappings();">
-                                                                &lt;</button>
-                                                        </div>
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Test Plan Id</th>
+														<th>Test Plan Name</th>
+														<th>Test Plan Description</th>
+														<!-- <th>Test Plan Created On</th>
+														<th>Test Plan Created By</th> -->
+														<th>Use case Name</th>
+													</tr>
+												</thead>
+												<tbody style="font-weight: normal;">
+													<tr ng-repeat="testPlan in VirtualJob">
+														<td ng-model="testPlan.jobId">{{testPlan.jobId}}</td>
+														<td ng-model="testPlan.jobName">{{testPlan.jobName}}
+														</td>
+														<td ng-model="testPlan.jobDescription">
+															{{testPlan.jobDescription}}</td>
+														<!-- <td ng-model="testPlan.jobCreateDate">
+															{{testPlan.jobCreateDate}}</td>
+														<td ng-model="testPlan.jobCreatedByName">
+															{{testPlan.jobCreatedByName}}</td> -->
+														<td ng-model="testPlan.useCaseName">
+															{{testPlan.useCaseName}}</td>
 
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 margin_top">
-                                                    <h4 class="margin_topnone lead" style="color:#337ab7;"><strong>Mappings</strong>
-                                                    </h4>
-                                                    <div ui-grid="DeviceMapping" ui-grid-selection ui-grid-cellNav
-                                                         class="grid">
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group" style="margin-bottom: 5px;">
+											<div class="col-md-6">
+												<label style="margin-left: 4px;"> Device Profiles <span
+													class="error-star"></label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-6">
+												<select class='form-control'
+													ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
+													ng-model="selectedOption"></select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group" style="margin-bottom: 5px;">
+											<div class="col-md-6">
+												<label style="margin-left: 4px;"> Devices <span
+													class="error-star"></label>
+											</div>
+											<div class="col-md-1">
+											</div>
+											<div class="col-md-5">
+												<label style="margin-left: 4px;"> Mappings <span
+													class="error-star"></label>
+											</div>
+										</div>
+										<div class="tab-content" style="margin-top: -20px; padding: 20px; border:none;">
+											<div class="tab-pane active">
+												<div class="row">
+												<div class="col-md-6">
+													<div class="table-responsive">
+														<div class="table-uigrid grid"
+															ui-grid="RealDevicesOptions" ui-grid-selection
+															ui-grid-selection ui-grid-resize-columns
+															ui-grid-move-columns ui-grid-pinning>
+															<img class="loading" src="images/loading.gif"
+															ng-show="dataLoading"></img>
+														<div class="loadingErr" ng-show="err">No Data Found
+														</div>
+														<img class="loading" src="images/please_wait.gif"
+															ng-show="dataProcessing"></img>
+															</div>
+														
 													</div>
-                                                    <!-- <table class="table">
-                                                        <thead>
-                                                        <tr>
-															<th>Device Profile</th>
-															<th>Devices Id</th>
-                                                            <th>Name</th>
-                                                            <th>Model</th>
-															<th>Manufacturer</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr ng-repeat="Device in DeviceMapping | unique:'RealDeviceId'">
-															 <td ng-model="Device.VirtualDeviceName">
-                                                                {{Device.VirtualDeviceName}}
-                                                            </td>
-															 <td ng-model="Device.RealDeviceId">
-                                                                {{Device.RealDeviceId}}
-                                                            </td>
-                                                            <td ng-model="Device.RealDeviceName">
-                                                                {{Device.RealDeviceName}}
-                                                            </td>
-															 <td ng-model="Device.Model">
-                                                                {{Device.Model}}
-                                                            </td>
-															 <td ng-model="Device.Manufacturer">
-                                                                {{Device.Manufacturer}}
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>-->
-                                                    <p>{{msg}}</p>
-                                                </div>
-                                            </div>
-											<div style="width:100%;height:50px;margin:0px 80%;margin-top: 30px; ">
-                                                <input type="button"  name="button" ng-click="nextTestPlan()" value="« Re-plan" class="btn btn-info"/>
-												<input type="button"  name="button" ng-click="CreateTestrun()" value="Next »" class="btn btn-info"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-				  </div>
-				 
-				</div>				
+													</div>
+										<div class="col-md-1 arrow_center">
+											<div class="ot-toggle toggle-margin">
+												<div class="Absolute-Center">
+													<button type="button" class=""
+														ng-click="addVirtualDevices();addRealDevices();">
+														&gt;</button><br />
+													<button type="button" class="" ng-click="removeMappings();">
+														&lt;</button>
+												</div>
+
+											</div>
+										</div>
+													<div class="col-md-5">
+													<div class="table-responsive">
+														<div class="table-uigrid grid"
+															ui-grid="DeviceMapping" ui-grid-selection
+															ui-grid-selection ui-grid-resize-columns
+															ui-grid-move-columns ui-grid-pinning></div>
+														
+													</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										
+										
+									</div>
+									<div
+										style="width: 100%; height: 50px; margin: 0px 80%; margin-top: 30px;">
+										<input type="button" name="button" ng-click="nextTestPlan()"
+											value="« Re-plan" class="btn btn-info" /> <input
+											type="button" name="button" ng-click="CreateTestrun()"
+											value="Next »" class="btn btn-info" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
-					<!--<div ng-include="'app/views/favourites.html'"></div>-->
-					
 			</div>
+			<!--<div ng-include="'app/views/favourites.html'"></div>-->
+
 		</div>
 	</div>
+</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
- <div ng-include="'app/views/popUp.html'"></div>
-	<div class="footer-div">
-	 <div ng-include="'app/views/footer.html'"></div>
-	 </div>
-<script>
+<div ng-include="'app/views/popUp.html'"></div>
+<div class="footer-div footer-bottom-touch">
+	<div ng-include="'app/views/footer.html'"></div>
+</div>
 
- function setEqualHeight(e) {
-	// alert("sdf");
-     var t = e.height();
-   //  e.each(function () {
-         currentHeight = $( window ).height();
-       // alert("t:"+t+"currentHeight"+currentHeight)
-         if (currentHeight > t) {
-        	 
-             t = currentHeight
-         }
-   //  });
-     $(".devicedata-height").height(currentHeight-158);
-   
- }
- $(window).resize(function () {
-	
-	    setEqualHeight( $('.ui-grid-viewport') );
-	});
- $(document).ready(function () {
-     setEqualHeight($(".ui-grid-viewport"))
- })
-</script>
 
-	 <div class="modal fade" id="CommandDetails" role="dialog" data-backdrop="static" data-keyboard="false">								
-	<div class="modal-dialog" style="width:755px;">
+<div class="modal fade" id="CommandDetails" role="dialog"
+	data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 755px;">
 		<!-- Modal content-->
 		<div class="modal-content">
-			<div class="modal-header" style="background-color:#337ab7;">
+			<div class="modal-header" style="background-color: #337ab7;">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title" style="color:#FFFFFF;">Task Details</h4>
+				<h4 class="modal-title" style="color: #FFFFFF;">Task Details</h4>
 			</div>
-			
-			<div class="modal-body" id="updateCommandParametersForm" >
-			<div align="center">
-			<img class="loading" src="images/loading.gif" class="loading-plan-detail-img"  ng-show="dataProcessingCommandParams"></img>
-			</div>
-				<div class="treeSection" style="display:none;">
-											
-													<div ng-include="'app/views/commonTreeDataTemplateView.html'">
-													
-													</div>
-													
-			</div>	
+
+			<div class="modal-body" id="updateCommandParametersForm">
+				<div align="center">
+					<img class="loading" src="images/loading.gif"
+						class="loading-plan-detail-img"
+						ng-show="dataProcessingCommandParams"></img>
+				</div>
+				<div class="treeSection" style="display: none;">
+
+					<div ng-include="'app/views/commonTreeDataTemplateView.html'">
+
+					</div>
+
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

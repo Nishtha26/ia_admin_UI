@@ -61,6 +61,11 @@ height: auto!important;
 .breadcrumb {
 	margin-bottom: 4px !important;
 }
+
+
+.lead {
+    height: 20px;
+}
 </style>
 <div ng-include="'app/views/header.html'"></div>
 <div class="maincontainer ">
@@ -194,9 +199,9 @@ height: auto!important;
 													style="margin-left: 64%; margin-top: 3%;"
 													ng-show="jobIsExitsError" ng-model="command-border">Error</span>
 												<button type="button" class="mb-sm btn btn-primary"
-													ng-click="testScript()">Â« Back</button>
+													ng-click="testScript()">« Back</button>
 												<button type="submit" class="mb-sm btn btn-primary"
-													ng-click="createTestPlanService()">Next Â»</button>
+													ng-click="createTestPlanService()">Next »</button>
 											</div>
 										</form>
 									</div>
@@ -217,26 +222,3 @@ height: auto!important;
 		<div ng-include="'app/views/footer.html'"></div>
 	</div>
 	<div ng-include="'app/views/popUp.html'"></div>
-	<script>
-		function setEqualHeight(e) {
-			// alert("sdf");
-			var t = e.height();
-			//  e.each(function () {
-			currentHeight = $(window).height();
-			// alert("t:"+t+"currentHeight"+currentHeight)
-			if (currentHeight > t) {
-
-				t = currentHeight
-			}
-			//  });
-			$(".devicedata-height").height(currentHeight - 158);
-
-		}
-		$(window).resize(function() {
-
-			//  setEqualHeight( $('.ui-grid-viewport') );
-		});
-		$(document).ready(function() {
-			//    setEqualHeight($(".ui-grid-viewport"))
-		})
-	</script>

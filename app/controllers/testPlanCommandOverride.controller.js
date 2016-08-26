@@ -535,6 +535,7 @@ oTech.controller('testPlanCommandOverride',
 				sendCreateData.jobDeviceVOList[i] = {};
 				sendCreateData.jobDeviceVOList[i].deviceId = $scope.tabs[i].deviceId;
 				sendCreateData.jobDeviceVOList[i].deviceName = $scope.tabs[i].id;
+				sendCreateData.jobDeviceVOList[i].deviceProfileName = $scope.tabs[i].deviceProfileName;
 				sendCreateData.jobDeviceVOList[i].taskLoop = $scope.tabs[i].content[0].loop;
 				
 				var superParentObject, parentObject = {}, childObject = {};
@@ -611,7 +612,7 @@ oTech.controller('testPlanCommandOverride',
 						$("#jobIsExitsSuccess").text("Test plan has been created successfully with Id :"+data.NewTestPlan.jobId+" ...");
 						 $timeout(function () {
 							 $location.path('/dashboard/testScript');
-	                        }, 4000);
+	                        }, 2000);
 						$scope.jobIsExitsSuccess=true;
                     }
                     else {
@@ -656,6 +657,8 @@ oTech.controller('testPlanCommandOverride',
                 );
             }*/
         }
+		 
+	
 		
 		
 

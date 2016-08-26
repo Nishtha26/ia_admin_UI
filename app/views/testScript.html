@@ -127,27 +127,3 @@ font-family: Source Sans Pro,sans-serif;
 	<div class="footer-div footer-bottom-touch">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>
-<script>
-
- function setEqualHeight(e) {
-	// alert("sdf");
-     var t = e.height();
-   //  e.each(function () {
-         currentHeight = $( window ).height();
-       // alert("t:"+t+"currentHeight"+currentHeight)
-         if (currentHeight > t) {
-        	 
-             t = currentHeight
-         }
-   //  });
-     $(".devicedata-height").height(currentHeight-158);
-   
- }
- $(window).resize(function () {
-	
-	//    setEqualHeight( $('.ui-grid-viewport') );
-	});
- $(document).ready(function () {
-  //   setEqualHeight($(".ui-grid-viewport"))
- })
-</script>

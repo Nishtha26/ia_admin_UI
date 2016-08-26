@@ -1,4 +1,4 @@
-   <link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
+X`   <link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/templete/app.css"/>
 <style>
 .ui-grid-sort-priority-number {
@@ -36,7 +36,7 @@ height: auto!important;
 
 </style>
 <div ng-include="'app/views/header.html'"></div>
-<div class="maincontainer" style="font-family: Source Sans Pro,sans-serif!important;background-color:#f5f7fa;overflow:hidden;">
+<div class="maincontainer main-cont-height" style="font-family: Source Sans Pro,sans-serif!important;background-color:#f5f7fa;overflow:hidden;">
 		<div class="maincontent">
 			<div class="container-fluid">
 				<div id="exTab2" style="width:100%;" class="container">
@@ -71,7 +71,7 @@ height: auto!important;
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
 											</div>
-											<div id="secondGrid" ui-grid="ScheduleRealDevices" ui-grid-selection ui-grid-cellNav class="table-uigrid  grid" style="height:302px;">
+											<div id="secondGrid" ui-grid="ScheduleRealDevices" ui-grid-selection ui-grid-cellNav class="table-uigrid  grid" style="height: 225px">
 											<img class="loading" src="images/loading.gif"  ng-show="dataLoading1"></img>
 											<div class ="loadingErr" ng-show ="err"> No Data Found </div>
 											<img class="loading" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
@@ -156,30 +156,6 @@ height: auto!important;
 </div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
  <div ng-include="'app/views/popUp.html'"></div>
-	<div class="footer-div">
+	<div class="footer-div footer-bottom-touch">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>
-<script>
-
- function setEqualHeight(e) {
-	// alert("sdf");
-     var t = e.height();
-   //  e.each(function () {
-         currentHeight = $( window ).height();
-       // alert("t:"+t+"currentHeight"+currentHeight)
-         if (currentHeight > t) {
-        	 
-             t = currentHeight
-         }
-   //  });
-     $(".devicedata-height").height(currentHeight-158);
-   
- }
- $(window).resize(function () {
-	
-	    setEqualHeight( $('.ui-grid-viewport') );
-	});
- $(document).ready(function () {
-     setEqualHeight($(".ui-grid-viewport"))
- })
-</script>

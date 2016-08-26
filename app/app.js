@@ -728,5 +728,22 @@ oTech.directive('passwordMatch', [function () {
     };
 }]);
 
+oTech.directive('contenteditable', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ctrl) {
+            elm.bind('blur', function() {
+                scope.$apply(function() {
+                    ctrl.$setViewValue(elm.html());
+                });
+            });
+            ctrl.$render = function() {
+                elm.html(ctrl.$viewValue);
+            };
+
+        }
+    };
+});
+
 
 

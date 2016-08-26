@@ -5,8 +5,9 @@ oTech.controller('editTestPlanController',
 
         $rootScope.editTestplanDevices = [];
         var TestPlanId = $cookieStore.get('TestPLANId');
+        $scope.TestplanName = $cookieStore.get('TestplanName');
 		$scope.dataLoading = true;
-
+		
         $rootScope.userId = sessionStorage.getItem('userId');
         var userId = sessionStorage.getItem('userId');
         var token = sessionStorage.getItem('token');
@@ -97,7 +98,7 @@ oTech.controller('editTestPlanController',
                     		VirtualDevice.splice(i,1);
                     	}
                     	var arr = jQuery.makeArray( deepCopyObject.jobVO[i] );
-					$scope.tabs.push({'deviceProfileName':'Device Profile Name '+$scope.counter,'id':deepCopyObject.jobVO[i].deviceName,
+					$scope.tabs.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'id':deepCopyObject.jobVO[i].deviceName,
 						'deviceId':deepCopyObject.jobVO[i].deviceId,'content':arr});
 						$scope.counter++;
                     }
@@ -153,7 +154,8 @@ oTech.controller('editTestPlanController',
     			for (var i = 0; i < $scope.tabs.length; i++) {
     				sendCreateData.jobDeviceVOList[i] = {};
     				sendCreateData.jobDeviceVOList[i].deviceId = $scope.tabs[i].deviceId;
-    				sendCreateData.jobDeviceVOList[i].deviceName = $scope.tabs[i].deviceProfileName;
+    				sendCreateData.jobDeviceVOList[i].deviceName = $scope.tabs[i].id;
+    				sendCreateData.jobDeviceVOList[i].deviceProfileName = $scope.tabs[i].deviceProfileName;
     				sendCreateData.jobDeviceVOList[i].jobDeviceId = $scope.tabs[i].content[0].jobDeviceId;
     				sendCreateData.jobDeviceVOList[i].jobId = $scope.tabs[i].content[0].jobId;
     				sendCreateData.jobDeviceVOList[i].taskId = $scope.tabs[i].content[0].taskId;    	
@@ -233,14 +235,14 @@ oTech.controller('editTestPlanController',
     	                function (data) {
     	                    if (data.status == "Success") {
     							$scope.dataProcessing = false;
-    	                        
-    	                        $timeout(function () {
-    	                            $('#MessagePopUp').modal('hide');
-    	                        }, 2000);
     							
     	                       $(".btn-info").removeClass("disabled");
     	                       $("#jobIsExitsSuccess").text("Test plan has been updated successfully ....")
-    	                       $scope.jobIsExitsSuccess=true;
+    	                        $scope.jobIsExitsSuccess=true;
+    	                       $timeout(function () {
+    								 $location.path('/dashboard/testScript');
+    		                        }, 2000);
+    	                      
     	                    }
     	                    else {
     							$scope.dataProcessing = false;

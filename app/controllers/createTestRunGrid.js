@@ -61,6 +61,21 @@ oTech.controller('createTestRunGridController',
 
            $location.path('/dashboard/testScript');
         }
+		
+		 $scope.createTestPlan = function() {
+				$cookieStore.remove('testPlanName');
+				$cookieStore.remove('testPlanDescription');
+				$cookieStore.remove('usecaseId');
+				$cookieStore.remove('usecaseDescription');
+				$rootScope.testPlanName = "";
+				$rootScope.testPlanDescription = "";
+				$rootScope.usecaseId = '';
+				$.removeCookie('testPlanName');
+				$.removeCookie('usecaseId');
+				$.removeCookie('testPlanDescription');
+
+				$location.path('/dashboard/initiateTestPlan');
+}
 
 		
 		  $scope.selectTab=function(event){

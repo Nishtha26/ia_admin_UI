@@ -1628,10 +1628,7 @@ input[type="number"] {
     padding-left: 5px;
     margin-top: 12px;
 }
-.footer-bottom-touch{
-	
-	position: absolute;bottom:0px;
-}
+
 .circle
     {
     width:25px;
@@ -1644,19 +1641,15 @@ input[type="number"] {
     background:#000
     }
   
-    @media only screen and (min-width: 1300px) and (max-width: 1440px) {
+@media screen and (min-width: 1300px) and (max-width: 1640px) {
+    
    .ui-grid{
-      /* max-width:1110px!important;
-   min-width:1110px!important; */
-  width: 1050px!important;
-   /*  max-height: 552px!important; */
-    
-    
+   
+  max-width: 1240px!important;
+
    }
-   body{
-   overflow-y: hidden;
-   font-size: small!important;
-   }
+  
+   
 .main-cont-height{
 	max-height: 654px;
     overflow-y: auto!important;
@@ -1671,9 +1664,27 @@ height: 318px!important;
 }
 
 }
+
+.footer-bottom-touch{
+	
+	position: absolute;bottom:0px;
+}
   .ui-grid{
-    max-width:1614px;}
+    max-width:1614px;
+    }
+
 
     .successOtClass{
     color: #0ae80e;
     }
+    
+
+div[contentEditable] {
+        border: 1px solid #fafafd;
+  background-color: white;
+  min-height: 20px;
+    }
+ .toggle-margin{
+margin: 55px 0px 0px 20px;
+ }
+
