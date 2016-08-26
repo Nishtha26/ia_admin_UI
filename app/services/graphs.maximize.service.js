@@ -35,6 +35,7 @@ oTech.service('GraphMaximizeServices',
 			var dataDevice = data.deviceAvailabilityData;
 			var startDate=new Date(data.startDateTime);
 			var endDate=new Date(data.endDateTime);
+			var colsizevalue=data.colsize;
 			var chartData = "";
 			$.each(dataDevice, function(i, point) {
 				var row  = point.split(',');
@@ -89,11 +90,11 @@ oTech.service('GraphMaximizeServices',
 			       //  tickPositions: [1],
 			      //      tickWidth: 0,
 //		            tickPixelInterval: 50,
-			      /*      dateTimeLabelFormats: {
+			           dateTimeLabelFormats: {
 			                day: '%b %e',
 			                week: '%b %e',
 			                
-			            },*/
+			            },
 			      /*  tickInterval: 60 * 1000,
 		            min: Date.UTC(2016, 7, 18),
 		            max: Date.UTC(2016, 7,19)*/
@@ -137,30 +138,30 @@ oTech.service('GraphMaximizeServices',
                     dataClasses: [{
                         from: 1,
                         to: 1,
-                        color: '#2eb82e',
+                        color: '#40ff00',
                         
                         name: 'Heart Beat'
                     }, 
                     {
                         from: 0,
                         to: 0,
-                        color: '#FFF',
-                        name: 'Inactive'
+                        color: '#ff0000',
+                        name: 'No Heart Beat'
                     },
                     {
                         from: 2,
                         to: 2,
                       
-                        color: '#1a1aff',
+                        color: '#4d4dff',
                         name: 'Job Running'
                     }
                     ]
                 },
 
 		        series: [{
-		            borderWidth: 1,
+		            borderWidth: 0,
 		            borderColor:'#FFFFFF',
-		            colsize: 600 * 1000,
+		            colsize: colsizevalue,
 		        //    pointInterval: 3600 * 1000,// one day
 //		            pointStart: Date.UTC(2016, 08, 18),
 		          //  pointInterval: 24 * 900 * 1000 ,

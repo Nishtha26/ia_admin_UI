@@ -2,12 +2,34 @@
 	<!-- Header Ends -->
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css">	
+<style>
+.select2-container .select2-choice{
+height:32px!important;
+}
 
+</style>
 	<!-- Main Content Starts -->
 	<div class="maincontainer">
 		<div class="maincontent" style="width:100%;">
 			<div class="container-fluid">
 				<div class="orch-rep-dashboards boxshdw" style="margin-bottom:10px;">
+				<div class="row" style="padding-top: 4px;">
+				 					 <div class="col-sm-3 device-av-label">
+					   <label >Start Date</label>
+	 </div>
+						 					 <div class="col-sm-3 device-av-label">
+					   <label>End Date</label>
+	 </div>
+	 			 					 <div class="col-sm-3 device-av-label">
+					   <label>Device</label>
+	 </div>
+	 			 					 <div class="col-sm-3">
+				<div class="form-group">
+					   <label>  </label>
+				</div>
+	 </div>	
+				</div>
+				<form name="device_availability" novalidate>
 				<div class="row" style="padding-top: 4px;">
 
 	<!-- 												 <div class="col-xs-6 col-xs-5 col-sm-3">
@@ -15,37 +37,52 @@
 				Select Device
  				</div>
  	 </div> -->
-									 <div class="col-xs-6 col-xs-3">
-				<div class="form-group">
-					<select id="deviceId" name="deviceId" class="form-control" >
 
+ 	 					 <div class="col-sm-3">
+				<div class="form-group" style="padding-left:11px;">
+					   <div class="input-group date " id="datetimepicker1">
+							<input  id="fromDate" name="fromDate"  class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					   </div>
+					   	 <div > 
+														 <div id="fromDate_required" class="errors"> **Start Date is required</div>
+														  <div id="fromDate_invalid" class="errors">**Start Date is invalid</div></div>
+				</div>
+				
+	 </div>
+		 <div class="col-sm-3">
+			    <div class="form-group">
+					 <div class="input-group date " id="datetimepicker2">
+							<input id="toDate" name="toDate" class="form-control"  style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+							</span>
+					</div>
+				</div>
+				<!--  ng-show="device_availability.toDate.$touched || device_availability.$submitted" ng-messages="device_availability.toDate.$error" -->
+				 <div   > 
+														<div id="toDate_required" class="errors">**To Date is required</div>
+														  <div id="toDate_invalid" class="errors"> **To Date is invalid</div></div>
+	 </div>
+	 									 <div class="col-sm-3">
+	<div class="form-group">
+					<select id="deviceId" name="deviceId" class="form-control"   >
+<option value="">Select Device </option>
 						<option ng-repeat="device in devices" ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
 
 					</select> 
 					 <img align="middle" class="loading" src="images/loading.gif"  ng-show="dataLoading" style="width:30px;height:30px;position:absolute;"></img>
  				</div>
- 				
+ 						 <div  >
+														 <div id="deviceId_required" class="errors">**Device is required</div></div>
  	 </div>
- 	 					 <div class="col-sm-3">
-				<div class="form-group">
-					   <div class="input-group date " id="datetimepicker1">
-							<input id="fromDate" name="fromDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
-							</span>
-					   </div>
+ 	  <div class="col-sm-3">
+	<input id="device_av_btn" class="btn btn-success btn-sm" type="button" value="Create"  >	
+ 	 </div>
+ 	 
 				</div>
-	 </div>
-		 <div class="col-sm-3">
-			    <div class="form-group">
-					 <div class="input-group date " id="datetimepicker2">
-							<input id="toDate" name="toDate" class="form-control" style="height : 37px;" type="text" value=""> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
-							</span>
-					</div>
-				</div>
-	 </div>
-				</div>
+				</form>
 					<div class="row">
 
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:550px;">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:auto;">
 						<div class="device_usage_graph device_availability boxshdw" style="padding:2px 0px 0px 6px;">
 								
 								<div class="device_heading text-uppercase" style="margin-left:20px;">

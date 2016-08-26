@@ -46,19 +46,56 @@ oTech.controller('deviceAvailabilityController',
 			  });//script
 			   
 			   
-			   $("#deviceId").on("change", function(e) {
-			     //  alert("you selected :" +);	
+			   $("#device_av_btn").on("click", function(e) {
+			     //  alert("you selected :" +);
+					var startDate=$("#fromDate").val();
+					if(startDate==""){
+						$("#fromDate_invalid").show();
+						return true;
+					}
+					else{
+						$("#fromDate_invalid").hide();
+					}
+					var endDate=$("#toDate").val();
+					if(startDate==""){
+						$("#toDate_required").show();
+						return true;
+					}
+					else{
+						$("#toDate_required").hide();
+					}
+					 var deviceId=$("#deviceId").val();
+					if(deviceId==""){
+						$("#deviceId_required").show();
+						return true;
+					}
+					else{
+						$("#deviceId_required").hide();
+					}
 				   $scope.dataLoadingMap=true;
+				  
 				   $("#dataLoadingMap").show();
-			       $scope.getDeviceAvailabilityData( $(this).val());
+			       $scope.getDeviceAvailabilityData(startDate,endDate,deviceId);
 			   });
+			   $(".errors").hide();
 			});
 		$(function() {
 			
 			$('#datetimepicker1').datetimepicker({
-				format : 'MM/DD/YYYY HH:mm'
+				format : 'MM/DD/YYYY HH:mm',
+				maxDate: new Date()
 			});
-		
+			$("#datetimepicker1").blur(function(){
+			    val = $(this).val();
+			    val1 = Date.parse(val);
+			    
+			    if (isNaN(val1)==true && val!==''){
+			    	$("#fromDate_required").show();
+			    }
+			    else{
+			    	$("#fromDate_required").hide();
+			    }
+			});
 			var dateNow = new Date();
 			dateNow.setDate(dateNow.getDate() - 1);
 			$('#fromDate').val(getFormattedDate(dateNow));
@@ -69,7 +106,8 @@ oTech.controller('deviceAvailabilityController',
 			
 			
 			$('#datetimepicker2').datetimepicker({
-				format : 'MM/DD/YYYY HH:mm'
+				format : 'MM/DD/YYYY HH:mm',
+				maxDate: new Date()
 			});
 			var dateNow = new Date();
 			$('#toDate').val(getFormattedDate(dateNow));
@@ -89,11 +127,10 @@ oTech.controller('deviceAvailabilityController',
 				var dateFormatted =   month + "/" +  day + "/" + year + " " + time;
 				return dateFormatted;
 			}
-	$scope.getDeviceAvailabilityData = function(deviceId){
+	$scope.getDeviceAvailabilityData = function(startDate,endDate,deviceId){
 //		 var deviceId = $('#deviceId').val(); 
 //		var data="";
-		var startDate=$("#fromDate").val();
-		var endDate=$("#toDate").val();
+
 		promise = GraphMaximizeServices.GetDeviceAvailabilityDataPerDevice(userId, token,deviceId,startDate,endDate);
 	
 	promise.then(

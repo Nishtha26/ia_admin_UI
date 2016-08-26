@@ -39,7 +39,7 @@ oTech.service('GraphServices',
 				passiveData.push(val.passiveCount);
 			});
 			var date = [];
-			for(var i = 0; i < labels.length; i++){
+		/*	for(var i = 0; i < labels.length; i++){
 				date.push(labels[i].split('/')[1]);
 			}
 			for(var i = 0;i < date.length; i++){
@@ -59,7 +59,7 @@ oTech.service('GraphServices',
 						passiveData[j] = tmp;
 					}
 				}
-			}
+			}*/
 			oApp.config.lineChartData.datasets[0].data = activeData;
 			oApp.config.lineChartData.datasets[1].data = passiveData;
 			oApp.config.lineChartData.labels = labels;

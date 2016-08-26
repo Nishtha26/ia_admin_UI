@@ -4,8 +4,8 @@ oTech
 				function($scope, $rootScope, $location, AppServices,
 						$stateParams) {
 					$scope.dataLoading = true;
-					$scope.listItem = 'apn';
-					var link = "apn";
+					$scope.listItem = 'APN';
+					var link = "APN";
 					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
 					var userId = sessionStorage.getItem("userId");
@@ -152,54 +152,58 @@ oTech
 					$scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
 					/* measurement list apn */
 					$scope.showDeviceList = function(link) {
-						if($scope.listItem == 'apn')
+						if($scope.listItem == 'APN')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
-						else if ($scope.listItem == 'applications')
+						else if ($scope.listItem == 'Applications')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapplications;
-						else if($scope.listItem == 'ipaddress')
+						else if($scope.listItem == 'IPAddress')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
-						else if($scope.listItem == 'l1log')
+						else if($scope.listItem == 'L1LOG')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsl1log;
-						else if($scope.listItem == 'location')
+						else if($scope.listItem == 'Location')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefslocation;
-						else if($scope.listItem == 'mms')
+						else if($scope.listItem == 'MMS')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsmms;
-						else if($scope.listItem == 'neighborcellinfo')
+						else if($scope.listItem == 'Neighborcellinfo')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsneighborcellinfo;
-						else if($scope.listItem == 'sms')
+						else if($scope.listItem == 'SMS')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefssms;
-						else if($scope.listItem == 'tcpperformance')
+						else if($scope.listItem == 'Tcpperformance')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefstcpperformance;
-						else if($scope.listItem == 'udpperformance')
+						else if($scope.listItem == 'Udpperformance')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsudpperformance;
-						else if($scope.listItem == 'voice')
+						else if($scope.listItem == 'Voice')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsvoice;
-						else if($scope.listItem == 'wifiinfo')
+						else if($scope.listItem == 'Wifiinfo')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefswifiinfo;
-						else if($scope.listItem == 'wifitrafficinfo')
+						else if($scope.listItem == 'Wifitrafficinfo')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefswifitrafficinfo;
-						else if($scope.listItem == 'attach')
+						else if($scope.listItem == 'Attach')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsattach;
-						else if($scope.listItem == 'latency')
+						else if($scope.listItem == 'Latency')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefslatency;
-						else if($scope.listItem == 'upload')
+						else if($scope.listItem == 'Upload')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsupload;
-						else if($scope.listItem == 'email')
+						else if($scope.listItem == 'Email')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsemail;
-						else if($scope.listItem == 'datausage')
+						else if($scope.listItem == 'Datausage')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdatausage;
-						else if($scope.listItem == 'video')
+						else if($scope.listItem == 'Video')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsvideo;
-						else if($scope.listItem == 'clickscreenimage')
+						else if($scope.listItem == 'Clickscreenimage')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreenimage;
-						else if($scope.listItem == 'audio')
+						else if($scope.listItem == 'Audio')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsaudio;
 						else if($scope.listItem == 'ClickScreenXY')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsclickscreenxy;
-						else if($scope.listItem == 'download')
+						else if($scope.listItem == 'Download')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdownload;
-						else if($scope.listItem == 'radio')
+						else if($scope.listItem == 'Radio')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsradio;
+						if(startLimit==1){
+							startLimit=0;
+						}
+						
 						promise = AppServices.GetMeasurementsapnData(userId,
 								token, $scope.itemsPerPage, startLimit, link);
 						promise.then(function(data) {

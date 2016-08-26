@@ -722,23 +722,24 @@ oApp.config = {
 		columnDefsradio: [
 		         			// this row just shows the row index, doesn't use any data from the row
 		         			
-		         			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
-		         			{headerName: "deviceId", field: "deviceId"},
-		         		   {headerName: "cellId", field: "cellId"},
-		         			{headerName: "lacId", field: "lacId"},
-		         			{headerName: "downloadTimeZone", field: "downloadTimeZone"},/* signal2noise*/
-		         			{headerName: "mcc", field: "mcc"},
-		         			{headerName: "mnc", field: "mnc"},
-		         			{headerName: "downloadType", field: "downloadType"},
-		         			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
-		         			{headerName: "downloadProgress", field: "downloadProgress"},
-		         			{headerName: "downloadFileUrl", field: "downloadFileUrl"},
-		         			{headerName: "downloadedFileSize", field: "downloadedFileSize"},
-		         			{headerName: "downloadTotalFileSize", field: "downloadTotalFileSize"},
-		         			{headerName: "sessionId", field: "sessionId"},
-		         			{headerName: "testcaseId", field: "testcaseId"}
-		         			
-		         			
+		         			{displayName: "Job Id", field: "jobId" ,pinnedLeft:true},
+		         			{displayName: "Device Id", field: "deviceId"},
+		         		   {displayName: "Cell Id", field: "cellId"},
+		         			{displayName: "Lac Id", field: "lacId"},
+		         			{displayName: "Signal2Noise", field: "evdoSnr"},
+		         			{displayName: "MCC", field: "mcc"},
+		         			{displayName: "MNC", field: "mnc"},
+		         			{displayName: "RAN Type", field: "networkType"},
+		         			{displayName: "Local Time", field: "deviceLocalTime"},
+		         			{displayName: "Time From Epoch In Millis", field: "time"},
+		         			{displayName: "Time Zone", field: "timeZone"},
+		         			{displayName: "Signal Strength Rssi (dBm)", field: "signalStrenghRssi"},
+		         			{displayName: "Quality Ber", field: "gsmRxQualityBer"},
+		         			{displayName: "Cdma Evdo", field: "cdmaEcIo"},
+		         			{displayName: "LTE PCI", field: "ltePci"},
+		         			{displayName: "LTE RSRQ", field: "lteRsrq"},
+		         			{displayName: "LTE RSSNR", field: "lteRssnr"},
+		         			{displayName: "TestCaseId", field: "testcaseId"}
 		         		],
 		columnDefsclickscreenxy : [
 			// this row just shows the row index, doesn't use any data from the row
