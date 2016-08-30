@@ -44,11 +44,11 @@
 	    <input type="text" class="taskSequenceNo tp-seq-wd create-input"  ng-model="node.sequenceNo">
 
 		<span ng-if="!node.commandId">
-			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-			<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+			<a ng-if="node.id != '1'" class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeNode(this);"><span class="glyphicon glyphicon-remove"></span></a>
+			<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 5px;"><span class="glyphicon glyphicon-plus"></span></a>
 		</span>
 		<span ng-if="node.commandId">
-			<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this); test(this);"><span class="glyphicon glyphicon-remove"></span></a>
+			<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeNode(this);"><span class="glyphicon glyphicon-remove"></span></a>
 			<!--<a ng-if="node.commandId == '-1'" class="pull-right btn btn-primary btn-xs addCommand{{node.id}}" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>-->
 		</span>
 		

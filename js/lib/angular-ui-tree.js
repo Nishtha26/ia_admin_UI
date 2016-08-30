@@ -241,9 +241,16 @@
 
         $scope.removeNode = function (node) {
           var index = $scope.$modelValue.indexOf(node.$modelValue);
+          var length = $scope.$modelValue.length;
           if (index > -1) {
             $scope.safeApply(function () {
-              $scope.$modelValue.splice(index, 1)[0];
+            if($scope.$modelValue.length == 1 && $scope.$modelValue[0].commandId){
+              $scope.$modelValue[0].title = "Add Command";
+              $scope.$modelValue[0].commandParams = "";
+              $scope.$modelValue[0].commandId = 100000;
+            }else{
+            	 $scope.$modelValue.splice(index, 1)[0];
+            }
             });
             return $scope.$treeScope.$callbacks.removed(node);
           }

@@ -275,9 +275,9 @@ oTech.controller('testScriptController',
 		
 
 	//added for the tree compnent
-		$scope.remove = function (scope) {
-        scope.remove();
-      };
+        $scope.removeNode = function (scope) { 
+            scope.remove();
+        };
 
       $scope.toggle = function (scope) {
         scope.toggle();
@@ -327,6 +327,7 @@ oTech.controller('testScriptController',
 					  }
 					]
 				});
+			 $scope.scrollTreeDown("scroll_commands");
 			}
 			if(nodeData.id >=10 && nodeData.id < 100){
 			 nodeData.nodes.push({ "id": (nodeData.nodes.length+1)*100,
@@ -344,6 +345,7 @@ oTech.controller('testScriptController',
 						 "nodes": []
 					  }]
 				});
+			 $scope.scrollTreeDown("scroll_commands");
 			}
 			
 			if(nodeData.id >= 100){
@@ -356,6 +358,7 @@ oTech.controller('testScriptController',
 						"commandId":100000,
 						 "nodes": []
 					  });
+			 $scope.scrollTreeDown("scroll_commands");
 			}
       };
 function getTreeDataForCommands1(data){
@@ -693,13 +696,17 @@ function getTreeDataForCommands1(data){
 						    },
 						    beforeDrop: function(event) {
 						    	$scope.isFirstNode=false;
+						    },
+						    
+						    removed: function(node) {
+						    	var test = node;
 						    }
 
 							};
 							
 							$scope.test = function (scope) {
 
-								//alert(scope);
+								var test = scope;
 							};
 							
 							 //feching usecase list

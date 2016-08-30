@@ -1667,29 +1667,39 @@ height: 318px!important;
 
 }
 
-.footer-bottom-touch{
-	
-	position: absolute;bottom:0px;
+.footer-bottom-touch {
+	position: absolute;
+	bottom: 0px;
 }
-  .ui-grid{
-    max-width:1614px;
-    }
 
+.ui-grid {
+	max-width: 1614px;
+}
 
-    .successOtClass{
-    color: #0ae80e;
-    }
-    
+.successOtClass {
+	color: #0ae80e;
+}
 
 div[contentEditable] {
-        border: 1px solid #fafafd;
-  background-color: white;
-  min-height: 20px;
-    }
- .toggle-margin{
-margin: 55px 0px 0px 20px;
- }
+	border: 1px solid #fafafd;
+	background-color: white;
+	min-height: 20px;
+}
 
-    .device-av-label{
-    line-height: 2;
-    }
+.toggle-margin {
+	margin: 55px 0px 0px 20px;
+}
+
+.device-av-label {
+	line-height: 2;
+}
+
+.refreshmodel {
+	float: right;
+	font-size: 10px;
+	margin-left: -45px;
+	border: 0px solid transparent;
+	background-color:#337ab7;
+	padding: 1px 11px;
+    color: #f9f8f6;
+}
