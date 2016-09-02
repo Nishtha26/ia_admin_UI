@@ -47,7 +47,7 @@ position: inherit;
 													<div data-toggle="dropdown" href="javascript:void(0);" aria-expanded="false"><span class="pull-left">{{listItem}}</span><span class="arrow-icon pull-right"></span></div>
 													<div class="dropdown-wrapper dropdown-menu">
 														<ul class="device-menu">
-															<li ng-repeat = "key in devices"><a ng-click=" openDevicedata($event)">{{key}}</a></li>
+															<li ng-repeat = "(id,val) in devices"><a ng-click=" openDevicedata('{{id}}','{{val}}')"  value="{{id}}">{{val}}</a></li>
 														</ul>
 													</div>
 												</div>

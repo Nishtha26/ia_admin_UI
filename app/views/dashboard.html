@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-							<div class="device_usage_graph boxshdw">
+							<div class="device_usage_graph boxshdw" style="height:302px;">
 								<div class="device_heading text-uppercase">
 									<h4>Execution Status</h4>
 									<div style="float:right;position:relative;top:-25px;">
@@ -87,11 +87,11 @@
 										</div>
 									</div>
 								</div>
-								<span class="device_graph_text1">% Job Progress</span>
-								<div class="executive_status_graph" style="clear:both;">
+								<span class="device_graph_text1">% Test Run Progress</span>
+								<div class="executive_status_graph" >
 									<div id="chart_div" style=""></div>
 								</div>
-								<p style="position:relative;left:40%;">Job Name</p>
+								<p style="position:relative;left:40%;">Test Run Name</p>
 							</div>
 						</div>
 					</div>
@@ -187,8 +187,31 @@
 			<div class="modal-body" >
 				<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoading"></img>
 				<p style="text-align:center" ng-show="DeviceList.devicesList.length <= 0 && !dataLoading">No Data Found</p>
-				<div ui-grid="deviceListGridOptions" ui-grid-pagination class="grid" ng-show="DeviceList.devicesList.length > 0 && !dataLoading" style="margin:0 auto;width:800px;"></div>
+				<div ui-grid="deviceListGridOptions"  class="grid" ng-show="DeviceList.devicesList.length > 0 && !dataLoading" style="margin:0 auto;width:800px;height:382px;">
 				
+							<div class="row">
+							<div class="col-sm-6">
+									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
+									</div>
+<div class="col-sm-6">
+										<div   class="pagination-div device_list-pag-margin">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">« Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next »</a>
+											</li>
+										  </ul>
+										</div>
+									</div>	
+				
+				</div>
+				</div>
+	
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -208,7 +231,31 @@
 			<div class="modal-body">
 				<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoading"></img>
 				<p style="text-align:center" ng-show="ActiveDeviceList.activeDevicesList.length <= 0 && !dataLoading">No Data Found</p>
-				<div ui-grid="activeDeviceGridOptions" ui-grid-pagination class="grid" ng-show="ActiveDeviceList.activeDevicesList.length > 0 && !dataLoading" style="margin:0 auto;width:800px;"></div>
+				<div ui-grid="activeDeviceGridOptions"  class="grid" ng-show="ActiveDeviceList.activeDevicesList.length > 0 && !dataLoading" style="margin:0 auto;width:800px;height:382px;">
+				
+				
+		<div class="row">
+							<div class="col-sm-6">
+									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
+									</div>
+<div class="col-sm-6">
+										<div   class="pagination-div device_list-pag-margin">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">« Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next »</a>
+											</li>
+										  </ul>
+										</div>
+									</div>	
+				
+	</div>
+				</div>
 				
 			</div>
 			<div class="modal-footer">

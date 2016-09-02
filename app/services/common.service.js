@@ -204,7 +204,7 @@ oTech.service('AppServices',
 		service.ActiveDeviceCount = function(userId, token){
 			var deferred = $q.defer();
 			$.ajax({
-				    url : oApp.config.BASE_URL + "rest/devices/activeDeviceData",
+				    url : oApp.config.BASE_URL + "rest/devices/activeDeviceCount",
 				    type: "POST",
 					data : {token:token, userId:userId},
 					headers :{
@@ -221,6 +221,7 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise;
 		}
+		
 		/*
 			Function to get Scheduled Job count
 		*/

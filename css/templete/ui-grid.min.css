@@ -6,8 +6,8 @@
 	border: 1px solid #d4d4d4;
 	box-sizing: content-box;
 	border-radius: 0;
-	-webkit-transform: translateZ(0);
-	transform: translateZ(0)
+	/*-webkit-transform: translateZ(0);
+	transform: translateZ(0)*/
 }
 
 .ui-grid-vertical-bar {

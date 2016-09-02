@@ -407,8 +407,11 @@ oTech.controller('addUsergroupsController',
 			  $scope.updateButton =true;
 			  $scope.createButton =false;
 			  $("#user_group").val(groupName);*/
-	    	  $scope.userDataLoading = true;
+	    	
 	    	var groupNameNew= $("#user_group").val();
+	    	if(!$scope.usergroupform.$invalid){
+	    		
+	    		  $scope.userDataLoading = true;
 			promise = AppServices.updateUsergroupData( token , userGroupId,groupNameNew);
 			promise.then(
 			function(data){
@@ -439,6 +442,12 @@ oTech.controller('addUsergroupsController',
 				  $scope.userDataLoading = false;
 			}
 			);
+	    }
+	    	else{
+	    		//alert("Error..");
+	    		$(this).parent().parent().find(".errors").show();
+	    		$("#user_group").focus();
+	    	}
 			
 	    }
 	    $scope.deleteUsergroup=function(){

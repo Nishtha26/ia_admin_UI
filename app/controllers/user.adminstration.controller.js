@@ -524,8 +524,10 @@ $scope.CreateUser =function(){
 /*Create Customer*/
 $scope.createCustomer =function(){
 	
-				
 	
+	
+
+//	groupSelector.val(userGroupID).trigger("change"); 
 	
 		customerName = $("#customer_name").val();
 		if(customerName==''){
@@ -537,7 +539,7 @@ $scope.createCustomer =function(){
 		promise = AppServices.createCustomerUserAdministration(customerName, token);
 		promise.then(
 			function(data){
-				customerList.push(customerName);
+				
 				if(data.errorDescription == "customer already exists"){
 					//$scope.errorMessage = true;
 						$rootScope.Message = data.errorDescription;
@@ -546,12 +548,15 @@ $scope.createCustomer =function(){
 				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				}
 				if(data.status=="success"){
-
+					
 				//	$("#customer_name").val("");
 				//	$( "#customer-8" ).val(customerName);
 //					$("#customer-8").select2().select2('val',customerName);
 						if($rootScope.role=="ROLE_OTADMIN"){
+						//	$("#customer-8").select2().select2('val',customerName);
+							$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
 							$("#customer-8").select2().select2('val',customerName);
+						//	$( "#customer-8" ).val(customerName);
 						}
 						else{
 							$("#customer-8").val(customerName);

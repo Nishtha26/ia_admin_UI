@@ -185,6 +185,33 @@ oApp.config = {
 			
 		]
 	},
+	activeJobListGridOptionsNew : {
+		paginationPageSizes: [1,25, 50, 75],
+		paginationPageSize: 25,
+		columnDefs: [
+			{ name: 'jobName',width:150,
+			displayName : 'Test Run Name'  },
+			{ name: 'jobDescription' ,width:150,
+		displayName : 'Test Run Description' },
+		{ displayName : 'Device Id', name: 'deviceId' ,width:150},
+			{ name: 'taskId' ,width:150},
+			{ name: 'jobPriority',width:150 },
+			{ name: 'jobCreatedBy' ,width:150},
+			{ name: 'jobCreateDate' ,width:150},
+			{ name: 'jobStartDate' ,width:150},
+			{ name: 'jobEndDate' ,width:150},
+			{ name: 'scheuleGroupId' ,width:150},
+			{ name: 'jobStartDateTime' ,width:150},
+		//	{ name: 'deviceGroupId' ,width:150},
+			{ name: 'recurrence' ,width:150},
+			{ name: 'isCompleted' ,width:150},
+			{ name: 'taskName' ,width:150},
+			{ name: 'runNum' ,width:150},
+		
+			
+			
+		]
+	},
 	activeDeviceGridOptions : {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
@@ -213,10 +240,31 @@ oApp.config = {
 		]
 	},
 	deviceListGridOptions : {
-		paginationPageSizes: [1,25, 50, 75],
-		paginationPageSize: 25,
+		//paginationPageSizes: [1,25, 50, 75],
+		//paginationPageSize: 25,
+		enableVerticalScrollbar :0,
 		columnDefs: [
-			{ name: 'deviceName' ,width:150},
+		         	//	 {headerName: "Device", field: "deviceId", width: 90},
+						{ name: 'deviceId' ,width:150},
+						{ name: 'deviceName',width:150 },
+						{ name: 'deviceType' ,width:150},
+						{ displayName: 'Carrier' ,width:150,field:'carrier'},
+						{ name: 'model' ,width:"20%"},
+						{ name: 'manufacturer' ,width:"10%"},
+						{displayName: 'IMSI' , field: 'imsi' ,width:150},
+						{ displayName: 'IMEI' , field: 'imei' ,width:150},
+						{ displayName: 'MSISDN' , name: 'msisdn' ,width:"15%"},
+						{ name: 'networkType' ,width:"15%"},
+						{ name: 'region' ,width:"15%"},
+						{ name: 'statusFlag' ,width:"15%"},
+						{ name: 'lastPing' ,width:150},
+						{ name: 'jobId' ,width:150},
+						{ name: 'jobName' ,width:150},
+						{ name: 'jobStatusTime' ,width:"10%" },
+						{ name: 'jobStartDate' ,width:"10%" },
+						{ name: 'jobEndDate' ,width:"10%" },
+				//	 {headerName: "workUrl", field: "workUrl", width: 100},
+		/*	{ name: 'deviceName' ,width:150},
 			{ name: 'workUrl',width:150 },
 			{ name: 'msisdn' ,width:150},
 			{ name: 'network' ,width:150},
@@ -234,7 +282,7 @@ oApp.config = {
 			{ name: 'loginDeviceTime' ,width:150},
 			{ name: 'deviceType' ,width:150},
 			{ name: 'networkType' ,width:150},
-			{ name: 'statusFlag' ,width:150},
+			{ name: 'statusFlag' ,width:150},*/
 		]
 	},
 			 mydeviceColumns : [
@@ -407,20 +455,20 @@ oApp.config = {
 		columnDefsneighborcellinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId",pinnedLeft:true},
+			{headerName: "autoId", name: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp"},
-			{headerName: "mcId", field: "mcId"},
-			{headerName: "mLac", field: "mLac"},
-			{headerName: "mNetworkType", field: "mNetworkType"},
-			{headerName: "mPsc", field: "mPsc"},
-			{headerName: "rssi", field: "rssi"},
-			{headerName: "apTime", field: "apTime"},
-			{headerName: "apDeviceLocalTime", field: "apDeviceLocalTime"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "apTimeZone", field: "apTimeZone"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{displayName: "Event Capture Time", field: "timeStamp",width: 180},
+			{displayName: "mcId", field: "mcId"},
+			{displayName: "mLac", field: "mLac"},
+			{displayName: "Network Type", field: "mNetworkType"},
+			{displayName: "mPsc Id", field: "mPsc"},
+			{displayName: "RSSI", field: "rssi"},
+			{displayName: "AP Time", field: "apTime"},
+			{displayName: "AP Device Local Time", field: "apDeviceLocalTime"},
+			{displayName: "UTC Time", field: "utcTime"},
+			{displayName: "AP Time Zone", field: "apTimeZone"},
+			{displayName: "TestCase Id", field: "testcaseId"}
 			
 		],
 		columnDefssms : [
@@ -1121,18 +1169,18 @@ quickrunGridOptions : {
 			{ headerName: 'Carrier' ,width:150,field:'carrier'},
 			{ name: 'model' ,width:"20%"},
 			{ name: 'manufacturer' ,width:"10%"},
-			{ name: 'imsi' ,width:150},
-			{ name: 'imei' ,width:150},
-			{ name: 'msisdn' ,width:"15%"},
+			{displayName:'IMSI', name: 'imsi' ,width:150},
+			{displayName:'IMEI', name: 'imei' ,width:150},
+			{displayName:'MSISDN', name: 'msisdn' ,width:"15%"},
 			{ name: 'networkType' ,width:"15%"},
 			{ name: 'region' ,width:"15%"},
 			{ name: 'statusFlag' ,width:"15%"},
-			{ name: 'lastPing' ,width:150},
+			{displayName: 'Last Ping', name: 'lastPingDateTime' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
 			{ name: 'jobId' ,width:150},
 			{ name: 'jobName' ,width:150},
-			{ name: 'jobStatusTime' ,width:"10%" },
-			{ name: 'jobStartDate' ,width:"10%" },
-			{ name: 'jobEndDate' ,width:"10%" },
+			{ displayName:'Job Status Time', name: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
+			{  displayName: 'Job Start Date Time' ,name: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+			{displayName: 'Job End Date Time' , name: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
 			
 			
 		]

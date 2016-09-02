@@ -258,14 +258,18 @@ oTech.service('GraphServices',
 var labels = [];
 var keys = [];
 keys[0]='';
+var toolTipText="";
 angular.forEach(data.execStatusList, function(val, key) 
 { 
 var row = [];
 row.push(key);
+
 angular.forEach(val, function(val1, key1) 
 {
 row.push(val1.completeStatus);
-row.push('Device Id: ' + val1.deviceId);
+toolTipText='Device Id: ' + val1.deviceId+" \nProgress : "+val1.completeStatus+"%";
+row.push(toolTipText);
+
 });
 labels.push(row);
 });
@@ -294,7 +298,17 @@ data.addRows(labels);
 
 var chart= new google.visualization.ColumnChart(document.getElementById('chart_div'));
 google.visualization.events.addListener(chart, 'error', errorHandler);
-chart.draw(data);
+var options_fullStacked = {
+//        legend: {position: 'right', maxLines: 1},
+        vAxis: {
+        	 viewWindowMode:'explicit',
+             viewWindow:{
+               max:0,
+               max:100
+             }
+        }
+      };
+chart.draw(data,options_fullStacked );
 
 
 

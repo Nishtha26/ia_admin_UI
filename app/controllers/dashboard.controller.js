@@ -20,9 +20,119 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$rootScope.menuData=null;
 		$rootScope.role=null;
 		$location.path('/login');
+		$scope.listTypeForPagination = "";
 	
 	}
-	 
+		/* pagination code  start ****************/
+		
+		var startLimit = 1;
+		$scope.itemsPerPage = 10;
+		$scope.currentPage = 0;
+		$scope.endLimit=$scope.itemsPerPage;
+		var allOfTheData;
+		$scope.totalRecords=0;
+
+		
+		$scope.range = function() {
+					var rangeSize = 6;
+					var ps = [];
+					var start;
+
+					start = $scope.currentPage;
+					if ( start > $scope.pageCount()-rangeSize ) {
+					start = $scope.pageCount()-rangeSize+1;
+					}
+
+					for (var i=start; i<start+rangeSize; i++) {
+					if(i>=0) 
+					ps.push(i);
+					}
+					return ps;
+				};
+
+				$scope.prevPage = function() {
+				if ($scope.currentPage > 0) {
+					$scope.setPagePrev($scope.currentPage-1);
+					//$scope.currentPage--;
+					}
+				};
+								
+				$scope.DisablePrevPage = function() {
+					return $scope.currentPage === 0 ? "disabled" : "";
+				 };
+				 
+				 $scope.pageCount = function() {
+					return Math.ceil($scope.totalRecords/$scope.itemsPerPage)-1;
+				};
+				
+				$scope.nextPage = function() {
+					if ($scope.currentPage < $scope.pageCount()) {
+					$scope.setPageNext($scope.currentPage+1);
+					//$scope.currentPage++;
+					}
+				};
+				
+				$scope.DisableNextPage = function() {
+					return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+				};
+				
+				 $scope.setPage = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*n);
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+				
+				 $scope.setPagePrev = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*n);
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+				 $scope.setPageNext = function(n) {
+					 $scope.dataLoading = true;
+					$scope.endLimit = ($scope.itemsPerPage*(n+1));
+					if($scope.endLimit > $scope.totalRecords){
+						var reminder = $scope.totalRecords % $scope.itemsPerPage;
+						if(reminder > 0){
+							$scope.endLimit = $scope.endLimit - ($scope.itemsPerPage-reminder);
+						}
+					}
+					 
+					startLimit = ($scope.itemsPerPage*(n));
+					$scope.createNewDatasource();
+					$scope.currentPage = n;
+				};
+
+				  
+		
+		/* pagination code  end ***********************/
+				 $scope.createNewDatasource = function() {
+						$scope.dataLoading = true;
+						if($scope.listTypeForPagination=="deviceList"){
+						$scope.deviceListGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
+						}
+						else if($scope.listTypeForPagination=="activeDeviceList"){
+							$scope.activeDeviceGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);	
+						}
+						$scope.dataLoading = false;
+					}
 	/*
 		To find Devices count
 	*/
@@ -44,7 +154,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		promise = AppServices.ActiveDeviceCount(userId, token);
 		promise.then(
 			function(data){
-				$scope.activeDeviceCount = data.activeDevicesList.length;
+				$scope.activeDeviceCount = data.activeCount;
 			},
 			function(err){
 				$scope.activeDeviceCount = 0;
@@ -198,7 +308,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		}).datepicker('update', new Date())
 		.on('changeDate', function(e)
 			{
-				var date = document.getElementById('dat').value;
+				 date = document.getElementById('dat').value;
 				$scope.getExecutiveStatusData(date)
 			});
 	});
@@ -207,6 +317,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.jobListGridOptions = oApp.config.jobListGridOptions;//For Jobs Grid View
 	
 	$scope.activeJobListGridOptions = oApp.config.activeJobListGridOptions;//For Active Jobs Grid View
+	$scope.activeJobListGridOptionsNew = oApp.config.activeJobListGridOptionsNew;//For Active Jobs Grid View new 
+	
 	
 	$scope.activeDeviceGridOptions = oApp.config.activeDeviceGridOptions;//For Active Devices Grid View
 	
@@ -244,9 +356,9 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		promise.then(
 			function(data){
 				$scope.ActiveJobList = data;
-				$scope.activeJobListGridOptions.data = data.activeJobList;
+				$scope.activeJobListGridOptionsNew.data = data.activeJobList;
 				$scope.dataLoading = false;
-				if($scope.activeJobListGridOptions.data.length <= 25){
+				if($scope.activeJobListGridOptionsNew.data.length <= 25){
 					$('.ui-grid-pager-panel').hide();
 				}
 				else
@@ -264,16 +376,21 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	$scope.showActiveDeviceList = function(){
 		$scope.dataLoading = true;
+		startLimit=1;
+		$scope.listTypeForPagination="activeDeviceList";
 		promise = AppServices.GetActiveDeviceData(userId, token);
 		promise.then(
 			function(data){
 				$scope.ActiveDeviceList = data;
-				$scope.activeDeviceGridOptions.data = data.activeDevicesList;
+				//$scope.activeDeviceGridOptions.data = data.activeDevicesList;
+				$scope.totalRecords = data.activeDevicesList;
+				allOfTheData = data.activeDevicesList;
+				$scope.activeDeviceGridOptions.data = data.activeDevicesList.slice( 0, $scope.itemsPerPage);
 				$scope.dataLoading = false;
-				if($scope.activeDeviceGridOptions.data.length <= 25)
+				/*if($scope.activeDeviceGridOptions.data.length <= 25)
 					$('.ui-grid-pager-panel').hide();
 				else
-					$('.ui-grid-pager-panel').show();
+					$('.ui-grid-pager-panel').show();*/
 			},
 			function(err){
 				
@@ -284,16 +401,21 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 
 	$scope.showDeviceList = function(){
 		$scope.dataLoading = true;
+		startLimit=1;
+		$scope.listTypeForPagination="deviceList";
 		promise = AppServices.GetDeviceData(userId, token);
 		promise.then(
 			function(data){
 				$scope.DeviceList = data;
-				$scope.deviceListGridOptions.data = data.devicesList;
+				$scope.totalRecords = data.deviceCount;
+				allOfTheData = data.devicesList;
+				$scope.deviceListGridOptions.data = data.devicesList.slice( 0, $scope.itemsPerPage);
+				//$scope.deviceListGridOptions.data = data.devicesList;
 				$scope.dataLoading = false;
-				if($scope.deviceListGridOptions.data.length <= 25)
+			/*	if($scope.deviceListGridOptions.data.length <= 25)
 					$('.ui-grid-pager-panel').hide();
 				else
-					$('.ui-grid-pager-panel').show();
+					$('.ui-grid-pager-panel').show();*/
 			},
 			function(err){
 				
@@ -331,7 +453,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.findActiveJobCount();
 	$scope.getDeviceAvailabilityData();
 	//$scope.getDeviceUsageData();
-//	$scope.getExecutiveStatusData(date);
+	$scope.getExecutiveStatusData(date);
 	$scope.getMapData();
 	
 	},60 * 1000);

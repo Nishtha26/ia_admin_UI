@@ -7,6 +7,7 @@ oTech.controller('deviceAvailabilityController',
 		$rootScope.role = sessionStorage.getItem("role");
 		$scope.loading = true;
 		$scope.dataLoading=false;
+		
 		$rootScope.slideContent();
 		window.onresize = function(event) {
 			$rootScope.slideContent();

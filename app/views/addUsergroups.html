@@ -75,7 +75,7 @@ color:rgb(35, 35, 35);
 										<div class="col-sm-6 user-pagination" align="center">
 								 <div class="clearfix"></div>
 								  <img class="loading" src="images/ajax-loader.gif" style="width: auto;height: auto;" ng-show="userDataLoading"  ></img>
-								<a  class="btn btn-info ot-btn" href="" class="table-AdministrationAdd" ng-click="showUsergroups()"><img src="images/device-plus-icon.png" alt="add"/> </a>
+								<a  class="btn btn-info ot-btn" href="" class="table-AdministrationAdd" ng-click="showUsergroups()"> Add </a>
 								<a  class="btn btn-info ot-btn" href=""  ng-click="assignUsersLoad()" ng-disabled="isAssignDisabled" ng-model="isAssignDisabled" >Assign Users </a>
 								 <button class="btn btn-info update-btn ot-btn" ng-click="UpdateUserGroupBtn()" ng-disabled="isUpdateDisabled" ng-model="isUpdateDisabled" >Edit</button>
 								  <button  class="btn btn-info delete-btn ot-btn" ng-click="DeleteUserGroupBtn()" ng-disabled="isDeleteDisabled" ng-model="isDeleteDisabled"  > Delete</button>
@@ -183,7 +183,7 @@ color:rgb(35, 35, 35);
 										  <button type="button" class="btn btn-info ot-btn" ng-click = "cancel()">Cancel</button>
 										</div>
 										<div class=" col-sm-10  text-center" ng-show="updateButton">
-										  <button type="button" class="btn btn-info ot-btn" ng-click="updateUserGroup()">Update</button>
+										  <button type="button" class="btn btn-info ot-btn" ng-click="updateUserGroup()" >Update</button>
 										  <button type="button" class="btn btn-info ot-btn" ng-click = "cancel()">Cancel</button>
 										</div>
 									  </div>

@@ -734,7 +734,7 @@ label{margin-left: 20px;}
 .ot-deviceData .dropdown-menu{padding:0px;}
 .ot-deviceData .device-menu{list-style-type:none;margin:0px;padding:0px;}
 .ot-deviceData .device-menu > li > a{padding:10px 20px;border-bottom:1px solid #ededed;display:block;}
-.ot-deviceData .device-header-section .dropdown.measurement {width:250px;}
+.ot-deviceData .device-header-section .dropdown.measurement {width:270px;}
 .ot-deviceData .device-header-section .dropdown .arrow-icon {margin-top: 11px;}
 .ot-deviceData .table tr td:first-child {text-align:center;}
 
@@ -1703,3 +1703,12 @@ div[contentEditable] {
 	padding: 1px 11px;
     color: #f9f8f6;
 }
+
+    .data-info_d-list{
+    line-height: 3;
+    margin-left: 1%;
+    }
+    .device_list-pag-margin{
+        margin-right: 14px;
+    margin-top: -17px;
+    }
