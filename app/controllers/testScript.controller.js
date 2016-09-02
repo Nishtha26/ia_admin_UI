@@ -905,7 +905,7 @@ function getTreeDataForCommands1(data){
 				$rootScope.Row = row.entity;
 
                
-							$location.path('/dashboard/testScript/EditTestplan/EditCommandParameters')
+							$location.path('/dashboard/testScript/EditCommandParameters')
 						
 				
 			}

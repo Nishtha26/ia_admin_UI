@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="css/templete/ui-grid.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/templete/app.css"/>
 <style>
 .ui-grid-sort-priority-number {
 font-size:0;
@@ -27,10 +29,18 @@ position: inherit;
   padding-top: 20px;
 }
  
-/*  .ui-grid-viewport{
- min-height: 100%;
-height: auto!important;
- } */
+ #jobtable .ui-grid-viewport{
+
+height: 110px!important;
+ } 
+#jobDeviceTable .ui-grid-viewport{
+
+height: 230px!important;
+ } 
+ .input_width{
+     width: 92%;
+    margin-left: 30px;
+ }
 
 </style>
 <div ng-include="'app/views/header.html'"></div>
@@ -44,31 +54,117 @@ height: auto!important;
 						<div class="orchestra_devices_table" style="background-color: #fff; width:100%;  ">
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<div ncy-breadcrumb></div>
+							<div style="width:100%;" ncy-breadcrumb></div>
 							
-								
-								 <div class="row">
-								  <div class="col-sm-12">
-									<table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="CreateTestRunVirtualDeviceOptions" ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ></table>
-								  </div>
-								</div>
-								<div class="row">
-								  <div class="col-sm-12">
-									<table class="table table-striped table-bordered table-hover grid" id="dataTables-example"  ui-grid="CreateTestRunRealDeviceOptions" ui-grid-selection ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ></table>
-								  </div>
-								</div>
-									
-									
-										
+									<form class="form-horizontal ng-pristine ng-valid">
+									<div class="row">
+										<div class="form-group" style="margin-bottom: 5px;">
+											<div class="col-md-4">
+												<label style="margin-left: 16px;">Schedule Start Date
+													& Time <span class="error-star"></span>
+												</label>
+											</div>
+											<div class="col-md-4">
+												<label style="margin-left: 24px;"> End Date: <span
+													class="error-star"></label>
+											</div>
+
+											<div class="col-md-4">
+												<label style="margin-left: 33px;"> Select Recurrence:
+													<span class="error-star">
+												</label>
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<div class="col-md-4">
+													<input class=" input_width form-control"
+														ng-model="Datendtime" style="background-color: #FFFFFF"
+														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
+														name="Datendtime" required />
+													<div ng-show="form.$submitted || form.Datendtime.$touched">
+														<div ng-show="form.Datendtime.$error.required"
+															style="color: red">**Please Select Start Date and
+															Time</div>
+													</div>
+													<i class="icon-place fa fa-calendar"></i>
+													
+												</div>
+												<div class="col-md-4">
+													<input class=" input_width form-control" ng-model="EndDate"
+														style="background-color: #FFFFFF" datetime-picker
+														date-format="yyyy-MM-dd" name="EndDate" required />
+													<div ng-show="form.$submitted || form.EndDate.$touched">
+														<div ng-show="form.EndDate.$error.required"
+															style="color: red">**Please Select End Time</div>
+													</div>
+													<i class="icon-place fa fa-calendar"></i>
+													
+												</div>
+
+												<div class="col-sm-4">
+													<select class="form-control input_width" id="sel2"
+														style="background-color: #FFFFFF;width: 87%!important;" ng-model="recurrence"
+														ng-change="change()" name="recurrence" required>
+														<option>None</option>
+														<option>Daily</option>
+
+													</select>
+													<div ng-show="form.$submitted || form.recurrence.$touched">
+														<div ng-show="form.recurrence.$error.required"
+															style="color: red">**Please Select Recurrence</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<table class="table-uigrid grid" id="jobtable"
+													style="height: 110px !important;"
+													ui-grid="CreateTestRunVirtualDeviceOptions"
+													ui-grid-selection ui-grid-cellNav ui-grid-resize-columns
+													ui-grid-move-columns ui-grid-pinning>
+													<img class="loading" src="images/loading.gif"
+														ng-show="dataLoading"></img>
+													<div class="loadingErr" ng-show="err">No Data Found</div>
+													<img class="loading" src="images/please_wait.gif"
+														ng-show="dataProcessing"></img>
+													<div class="loadingErr" ng-show="err">No Data Found</div>
+												</table>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<table class="table-uigrid grid" id="jobDeviceTable"
+													style="height: 300px !important;"
+													ui-grid="CreateTestRunRealDeviceOptions" ui-grid-selection
+													ui-grid-cellNav ui-grid-resize-columns ui-grid-move-columns
+													ui-grid-pinning>
+													<img class="loading" src="images/loading.gif"
+														ng-show="dataLoading"></img>
+													<div class="loadingErr" ng-show="err">No Data Found</div>
+													<img class="loading" src="images/please_wait.gif"
+														ng-show="dataProcessing"></img>
+													<div class="loadingErr" ng-show="err">No Data Found</div>
+												</table>
+											</div>
+										</div>
+
+										<div style="width:100%;height:50px;margin:0px 84%;margin-top: 30px; ">
+
+                                                <input type="submit" name="button" value="Start Now" class="btn btn-info"
+                                                       ng-click="startnow();"/>
+                                                <input type="submit" name="button" value="Schedule" class="btn btn-info"
+                                                       ng-click="schedule();"/>
+                                                <input type="submit" name="button" value="Stop" class="btn btn-info"
+                                                       ng-click="stop();"/>
+                                            </div>
+									</form>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-						  <div class="col-xs-6 col-sm-4"></div>
-						  <div class="col-xs-6 col-sm-4"><a class="btn btn-info" ng-click="testscript()">Back</a>	</div>
-						  <!-- Optional: clear the XS cols if their content doesn't match in height -->
-						  <div class="clearfix visible-xs-block"></div>
-						  <div class="col-xs-6 col-sm-4"> <a class="btn btn-info" ng-click="ScheduleNext()">Next</a></div>
 						</div>
 					</div>
 				  </div>
@@ -82,30 +178,6 @@ height: auto!important;
 	</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
  <div ng-include="'app/views/popUp.html'"></div>
-	<div class="footer-div">
+	<div class="footer-div footer-bottom-touch">
 	 <div ng-include="'app/views/footer.html'"></div>
 	 </div>
-<script>
-
- function setEqualHeight(e) {
-	// alert("sdf");
-     var t = e.height();
-   //  e.each(function () {
-         currentHeight = $( window ).height();
-       // alert("t:"+t+"currentHeight"+currentHeight)
-         if (currentHeight > t) {
-        	 
-             t = currentHeight
-         }
-   //  });
-     $(".devicedata-height").height(currentHeight-158);
-   
- }
- $(window).resize(function () {
-	
-	    setEqualHeight( $('.ui-grid-viewport') );
-	});
- $(document).ready(function () {
-     setEqualHeight($(".ui-grid-viewport"))
- })
-</script>

@@ -1712,3 +1712,8 @@ div[contentEditable] {
         margin-right: 14px;
     margin-top: -17px;
     }
+
+.ui-grid-progress-strip {
+	width: 92%;
+	margin: 7px 12px;
+}

@@ -150,7 +150,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     templateUrl: "app/views/testScript.html",
                     controller: 'testScriptController',
 					ncyBreadcrumb: {
-                        label: '{{testplan_name1}}'
+                        label: '{{TestplanName}}'
                     }
                 })
 				.state("initiateTestPlan", {
@@ -193,7 +193,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                         label: '{{TestplanName}}'
                     }
                 })
-                .state('EditTestplan.EditCommandParameters', {
+                .state('testScript.EditCommandParameters', {
                     url: '/EditCommandParameters',
                     views: {
                         "@": {
@@ -741,6 +741,32 @@ oTech.directive('contenteditable', function() {
                 elm.html(ctrl.$viewValue);
             };
 
+        }
+    };
+});
+
+oTech.directive('dateParser', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ctrl) {
+            var dateFormat = scope.format;
+
+            ctrl.$formatters.push(function (modelValue) {
+                return "01/01/1900";
+            });
+
+            ctrl.$parsers.unshift(function (viewValue) {
+                //convert string input into moment data model
+                var isValueADate = (viewValue === null) ? false : angular.isDate(viewValue);
+                var parsedMoment = (isValueADate) ? moment(viewValue) : moment(viewValue, dateFormat);
+
+                //toggle validity
+                ctrl.$setValidity(attrs.ngModel, parsedMoment.isValid());
+
+                //return model value
+                return parsedMoment.isValid() ? parsedMoment.toDate() : undefined;
+            });
         }
     };
 });

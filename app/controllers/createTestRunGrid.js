@@ -19,7 +19,7 @@ oTech.controller('createTestRunGridController',
         var TestRunSelectedData = $cookieStore.get('TestRunGridData');
         $scope.TestplanName = $cookieStore.get('TestplanName');
         var deviceId = $cookieStore.get('JobDeviceId');
-
+        $scope.timer;
         promise = testScriptService.getTestRunDependantData(token, TestRunName, userId);
         promise.then(
             function (data) {
@@ -90,24 +90,26 @@ oTech.controller('createTestRunGridController',
 //Create Test Run Virtual Device
         $scope.CreateTestRunVirtualDeviceOptions = {
             enableColumnResize: true,
-            enableFiltering: true,
+            //enableFiltering: true,
             enableRowHeaderSelection: false,
-            enableRowSelection: true,
+            //enableRowSelection: true,
             multiSelect: false,
 			enableVerticalScrollbar :0,
 			enableHorizontalScrollbar:0,
             columnDefs: [
-                {field: 'jobId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'jobName', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'jobId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader, width: '20%'},
+                {field: 'jobName', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader, width: '30%'},
                 {
                     field: 'jobDescription',
                     name: 'Test Run Description',
-                    headerCellClass: $scope.highlightFilteredHeader
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: '30%'
                 },
                 {
                     field: 'jobCreateDate',
                     name: 'Test Run Created Date',
-                    headerCellClass: $scope.highlightFilteredHeader
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: '20%'
                 },
             ]
         };
@@ -117,7 +119,7 @@ oTech.controller('createTestRunGridController',
             enableFiltering: true,
             enableRowHeaderSelection: false,
             enableRowSelection: true,
-            multiSelect: false,
+            multiSelect: true,
 			enableVerticalScrollbar :0,
 		    enableHorizontalScrollbar:0,
             columnDefs: [
@@ -142,7 +144,7 @@ oTech.controller('createTestRunGridController',
                 $cookieStore.put('TestRunDescription', row.entity.jobDescription);
                 var testrunID = row.entity.jobId;
                 $cookieStore.put('TestRunId', testrunID);
-//
+				Devices = [];
 
                 var testrunID = $cookieStore.get('TestRunId');
                 //Get devices service
@@ -152,7 +154,6 @@ oTech.controller('createTestRunGridController',
 						$scope.dataProcessing = false;
                         console.log(JSON.stringify(data.testRunDeviceData));
                         $scope.CreateTestRunRealDeviceOptions.data = data.testRunDeviceData;
-
 
                     },
                     function (err) {
@@ -178,6 +179,16 @@ oTech.controller('createTestRunGridController',
                 var selectdata = row.entity.testrunId;
                 console.log(JSON.stringify(row.entity));
                 $cookieStore.put('JobDeviceId', row.entity.deviceId);
+                
+                if(row.isSelected){
+					Devices.push(row.entity.deviceId);
+			}else{
+				for (var i = 0; i < Devices.length; i++){
+					if(Devices[i] == row.entity.deviceId){
+						Devices.splice(i, 1);
+					}
+				}
+			}
             });
 
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
@@ -225,6 +236,7 @@ oTech.controller('createTestRunGridController',
                 },
             ]
         };
+        
         $scope.ScheduleRealDevices = {
             enableFiltering: true,
             enableRowHeaderSelection: false,
@@ -234,17 +246,17 @@ oTech.controller('createTestRunGridController',
 			enableHorizontalScrollbar:0,
             columnDefs: [
                 {field: 'deviceId', name: 'Device ID', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'deviceName', name: 'Device Name', headerCellClass: $scope.highlightFilteredHeader,cellTemplate:'<div data-toggle="modal" data-target="#Device_List" ng-click="grid.appScope.showDeviceLogDetails({{row.entity.deviceId}});">'+'<a>{{row.entity.deviceName}}</a>' +'</div>'},
+                {field: 'deviceName', name: 'Device Name', headerCellClass: $scope.highlightFilteredHeader/*,cellTemplate:'<div data-toggle="modal" data-target="#Device_List" ng-click="grid.appScope.showDeviceLogDetails({{row.entity.deviceId}});">'+'<a>{{row.entity.deviceName}}</a>' +'</div>'*/},
                 {field: 'deviceModel', name: ' Device Model', headerCellClass: $scope.highlightFilteredHeader},
                 {field: 'deviceManufacturer', name: 'Device Manufacturer', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},
-				{field: 'jobStatusName', name: ' Job status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceStatus_List" ng-click="grid.appScope.showDeviceLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.jobStatusName}}</a>' +'</div>'},
+               /* {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},*/
+				{field: 'jobProgress', name: 'Job Monitoring', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b>{{row.entity.jobProgress}}%</b></uib-progressbar></div>'},
 				/*{field: 'action', name: 'Action', cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrl}}" target="_blank">{{row.entity.action}}</a>' +'</div>' },
 				{field: 'deviceLogLevel', name: ' Device Log Level', headerCellClass: $scope.highlightFilteredHeader},*/
 				{name:'Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
-                    '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 50%;height:75%;padding-top:1%" ng-model="actions"  ng-change="grid.appScope.takeAction(this,row)">'+
+                    '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 80%;height:75%;padding-top:1%" ng-model="actions"  ng-change="grid.appScope.takeAction(this,row)">'+
  					  '<option value="">Select Action</option>' +
- 					  '<option data-target="#DeviceStatus_List" value="DeviceStatus_List">Device Ack. Status</option>'+
+ 					  '<option data-target="#DeviceNotification_List" value="DeviceNotification_List">Device Ack. Status</option>'+
  					  '<option data-target="#Device_List" value="Device_List" >View Device Log</option>'+
  					  '<option value="{{row.entity.testplanId}}-Edit">View Shedule Info</option> '+
  					'</select>'},
@@ -310,7 +322,9 @@ oTech.controller('createTestRunGridController',
                         console.log(JSON.stringify(data.testRunDeviceData));
                         $scope.ScheduleRealDevices.data = data.testRunDeviceData;
 						$scope.dataProcessing = false;
-
+						$timeout(function () {
+	                    	$scope.refreshCallForJobProgress(userId, token, testrunID);
+	                    }, 3000);
                     },
                     function (err) {
                         console.log(err);
@@ -401,7 +415,7 @@ oTech.controller('createTestRunGridController',
                     function( row, col ) {
                     return '' + row.entity.message + '';
                   }},
-                {field: 'time', name: 'Time', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'time', name: 'Time', headerCellClass: $scope.highlightFilteredHeader, cellFilter: 'date:"yyyy-MM-dd hh:mm:ss UTC Z"'},
             ]
         };
 		
@@ -428,6 +442,9 @@ oTech.controller('createTestRunGridController',
 			function(data){
 				$scope.deviceLogList = data;
 				$scope.deviceLogListGridOptions.data = data.deviceLogList;
+				for(var i=0; i < $scope.deviceLogListGridOptions.data.length; i++ ){
+					$scope.deviceLogListGridOptions.data[i].time = new Date($scope.deviceLogListGridOptions.data[i].time);
+				}
 				$scope.dataLoadingPopup = false;
 				if($scope.deviceLogListGridOptions.data.length <= 25)
 					$('.ui-grid-pager-panel').hide();
@@ -510,10 +527,12 @@ oTech.controller('createTestRunGridController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
+            enableHorizontalScrollbar:0,
             columnDefs: [
                 {field: 'iaNotofocationStatusByName', name: 'Request Status', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'createdDate', name: 'Request Time', headerCellClass: $scope.highlightFilteredHeader},
-                {field: 'ackDate', name: 'Request Ack Time', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'createdDate', name: 'Request Time', headerCellClass: $scope.highlightFilteredHeader, cellFilter: 'date:"yyyy-MM-dd hh:mm:ss UTC Z"'},
+                {field: 'ackDate',type: 'date', name: 'Request Ack Time', headerCellClass: $scope.highlightFilteredHeader, 
+                    cellFilter: 'date:"yyyy-MM-dd hh:mm:ss UTC Z"'},
 				{field: 'retryCount', name: 'Retry Count', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };
@@ -526,6 +545,10 @@ oTech.controller('createTestRunGridController',
 			function(data){
 				$scope.deviceNotificationLogList = data;
 				$scope.deviceNotificationLogListGridOptions.data = data.deviceNotificationLogList;
+				for(var i=0; i < $scope.deviceNotificationLogListGridOptions.data.length; i++){
+					$scope.deviceNotificationLogListGridOptions.data[i].ackDate = new Date($scope.deviceNotificationLogListGridOptions.data[i].ackDate);
+					$scope.deviceNotificationLogListGridOptions.data[i].createdDate = new Date($scope.deviceNotificationLogListGridOptions.data[i].createdDate);
+				}
 				$scope.dataLoadingPopup = false;
 				if($scope.deviceNotificationLogListGridOptions.data.length <= 25)
 					$('.ui-grid-pager-panel').hide();
@@ -1013,10 +1036,306 @@ oTech.controller('createTestRunGridController',
 			$scope.showDeviceLogDetails(row.entity.deviceId);
 			$('#'+context.actions+'').modal('show');	
 				}
-			if(context.actions == ""){
-				
+			if(context.actions == "DeviceNotification_List"){
+				$scope.showDeviceNotificationLogDetails(row.entity.deviceId,row.entity.jobId);
+				$('#'+context.actions+'').modal('show');	
 			}
 	}
+	
+
+	// job progress interval call till 100% job compleate
+	$scope.isJobInProgress = false;
+					$scope.refreshCallForJobProgress = function(userId, token, testrunID) {
+
+						promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
+		                promise.then(
+		                    function (data) {
+
+		                        console.log(JSON.stringify(data.testRunDeviceData));
+		                        $scope.ScheduleRealDevices.data = data.testRunDeviceData;
+		                        for(var i =0; i < $scope.ScheduleRealDevices.data.length; i++){
+		                        	if($scope.ScheduleRealDevices.data[i].jobProgress < '100' && $scope.ScheduleRealDevices.data[i].jobProgress > '0'){
+		                        		$scope.isJobInProgress = true;
+		                        	}else{
+		                        		$scope.isJobInProgress = false;
+		                        	}
+		                        }
+		                    },
+		                    function (err) {
+		                        console.log(err);
+		                    }
+		                );
+						
+		                $scope.timer = $timeout(function() {
+							console.log("Timeout executed", Date.now());
+						}, 50000);
+
+		                $scope.timer.then(
+								function() {
+
+									if($scope.isJobInProgress){
+										$scope.refreshCallForJobProgress(userId, token, testrunID);
+										}else{
+											$timeout.cancel( $scope.timer );
+										}
+
+								}, function() {
+									console.log("Timer rejected!");
+								});
+					}
+					
+					
+					
+					  $scope.stop = function () {
+						  
+						  $(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
+				    		
+				    		if(Devices == undefined || testRunID == ""){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please Select JOB!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				    		
+				    		if(Devices.length <= 0){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please select device!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				            var ScheduleData = JSON.stringify({
+				                "jobId": testRunID,
+				                "jobName": $scope.testRunName,
+				                "jobDescription": $scope.jobTemplateDescription,
+				                "jobCreatedBy": userId,
+//				                    "jobStartDate": $scope.StartDate,
+				                "jobStartDateTime": $scope.Datendtime,
+				                "jobEndDate": $scope.EndDate,
+				                "recurrence": $scope.recurrence,
+				                "deviceList": Devices,
+				                "operation": "stop",
+				            })
+				            console.log(ScheduleData);
+				            promise = testScriptService.Schedule(ScheduleData, userId, token);
+				            promise.then(
+				                function (data) {
+				                    console.log('schedule');
+				                    console.log(data);
+				                    if (data.status == "error") {
+
+				                        $rootScope.Message = "Error occured during Test run stop ";
+
+				                        $('#MessageColor').css("color", "red");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                    if (data.status == "success") {
+
+				                        $rootScope.Message = " Test run stopped successfully ";
+
+				                        $('#MessageColor').css("color", "green");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                },
+				                function (err) {
+				                    console.log(err);
+				                    $scope.dataProcessing = false;
+				    				$(".btn-info").removeClass("disabled");
+				                }
+				            );
+				        }
+
+				        $scope.schedule = function () {
+				        	$(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
+				    		
+				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please Select JOB!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				    		
+				    		if(Devices.length <= 0){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please select device!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				            var ScheduleData = JSON.stringify({
+				                "jobId": $cookieStore.get('TestRunId'),
+				                "jobName": $cookieStore.get('TestRunName'),
+				                "jobDescription": $scope.jobTemplateDescription,
+				                "jobCreatedBy": userId,
+				                "jobStartDate": "2016-02-08",
+				                "jobStartDateTime": $scope.Datendtime,
+//				                    "jobStartDate": $scope.StartDate,
+				                "jobEndDate": $scope.EndDate,
+				                "recurrence": $scope.recurrence,
+				                "deviceList": Devices,
+				                "operation": "schedule",
+				            })
+				            console.log(ScheduleData);
+				            promise = testScriptService.Schedule(ScheduleData, userId, token);
+				            promise.then(
+				                function (data) {
+				                    console.log(JSON.stringify(data));
+
+				                    if (data.status == "error") {
+
+				                        $rootScope.Message = data.errorDescription;
+
+				                        $('#MessageColor').css("color", "red");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                    if (data.status == "success") {
+
+				                        $rootScope.Message = "Test Run has been Scheduled Successfully";
+
+				                        $('#MessageColor').css("color", "green");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                },
+				                function (err) {
+				                    console.log(err);
+				                    $scope.dataProcessing = false;
+				    				$(".btn-info").removeClass("disabled");
+				                }
+				            );
+				        }
+
+				        $scope.startnow = function () {
+				        	
+				        	$(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
+				    		
+				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please Select JOB!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				    		
+				    		if(Devices.length <= 0){
+				    						$scope.dataProcessing = false;
+				                            $rootScope.Message = " Please select device!! ";
+				                            $('#MessageColor').css("color", "red");
+				                            $('#MessagePopUp').modal('show');
+				                            $timeout(function () {
+				                                $('#MessagePopUp').modal('hide');
+				                            }, 2000);
+				    						$(".btn-info").removeClass("disabled");
+				    						$('.treeSection').css("display", "block");
+				    						return false;
+				    		}
+				        	
+				            var ScheduleData = JSON.stringify({
+				                "jobId": $cookieStore.get('TestRunId'),
+				                // "jobName": $scope.testRunName,
+				                "jobDescription": $scope.jobTemplateDescription,
+				                "jobCreatedBy": userId,
+				                // "jobStartDateTime": $scope.Datendtime,
+//				                    "jobStartDate": $scope.StartDate,
+//				                 "jobEndDate": $scope.EndDate,
+//				                 "recurrence": $scope.recurrence,
+				                "deviceList": Devices,
+				                "operation": "start_now",
+				            })
+				            console.log(ScheduleData);
+				            promise = testScriptService.Schedule(ScheduleData, userId, token);
+				            promise.then(
+				                function (data) {
+
+				                    if (data.status == "error") {
+
+				                        $rootScope.Message = data.errorDescription;
+
+				                        $('#MessageColor').css("color", "red");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                    if (data.status == "success") {
+
+				                        $rootScope.Message = " Test run started successfully ";
+
+				                        $('#MessageColor').css("color", "green");
+				                        $('#MessagePopUp').modal('show');
+				                        $timeout(function () {
+				                            $('#MessagePopUp').modal('hide');
+				                        }, 2000);
+				                        
+				                        $scope.dataProcessing = false;
+				        				$(".btn-info").removeClass("disabled");
+				                    }
+
+				                },
+				                function (err) {
+				                	$scope.dataProcessing = false;
+				    				$(".btn-info").removeClass("disabled");
+				                    console.log(err);
+				                }
+				            );
+				        }
 	
 	
 	
