@@ -1093,8 +1093,12 @@ oTech.controller('createTestRunGridController',
 					
 					  $scope.stop = function () {
 						  
-						  $(".btn-info").addClass("disabled");
-				    		$scope.dataProcessing = true;
+				    		
+				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "") || ($scope.EndDate == undefined || $scope.EndDate == "")){
+	    						$scope.form.$submitted = true;
+	    						$(".btn-info").removeClass("disabled");
+	    						return false;
+				    		}
 				    		
 				    		if(Devices == undefined || testRunID == ""){
 				    						$scope.dataProcessing = false;
@@ -1133,6 +1137,9 @@ oTech.controller('createTestRunGridController',
 				                "deviceList": Devices,
 				                "operation": "stop",
 				            })
+				            
+				            	  $(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
 				            console.log(ScheduleData);
 				            promise = testScriptService.Schedule(ScheduleData, userId, token);
 				            promise.then(
@@ -1175,8 +1182,13 @@ oTech.controller('createTestRunGridController',
 				        }
 
 				        $scope.schedule = function () {
-				        	$(".btn-info").addClass("disabled");
-				    		$scope.dataProcessing = true;
+				        	
+				    		
+				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "") || ($scope.EndDate == undefined || $scope.EndDate == "")){
+	    						$scope.form.$submitted = true;
+	    						$(".btn-info").removeClass("disabled");
+	    						return false;
+				    		}
 				    		
 				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
 				    						$scope.dataProcessing = false;
@@ -1216,6 +1228,9 @@ oTech.controller('createTestRunGridController',
 				                "deviceList": Devices,
 				                "operation": "schedule",
 				            })
+				            
+				            $(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
 				            console.log(ScheduleData);
 				            promise = testScriptService.Schedule(ScheduleData, userId, token);
 				            promise.then(
@@ -1259,8 +1274,12 @@ oTech.controller('createTestRunGridController',
 
 				        $scope.startnow = function () {
 				        	
-				        	$(".btn-info").addClass("disabled");
-				    		$scope.dataProcessing = true;
+				    		
+				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "") || ($scope.EndDate == undefined || $scope.EndDate == "")){
+	    						$scope.form.$submitted = true;
+	    						$(".btn-info").removeClass("disabled");
+	    						return false;
+				    		}
 				    		
 				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
 				    						$scope.dataProcessing = false;
@@ -1300,6 +1319,9 @@ oTech.controller('createTestRunGridController',
 				                "deviceList": Devices,
 				                "operation": "start_now",
 				            })
+				            
+				            $(".btn-info").addClass("disabled");
+				    		$scope.dataProcessing = true;
 				            console.log(ScheduleData);
 				            promise = testScriptService.Schedule(ScheduleData, userId, token);
 				            promise.then(
