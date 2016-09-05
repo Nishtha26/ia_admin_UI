@@ -82,10 +82,10 @@ height: 230px!important;
 													<input class=" input_width form-control"
 														ng-model="Datendtime" style="background-color: #FFFFFF"
 														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
-														name="Datendtime" required />
+														name="Datendtime"  />
 													<div ng-show="form.$submitted || form.Datendtime.$touched">
 														<div ng-show="form.Datendtime.$error.required"
-															style="color: red">**Please Select Start Date and
+															style="color: red">*Please Select Start Date and
 															Time</div>
 													</div>
 													<i class="icon-place fa fa-calendar"></i>
@@ -94,10 +94,10 @@ height: 230px!important;
 												<div class="col-md-4">
 													<input class=" input_width form-control" ng-model="EndDate"
 														style="background-color: #FFFFFF" datetime-picker
-														date-format="yyyy-MM-dd" name="EndDate" required />
+														date-format="yyyy-MM-dd" name="EndDate" />
 													<div ng-show="form.$submitted || form.EndDate.$touched">
 														<div ng-show="form.EndDate.$error.required"
-															style="color: red">**Please Select End Time</div>
+															style="color: red">*Please Select End Time</div>
 													</div>
 													<i class="icon-place fa fa-calendar"></i>
 													

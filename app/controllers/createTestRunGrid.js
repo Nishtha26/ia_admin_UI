@@ -1184,14 +1184,23 @@ oTech.controller('createTestRunGridController',
 				        $scope.schedule = function () {
 				        	
 				    		
-				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "") || ($scope.EndDate == undefined || $scope.EndDate == "")){
-	    						$scope.form.$submitted = true;
+				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "")){
+				    			$scope.datentimeError = true;
+				    			$scope.endDateError = false;
 	    						$(".btn-info").removeClass("disabled");
 	    						return false;
 				    		}
 				    		
+				    		if( ($scope.EndDate == undefined || $scope.EndDate == "")){
+				    			$scope.endDateError = true;
+				    			$scope.datentimeError = false;
+	    						$(".btn-info").removeClass("disabled");
+	    						return false;
+				    		}
 				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
 				    						$scope.dataProcessing = false;
+				    						$scope.datentimeError = false;
+							    			$scope.endDateError = false;
 				                            $rootScope.Message = " Please Select JOB!! ";
 				                            $('#MessageColor').css("color", "red");
 				                            $('#MessagePopUp').modal('show');
@@ -1205,6 +1214,8 @@ oTech.controller('createTestRunGridController',
 				    		
 				    		if(Devices.length <= 0){
 				    						$scope.dataProcessing = false;
+				    						$scope.datentimeError = false;
+							    			$scope.endDateError = false;
 				                            $rootScope.Message = " Please select device!! ";
 				                            $('#MessageColor').css("color", "red");
 				                            $('#MessagePopUp').modal('show');
@@ -1275,11 +1286,7 @@ oTech.controller('createTestRunGridController',
 				        $scope.startnow = function () {
 				        	
 				    		
-				    		if(($scope.Datendtime == undefined || $scope.Datendtime == "") || ($scope.EndDate == undefined || $scope.EndDate == "")){
-	    						$scope.form.$submitted = true;
-	    						$(".btn-info").removeClass("disabled");
-	    						return false;
-				    		}
+				    		
 				    		
 				    		if(Devices == undefined || $cookieStore.get('TestRunId') == ""){
 				    						$scope.dataProcessing = false;
