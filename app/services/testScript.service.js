@@ -839,6 +839,32 @@ oTech.service('testScriptService',
 			    });	
 			return deferred.promise; 
 		}
+		
+		service.showJobStatusOnDeviceList = function (userId,token,deviceId,testRunId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testRun/jobStatus",
+				type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'testRunId': testRunId,
+					'deviceId': deviceId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve($.parseJSON(data.jobStatusList));
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 
         return service;
     }])

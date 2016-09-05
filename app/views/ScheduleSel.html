@@ -163,6 +163,67 @@ height: 150px!important;
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="jobStatus" role="dialog" data-backdrop="static" data-keyboard="false">								
+	<div class="modal-dialog" style="width:900px;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#337ab7;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" style="color:#FFFFFF;">{{header}}</h4>
+			</div>
+			<div class="modal-body" >
+			<div class="row">
+                                               <div class="col-md-12 margin_top">
+                                                    <table class="table" >
+                                                        <thead>
+                                                        <tr>
+                                                           <th>Test Run Id</th>
+															<th>Device Id</th>
+															<th>Distinct Command Size</th>
+                                                            <th>Scheduled Commands Count</th>
+                                                            <th>Test Run Name</th>
+															<th>Test Run Start Date</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:normal;">
+                                                        <tr >
+															 <td >
+                                                               {{testRunID}}
+                                                            </td>
+															 <td >
+                                                               {{deviceID}}
+                                                            </td>
+															 <td >
+                                                                {{distinctCommandSize}}
+                                                            </td>
+                                                            <td >
+                                                                {{scheduledCommandsCount}}
+                                                            </td>
+															<td >
+                                                               {{testRunName}}
+                                                            </td>
+															<td >
+                                                                {{jobStartDate}}
+                                                            </td>
+															
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                       </div>
+				<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+				<p style="text-align:center" ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No Data Found</p>
+				<div ui-grid="jobStatusList" ui-grid-pagination class="grid" ng-show="commandInfoList.length > 0 && !dataLoadingPopup" style="margin:0 auto;width:800px;"></div>
+				
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="showDeviceNotificationLogDetailsRefresh(this);">refresh</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div> -->
+		</div>
+	</div>
+</div>
 <div ng-include="'app/views/favouritesPopUp.html'"></div>
  <div ng-include="'app/views/popUp.html'"></div>
 	<div class="footer-div footer-bottom-touch">

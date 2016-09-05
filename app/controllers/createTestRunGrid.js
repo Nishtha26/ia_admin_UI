@@ -258,7 +258,7 @@ oTech.controller('createTestRunGridController',
  					  '<option value="">Select Action</option>' +
  					  '<option data-target="#DeviceNotification_List" value="DeviceNotification_List">Device Ack. Status</option>'+
  					  '<option data-target="#Device_List" value="Device_List" >View Device Log</option>'+
- 					  '<option value="{{row.entity.testplanId}}-Edit">View Shedule Info</option> '+
+ 					  '<option data-target="#jobStatus" value="jobStatus">View Shedule Info</option> '+
  					'</select>'},
 				/*{field: 'notificationType', name: ' Device Notification Type', headerCellClass: $scope.highlightFilteredHeader},
 				{field: 'runNumDesc', name: ' Command Counts', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrlForRunNum}}" target="_blank">{{row.entity.runNumDesc}}</a>' +'</div>'},*/
@@ -1040,6 +1040,11 @@ oTech.controller('createTestRunGridController',
 				$scope.showDeviceNotificationLogDetails(row.entity.deviceId,row.entity.jobId);
 				$('#'+context.actions+'').modal('show');	
 			}
+			
+			if(context.actions == "jobStatus"){
+				$scope.showJobStatusOnDeviceList(row.entity.deviceId,row.entity.jobId);
+				$('#'+context.actions+'').modal('show');	
+			}
 	}
 	
 
@@ -1336,6 +1341,60 @@ oTech.controller('createTestRunGridController',
 				                }
 				            );
 				        }
+				        
+				        
+				        
+				        $scope.showJobStatusOnDeviceList = function(deviceId,jobId){
+				    		$scope.dataLoadingPopup = true;
+				    	 $scope.header = "Job Status"
+				    	// $scope.jobStatusList = [];
+				    		promise = testScriptService.showJobStatusOnDeviceList(userId,token,deviceId,jobId);
+				    		promise.then(
+				    			function(data){
+				    				$scope.commandInfoList = $.parseJSON(data.commandInfo);
+				    				$scope.testRunID = data.jobId;
+				    				$scope.deviceID = data.deviceID;
+				    				$scope.distinctCommandSize = data.distinctCommandSize;
+				    				$scope.scheduledCommandsCount = data.scheduledCommandsCount;
+				    				$scope.testRunName = data.jobName;
+				    				$scope.jobStartDate = data.jobStartDate;
+				    				$scope.jobStatusList.data = $scope.commandInfoList;
+				    				$scope.dataLoadingPopup = false;
+				    				if($scope.jobStatusList.data.length <= 25)
+				    					$('.ui-grid-pager-panel').hide();
+				    				else
+				    					$('.ui-grid-pager-panel').show();
+				    			},
+				    			function(err){
+				    				$scope.dataLoadingPopup = false;
+				    			}
+				    		);
+				    	}
+				        
+				        $scope.jobStatusList = {
+				                enableFiltering: true,
+				                enableRowHeaderSelection: false,
+				                enableRowSelection: true,
+				                multiSelect: false,
+				                enableHorizontalScrollbar:0,
+				                columnDefs: [
+				                    {field: 'scheduleDateAndTime', name: 'Schedule Date & Time', headerCellClass: $scope.highlightFilteredHeader},
+				                   // {field: 'commandId', name: 'CommandId', headerCellClass: $scope.highlightFilteredHeader},
+				                    {field: 'name', name: 'name', headerCellClass: $scope.highlightFilteredHeader},
+				    				{field: 'actionDuration', name: 'Action Duration', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
+				                        function( row, col ) {
+				                        return '' + row.entity.actionDuration + '';
+				                      }},
+				    				{field: 'testCaseId', name: 'Test Case Id', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
+				                        function( row, col ) {
+				                        return '' + row.entity.testCaseId + '';
+				                      }},
+				    				{field: 'parameters', name: 'Parameters', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
+				                        function( row, col ) {
+				                        return '' + row.entity.parameters + '';
+				                      }},
+				                ]
+				            };
 	
 	
 	
