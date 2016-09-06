@@ -132,8 +132,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://dev.orchestratec.net:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://dev.orchestratec.net:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://test.orchestratec.net:8080/IAPORTAL/',
+	MEASUREMENT_URL :'http://test.orchestratec.net:8080/IAPORTAL/rest/measurement/',
 	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
     REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
@@ -333,7 +333,10 @@ oApp.config = {
 			{headerName: "autoId", field: "autoId", width: 150, visible:false},
 			{headerName: "deviceId", field: "deviceId", width: 100, pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 120},
-			{headerName: "timeStamp", field: "timeStamp", width: 90},
+			{headerName: "timeStamp", field: "timeStamp", width: 90, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.timeStamp + '';
+              }},
 			{headerName: "apnId", field: "apnId", width: 110},
 			{headerName: "apnName", field: "apnName", width: 110},
 			{headerName: "apnNumeric", field: "apnNumeric", width: 100},
@@ -359,8 +362,14 @@ oApp.config = {
 			{headerName: "apnCarrierEnabled", field: "apnCarrierEnabled", width: 150},
 			{headerName: "apnBearer", field: "apnBearer", width: 100},
 			{headerName: "apnIfPreferredApn", field: "apnIfPreferredApn", width: 150},
-			{headerName: "testcaseId", field: "testcaseId", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100}
+			{headerName: "testcaseId", field: "testcaseId", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.testcaseId + '';
+              }},
+			{headerName: "sessionId", field: "sessionId", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.sessionId + '';
+              }}
 		],
 		columnDefsapplications : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -368,7 +377,10 @@ oApp.config = {
 			{headerName: "deviceId", field: "deviceId", width: 150, pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   
-			{headerName: "timeStamp", field: "timeStamp", width: 90},
+			{headerName: "timeStamp", field: "timeStamp", width: 90, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.timeStamp + '';
+              }},
 		 
 			{headerName: "appName", field: "appName", width: 110},
 			{headerName: "appRss", field: "appRss", width: 100},
@@ -381,15 +393,30 @@ oApp.config = {
 			{headerName: "appRunStatus", field: "appRunStatus", width: 100},
 			{headerName: "appPss", field: "appPss", width: 100},
 			{headerName: "appUss", field: "appUss", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100},
+			{headerName: "sessionId", field: "sessionId", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.sessionId + '';
+              }},
+			{headerName: "testcaseId", field: "testcaseId", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.testcaseId + '';
+              }},
 			{headerName: "appUsageTime", field: "appUsageTime", width: 100},
-			{headerName: "utcTime", field: "utcTime", width: 100},
+			{headerName: "utcTime", field: "utcTime", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.utcTime + '';
+              }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone", width: 150},
 			{headerName: "appState", field: "appState", width: 100},
 			{headerName: "numberThread", field: "numberThread", width: 100},
-			{headerName: "appFbground", field: "appFbground", width: 100},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 150}
+			{headerName: "appFbground", field: "appFbground", width: 100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.appFbground + '';
+              }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", width: 150, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.deviceLocalTime + '';
+              }}
 		],
 		columnDefsipaddress : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -397,41 +424,98 @@ oApp.config = {
 			{headerName: "autoId", field: "autoId" ,pinnedLeft:true },
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId" },
-			{headerName: "timeStamp", field: "timeStamp" },
-			{headerName: "ipPublicV4", field: "ipPublicV4", },
+			{headerName: "timeStamp", field: "timeStamp" , cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.timeStamp + '';
+              }},
+			{headerName: "ipPublicV4", field: "ipPublicV4", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.ipPublicV4 + '';
+              }},
 			{headerName: "dupId", field: "dupId"},
-			{headerName: "ipPrivateV4", field: "ipPrivateV4"},
-			{headerName: "ipPublicV6", field: "ipPublicV6"},
-			{headerName: "ipPrivateV6", field: "ipPrivateV6"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "ipPrivateV4", field: "ipPrivateV4", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.ipPrivateV4 + '';
+              }},
+			{headerName: "ipPublicV6", field: "ipPublicV6", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.ipPublicV6 + '';
+              }},
+			{headerName: "ipPrivateV6", field: "ipPrivateV6", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.ipPrivateV6 + '';
+              }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.testcaseId + '';
+              }}
 		],
 		columnDefsl1log : [
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
-			{headerName: "testcaseId", field: "testcaseId"},
-		   {headerName: "jobStartTime", field: "jobStartTime"},
-			{headerName: "jobStartTimeMs", field: "jobStartTimeMs"},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }},
+		   {headerName: "jobStartTime", field: "jobStartTime", cellTooltip: 
+               function( row, col ) {
+               return '' + row.entity.jobStartTime + '';
+             }},
+			{headerName: "jobStartTimeMs", field: "jobStartTimeMs", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.jobStartTimeMs + '';
+	             }},
 			{headerName: "pci", field: "pci"},
-			{headerName: "cellId", field: "cellId"},
-			{headerName: "cellName", field: "cellName"},
-			{headerName: "channelBandWidth", field: "channelBandWidth"},
-			{headerName: "fileUrl", field: "fileUrl"}
+			{headerName: "cellId", field: "cellId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.cellId + '';
+	             }},
+			{headerName: "cellName", field: "cellName", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.cellName + '';
+	             }},
+			{headerName: "channelBandWidth", field: "channelBandWidth", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.channelBandWidth + '';
+	             }},
+			{headerName: "fileUrl", field: "fileUrl", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.fileUrl + '';
+	             }}
 		],
 		columnDefslocation : [
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
-		   {headerName: "timeStamp", field: "timeStamp"},
-			{headerName: "locationProvider", field: "locationProvider"},
-			{headerName: "collectAltitude", field: "collectAltitude"},
-			{headerName: "sessionId", field: "sessionId"},
+		   {headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+               function( row, col ) {
+               return '' + row.entity.timeStamp + '';
+             }},
+			{headerName: "locationProvider", field: "locationProvider", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.locationProvider + '';
+	             }},
+			{headerName: "collectAltitude", field: "collectAltitude", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.collectAltitude + '';
+	             }},
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
 			{headerName: "xParam", field: "xParam"},
 			{headerName: "yParam", field: "yParam"},
-			{headerName: "testcaseId", field: "testcaseId"},
-			{headerName: "lastLocationTime", field: "lastLocationTime"}
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }},
+			{headerName: "lastLocationTime", field: "lastLocationTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.lastLocationTime + '';
+	             }}
 		],
 		columnDefsmms : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -439,18 +523,48 @@ oApp.config = {
 			{headerName: "mmsId", field: "mmsId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
-			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
-			{headerName: "timeZone", field: "timeZone"},
-			{headerName: "mmsTime", field: "mmsTime"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
-			{headerName: "mmsText", field: "mmsText"},
+			{headerName: "callingPartyNumber", field: "callingPartyNumber", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.callingPartyNumber + '';
+	             }},
+			{headerName: "calledPartyNumber", field: "calledPartyNumber", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.calledPartyNumber + '';
+	             }},
+			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeZone + '';
+	             }},
+			{headerName: "mmsTime", field: "mmsTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mmsTime + '';
+	             }},
+			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceLocalTime + '';
+	             }},
+			{headerName: "mmsText", field: "mmsText", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mmsText + '';
+	             }},
 			{headerName: "mmsFileSize", field: "mmsFileSize"},
-			{headerName: "mmsFileName", field: "mmsFileName"},
+			{headerName: "mmsFileName", field: "mmsFileName", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mmsFileName + '';
+	             }},
 			{headerName: "sendStatus", field: "sendStatus"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 		],
 		columnDefsneighborcellinfo : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -458,17 +572,47 @@ oApp.config = {
 			{headerName: "autoId", name: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
-			{displayName: "Event Capture Time", field: "timeStamp",width: 180},
+			{displayName: "Event Capture Time", field: "timeStamp",width: 180, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeStamp + '';
+	             }},
 			{displayName: "mcId", field: "mcId"},
-			{displayName: "mLac", field: "mLac"},
-			{displayName: "Network Type", field: "mNetworkType"},
-			{displayName: "mPsc Id", field: "mPsc"},
-			{displayName: "RSSI", field: "rssi"},
-			{displayName: "AP Time", field: "apTime"},
-			{displayName: "AP Device Local Time", field: "apDeviceLocalTime"},
-			{displayName: "UTC Time", field: "utcTime"},
-			{displayName: "AP Time Zone", field: "apTimeZone"},
-			{displayName: "TestCase Id", field: "testcaseId"}
+			{displayName: "mLac", field: "mLac", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mLac + '';
+	             }},
+			{displayName: "Network Type", field: "mNetworkType", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mNetworkType + '';
+	             }},
+			{displayName: "mPsc Id", field: "mPsc", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mPsc + '';
+	             }},
+			{displayName: "RSSI", field: "rssi", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.rssi + '';
+	             }},
+			{displayName: "AP Time", field: "apTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apTime + '';
+	             }},
+			{displayName: "AP Device Local Time", field: "apDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apDeviceLocalTime + '';
+	             }},
+			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{displayName: "AP Time Zone", field: "apTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apTimeZone + '';
+	             }},
+			{displayName: "TestCase Id", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefssms : [
@@ -480,14 +624,32 @@ oApp.config = {
 			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
 			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
 			{headerName: "callingPartySMSC", field: "callingPartySMSC"},
-			{headerName: "timeZone", field: "timeZone"},
-			{headerName: "smsTime", field: "smsTime"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeZone + '';
+	             }},
+			{headerName: "smsTime", field: "smsTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.smsTime + '';
+	             }},
+			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceLocalTime + '';
+	             }},
 			{headerName: "textMsg", field: "textMsg"},
 			{headerName: "sendStatus", field: "sendStatus"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefstcpperformance : [
@@ -496,20 +658,35 @@ oApp.config = {
 			{headerName: "autoId", field: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp"},
-			{headerName: "deviceTime", field: "deviceTime"},
+			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeStamp + '';
+	             }},
+			{headerName: "deviceTime", field: "deviceTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceTime + '';
+	             }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
 			{headerName: "nodeType", field: "nodeType"},
-			{headerName: "serverIp", field: "serverIp"},
+			{headerName: "serverIp", field: "serverIp", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.serverIp + '';
+	             }},
 			{headerName: "serverPort", field: "serverPort"},
-			{headerName: "clientIp", field: "clientIp"},
+			{headerName: "clientIp", field: "clientIp", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clientIp + '';
+	             }},
 			{headerName: "clientPort", field: "clientPort"},
 			{headerName: "timeDuration", field: "timeDuration"},
 			{headerName: "dataTransfered", field: "dataTransfered"},
 			{headerName: "bandWidth", field: "bandWidth"},
 			{headerName: "tcpWindowSize", field: "tcpWindowSize"},
 			{headerName: "networkType", field: "networkType"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefsudpperformance : [
@@ -518,13 +695,25 @@ oApp.config = {
 			{headerName: "autoId", field: "autoId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp"},
-			{headerName: "deviceTime", field: "deviceTime"},
+			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeStamp + '';
+	             }},
+			{headerName: "deviceTime", field: "deviceTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceTime + '';
+	             }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
 			{headerName: "nodeType", field: "nodeType"},
-			{headerName: "serverIP", field: "serverIP"},
+			{headerName: "serverIP", field: "serverIP", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.serverIP + '';
+	             }},
 			{headerName: "serverPort", field: "serverPort"},
-			{headerName: "clientIP", field: "clientIP"},
+			{headerName: "clientIP", field: "clientIP", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clientIP + '';
+	             }},
 			{headerName: "clientPort", field: "clientPort"},
 			{headerName: "timeDuration", field: "timeDuration"},
 			{headerName: "dataTransfered", field: "dataTransfered"},
@@ -535,7 +724,10 @@ oApp.config = {
 			{headerName: "dataGramLost", field: "dataGramLost"},
 			{headerName: "dataGramTotal", field: "dataGramTotal"},
 			{headerName: "networkType", field: "networkType"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefsvoice : [
@@ -547,13 +739,22 @@ oApp.config = {
 			{headerName: "callingPartyNumber", field: "callingPartyNumber"},
 			{headerName: "calledPartyNumber", field: "calledPartyNumber"},
 			{headerName: "voiceCallTime", field: "voiceCallTime"},
-			{headerName: "voiceCallDeviceLocalTime", field: "voiceCallDeviceLocalTime"},
-			{headerName: "voiceCallUTCTime", field: "voiceCallUTCTime"},
+			{headerName: "voiceCallDeviceLocalTime", field: "voiceCallDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.voiceCallDeviceLocalTime + '';
+	             }},
+			{headerName: "voiceCallUTCTime", field: "voiceCallUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.voiceCallUTCTime + '';
+	             }},
 			{headerName: "voiceCallTimeZone", field: "voiceCallTimeZone"},
 			{headerName: "eventType", field: "eventType"},
 			{headerName: "sessionId", field: "sessionId"},
 			{headerName: "voiceCallFile", field: "voiceCallFile"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 		],
 		columnDefswifiinfo : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -561,24 +762,60 @@ oApp.config = {
 			{headerName: "autoId", field: "autoId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp"},
-			{headerName: "wifiApn", field: "wifiApn"},
-			{headerName: "wifiSsId", field: "wifiSsId"},
-			{headerName: "wifiIpAddress", field: "wifiIpAddress"},
-			{headerName: "wifiMacAddress", field: "wifiMacAddress"},
-			{headerName: "wifiBssId", field: "wifiBssId"},
+			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeStamp + '';
+	             }},
+			{headerName: "wifiApn", field: "wifiApn", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiApn + '';
+	             }},
+			{headerName: "wifiSsId", field: "wifiSsId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiSsId + '';
+	             }},
+			{headerName: "wifiIpAddress", field: "wifiIpAddress", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiIpAddress + '';
+	             }},
+			{headerName: "wifiMacAddress", field: "wifiMacAddress", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiMacAddress + '';
+	             }},
+			{headerName: "wifiBssId", field: "wifiBssId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiBssId + '';
+	             }},
 			{headerName: "wifiSignalLevel", field: "wifiSignalLevel"},
 			{headerName: "wifiFrequency", field: "wifiFrequency"},
-			{headerName: "wifiSecurity", field: "wifiSecurity"},
+			{headerName: "wifiSecurity", field: "wifiSecurity", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiSecurity + '';
+	             }},
 			{headerName: "wifiStatus", field: "wifiStatus"},
-			{headerName: "apTime", field: "apTime"},
-			{headerName: "apDeviceLocationTime", field: "apDeviceLocationTime"},
-			{headerName: "apUtcTime", field: "apUtcTime"},
-			{headerName: "apTimeZone", field: "apTimeZone"},
+			{headerName: "apTime", field: "apTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apTime + '';
+	             }},
+			{headerName: "apDeviceLocationTime", field: "apDeviceLocationTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apDeviceLocationTime + '';
+	             }},
+			{headerName: "apUtcTime", field: "apUtcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apUtcTime + '';
+	             }},
+			{headerName: "apTimeZone", field: "apTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.apTimeZone + '';
+	             }},
 			{headerName: "wifiLinkSpeed", field: "wifiLinkSpeed"},
 			{headerName: "wifiApDistance", field: "wifiApDistance"},
 			{headerName: "wifiSnr", field: "wifiSnr"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 		],
 		columnDefswifitrafficinfo : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -590,11 +827,26 @@ oApp.config = {
 			{headerName: "finalConnectedState", field: "finalConnectedState"},
 			{headerName: "timeTakenToConnect", field: "timeTakenToConnect"},
 			{headerName: "timeTakenToDisconnect", field: "timeTakenToDisconnect"},
-			{headerName: "wifiInfoTime", field: "wifiInfoTime"},
-			{headerName: "timeZone", field: "timeZone"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "wifiInfoTime", field: "wifiInfoTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.wifiInfoTime + '';
+	             }},
+			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeZone + '';
+	             }},
+			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceLocalTime + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefsattach : [
@@ -603,11 +855,20 @@ oApp.config = {
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
 		   {headerName: "sessionSeqNumber", field: "sessionSeqNumber"},
-			{headerName: "sessionTime", field: "sessionTime"},
+			{headerName: "sessionTime", field: "sessionTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionTime + '';
+	             }},
 			{headerName: "sessionDeviceLocalTime", field: "sessionDeviceLocalTime"},
-			{headerName: "sessionUTCTime", field: "sessionUTCTime"},
+			{headerName: "sessionUTCTime", field: "sessionUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionUTCTime + '';
+	             }},
 			{headerName: "sessionTimeZone", field: "sessionTimeZone"},
-			{headerName: "sessionType", field: "sessionType"},
+			{headerName: "sessionType", field: "sessionType", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionType + '';
+	             }},
 			{headerName: "connectTechnology", field: "connectTechnology"},
 			{headerName: "sessionStatus", field: "sessionStatus"},
 			{headerName: "serviceStateStatus", field: "serviceStateStatus"},
@@ -615,8 +876,14 @@ oApp.config = {
 			{headerName: "sessionVolumn", field: "sessionVolumn"},
 			{headerName: "sessionLatency", field: "sessionLatency"},
 			{headerName: "sessionCauseCode", field: "sessionCauseCode"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefslatency : [
@@ -625,10 +892,22 @@ oApp.config = {
 			{headerName: "deviceId", field: "deviceId", width: 150 ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId", width: 90},
 		   {headerName: "pingSeqNumber", field: "pingSeqNumber", width: 90},
-			{headerName: "pingStartTime", field: "pingStartTime", width: 110},
-			{headerName: "pingDeviceLocalTime", field: "pingDeviceLocalTime", width: 150},
-			{headerName: "pingUTCTime", field: "pingUTCTime", width: 100},
-			{headerName: "pingTimeZone", field: "pingTimeZone", width: 100},
+			{headerName: "pingStartTime", field: "pingStartTime", width: 110, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.pingStartTime + '';
+	             }},
+			{headerName: "pingDeviceLocalTime", field: "pingDeviceLocalTime", width: 150, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.pingDeviceLocalTime + '';
+	             }},
+			{headerName: "pingUTCTime", field: "pingUTCTime", width: 100, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.pingUTCTime + '';
+	             }},
+			{headerName: "pingTimeZone", field: "pingTimeZone", width: 100, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.pingTimeZone + '';
+	             }},
 			{headerName: "mobileNetworkType", field: "mobileNetworkType", width: 150},
 			{headerName: "ipAddress", field: "ipAddress", width: 100},
 			{headerName: "noPktsTxed", field: "noPktsTxed", width: 100},
@@ -640,8 +919,14 @@ oApp.config = {
 			{headerName: "rttMdev", field: "rttMdev", width: 100},
 			{headerName: "rttUnit", field: "rttUnit", width: 100},
 			{headerName: "wholeStr", field: "wholeStr", width: 100},
-			{headerName: "sessionId", field: "sessionId", width: 100},
-			{headerName: "testcaseId", field: "testcaseId", width: 100}
+			{headerName: "sessionId", field: "sessionId", width: 100, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", width: 100, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefsupload : [
@@ -650,18 +935,36 @@ oApp.config = {
 			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "uploadSeqNo", field: "uploadSeqNo"},
-			{headerName: "uploadTime", field: "uploadTime"},
+			{headerName: "uploadTime", field: "uploadTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.uploadTime + '';
+	             }},
 			{headerName: "uploadTimeZone", field: "uploadTimeZone"},
-			{headerName: "uploadDeviceLocalTime", field: "uploadDeviceLocalTime"},
-			{headerName: "uploadUTCTime", field: "uploadUTCTime"},
+			{headerName: "uploadDeviceLocalTime", field: "uploadDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.uploadDeviceLocalTime + '';
+	             }},
+			{headerName: "uploadUTCTime", field: "uploadUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.uploadUTCTime + '';
+	             }},
 			{headerName: "uploadType", field: "uploadType"},
 			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
 			{headerName: "uploadProcess", field: "uploadProcess"},
-			{headerName: "uploadFileUrl", field: "uploadFileUrl"},
+			{headerName: "uploadFileUrl", field: "uploadFileUrl", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.uploadFileUrl + '';
+	             }},
 			{headerName: "uploadedFileSize", field: "uploadedFileSize"},
 			{headerName: "uploadedTotalFileSize", field: "uploadedTotalFileSize"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 		],
 		columnDefsemail : [
 			// this row just shows the row index, doesn't use any data from the row
@@ -669,34 +972,85 @@ oApp.config = {
 			{headerName: "emailId", field: "emailId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "jobId", field: "jobId"},
-			{headerName: "sendingFrom", field: "sendingFrom"},
-			{headerName: "sendingTo", field: "sendingTo"},
-			{headerName: "emailTime", field: "emailTime"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
+			{headerName: "sendingFrom", field: "sendingFrom", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sendingFrom + '';
+	             }},
+			{headerName: "sendingTo", field: "sendingTo", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sendingTo + '';
+	             }},
+			{headerName: "emailTime", field: "emailTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.emailTime + '';
+	             }},
+			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceLocalTime + '';
+	             }},
 			{headerName: "timeZone", field: "timeZone"},
-			{headerName: "emailSubject", field: "emailSubject"},
-			{headerName: "emailMsg", field: "emailMsg"},
-			{headerName: "emailHasAttachment", field: "emailHasAttachment"},
-			{headerName: "attachmentSize", field: "attachmentSize"},
-			{headerName: "sendStatus", field: "sendStatus"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "emailSubject", field: "emailSubject", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.emailSubject + '';
+	             }},
+			{headerName: "emailMsg", field: "emailMsg", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.emailMsg + '';
+	             }},
+			{headerName: "emailHasAttachment", field: "emailHasAttachment", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.emailHasAttachment + '';
+	             }},
+			{headerName: "attachmentSize", field: "attachmentSize", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.attachmentSize + '';
+	             }},
+			{headerName: "sendStatus", field: "sendStatus", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sendStatus + '';
+	             }},
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 		],
 		columnDefsdatausage : [
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
-		   {headerName: "timeStamp", field: "timeStamp"},
+		   {headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+               function( row, col ) {
+               return '' + row.entity.timeStamp + '';
+             }},
 			{headerName: "intfName", field: "intfName"},
 			{headerName: "intfOutband", field: "intfOutband"},
 			{headerName: "intfInband", field: "intfInband"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"},
-			{headerName: "ipAddress", field: "ipAddress"},
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }},
+			{headerName: "ipAddress", field: "ipAddress", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.ipAddress + '';
+	             }},
 			{headerName: "bytes", field: "bytes"},
-			{headerName: "sentOrReceive", field: "sentOrReceive"}
+			{headerName: "sentOrReceive", field: "sentOrReceive", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sentOrReceive + '';
+	             }}
 			
 		],
 		columnDefsvideo : [
@@ -705,19 +1059,43 @@ oApp.config = {
 			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "mplayerSeqNo", field: "mplayerSeqNo"},
-			{headerName: "mplayerTime", field: "mplayerTime"},
-			{headerName: "mplayerTimeZone", field: "mplayerTimeZone"},
-			{headerName: "mplayerDeviceLocalTime", field: "mplayerDeviceLocalTime"},
-			{headerName: "mplayerUTCTime", field: "mplayerUTCTime"},
+			{headerName: "mplayerTime", field: "mplayerTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerTime + '';
+	             }},
+			{headerName: "mplayerTimeZone", field: "mplayerTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerTimeZone + '';
+	             }},
+			{headerName: "mplayerDeviceLocalTime", field: "mplayerDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerDeviceLocalTime + '';
+	             }},
+			{headerName: "mplayerUTCTime", field: "mplayerUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerUTCTime + '';
+	             }},
 			{headerName: "mplayerType", field: "mplayerType"},
 			{headerName: "mobileNetWorkType", field: "mobileNetWorkType"},
 			{headerName: "mplayerProgress", field: "mplayerProgress"},
-			{headerName: "mplayerFileUrl", field: "mplayerFileUrl"},
+			{headerName: "mplayerFileUrl", field: "mplayerFileUrl", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerFileUrl + '';
+	             }},
 			{headerName: "mplayerBufferProgress", field: "mplayerBufferProgress"},
-			{headerName: "mplayerTotalFileDuration", field: "mplayerTotalFileDuration"},
+			{headerName: "mplayerTotalFileDuration", field: "mplayerTotalFileDuration", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerTotalFileDuration + '';
+	             }},
 			{headerName: "mplayerCodeInfo", field: "mplayerCodeInfo"},
-			{headerName: "mplayerSessionId", field: "mplayerSessionId"},
-			{headerName: "testCaseId", field: "testCaseId"}
+			{headerName: "mplayerSessionId", field: "mplayerSessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.mplayerSessionId + '';
+	             }},
+			{headerName: "testCaseId", field: "testCaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 		],
 		columnDefsclickscreenimage : [
@@ -731,17 +1109,44 @@ oApp.config = {
 			
 			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
 			{headerName: "jobId", field: "jobId"},
-		   {headerName: "time", field: "time"},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime"},
-			{headerName: "utcTime", field: "utcTime"},
-			{headerName: "timeZone", field: "timeZone"},
-			{headerName: "localAudioFilePath", field: "localAudioFilePath"},
-			{headerName: "startTime", field: "startTime"},
+		   {headerName: "time", field: "time", cellTooltip: 
+               function( row, col ) {
+               return '' + row.entity.time + '';
+             }},
+			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceLocalTime + '';
+	             }},
+			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.utcTime + '';
+	             }},
+			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.timeZone + '';
+	             }},
+			{headerName: "localAudioFilePath", field: "localAudioFilePath", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.localAudioFilePath + '';
+	             }},
+			{headerName: "startTime", field: "startTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.startTime + '';
+	             }},
 			{headerName: "endTime", field: "endTime"},
-			{headerName: "ifPlayer", field: "ifPlayer"},
-			{headerName: "testcaseId", field: "testcaseId"},
+			{headerName: "ifPlayer", field: "ifPlayer", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.ifPlayer + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }},
 			{headerName: "ftpServer", field: "ftpServer"},
-			{headerName: "ftpServerWaveFilePath", field: "ftpServerWaveFilePath"},
+			{headerName: "ftpServerWaveFilePath", field: "ftpServerWaveFilePath", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.ftpServerWaveFilePath + '';
+	             }},
 			{headerName: "audioAnalyzed", field: "audioAnalyzed"}
 			
 			
@@ -752,18 +1157,39 @@ oApp.config = {
 			{headerName: "jobId", field: "jobId" ,pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId"},
 		   {headerName: "downloadSeqNo", field: "downloadSeqNo"},
-			{headerName: "downloadTime", field: "downloadTime"},
-			{headerName: "downloadTimeZone", field: "downloadTimeZone"},
-			{headerName: "downloadDeviceLocalTime", field: "downloadDeviceLocalTime"},
-			{headerName: "downloadUTCTime", field: "downloadUTCTime"},
+			{headerName: "downloadTime", field: "downloadTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.downloadTime + '';
+	             }},
+			{headerName: "downloadTimeZone", field: "downloadTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.downloadTimeZone + '';
+	             }},
+			{headerName: "downloadDeviceLocalTime", field: "downloadDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.downloadDeviceLocalTime + '';
+	             }},
+			{headerName: "downloadUTCTime", field: "downloadUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.downloadUTCTime + '';
+	             }},
 			{headerName: "downloadType", field: "downloadType"},
 			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
 			{headerName: "downloadProgress", field: "downloadProgress"},
-			{headerName: "downloadFileUrl", field: "downloadFileUrl"},
+			{headerName: "downloadFileUrl", field: "downloadFileUrl", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.downloadFileUrl + '';
+	             }},
 			{headerName: "downloadedFileSize", field: "downloadedFileSize"},
 			{headerName: "downloadTotalFileSize", field: "downloadTotalFileSize"},
-			{headerName: "sessionId", field: "sessionId"},
-			{headerName: "testcaseId", field: "testcaseId"}
+			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.sessionId + '';
+	             }},
+			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.testcaseId + '';
+	             }}
 			
 			
 		],
@@ -778,16 +1204,46 @@ oApp.config = {
 		         			{displayName: "MCC", field: "mcc"},
 		         			{displayName: "MNC", field: "mnc"},
 		         			{displayName: "RAN Type", field: "networkType"},
-		         			{displayName: "Local Time", field: "deviceLocalTime"},
-		         			{displayName: "Time From Epoch In Millis", field: "time"},
-		         			{displayName: "Time Zone", field: "timeZone"},
-		         			{displayName: "Signal Strength Rssi (dBm)", field: "signalStrenghRssi"},
-		         			{displayName: "Quality Ber", field: "gsmRxQualityBer"},
-		         			{displayName: "Cdma Evdo", field: "cdmaEcIo"},
-		         			{displayName: "LTE PCI", field: "ltePci"},
-		         			{displayName: "LTE RSRQ", field: "lteRsrq"},
-		         			{displayName: "LTE RSSNR", field: "lteRssnr"},
-		         			{displayName: "TestCaseId", field: "testcaseId"}
+		         			{displayName: "Local Time", field: "deviceLocalTime", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.deviceLocalTime + '';
+			     	             }},
+		         			{displayName: "Time From Epoch In Millis", field: "time", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.time + '';
+			     	             }},
+		         			{displayName: "Time Zone", field: "timeZone", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.timeZone + '';
+			     	             }},
+		         			{displayName: "Signal Strength Rssi (dBm)", field: "signalStrenghRssi", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.signalStrenghRssi + '';
+			     	             }},
+		         			{displayName: "Quality Ber", field: "gsmRxQualityBer", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.gsmRxQualityBer + '';
+			     	             }},
+		         			{displayName: "Cdma Evdo", field: "cdmaEcIo", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.cdmaEcIo + '';
+			     	             }},
+		         			{displayName: "LTE PCI", field: "ltePci", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.ltePci + '';
+			     	             }},
+		         			{displayName: "LTE RSRQ", field: "lteRsrq", cellTooltip: 
+			     	               function( row, col ) {
+			     	               return '' + row.entity.lteRsrq + '';
+			     	             }},
+		         			{displayName: "LTE RSSNR", field: "lteRssnr", cellTooltip: 
+		     	               function( row, col ) {
+		     	               return '' + row.entity.lteRssnr + '';
+		     	             }},
+		         			{displayName: "TestCaseId", field: "testcaseId", cellTooltip: 
+		     	               function( row, col ) {
+		     	               return '' + row.entity.testcaseId + '';
+		     	             }}
 		         		],
 		columnDefsclickscreenxy : [
 			// this row just shows the row index, doesn't use any data from the row
