@@ -67,14 +67,7 @@ oTech.controller('userAdminstrationController',
 		var allOfTheData;
 		$scope.totalRecords=0;
 
-	/*	$(document).ready(function(){
 
-			   $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
-			    $("#customer-8").select2({
-			    });
-			  
-			  });//script
-			});*/
 		
 		$scope.range = function() {
 					var rangeSize = 6;
@@ -191,7 +184,7 @@ oTech.controller('userAdminstrationController',
 					$scope.createCompanyId = true;
 		             $scope.tableCompanyId = false;
 					 $scope.status =true;
-					$("#firstname").focus();
+					
 					$('#email-8').attr('readonly', false);
 					$("#username-7").attr('readonly', false);
 					$("#username-7").val("") ;
@@ -211,11 +204,13 @@ oTech.controller('userAdminstrationController',
 						$("#customer-8").val("");	
 					}
 					$scope.selectedUserGroup=[];
+					$("#firstname").focus();
 				//	$(".errors").hide();
 			 }
 			 $('.table-emailAdd').click(function(){
 				
 				$('.emailAdd').slideToggle();
+				$("#customer_name").focus();
 			 });
 			 
 			 
@@ -580,6 +575,7 @@ $scope.closerCreatePop =function(){
 	$("#customer_name").val("");
 	$('.emailAdd').slideToggle();
 }	
+
 
 $scope.userGroupList =function(){
 	

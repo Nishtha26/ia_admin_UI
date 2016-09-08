@@ -189,11 +189,13 @@ oApp.config = {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
 		columnDefs: [
-			{ name: 'jobName',width:150,
+		         	{ field: 'jobId',width:150,
+		    			displayName : 'Test Run Id'  },
+			{ field: 'jobName',width:150,
 			displayName : 'Test Run Name'  },
-			{ name: 'jobDescription' ,width:150,
+			{ field: 'jobDescription' ,width:150,
 		displayName : 'Test Run Description' },
-		{ displayName : 'Device Id', name: 'deviceId' ,width:150},
+		{ displayName : 'Device Id', field: 'deviceId' ,width:150},
 			{ name: 'taskId' ,width:150},
 			{ name: 'jobPriority',width:150 },
 			{ name: 'jobCreatedBy' ,width:150},
@@ -208,7 +210,7 @@ oApp.config = {
 			{ name: 'taskName' ,width:150},
 			{ name: 'runNum' ,width:150},
 		
-			
+
 			
 		]
 	},
@@ -216,10 +218,11 @@ oApp.config = {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
 		columnDefs: [
+{displayName:'deviceId', field: 'deviceId' ,width:150},
 			{ name: 'deviceName' ,width:150},
-			{ name: 'userId' ,width:150},
+			{ displayName:'Carrier', field: 'carrier' ,width:150},
 			{ name: 'customerName' ,width:150},
-			{ name: 'workUrl',width:150 },
+//			{ name: 'workUrl',width:150 },
 			{ name: 'msisdn' ,width:150},
 			{ name: 'network' ,width:150},
 			{ name: 'region',width:150 },
@@ -228,21 +231,23 @@ oApp.config = {
 			{ name: 'imei' ,width:150},
 			{ name: 'imsi' ,width:150},
 			{ name: 'iacVersion' ,width:150},
-			{ name: 'logLevel' ,width:150},
-			{ name: 'notificationType' ,width:150},
-			{ name: 'lastPing' ,width:150},
+		/*	{ name: 'logLevel' ,width:150},*/
+			/*{ name: 'notificationType' ,width:150},*/
+			{ displayName:'lastPing', field: 'lastPingDateTime' ,width:150},
 			
-			{ name: 'loginTimestamp' ,width:150},
+	/*		{ name: 'loginTimestamp' ,width:150},
 			{ name: 'loginDeviceTime' ,width:150},
-			{ name: 'deviceType' ,width:150},
+			{ name: 'deviceType' ,width:150},*/
 			{ name: 'networkType' ,width:150},
 			{ name: 'statusFlag' ,width:150},
+			
 		]
 	},
 	deviceListGridOptions : {
 		//paginationPageSizes: [1,25, 50, 75],
 		//paginationPageSize: 25,
 		enableVerticalScrollbar :0,
+		enableHorizontalScrollbar : 1,
 		columnDefs: [
 		         	//	 {headerName: "Device", field: "deviceId", width: 90},
 						{ name: 'deviceId' ,width:150},
@@ -260,9 +265,9 @@ oApp.config = {
 						{ name: 'lastPing' ,width:150},
 						{ name: 'jobId' ,width:150},
 						{ name: 'jobName' ,width:150},
-						{ name: 'jobStatusTime' ,width:"10%" },
-						{ name: 'jobStartDate' ,width:"10%" },
-						{ name: 'jobEndDate' ,width:"10%" },
+						{ name: 'jobStatusTime' ,width:150 },
+						{ name: 'jobStartDate' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"},
+						{ name: 'jobEndDate' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
 				//	 {headerName: "workUrl", field: "workUrl", width: 100},
 		/*	{ name: 'deviceName' ,width:150},
 			{ name: 'workUrl',width:150 },
@@ -1553,7 +1558,7 @@ quickrunGridOptions : {
 			{ name: 'deviceId' ,width:150},
 			{ name: 'deviceType' ,width:150},
 			{ name: 'networkType' ,width:150},
-			{ name: 'statusFlag' ,width:150},
+			{ displayName: 'Device Status',field:'deviceStatus' ,width:150},
 		]
 	},
 	virtualDeviceGridOptions : {

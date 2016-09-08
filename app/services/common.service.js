@@ -1669,6 +1669,26 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
-		
+		service.GetDeviceDataForDashboard = function(userId, token){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/deviceDataForDashboard",
+				    type: "POST",
+					data : {token:token, userId:userId},
+					headers :{
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+				    success: function(data)
+				    {
+						
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
 	return service; 		
 }])

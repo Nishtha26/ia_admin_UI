@@ -131,6 +131,9 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 						else if($scope.listTypeForPagination=="activeDeviceList"){
 							$scope.activeDeviceGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);	
 						}
+						else if($scope.listTypeForPagination=="activeJobList"){
+							$scope.activeJobListGridOptionsNew.data = allOfTheData.slice( startLimit, $scope.endLimit);	
+						}
 						$scope.dataLoading = false;
 					}
 	/*
@@ -294,7 +297,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.findScheduledJobCount();
 	$scope.findActiveJobCount();
 	$scope.getDashBoardMenu();
-	$scope.getFavouriteReports();
+//	$scope.getFavouriteReports();
 	$scope.getDeviceUsageData();
 	$scope.getDeviceAvailabilityData();
 	var date = $rootScope.getTodayDate();
@@ -352,17 +355,22 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	*/
 	$scope.showActiveJobList = function(){
 		$scope.dataLoading = true;
+		startLimit=1;
+		$scope.listTypeForPagination="activeJobList"
 		promise = AppServices.GetActiveJobListData(userId, token);
 		promise.then(
 			function(data){
 				$scope.ActiveJobList = data;
-				$scope.activeJobListGridOptionsNew.data = data.activeJobList;
+				$scope.totalRecords = data.activeJobList.length;
+				allOfTheData = data.activeJobList;
+				$scope.activeJobListGridOptionsNew.data = data.activeJobList.slice( 0, $scope.itemsPerPage);
+//				$scope.activeJobListGridOptionsNew.data = data.activeJobList;
 				$scope.dataLoading = false;
-				if($scope.activeJobListGridOptionsNew.data.length <= 25){
+		/*		if($scope.activeJobListGridOptionsNew.data.length <= 25){
 					$('.ui-grid-pager-panel').hide();
 				}
 				else
-					$('.ui-grid-pager-panel').show();
+					$('.ui-grid-pager-panel').show();*/
 			},
 			function(err){
 				
@@ -383,7 +391,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 			function(data){
 				$scope.ActiveDeviceList = data;
 				//$scope.activeDeviceGridOptions.data = data.activeDevicesList;
-				$scope.totalRecords = data.activeDevicesList;
+				$scope.totalRecords = data.activeDevicesList.length;
 				allOfTheData = data.activeDevicesList;
 				$scope.activeDeviceGridOptions.data = data.activeDevicesList.slice( 0, $scope.itemsPerPage);
 				$scope.dataLoading = false;
@@ -403,7 +411,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.dataLoading = true;
 		startLimit=1;
 		$scope.listTypeForPagination="deviceList";
-		promise = AppServices.GetDeviceData(userId, token);
+		promise = AppServices.GetDeviceDataForDashboard(userId, token);
 		promise.then(
 			function(data){
 				$scope.DeviceList = data;

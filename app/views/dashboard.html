@@ -140,7 +140,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="favorite_reports boxshdw  magin-btm-20">
+		<!-- 	<div class="favorite_reports boxshdw  magin-btm-20">
 				
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -170,7 +170,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 
 		</div>
@@ -197,13 +197,13 @@
 										<div   class="pagination-div device_list-pag-margin">
 										  <ul class="pagination">
 											<li ng-class="DisablePrevPage()">
-											  <a href ng-click="prevPage()">« Prev</a>
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
 											</li>
 											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 											  <a href="">{{n+1}}</a>
 											</li>
 											<li ng-class="DisableNextPage()">
-											  <a href ng-click="nextPage()">Next »</a>
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
 											</li>
 										  </ul>
 										</div>
@@ -213,9 +213,9 @@
 				</div>
 	
 			</div>
-			<div class="modal-footer">
+			<!-- <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
@@ -242,13 +242,13 @@
 										<div   class="pagination-div device_list-pag-margin">
 										  <ul class="pagination">
 											<li ng-class="DisablePrevPage()">
-											  <a href ng-click="prevPage()">« Prev</a>
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
 											</li>
 											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 											  <a href="">{{n+1}}</a>
 											</li>
 											<li ng-class="DisableNextPage()">
-											  <a href ng-click="nextPage()">Next »</a>
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
 											</li>
 										  </ul>
 										</div>
@@ -258,9 +258,9 @@
 				</div>
 				
 			</div>
-			<div class="modal-footer">
+		<!-- 	<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
@@ -278,9 +278,9 @@
 				<div ui-grid="jobListGridOptions" ui-grid-pagination class="grid" ng-show="JobList.scheduledJobCount > 0 && !dataLoading" style="margin:0 auto;width:800px;"></div>
 				
 			</div>
-			<div class="modal-footer">
+		<!-- 	<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
@@ -295,14 +295,35 @@
 			<div class="modal-body">
 				<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoading"></img>
 				<p style="text-align:center" ng-show="ActiveJobList.activeJobCount <= 0 && !dataLoading">No Data Found</p>
-				<div ui-grid="activeJobListGridOptions" ui-grid-pagination class="grid" ng-show="ActiveJobList.activeJobCount > 0 && !dataLoading" style="margin:0 auto;width:800px;"></div>
+				<div ui-grid="activeJobListGridOptionsNew"  class="grid" ng-show="ActiveJobList.activeJobCount > 0 && !dataLoading" style="margin:0 auto;width:800px;">
+						<div class="row">
+							<div class="col-sm-6">
+									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
+									</div>
+<div class="col-sm-6">
+										<div   class="pagination-div device_list-pag-margin">
+										  <ul class="pagination">
+											<li ng-class="DisablePrevPage()">
+											  <a href ng-click="prevPage()">&#60;&#60; Prev</a>
+											</li>
+											<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+											  <a href="">{{n+1}}</a>
+											</li>
+											<li ng-class="DisableNextPage()">
+											  <a href ng-click="nextPage()">Next &#62;&#62;</a>
+											</li>
+										  </ul>
+										</div>
+									</div>	
 				
+	</div>
+	</div>
 			</div>
-			<div class="modal-footer">
+		<!-- 	<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
-<div ng-include="'app/views/favouritesPopUp.html'"></div>
-<div ng-include="'app/views/popUp.html'"></div>
+<!-- <div ng-include="'app/views/favouritesPopUp.html'"></div>
+<div ng-include="'app/views/popUp.html'"></div> -->

@@ -114,19 +114,19 @@ display: inline!important;
 										  <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="firstname">Name <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
-											  <input type="text" class="form-control name-inline font-adduser" name="firstname" id="firstname" placeholder="First Name"  ng-model="firstname" required ng-minlength="6" />
+											  <input type="text" class="form-control name-inline font-adduser" name="firstname" id="firstname" placeholder="First Name"  ng-model="firstname" required ng-minlength="2" />
 											  <input type="text" class="form-control name-inline font-adduser" id="lastname" placeholder="Last Name" style="float:right;">
 												<span ng-show="myForm.firstname.$error.required" class="errors"> **Firstname field should not be empty</span>
-												<span ng-show="myForm.firstname.$error.minlength" class="errors"> **Firstname field length should not be less than 6 characters</span>
+												<span ng-show="myForm.firstname.$error.minlength" class="errors"> **Firstname field length should not be less than 2 characters</span>
 											</div>
 										  </div>
 										  	  <div class="form-group">
 											<label class="control-label col-sm-3 col-md-2 col-lg-2" for="username-7">Username <span class="error-star"></span></label>
 											<div class="col-sm-7 col-md-8 col-lg-8">
 									<input type="text" class="form-control" name="userName" id="username-7" ng-model="userName"
-				 					 required ng-minlength="6">
+				 					 required ng-minlength="2">
 											  <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors"> **User name field should not be empty</span>
-												<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors"> **User name field length should not be less than 6 characters</span>
+												<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors"> **User name field length should not be less than 2 characters</span>
 											</div>
 										  </div>
 										  <!-- ng-class="{'has-error':!myForm.password.$valid}" -->
@@ -180,8 +180,8 @@ display: inline!important;
 										  </div>
 										   <div class="form-group" >
 											<div class="" ng-show="{{role == 'ROLE_OTADMIN'}}">
-												
-												<a href="" class=" table-emailAdd  " data-toggle="dropdown" ng-show="addCustomer" style="right: 98px;">
+												<!-- data-toggle="dropdown"  -->
+												<a id="add-Customer" href="" class="table-emailAdd" ng-show="addCustomer" style="right:98px;" >
 												+
 													</a>
 													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd">
