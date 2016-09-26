@@ -1,21 +1,28 @@
 <style>
 .angular-ui-tree-node, .angular-ui-tree-placeholder{
 	mrgin-top:20px !important;}
-.angular-ui-tree-nodes .angular-ui-tree-nodes {
+/* .angular-ui-tree-nodes .angular-ui-tree-nodes {
     padding-left: 10px;
-}
+} */
 .panel-body {
-    padding: 20px;
-    padding-left: 8px;
+    padding: 14px 14px 7px 14px;
+}
+.panel {
+    margin-bottom: 7px;
+    }
+.panel_mt{
+	margin-top: 15px;
 }
 .angular-ui-tree-handle{
 border:none;
-background:none;}
+background:none;
+padding: 8px;
+}
 
 .textboxcommand{
-height: 30px;
+height: 25px;
     margin-bottom: 5px!important;
-    padding: 7px 12px;
+    padding: 2px 10px;
     }
 
 #aab{
@@ -48,7 +55,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
   color: #636363;
 }
 .addButtonTestPlan{
-padding:8px;}
+padding:4px;}
 
 .commandText div:first-child{
 padding:0;
@@ -61,7 +68,30 @@ margin:0;}
 
 input{
 margin:0px 3px !important; }
-
+.panel-heading{
+    padding: 7px 20px;
+   }
+ .form-control{
+ 	height: 25px;
+    padding: 2px 10px;
+ }
+ .heading-elements{
+ top:40%;
+ }
+ .well{
+     padding: 20px 20px 0px 20px;
+ }
+ .command_group_container_div{
+ 	padding: 14px 14px 14px 14px;
+ }
+ div .command_group_container_div:not(:first-child) {
+    padding: 0px 14px 14px 14px;
+}
+.coustom-form-control{
+display:inline-block;
+width:40px;
+text-align:center;
+}
 </style>
 <script type="text/ng-template" id="nodes_renderer5.html">
   <div ui-tree-handle class="tree-node tree-node-content">
@@ -71,7 +101,7 @@ margin:0px 3px !important; }
 
 <script type="text/ng-template" id="nodrop_nodes_renderer.html">
 <div ui-tree-handle  >
-<div class="panel-heading">
+<div class="panel-heading" style="padding: 0 12px;">
 								<h6 class="panel-title">Test Plan Details</h6>
 								<div class="heading-elements">
 									<ul class="icons-list">
@@ -98,9 +128,9 @@ margin:0px 3px !important; }
 										<h6 class="panel-title">Test Case</h6>
 										<div class="heading-elements">
 											<ul class="icons-list">
-		                		<li><input type='text' class='form-control' placeholder='test case name' ng-model="node.title" style='width: 200px; padding: 7px 12px;' maxlength='50' /></li>
-		                		<li><input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 50px; padding: 7px 12px;' maxlength='4' /></li>
-		                		<li><input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 50px; padding: 7px 12px;' maxlength='4' /></li>
+		                		<li><input type='text' class='form-control' placeholder='test case name' ng-model="node.title" style='width: 150px; padding: 7px 12px;' maxlength='50' /></li>
+		                		<li><input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 35px; padding: 2px 10px;' maxlength='4' /></li>
+		                		<li><input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 35px; padding: 2px 10px;' maxlength='4' /></li>
 		                		<li><a><span class="label label-success add_command_group_label addButtonTestPlan" ng-click="newSubItem(this)">Add new command group</span></a></li>
 		                		<li><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></li>
 								<li><a data-action='collapse' ng-click='toggle(this)';></a></li>
@@ -119,8 +149,8 @@ margin:0px 3px !important; }
 <script type="text/ng-template" id="nodrop_nodes_renderer2.html">
 	<div ui-tree-handle  >										
 <div class='col-lg-7 col-sm-7' style="color:#7c9eb2;">{{node.title}}</div>
-<div class='col-lg-2 col-sm-2'><input class='form-control command-group-loop  textboxcommand'  ng-model="node.loop" style='width: 50px;' maxlength='4' type='text' /></div> 
-<div class='col-lg-2 col-sm-2'><input class='form-control command-group-sequnce textboxcommand' style='width: 50px;' ng-model="node.sequenceNo" maxlength='4' type='text' /></div> 
+<div class='col-lg-2 col-sm-2'><input class='form-control command-group-loop  textboxcommand'  ng-model="node.loop" style='width: 35px;' maxlength='4' type='text' /></div> 
+<div class='col-lg-2 col-sm-2'><input class='form-control command-group-sequnce textboxcommand' style='width: 35px;' ng-model="node.sequenceNo" maxlength='4' type='text' /></div> 
 <div class='col-lg-1 col-sm-1 remove_command_icon text-center' ><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></div>
 				</div>								
 
@@ -143,16 +173,16 @@ margin:0px 3px !important; }
 													</div>
 													
 													<div class="row">
-														<div class="col-md-6">
+														<div class="col-md-7">
 															<div class="form-group">
 																<label class="text-semibold">Sequence:</label>
-																<input type="text" class="form-control command-group-sequnce" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
+																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
 															</div>
 														</div>
-														<div class="col-md-6">
+														<div class="col-md-5">
 															<div class="form-group">
 																<label class="text-semibold">Loop:</label>
-																<input type="text" class="form-control command-group-loop" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
+																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
 															</div>
 														</div>
 													</div>
@@ -171,7 +201,7 @@ margin:0px 3px !important; }
 										</div>
 									</span>
 							<span ng-if="!node.isFirst">
-										<div class="col-lg-12" style="margin-top: 25px; border-top: 5px double #ccc; padding-top: 20px;">
+										<div class="col-lg-12" style="border-top: 5px double #ccc; padding-top: 14px;">
 											<div class="col-md-4 well">
 												<form action="#">
 
@@ -185,16 +215,16 @@ margin:0px 3px !important; }
 													</div>
 													
 													<div class="row">
-														<div class="col-md-6">
+														<div class="col-md-7">
 															<div class="form-group">
 																<label class="text-semibold">Sequence:</label>
-																<input type="text" class="form-control command-group-sequnce" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
+																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
 															</div>
 														</div>
-														<div class="col-md-6">
+														<div class="col-md-5">
 															<div class="form-group">
 																<label class="text-semibold">Loop:</label>
-																<input type="text" class="form-control command-group-loop" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
+																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
 															</div>
 														</div>
 													</div>
@@ -223,7 +253,7 @@ margin:0px 3px !important; }
 	<!-- /menu -->
 
 	<!-- Page header -->
-	 <div class="page-header">
+	 <!-- <div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
@@ -237,7 +267,7 @@ margin:0px 3px !important; }
 				</div>
 			</div>
 		</div>
-	</div> 
+	</div>  -->
 	<!-- /page header -->
 
 
@@ -259,19 +289,19 @@ margin:0px 3px !important; }
 						
 						<div class="panel panel-white">
 							<div class="panel-heading">
-								<h6 class="panel-title droppable">Create a Test Plan</h6>
+								<h6 class="panel-title droppable">Create Test Plan</h6>
 							</div>
-							<div class="panel-body" style="padding-left:20px !important;">
+							<div class="panel-body">
 								
 								<form  name="form" role="form">
 									<div class="panel panel-flat">
 										<div class="panel-body">
 
-											<div class="col-md-12">
+											<div class="col-md-12"  style="padding:10px 10px 0px 10px;">
 												<div class="col-lg-6">
 													<div class="col-lg-12">
 														<div class="form-group">
-															<div class="col-lg-3">
+															<div class="col-lg-3" style="padding:0px;">
 																<label class="text-semibold">Test Plan Name:</label>
 															</div>
 															<div class="col-lg-9">
@@ -283,7 +313,7 @@ margin:0px 3px !important; }
 
 													<div class="col-lg-12" style='padding-top: 20px;'>
 														<div class="form-group">
-															<div class="col-lg-3">
+															<div class="col-lg-3" style="padding:0px;">
 																<label class="text-semibold">Use Case:</label>
 															</div>
 															<div class="col-lg-9">
@@ -334,7 +364,7 @@ margin:0px 3px !important; }
 
 					<!-- test case area -->
 					<div class="col-lg-12">
-						<div class="panel panel-white" >
+						<div class="panel panel-white panel_mt" >
 						<div  ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" >		
 						<div ui-tree-nodes="" ng-model="tree2">
 						<div  ui-tree-node data-nodrag  ui-tree-node ng-repeat="node in tree2" ng-include="'nodrop_nodes_renderer.html'">
