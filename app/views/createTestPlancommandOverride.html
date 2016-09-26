@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/core.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/effects.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/extensions/cookie.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/trees/fancytree_all.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/trees/fancytree_childcounter.js"></script>
+
+
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/form_layouts.js"></script>
+	<script type="text/javascript" src="assets/js/pages/command_tree.js"></script>
+
+
+
+	<!-- /theme JS files -->
+	
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Test Scripts</span> - device attachment
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				
+				<div class="panel panel-white">
+
+					<!-- Test Plan Commands DIV -->
+					<div class="panel-body" id='command_creator_div'>
+						<div class="row">
+
+							<!-- Test Plan Devices Div -->
+							<div class="col-lg-12" id='command_params_div' >
+								<!-- Table tree -->
+								<div class="panel panel-white">
+									<div class="panel-heading">
+										<h6 class="panel-title">Add devices to plan</h6>
+									</div>
+									<div class="panel-body">
+										<div class="col-md-3">
+											<div class="col-md-12" style='padding-bottom: 10px; border-bottom: 3px double #ccc;'>
+												<div class="form-group">
+													<label class="control-label col-lg-4">Device</label>
+													<div class="col-lg-8">
+														<div class="input-group">
+															<input type="text" class="form-control" id='device_name_to_plan' placeholder="Device Type Name">
+															<span class="input-group-addon" id='add_device_to_plan_button'>Go</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<table class="table table-condensed">
+													<thead>
+														<tr><th style="width: 70%;">Device Name</th><th style="width: 15%;">View</th><th style="width: 15%;">Remove</th></tr>
+													</thead>
+													<tbody class="devices_table_body"></tbody>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-9" style="border-left: 5px double #ccc; display:none;" id='params_template_div'>
+											<div class="table-responsive">
+												<table class="table table-bordered tree-table">
+													<thead>
+														<tr>
+															<th style="width: 46px;"></th>
+															<th style="width: 80px;">#</th>
+															<th>Command</th>
+															<th>Params</th>
+															<th style="width: 80px;">Loop</th>
+															<th style="width: 80px;">Sequence</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<div class="panel-footer" id='test_script_panel_footer' style='display:none; '>
+										<ul class="pull-right"><li><a href='finalize_test_script.html'><button type='button' class='btn btn-primary'>Finalize</button></a></li></ul>
+									</div>
+								</div>
+								<!-- /table tree -->
+							</div>
+							<!-- Test Plan Devices Div -->
+
+						</div>
+					</div>
+					<!-- /Test Plan Commands DIV -->
+					
+				</div>
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		w3IncludeHTML();
+
+
+	 	 $("#add_device_to_plan_button").click(function() {
+	 	 	if ($.trim($("#device_name_to_plan").val()) === ''){
+
+	 	 	}
+	 	 	else{
+	 	 		var device_name = $.trim($("#device_name_to_plan").val());
+	 	 		// add the device to the list
+	 	 		$(".devices_table_body").append("<tr><td>" + device_name + "</td><td class='template_viewer_click'><a href='#'>View</a></td><td class='device_remover_click'><a href='#'>Remove</a></td></tr>");
+	 	 		// empty out the text box
+	 	 		$("#device_name_to_plan").val('');
+
+	 	 		// add jquery to handle remove click
+	 	 		$('.template_viewer_click').click(function() {
+ 	 				$("#params_template_div").show();
+ 	 				$("#test_script_panel_footer").show();
+ 	 			});
+
+ 	 			// add jquery to handle remove click
+	 	 		$('.device_remover_click').click(function() {
+ 	 				$(this).closest('tr').remove();
+ 	 				$("#params_template_div").hide();
+ 	 				$("#test_script_panel_footer").hide();
+ 	 			});
+
+	 	 	}
+	 	 });
+
+
+
+	});
+
+</script>

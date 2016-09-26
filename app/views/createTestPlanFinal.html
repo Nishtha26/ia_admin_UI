@@ -1,0 +1,234 @@
+<style>
+
+.error_msg{
+    float: right;
+    
+    color: red;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 27px;
+}
+
+.success_msg{
+	float: right;
+    color: #48A64C;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 27px;
+}
+
+ul ul, ol ul, ul ol, ol ol{
+list-style-type: none;
+}
+
+ol{
+margin-left: -25px;
+}
+
+.device_attachment_tree li div:first-child{
+	padding-left:0px;
+	}
+	
+	.device_attachment_tree li li div:first-child{
+	padding-left:20px;
+	}
+	
+	.device_attachment_tree li li li div:first-child{
+	padding-left:40px;
+	}
+	
+	.device_attachment_tree li li li li div:first-child{
+		padding-left:60px;
+		}
+		
+.device_attachment_tree li div {
+    margin-bottom: 5px;
+}	
+
+.command_lister_ul > li div{
+	font-weight:bold;
+	}
+	hr {
+	margin-top:35px;
+	}
+	
+.angular-ui-tree-handle{
+border:none;
+background:none;
+    padding: 0px 0px;
+
+}
+
+
+.angular-ui-tree-node, .angular-ui-tree-placeholder{
+min-height:0px;
+}
+
+.active{
+text-decoration: underline;
+background:none;
+}
+
+.panel-body {
+    padding: 10px 10px 5px 10px;
+}
+.panel {
+    margin-bottom: 5px;
+    }
+</style>	
+	
+<script type="text/ng-template" id="nodrop_nodes_renderer2.html">
+
+<!--<div class="col-lg-1">	</div>-->	
+<span ui-tree-handle  >											
+<div class="col-lg-3">
+<a data-nodrag ng-click="toggle(this)">
+		<span ng-class="{
+		'icon-folder-plus': collapsed,
+		'icon-folder-minus': !collapsed
+		}">
+		</span>
+		</a>
+{{node.title}}</div>
+<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%;"/><i class="icon-pencil5 text-green-800 user_editor_link"></i></span></div>
+<div class="col-lg-2 col-sm-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" /></div> 
+<div class="col-lg-2 col-sm-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
+</span>
+
+<ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
+	<li ng-repeat="node in node.nodes" ui-tree-node data-nodrag  ng-include="'nodrop_nodes_renderer2.html'"></li>
+</ol>
+											
+
+</script>
+	
+	<!-- header  -->
+	<div ng-include="'app/views/header/header.html'"></div>
+	<!-- /header  -->
+	<!-- menu -->
+	<div ng-include="'app/views/menus/menu.html'"></div>
+	<!-- /menu -->
+
+
+	<!-- Page header -->
+	 <!-- <div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Test Plan</span> - device profiles
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>  -->
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				
+				<div class="panel panel-white">
+
+					<!-- Test Plan Commands DIV -->
+					<div class="panel-body" id="command_creator_div">
+						<div class="row">
+
+							<!-- Test Plan Devices Div -->
+							<div class="col-lg-12" id="command_params_div" >
+								<!-- Table tree -->
+								<div class="panel panel-white">
+									<div class="panel-heading">
+										<h6 class="panel-title">Add Device Profile <span class="pull-right" ng-show="errMessageTestPlanFinalId" style="font-size: 14px; color:red;">{{errMessageTestPlanFinal}}</span><span class="pull-right" ng-show="successMessageTestPlanFinalId" style="font-size: 14px; color:green;">{{successMessageTestPlanFinal}}</span></h6>
+									</div>
+									<div class="panel-body">
+										<div class="col-lg-3">
+											<div class="col-lg-12" style="padding-bottom: 10px; border-bottom: 3px double #ccc;">
+												<div class="form-group">
+													<label class="control-label col-lg-4">Profile Name</label>
+													<div class="col-lg-8">
+														<div class="input-group">
+															<input type="text" class="form-control" id="device_name_to_plan" ng-change="deviceProvileName()" ng-model="deviceProfileName" placeholder="Device Profile Name">
+															<span class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+														</div>
+														<span  style="color:red" ng-show="err" class="help-block">{{addProfileErrorMsg}}</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<table class="table table-condensed">
+													<thead>
+														<tr><th style="width: 70%;">Profile Name</th><th style="width: 15%;">View</th><th style="width: 15%;">Remove</th></tr>
+													</thead>
+													<tbody class="devices_table_body">
+													
+													  <tr ng-repeat="mapping in tabs" >
+                                                            <td ng-model="mapping.deviceProfileName">
+                                                                {{mapping.deviceProfileName}}
+                                                            </td>
+                                                           <td class="template_viewer_click" ng-class="{active : activeProfile === mapping.index}" ng-click="veiwFancyTree(mapping)"><a >View</a></td>
+                                                           <td class="device_remover_click" ng-click="removeFancyTree(mapping)"><a >Remove</a></td>
+                                                      </tr>
+													
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="col-lg-9" style="border-left: 5px double #ccc;" id="params_template_div" >
+											
+											
+											
+												 <ul class="command_lister_ul" style="list-style: none; padding: 10px;" >
+													<li><div class="col-lg-3 col-sm-3">Title</div><div class="col-lg-5 col-sm-5">Command Params</div><div class="col-lg-2 col-sm-2" style="text-align:right; padding-right: 21px;">Loop</div><div class="col-lg-2 col-sm-2"  style="text-align:center;">Sequence</div></li>
+													<li><hr/></li>
+													<span ui-tree>
+														<ol ui-tree-nodes=""  ng-model="tree2" class="device_attachment_tree" ng-class="{hidden: collapsed}">
+														<li ng-repeat="node in tree2" ui-tree-node  data-nodrag ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol>
+													</span>	
+												</ul> 
+												
+												
+										</div>
+									</div>
+
+									<div class="panel-footer" id="test_script_panel_footer">
+									
+										<ul><li><span  class="error_msg"  ng-show ="finalizeTestPlan">Please wait..</span></li></ul>
+										<ul class="pull-right"><li><button type="button" class="btn btn-xs btn-primary" ng-click="saveTestPlan();">Finalize</button></li></ul>
+									</div>
+								</div>
+								<!-- /table tree -->
+							</div>
+							<!-- Test Plan Devices Div -->
+
+						</div>
+					</div>
+					<!-- /Test Plan Commands DIV -->
+					
+				</div>
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- footer  -->
+		<div ng-include="'app/views/footer/footer.html'"></div>
+		<!-- /footer  -->
+
+	</div>
+	<!-- /page container -->
+

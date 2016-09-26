@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ngSanitize', "agGrid", 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree','ngMessages']).filter('oTech', function () {});
+var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView',	'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree','ngMessages']).filter('oTech', function () {});
 
 
 oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $q, $location) {
@@ -145,65 +145,34 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     templateUrl: "app/views/mydevices.html",
                     controller: 'MyDevicesController'
                 })
-                .state("testScript", {
-                    url: "/dashboard/testScript",
-                    templateUrl: "app/views/testScript.html",
-                    controller: 'testScriptController',
-					ncyBreadcrumb: {
-                        label: '{{TestplanName}}'
-                    }
-                })
-				.state("initiateTestPlan", {
-                    url: "/dashboard/initiateTestPlan",
-                    templateUrl: "app/views/initiateTestPlan.html",
-                    controller: 'testScriptController',
-					ncyBreadcrumb: {
-                        label: 'Create Test Plan'
-                    }
-                })
-                .state("createTestPlan", {
-                    url: "/dashboard/initiateTestPlan/createTestPlan",
+                  .state("createTestPlan", {
+                    url: "/dashboard/createTestPlan",
                     templateUrl: "app/views/createTestPlan.html",
-                    controller: 'createTestPlanController',
-                    ncyBreadcrumb: {
+                    controller: 'createTestPlan',
+					ncyBreadcrumb: {
                         label: 'Test Plan'
                     }
                 })
-				.state("testPlanCreated", {
-                    url: "/dashboard/testScript/createTestPlan/testPlanCreated",
-                    templateUrl: "app/views/testPlanCreated.html",
-                    controller: 'testPlanCommandOverride',
-                    ncyBreadcrumb: {
-                        label: '{{TestplanName}}'
-                    }
-                })
-				.state("testPlanEdited", {
-                    url: "/dashboard/testScript/createTestPlan/testPlanEdited",
-                    templateUrl: "app/views/testPlanCreated.html",
-                    controller: 'testPlanCommandOverride',
-                    ncyBreadcrumb: {
-                        label: 'Test Plan Edited'
-                    }
-                })
-                .state("EditTestplan", {
-                    url: "/dashboard/testScript/EditTestplan",
-                    templateUrl: "app/views/editTestPlan.html",
-                    controller: 'editTestPlanController',
-                    ncyBreadcrumb: {
-                        label: '{{TestplanName}}'
-                    }
-                })
-                .state('testScript.EditCommandParameters', {
-                    url: '/EditCommandParameters',
+                .state("createTestPlanFinal", {
+                	url: '/dashboard/createTestPlanFinal',
                     views: {
                         "@": {
-                            templateUrl: 'app/views/editTestplanCmndprmtrs.html',
-                            controller: 'editTestPlanController'
+                            templateUrl: 'app/views/createTestPlanFinal.html',
+                            controller: 'testPlanCommandOverride'
                         }
                     },
-                    ncyBreadcrumb: {
-                        label: 'Edit Test Plan'
+					ncyBreadcrumb: {
+                        label: 'Test Plan final'
                     }
+                }) 
+                .state("testPlanTestRunAdministration", {
+                	url: '/dashboard/testPlanTestRunAdministration',
+                   templateUrl: 'app/views/testPlanTestRunAdministration.html',
+                   controller: 'testPlanTestRunAdministration',
+					ncyBreadcrumb: {
+                       label: 'Administration'
+                   }
+                     
                 })
                 .state("CreateTestRun", {
                     url: "/CreateTestRun",
@@ -223,6 +192,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     },
                     ncyBreadcrumb: {
                         label: '{{TestPlanId}}'
+                    }
+                })
+                .state("initiateTestPlan", {
+                    url: "/dashboard/initiateTestPlan",
+                    templateUrl: "app/views/initiateTestPlan.html",
+                    controller: 'createTestPlan',
+					ncyBreadcrumb: {
+                        label: 'Create Test Plan'
                     }
                 })
                 .state('CreateTestRun.MappingTestRun.MappingDevices', {
@@ -385,7 +362,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 
     }]);
 
-oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies, createTestRunScheduleService) {
+oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies) {
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
@@ -421,11 +398,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     $rootScope.gotoDashBoard = function () {
         $location.path('/dashboard');
     }
-    /* Test Script navigation */
-    $rootScope.testscript = function () {
-
-        $location.path('/dashboard/testScript');
-    }
+   
     /*
      Function for submenu toggle
      */
@@ -492,6 +465,11 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
 
             $location.path('/dashboard/UserGroups');
         }
+        else if (name == 'Measurements') {
+
+        	   $location.path('/dashboard/deviceMeasurements');
+        }
+        
     }
 
     /*
@@ -690,8 +668,38 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         );
         e.stopPropagation();
     }
-
+/*
+    To show Error / message into screen 
+    */
+    $rootScope.showErrorMessage = function (divId,msg) {
+    	 	$("#"+divId).text(msg);
+    		$("#"+divId).css('color', 'red');
+    		$("#"+divId).show();
+    		setTimeout(function(){$('#'+divId).hide();}, 4000);
+    }
+    $rootScope.showSuccessMessage = function (divId,msg) {
+    		$("#"+divId).text(msg);
+    		$("#"+divId).css('color', 'green');
+    		$("#"+divId).show();
+    		setTimeout(function(){$('#'+divId).hide();}, 4000);
+    }
+    $rootScope.inNewWindowTableauURL = function(tableauURL){
+    	//alert(tableauURL);
+    	window.open(tableauURL,'mywin','left=180,top=10,width=1500,height=auto,toolbar=1,resizable=0');
+/*	promise = ReportServices.GetReportCategory(userId, token);
+	promise.then(
+		function(data){
+			    $scope.reports = data;
+				sessionStorage.setItem('reportsubmenus',JSON.stringify(data)); to set report data in reportsubmenus 	
+		},
+		function(err){
+			
+		}
+	);*/
+}	
 });
+
+
 oTech.filter('capitalize', function () {
     return function (input) {
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -700,6 +708,11 @@ oTech.filter('capitalize', function () {
 oTech.filter('capitalizeFirstWord', function () {
     return function (input) {
         return (!!input) ? input.charAt(0).toUpperCase()  : '';
+    }
+});
+oTech.filter('footerYear', function () {
+    return function (input) {
+        return new Date().getFullYear();
     }
 });
 
@@ -770,6 +783,95 @@ oTech.directive('dateParser', function () {
         }
     };
 });
+oTech.directive('myTable', function() {
+    return function(scope, element, attrs) {
 
+        // apply DataTable options, use defaults if none specified by user
+        var options = {};
+        if (attrs.myTable.length > 0) {
+            options = scope.$eval(attrs.myTable);
+        } else {
+            options = {
+                "bStateSave": true,
+                "iCookieDuration": 2419200, /* 1 month */
+                "bJQueryUI": true,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": false,
+                "bInfo": false,
+                "bDestroy": true
+            };
+        }
+
+        // Tell the dataTables plugin what columns to use
+        // We can either derive them from the dom, or use setup from the controller           
+        var explicitColumns = [];
+        element.find('th').each(function(index, elem) {
+           // explicitColumns.push($(elem).text());
+        	explicitColumns.push({name : $(elem).text()});
+        });
+        if (explicitColumns.length > 0) {
+            options["aoColumns"] = explicitColumns;
+        } else if (attrs.aoColumns) {
+            options["aoColumns"] = scope.$eval(attrs.aoColumns);
+        }
+
+        // aoColumnDefs is dataTables way of providing fine control over column config
+        if (attrs.aoColumnDefs) {
+            options["aoColumnDefs"] = scope.$eval(attrs.aoColumnDefs);
+        }
+        
+        if (attrs.fnRowCallback) {
+            options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
+        }
+
+        // apply the plugin
+        var dataTable = element.dataTable(options);
+
+        
+        
+        // watch for any changes to our data, rebuild the DataTable
+        scope.$watch(attrs.aaData, function(value) {
+            var val = value || null;
+            if (val) {
+                dataTable.fnClearTable();
+                dataTable.fnAddData(scope.$eval(attrs.aaData));
+            }
+        });
+    };
+});
+oTech.directive('gridtableHeight', function() {
+	 return function(scope, element, attrs) {
+		   var rowHeight = 40; // your row height
+		    var headerHeight = 58; // your header height
+		    var footerPage=0;
+		    return {
+		       height: ($scope.addUsergroupsGridOptions.data.length * rowHeight + headerHeight+footerPage) + "px"
+		    };
+	      
+	    };
+	});
+
+angular.module('oTech').factory('messages', function(){
+  var messages = [];
+  
+  messages.add = function(message){
+     messages.push(message);
+  };
+  return messages;
+
+});
+
+oTech.directive('selectBoxPreSelected', function($timeout) {
+    return {
+        restrict: 'AC',
+        link: function(scope, element, attrs) {
+            $timeout(function() {
+                element.show();
+                $(element).select2();
+            }); 
+        }
+    };
+})
 
 

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<script src="https://ssl.panoramio.com/wapi/wapi.js?v=1"></script>
+
+
+
+
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>	
+	<script type="text/javascript" src="assets/js/pages/datatables_basic.js"></script>
+
+	<script type="text/javascript" src="assets/js/maps/google/basic/basic.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/basic/geolocation.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/basic/coordinates.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/basic/click_event.js"></script>
+	
+	<script type="text/javascript" src="assets/js/maps/google/layers/traffic.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/layers/transit.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/layers/bicycling.js"></script>
+	<script type="text/javascript" src="assets/js/maps/google/layers/fusion_tables.js"></script>
+
+
+
+	<!-- /theme JS files -->
+	
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Devices</span>
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+				
+
+				<div class="row">
+					
+					<div class="col-lg-12">
+
+						<!-- Devices list panel -->
+						<div class="col-lg-6">
+							
+
+
+							<!-- Basic datatable -->
+							<div class="panel panel-white">
+								<div class="panel-heading">
+									<h5 class="panel-title">Device List</h5>
+									<div class="heading-elements">
+										<ul class="icons-list">
+	                		<li id='create_new_device_label'><span class='label label-primary'>Create Device</span></li>
+	                		<li id='device_list_label' style="display: none;"><span class='label label-default'>Device List</span></li>
+	                		<li id='device_edit_label' style="display: none;"><span class='label label-warning'>Cancel Edit</span></li>
+	                	</ul>
+                	</div>
+								</div>
+
+								<div class="panel-body" id='device_table_list_div'>
+									<table class="table datatable-basic">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Model</th>
+												<th>Manufacturer</th>
+												<th>Last Ping</th>
+												<th>Status</th>
+												<th>Edit</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-success">Running 100%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 0%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 68%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-default">Running 40%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 73%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 9%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 82%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-success">Running 100%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 4%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 55%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-default">Running 28%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 59%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-success">Running 100%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 0%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 68%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-default">Running 40%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 73%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 9%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 82%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-success">Running 100%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-warning">Running 4%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 55%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-default">Running 28%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+											<tr>
+												<td>3568</td>
+												<td><a href="#" class="device_details_view">yogeshPC</a></td>
+												<td>iPhone 5S</td>
+												<td>Apple</td>
+												<td>2016-08-03 08:25:16.0</td>
+												<td><span class="label label-primary">Running 59%</span></td>
+												<td><a href='#' class='device_editor_link'>Edit</a></td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+
+								
+
+								<!-- Create a device form -->
+								<div class="panel-body" id='create_device_body_div' style="display: none;">
+									
+									<form action="#">
+										<div class="row">
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Device Name</label>	
+													<input type='text' id='device_name' class="form-control" />
+												</div>
+												<div class="col-lg-6">
+													<label>Device Type</label>	
+													<select class="select">
+														<option value="A">Tablet</option>
+														<option value="B">Kindle</option>
+														<option value="C">Android Phone</option>
+														<option value="D">iPhone</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Carrier</label>	
+													<select class="select">
+														<option value="AZ">AT&T</option>
+														<option value="AZ">Sprint</option>
+														<option value="AZ">T-Mobile</option>
+														<option value="AZ">Verizone</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<label>Network Type Type</label>	
+													<select class="select">
+														<option value="AZ">3G</option>
+														<option value="AZ">4G</option>
+														<option value="AZ">4G LTE</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Manufacturer</label>	
+													<select class="select">
+														<option value="AZ">Apple</option>
+														<option value="AZ">Microsoft</option>
+														<option value="AZ">Ericsson</option>
+														<option value="AZ">Nokia</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<label>Model</label>	
+													<select class="select">
+														<option value="AZ">iPhone 5</option>
+														<option value="AZ">iPhone 4</option>
+														<option value="AZ">iPhone 6S</option>
+														<option value="AZ">iPhone 6</option>
+														<option value="AZ">iPhone 7</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>IMSI</label>	
+													<input type='text' id='imsi' class="form-control" placeholder="Device IMSI" />
+												</div>
+												<div class="col-lg-6">
+													<label>IMEI</label>	
+													<input type='text' id='imei' class="form-control" placeholder="Device IMEI" />
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Region</label>	
+													<select class="select" data-placeholder="Select device(s)...">
+														<option value="AZ">East Coast</option>
+														<option value="AZ">Wst Coast</option>
+														<option value="AZ">Midwest</option>
+														<option value="AZ">Pacific</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-6" style='margin-top:8px;'>
+												<button type="submit" class="btn bg-primary btn-sm">Create Device</button>
+											</div>
+										</div>
+									</form>
+								</div>
+
+
+								<!-- Create a device form -->
+								<div class="panel-body" id='edit_device_body_div' style="display: none;">
+									
+									<form action="#">
+										<div class="row">
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Device Name</label>	
+													<input type='text' id='device_name' class="form-control" value='yoGeshPC'/>
+												</div>
+												<div class="col-lg-6">
+													<label>Device Type</label>	
+													<select class="select">
+														<option value="A">Tablet</option>
+														<option value="B">Kindle</option>
+														<option value="C">Android Phone</option>
+														<option value="D">iPhone</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Carrier</label>	
+													<select class="select">
+														<option value="AZ">AT&T</option>
+														<option value="AZ">Sprint</option>
+														<option value="AZ">T-Mobile</option>
+														<option value="AZ">Verizone</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<label>Network Type Type</label>	
+													<select class="select">
+														<option value="AZ">3G</option>
+														<option value="AZ">4G</option>
+														<option value="AZ">4G LTE</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Manufacturer</label>	
+													<select class="select">
+														<option value="AZ">Apple</option>
+														<option value="AZ">Microsoft</option>
+														<option value="AZ">Ericsson</option>
+														<option value="AZ">Nokia</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<label>Model</label>	
+													<select class="select">
+														<option value="AZ">iPhone 5</option>
+														<option value="AZ">iPhone 4</option>
+														<option value="AZ">iPhone 6S</option>
+														<option value="AZ">iPhone 6</option>
+														<option value="AZ">iPhone 7</option>
+													</select>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>IMSI</label>	
+													<input type='text' id='imsi' class="form-control" placeholder="Device IMSI" value='AB834800SDSDSD' />
+												</div>
+												<div class="col-lg-6">
+													<label>IMEI</label>	
+													<input type='text' id='imei' class="form-control" placeholder="Device IMEI" value='00-25-64-85-890' />
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row" style='margin-top: 10px;'>
+											<div class="form-group">
+												<div class="col-lg-6">
+													<label>Region</label>	
+													<select class="select" data-placeholder="Select device(s)...">
+														<option value="AZ">East Coast</option>
+														<option value="AZ">Wst Coast</option>
+														<option value="AZ">Midwest</option>
+														<option value="AZ">Pacific</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-6" style='margin-top:8px;'>
+												<button type="submit" class="btn bg-primary btn-sm">Edit Device</button>
+											</div>
+										</div>
+
+
+										
+
+									</form>
+
+
+
+								</div>
+
+								<!-- /create a device form -->
+
+
+
+							</div>
+							<!-- /basic datatable -->
+						</div>	
+						<!-- /Devices list panel -->
+
+
+						<!-- device maps panel -->
+						<div class="col-lg-6">
+							
+
+							<div class="panel panel-flat">
+								<div class="panel-heading">
+									<h6 class="panel-title">Device Facets</h6>
+									<div class="heading-elements">
+										<ul class="icons-list">
+	                		<li><a data-action="collapse"></a></li>
+	                		<li><a data-action="reload"></a></li>
+	                		<li><a data-action="close"></a></li>
+	                	</ul>
+                	</div>
+								</div>
+
+								<div class="panel-body">
+									<div class="tabbable">
+										<ul class="nav nav-tabs">
+											<li class="active"><a href="#availability" data-toggle="tab">Availability</a></li>
+											<li><a href="#device_maps" data-toggle="tab">Device Maps</a></li>
+											<li><a href="#drive_routes" data-toggle="tab">Drive Routes</a></li>
+										</ul>
+
+										<div class="tab-content">
+											<div class="tab-pane active" id="availability">
+												Basic tabs example using <code>.nav-tabs</code> class. Also requires base <code>.nav</code> class.
+											</div>
+
+											<div class="tab-pane" id="device_maps">
+												<div class="map-container map-click-event"></div>
+											</div>
+
+											<div class="tab-pane" id="drive_routes">
+												<div class="map-container map-layer-traffic"></div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+						</div>
+						<!-- /device maps panel -->
+
+
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		 w3IncludeHTML();		
+
+
+		 $("#create_new_device_label").click(function() {
+		 	$(this).hide();
+		 	$("#device_list_label").show();
+		 	$("#device_edit_label").hide();
+		 	$("#create_device_body_div").show();
+		 	$("#edit_device_body_div").hide();
+		 	$("#device_table_list_div").hide();
+		 });
+
+
+		 $("#device_list_label").click(function() {
+		 	$(this).hide();
+		 	$("#create_new_device_label").show();
+		 	$("#device_edit_label").hide();
+		 	$("#create_device_body_div").hide();
+		 	$("#edit_device_body_div").hide();
+		 	$("#device_table_list_div").show();
+		 });
+
+		 $(".device_editor_link").click(function() {
+		 	$("#create_new_device_label").hide();
+		 	$("#device_list_label").hide();
+		 	$("#device_edit_label").show();
+		 	$("#create_device_body_div").hide();
+		 	$("#edit_device_body_div").show();
+		 	$("#device_table_list_div").hide();
+		 });
+
+		 $("#device_edit_label").click(function() {
+		 	$("#create_new_device_label").show();
+		 	$("#device_list_label").hide();
+		 	$("#device_edit_label").hide();
+		 	$("#create_device_body_div").hide();
+		 	$("#edit_device_body_div").hide();
+		 	$("#device_table_list_div").show();
+		 });
+
+
+
+
+	});
+
+
+
+
+
+</script>

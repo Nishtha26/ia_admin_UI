@@ -42,8 +42,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     			var dateFormatted =  year + "-" + month  + "-" + day + " " + time;
                                     			return dateFormatted;
                                     		}
-                                    		$(function() {
-                                    		//	alert("test")format : 'MM/DD/YYYY HH:mm' 2015-06-29 16:00:00
+                                    	/*	$(function() {
                                     			$('#datetimepicker1').datetimepicker({
                                     				format : 'YYYY-MM-DD HH:mm'
                                     			});
@@ -64,7 +63,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     			$("#datetimepicker2").on("dp.change", function(e) {
                                     				$('#datetimepicker2').data("DateTimePicker");
                                     			});
-                                    		});	
+                                    		});*/	
                                     		 /* to call replay map  */ 
                                     		   $scope.DefaultReplayMap = true ;
                                     		$scope.checkAjaxCall =function(){
@@ -179,7 +178,26 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 			);
                                 		}
                                 		$scope.showHeatMapCategory();         		
-                                    		
+                                		  
+                                		  //$(document).ready(function() {
+                                			  
+                                		function getCheckBoxValue(fieldName){
+                                			var technologyVal = [];
+                                		  $.each($("input[name='"+fieldName+"']:checked"), function(){            
+                                			  technologyVal.push($(this).val());
+                                          });
+                                		  if(technologyVal.length>0){
+                                			  if(technologyVal.length==2)
+                                				  {
+                                				  return "all";
+                                				  }
+                                			  if(technologyVal.length==1){
+                                				  return technologyVal[0];
+                                			  }
+                                		  }
+                                		  return "";
+                                		}
+                                	//	  });
                                 		$scope.generateHeatMap =function(){
                                 			     var marketName = $('#marketName').val(); 
                                 			     var deviceId = $('#deviceId').val();
@@ -187,9 +205,13 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 			     var fromDate = $('#fromDate').val();
                                 			     var toDate = $('#toDate').val();
                                 			    var  category=$('#category').val();
-                                			    var location=$('#location').val();
-                                			    var technology=$('#technology').val();
+//                                			    var location=$('#location').val();
+                                			    var location=getCheckBoxValue('location');
+                                		//	    var technology=$('#technology').val();
+                                			    var technology=getCheckBoxValue('technology');
+                                			    
                                 				   $scope.dataLoading3 = true;
+                                					if(!$scope.heatmap_form.$invalid){
                                 			     var data = {"marketName" : marketName, "deviceId":deviceId ,"fromDate" : fromDate,"toDate" : toDate,"category":category, "location":location,"technology":technology}; 
                                 			     var heatMapInput=data;
                                 			
@@ -238,8 +260,14 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 					function(err){
                                 					}
                                 				);
+                                					}
                                 		}
                                 		
+                                	/*	$scope.isCheckboxRequired = function(fieldName){
+                                			  return !$scope.technology.some(function(options){
+                                			    return options.selected;
+                                			  });
+                                			}*/
                                 		
                                     		});
 
