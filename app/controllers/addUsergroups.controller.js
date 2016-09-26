@@ -191,13 +191,10 @@ oTech.controller('addUsergroupsController',
       /*To Show Add User groups Div*/	  
 	  
 	  $scope.showUsergroups =function(){
-		  
 		   $scope.userDiv =true;
 		  $scope.assignuser= false;
 		  $scope.updateButton =false;
 		 $scope.createButton =true;
-		 $("#user_group").val('');
-		 $("#user_group").focus();
 	  }
 	   
 	   /*Cancel button */

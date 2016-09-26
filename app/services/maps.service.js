@@ -91,7 +91,7 @@
 				var boxText = document.createElement("div");
 			
 				boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);border-radius: 10px; ";
-				deviceDataHTML='<table class="table table-striped">'
+				deviceDataHTML='<table class="table table-striped table_padding">'
 					+ '<thead><tr>' + '<th>Device Details</th>'
 					+ '</tr></thead>' + '<tbody>'
 					+ '<tr><td>Active Date (MM/dd/yyyy hh:mm) </td><td>' + getFormattedDate(device.lastMsgRecvTimeStamp)
@@ -123,7 +123,7 @@
 						/*,opacity: 0.75*/
 						,width: "290px"
 					}
-					,closeBoxMargin: "10px 19px 2px 2px"
+					,closeBoxMargin: "12px 19px -30px 2px"
 					,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
 					,infoBoxClearance: new google.maps.Size(1, 1)
 					,isHidden: false
@@ -273,7 +273,7 @@
 			
 			var boxText = document.createElement("div");
 			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); ";
-			deviceDataHTML='<table class="table table-striped">'
+			deviceDataHTML='<table class="table table-striped table_padding">'
 				+ '<thead><tr>' + '<th>Device Details</th>'
 				+ '</tr></thead>' + '<tbody>'
 				+ '<tr><td>Device ID           </td><td>' + device.deviceId

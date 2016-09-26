@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+
+	<script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+	
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
+
+
+<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/datatables_advanced.js"></script>
+
+
+	<!-- /theme JS files -->
+	
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Measurements</span>
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+				
+				<!-- Highlighting rows and columns -->
+				<div class="panel panel-white">
+					<div class="panel-heading">
+						<h5 class="panel-title">Measurements Data</h5>
+					</div>
+
+					<DIV class='panel-body'>
+
+
+						<div class="form-group col-lg-3">
+							<label class="text-semibold">Category</label>
+							<select class="select">
+								<option value="AZ">APN</option>
+								<option value="CO">Applications</option>
+								<option value="ID">Audio</option>
+								<option value="WY">clickscreanimage</option>
+								<option value="WY">clickscreanxy</option>
+								<option value="WY">IP Address</option>
+								<option value="WY">I1lag</option>
+								<option value="WY">location</option>
+								<option value="WY">MMS</option>
+								<option value="WY">Neighborcellinfo</option>
+								<option value="WY">SMS</option>
+								<option value="WY">TCP Performance</option>
+								<option value="WY">UDP Performance</option>
+								<option value="WY">Voice</option>
+								<option value="WY">WIFI Info</option>
+								<option value="WY">WIFI Traffic Info</option>
+								<option value="WY">Attach</option>
+								<option value="WY">Radio</option>
+								<option value="WY">Latency</option>
+								<option value="WY">Download</option>
+								<option value="WY">Upload</option>
+								<option value="WY">Email</option>
+								<option value="WY">Data Usage</option>
+								<option value="WY">Video</option>
+							</select>
+						</div>
+
+
+						<table class="table table-bordered table-hover datatable-highlight" >
+							<thead>
+								<tr>
+									<th>Device ID</th>
+									<th>Job ID</th>
+									<th>Time Stamp</th>
+									<th>APN ID</th>
+									<th>APN Name</th>
+									<th>APN Numeric</th>
+									<th>APN MCC</th>
+									<th>APN MNC</th>
+									<th>APN APN</th>
+									<th>APN User</th>
+									<th>APN Server</th>
+									<th>APN Password</th>
+									<th>APN Proxy</th>
+									<th>APN Port</th>
+									<th>APN MMS Proxy</th>
+									<th>APN MMS Port</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>3815</td>
+									<td>99453</td>
+									<td>08/13/2016 13:05:58</td>
+									<td>894959</td>
+									<td>vfalmms</td>
+									<td>8949920049</td>
+									<td>202</td>
+									<td>01</td>
+									<td>internet</td>
+									<td>samj</td>
+									<td>http://mmsc.cosmote.gr:8002</td>
+									<td>jackson</td>
+									<td>10.10.10.20</td>
+									<td>8002</td>
+									<td>10.10.10.24</td>
+									<td>8002</td>
+								</tr>
+								<tr>
+									<td>3815</td>
+									<td>99453</td>
+									<td>08/13/2016 13:05:58</td>
+									<td>894959</td>
+									<td>vfalmms</td>
+									<td>8949920049</td>
+									<td>202</td>
+									<td>01</td>
+									<td>internet</td>
+									<td>samj</td>
+									<td>http://mmsc.cosmote.gr:8002</td>
+									<td>jackson</td>
+									<td>10.10.10.20</td>
+									<td>8002</td>
+									<td>10.10.10.24</td>
+									<td>8002</td>
+								</tr>
+								<tr>
+									<td>3815</td>
+									<td>99453</td>
+									<td>08/13/2016 13:05:58</td>
+									<td>894959</td>
+									<td>vfalmms</td>
+									<td>8949920049</td>
+									<td>202</td>
+									<td>01</td>
+									<td>internet</td>
+									<td>samj</td>
+									<td>http://mmsc.cosmote.gr:8002</td>
+									<td>jackson</td>
+									<td>10.10.10.20</td>
+									<td>8002</td>
+									<td>10.10.10.24</td>
+									<td>8002</td>
+								</tr>
+							</tbody>
+						</table>
+					</DIV>
+				</div>
+				<!-- /highlighting rows and columns -->
+
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		 w3IncludeHTML();		
+	});
+
+</script>

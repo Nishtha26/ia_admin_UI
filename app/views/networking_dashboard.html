@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/anytime.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+
+
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
+	<script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+
+
+
+	<!-- /theme JS files -->
+	
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Network Performance</span> - dashboard
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Secondary sidebar -->
+			<div class="sidebar sidebar-secondary sidebar-default">
+				<div class="sidebar-content">
+
+					<!-- Title -->
+					<div class="category-title h6">
+						<span>Dashboard Configurator</span>
+						<ul class="icons-list">
+							<li><a href="#"><i class="icon-gear"></i></a></li>
+						</ul>
+					</div>
+					<!-- /title -->
+
+
+					<!-- Sidebar search -->
+					<div class="sidebar-category">
+
+
+
+
+						<div class="category-content">
+
+
+							<div class="form-group">
+								<label>View Type</label>
+								<select class="select" id='networking_view_selector'>
+									<option value="heat_maps">Heat Maps</option>
+									<option value="device_view">Device View</option>
+									<option value="summary_view">Summary View</option>
+									<option value="timeline_view">Timeline View</option>
+								</select>
+							</div>
+
+
+
+							<!-- /heat maps form -->
+						
+							<div id='heat_maps_form' style='display:none; '>
+
+								<form action="#">
+									<div class="form-group">
+										<label>Device ID</label>
+										<select class="select">
+											<option value="AZ">98504 (4G-LTE, LGE)</option>
+											<option value="CO">98502 (Setup B_B, LGE, T-Mobile)</option>
+											<option value="ID">98501 (A1, LGE, AT&T)</option>
+											<option value="WY">1808 (Sprint UE, Samsung, Sprint)</option>
+											<option value="AL">1323 (TMO_3G, Samsung)</option>
+											<option value="AR">1032 (Setup C_A, LGE)</option>
+											<option value="KS">1016 (LG - G2, LGE)</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>KPI Type</label>
+										<select class="select">
+											<option value="AZ">Signal Strength</option>
+											<option value="CO">RSRQ</option>
+											<option value="ID">SINR</option>
+											<option value="WY">CQI</option>
+											<option value="WY">Network Latency</option>
+											<option value="WY">HTTP Download</option>
+											<option value="WY">HTTP Upload</option>
+											<option value="WY">FTP Download</option>
+											<option value="WY">FTP Upload</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Display time picker: </label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+											<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
+										</div>
+									</div>
+
+									<div>
+										<button type="submit" class="btn bg-primary">Run Report</button>
+									</div>
+
+								</form>
+							</div>
+							<!-- /End of heat maps form -->
+
+
+
+							<!-- device view form -->
+							<div id='device_view_form' style='display:none; '>
+
+								<form action="#">
+									<div class="form-group">
+										<label>Device ID</label>
+										<select class="select">
+											<option value="AZ">98504 (4G-LTE, LGE)</option>
+											<option value="CO">98502 (Setup B_B, LGE, T-Mobile)</option>
+											<option value="ID">98501 (A1, LGE, AT&T)</option>
+											<option value="WY">1808 (Sprint UE, Samsung, Sprint)</option>
+											<option value="AL">1323 (TMO_3G, Samsung)</option>
+											<option value="AR">1032 (Setup C_A, LGE)</option>
+											<option value="KS">1016 (LG - G2, LGE)</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Display time picker: </label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+											<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
+										</div>
+									</div>
+
+
+									<div>
+										<button type="submit" class="btn bg-primary">Run Report</button>
+									</div>
+
+								</form>
+							</div>
+							<!-- /End of device view form -->
+
+
+							<!-- summary view  -->
+							<div id='summary_view_form' style='display:none; '>
+
+								<form action="#">
+									<div class="form-group">
+										<label>Device ID</label>
+										<select class="select select-size-sm" multiple="multiple" data-placeholder="Select device(s)...">
+											<option value="AZ">98504 (4G-LTE, LGE)</option>
+											<option value="CO">98502 (Setup B_B, LGE, T-Mobile)</option>
+											<option value="ID">98501 (A1, LGE, AT&T)</option>
+											<option value="WY">1808 (Sprint UE, Samsung, Sprint)</option>
+											<option value="AL">1323 (TMO_3G, Samsung)</option>
+											<option value="AR">1032 (Setup C_A, LGE)</option>
+											<option value="KS">1016 (LG - G2, LGE)</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Report Templates</label>
+										<select class="select" multiple='multiple' data-placeholder="Select report format(s)...">
+											<option value="AZ">Summary Across Operator</option>
+											<option value="AZ">Summary Single Operator</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Display time picker: </label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+											<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
+										</div>
+									</div>
+
+
+									<div>
+										<button type="submit" class="btn bg-primary">Run Report</button>
+									</div>
+
+								</form>
+							</div>
+							<!-- /summary view -->
+
+
+
+
+							<!-- timeline view  -->
+							<div id='timeline_form' style='display:none; '>
+
+								<form action="#">
+									<div class="form-group">
+										<label>Device ID</label>
+										<select class="select select-size-sm" multiple="multiple" data-placeholder="Select device(s)...">
+											<option value="AZ">98504 (4G-LTE, LGE)</option>
+											<option value="CO">98502 (Setup B_B, LGE, T-Mobile)</option>
+											<option value="ID">98501 (A1, LGE, AT&T)</option>
+											<option value="WY">1808 (Sprint UE, Samsung, Sprint)</option>
+											<option value="AL">1323 (TMO_3G, Samsung)</option>
+											<option value="AR">1032 (Setup C_A, LGE)</option>
+											<option value="KS">1016 (LG - G2, LGE)</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Report Templates</label>
+										<select class="select" multiple='multiple' data-placeholder="Select report format(s)...">
+											<option value="AZ">Summary Across Operator</option>
+											<option value="AZ">Summary Single Operator</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Display time picker: </label>
+										<div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+											<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
+										</div>
+									</div>
+
+
+									<div>
+										<button type="submit" class="btn bg-primary">Run Report</button>
+									</div>
+
+								</form>
+							</div>
+							<!-- /timeline view  -->
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+					</div>
+					<!-- /sidebar search -->
+
+
+					<!-- Action buttons -->
+					<div class="sidebar-category">
+						<div class="category-title">
+							<span>Download/ Action buttons</span>
+							<ul class="icons-list">
+								<li><a href="#" data-action="collapse"></a></li>
+							</ul>
+						</div>
+
+						<div class="category-content">
+							<div class="row">
+								<div class="col-xs-6">
+									<button class="btn bg-teal-400 btn-block btn-float btn-float-lg" type="button"><i class="icon-file-excel"></i> <span>Excel</span></button>
+									<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button"><i class="icon-file-word"></i> <span>Word</span></button>
+								</div>
+								
+								<div class="col-xs-6">
+									<button class="btn bg-warning-400 btn-block btn-float btn-float-lg" type="button"><i class="icon-file-pdf"></i> <span>PDF</span></button>
+									<button class="btn bg-purple-300 btn-block btn-float btn-float-lg" type="button"><i class="icon-mail-read"></i> <span>Email</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /action buttons -->
+
+
+				</div>
+			</div>
+			<!-- /secondary sidebar -->
+
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- main area -->
+
+				<div class="col-lg-12">
+					
+								<!-- Multiple donut charts -->
+								<div class="panel panel-flat">
+									<div class="panel-heading">
+										<h5 class="panel-title">Multiple donuts</h5>
+										<div class="heading-elements">
+											<ul class="icons-list">
+						                		<li><a data-action="collapse"></a></li>
+						                		<li><a data-action="reload"></a></li>
+						                		<li><a data-action="close"></a></li>
+						                	</ul>
+					                	</div>
+									</div>
+
+									<div class="panel-body">
+										<div class="chart-container has-scroll">
+											<div class="chart has-fixed-height has-minimum-width" id="multiple_donuts" style="height: 450px;"></div>
+										</div>
+									</div>
+								</div>
+								<!-- /multiple donut charts -->
+
+
+				</div>
+
+
+				<!-- /main area -->
+
+
+
+
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		 w3IncludeHTML();		
+
+
+		 $("#networking_view_selector").change(function() {
+		 	var view_selected = $(this).val();
+		 	if (view_selected === 'heat_maps'){
+		 		$("#heat_maps_form").show();
+		 		$("#device_view_form").hide();
+		 		$("#summary_view_form").hide();
+		 		$("#timeline_form").hide();
+		 	}
+		 	else if (view_selected === 'heat_maps'){
+		 		$("#heat_maps_form").show();
+		 		$("#device_view_form").hide();
+		 		$("#summary_view_form").hide();
+		 		$("#timeline_form").hide();
+		 	}
+		 	else if (view_selected === 'device_view'){
+		 		$("#heat_maps_form").hide();
+		 		$("#device_view_form").show();
+		 		$("#summary_view_form").hide();
+		 		$("#timeline_form").hide();
+		 	}
+		 	else if (view_selected === 'summary_view'){
+		 		$("#heat_maps_form").hide();
+		 		$("#device_view_form").hide();
+		 		$("#summary_view_form").show();
+		 		$("#timeline_form").hide();
+		 	}
+		 	else if (view_selected === 'timeline_view'){
+		 		$("#heat_maps_form").hide();
+		 		$("#device_view_form").hide();
+		 		$("#summary_view_form").hide();
+		 		$("#timeline_form").show();
+		 	}
+		 	else {
+		 		$("#timeline_form").hide();
+		 		$("#device_view_form").hide();
+		 		$("#summary_view_form").hide();
+		 		$("#timeline_form").hide();	
+		 	}
+		 });
+
+
+
+
+	});
+
+</script>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/anytime.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+
+
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
+	<script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+
+
+
+	<!-- /theme JS files -->
+	
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">WIFI</span> - dashboard
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Secondary sidebar -->
+			<div class="sidebar sidebar-secondary sidebar-default">
+				<div class="sidebar-content">
+
+					<!-- Title -->
+					<div class="category-title h6">
+						<span>Dashboard Configurator</span>
+						<ul class="icons-list">
+							<li><a href="#"><i class="icon-gear"></i></a></li>
+						</ul>
+					</div>
+					<!-- /title -->
+
+
+					<!-- Sidebar search -->
+					<div class="sidebar-category">
+
+						<div class="category-content">
+							<form action="#">
+								<div class="form-group">
+									<label>Type</label>
+									<select class="select">
+										<option value="AZ">Test Run</option>
+										<option value="CO">System</option>
+										<option value="ID">Demo_1</option>
+										<option value="WY">Cisco_SJC</option>
+										<option value="AL">Cisco_R</option>
+										<option value="AR">AP</option>
+										<option value="KS">Client</option>
+										<option value="KY">Custom Reports</option>
+										<option value="CT">Heatmap</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Group</label>
+									<select class="select">
+										<option value="AZ">Statistical Performance</option>
+										<option value="CO">AP Aggregate Performance</option>
+										<option value="ID">Tabular Performance</option>
+										<option value="WY">Client Avg. Performance</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label>Display time picker: </label>
+									<div class="input-group">
+										<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+										<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
+									</div>
+								</div>
+
+
+								<div>
+									<button type="submit" class="btn bg-primary">Run Report</button>
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<!-- /sidebar search -->
+
+
+					<!-- Action buttons -->
+					<div class="sidebar-category">
+						<div class="category-title">
+							<span>Download/ Action buttons</span>
+							<ul class="icons-list">
+								<li><a href="#" data-action="collapse"></a></li>
+							</ul>
+						</div>
+
+						<div class="category-content">
+							<div class="row">
+								<div class="col-xs-6">
+									<button class="btn bg-teal-400 btn-block btn-float btn-float-lg" type="button"><i class="icon-file-excel"></i> <span>Excel</span></button>
+									<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button"><i class="icon-file-word"></i> <span>Word</span></button>
+								</div>
+								
+								<div class="col-xs-6">
+									<button class="btn bg-warning-400 btn-block btn-float btn-float-lg" type="button"><i class="icon-file-pdf"></i> <span>PDF</span></button>
+									<button class="btn bg-purple-300 btn-block btn-float btn-float-lg" type="button"><i class="icon-mail-read"></i> <span>Email</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /action buttons -->
+
+
+				</div>
+			</div>
+			<!-- /secondary sidebar -->
+
+
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- main area -->
+
+				<div class="col-lg-12">
+					
+								<!-- Multiple donut charts -->
+								<div class="panel panel-flat">
+									<div class="panel-heading">
+										<h5 class="panel-title">Multiple donuts</h5>
+										<div class="heading-elements">
+											<ul class="icons-list">
+						                		<li><a data-action="collapse"></a></li>
+						                		<li><a data-action="reload"></a></li>
+						                		<li><a data-action="close"></a></li>
+						                	</ul>
+					                	</div>
+									</div>
+
+									<div class="panel-body">
+										<div class="chart-container has-scroll">
+											<div class="chart has-fixed-height has-minimum-width" id="multiple_donuts" style="height: 450px;"></div>
+										</div>
+									</div>
+								</div>
+								<!-- /multiple donut charts -->
+
+
+				</div>
+
+
+				<!-- /main area -->
+
+
+
+
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		 w3IncludeHTML();		
+	});
+
+</script>

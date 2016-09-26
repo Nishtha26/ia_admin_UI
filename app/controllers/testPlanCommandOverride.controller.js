@@ -1,6 +1,6 @@
 oTech.controller('testPlanCommandOverride',
-    function ($scope, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices,
-              $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $log, $timeout) {
+    function ($scope,$compile, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices,
+              $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $log, $timeout,messages) {
 		
 		var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
@@ -11,23 +11,36 @@ oTech.controller('testPlanCommandOverride',
 		 var VirtualJobsOptions = [];
 		 $scope.dataLoading = true;
 		 $scope.isUpdatable = false;
+		 
+		 $rootScope.my_tree = {};
 		
 		
-		if($.cookie("testPlanName") != undefined && $.cookie("testPlanDescription") != undefined && $.cookie("usecaseDescription") != undefined && $.cookie("usecaseId") != undefined){
-				$scope.testPlanName = $.cookie("testPlanName");
-				$scope.testPlanDescription = $.cookie("testPlanDescription");
-				$scope.usecaseVal = $.cookie("usecaseId");
-				
-				VirtualJobsOptions.push({
-								'jobName': $.cookie("testPlanName"),
-                                'jobDescription': $.cookie("testPlanDescription"),
-								'useCaseName': $.cookie("usecaseDescription"),
-								
-                            });
-							$scope.VirtualJob = VirtualJobsOptions;
-						$scope.uiTreeJSON	= $rootScope.uiTreeJSON;
-		}else{
-			$scope.usecaseVal= "1";
+		
+		
+		if(messages.length==1){
+			for(var i=0; i < messages[0].length; i++){
+			      if(messages[0][i].key == "testPlanName")
+			    	  $scope.testPlanName = messages[0][i].value;
+			      if(messages[0][i].key == "testPlanDescription")
+			    	  $scope.testPlanDescription = messages[0][i].value;
+			      if(messages[0][i].key == "treeJson")
+			    	  $scope.uiTreeJSON = messages[0][i].value;
+			      if(messages[0][i].key == "usecase")
+			    	  $scope.usecaseVal = messages[0][i].value.id;
+			      
+			   }
+		}else if(messages.length > 1){
+			angular.forEach(messages[0], function(value, key){
+			      if(value.key == "testPlanName")
+			    	  $scope.testPlanName = value.value;
+			      if(value.key == "testPlanDescription")
+			    	  $scope.testPlanDescription = value.value;
+			      if(value.key == "treeJson")
+			    	  $scope.uiTreeJSON = value.value;
+			      if(value.key == "usecase")
+			    	  $scope.usecaseVal = value.value.id;
+			      
+			   });
 		}
 		
 		$rootScope.slideContent();
@@ -52,133 +65,17 @@ oTech.controller('testPlanCommandOverride',
             }
         }
 		
-		$scope.testScript = function () {
-
-           $location.path('/dashboard/testScript');
-        }
 		
 		
 		 $scope.getDashBoardMenu();
         $scope.getFavouriteReports();
 		
-		/*$scope.VirtualJobsOptions = {
-			enableFiltering: true,
-            enableRowHeaderSelection: false,
-            enableRowSelection: true,
-            multiSelect: false,
-			columnDefs: [
-                {headerName: "Test Plan Id",field: 'jobId', headerCellClass: $scope.highlightFilteredHeader},
-                {headerName: "Test Plan Name",field: 'jobName', headerCellClass: $scope.highlightFilteredHeader},
-				{headerName: "Test Plan Description",field: 'jobDescription', headerCellClass: $scope.highlightFilteredHeader},
-				{headerName: "Test Plan Created On",field: 'jobCreateDate', headerCellClass: $scope.highlightFilteredHeader},
-				{headerName: "Test Plan Created By",field: 'jobCreatedByName', headerCellClass: $scope.highlightFilteredHeader},
-				{headerName: "Use case Name",field: 'useCaseName', headerCellClass: $scope.highlightFilteredHeader},
-            ]
-		};
 		
-		//Row selection
-        $scope.VirtualJobsOptions.onRegisterApi = function (gridApi) {
-			$scope.gridApi = gridApi;
-			gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.dataProcessing = true;
-				$(".btn-info").addClass("disabled");
-                //$rootScope.RowCreateTestrun = row.entity;	
-                
-				var JobId = row.entity.jobId;
-				$cookieStore.put('JobId', JobId);
-                $rootScope.JobId = row.entity.jobId;
-				$rootScope.Row = row.entity;
-
-			});
-		}
-		
-
-		var JobId =  $cookieStore.get('TestPLANId');
-        promise = testScriptService.getVirtualJob(token, userId, JobId);
-				promise.then(
-                    function (data) {
-						$scope.dataLoading = false;
-						sessionStorage.setItem('JobId', data.jobId);
-						for (var i = 0; i < data.length; i++){
-						VirtualJobsOptions.push({
-                                'jobId': data[i].jobId,
-								'jobName': data[i].jobName,
-                                'jobDescription': data[i].jobDescription,
-                                'jobCreateDate': data[i].jobCreateDate,
-								'jobCreatedByName': data[i].jobCreatedByName,
-								'useCaseName': data[i].useCaseName,
-								
-                            });
-						}
-						
-						$scope.VirtualJob = VirtualJobsOptions;
-						$scope.dataLoading = false;
-						$(".btn-info").removeClass("disabled");
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-				
-				
-				promise = testScriptService.getVirtualDevicesForJob(token, userId, JobId);
-				promise.then(
-                    function (data) {
-                        $scope.VirtualJobsDevicesOptions.data = data;
-						$(".btn-info").removeClass("disabled");
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-				
-				// To get the list of virtual devices that are associted with the virtual devices
-		    $scope.VirtualJobsDevicesOptions = {
-			enableFiltering: true,
-            enableRowHeaderSelection: false,
-            enableRowSelection: true,
-            multiSelect: false,
-			enableVerticalScrollbar :0,
-		enableHorizontalScrollbar:0,
-			columnDefs: [
-                {name: 'Id',headerName: "Id", field: 'deviceId', headerCellClass: $scope.highlightFilteredHeader},
-				{ name: 'Name', field: 'deviceName', haderCellClass: $scope.highlightFilteredHeader},
-            ]
-		};
-		
-		//Row selection
-        $scope.VirtualJobsDevicesOptions.onRegisterApi = function (gridApi) {
-			$scope.gridApi = gridApi;
-			gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.dataProcessing = true;
-				$(".btn-info").addClass("disabled");
-                //$rootScope.RowCreateTestrun = row.entity;	
-                $('.treeSection').css("display", "none");
-				var jobDeviceId = row.entity.jobDeviceId;
-				var jobId = row.entity.jobId;
-				$rootScope.JobId = row.entity.jobId;
-				$rootScope.jobDeviceId = row.entity.jobDeviceId;
-				promise = testScriptService.getVirtualJobsTask(token, userId, jobId, jobDeviceId);
-				promise.then(
-                    function (data) {
-                        $scope.uiTreeJSON = data.jobVO;
-						$rootScope.uiTreeJSON = data.jobVO;
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
-						$('.treeSection').css("display", "block");
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-
-			});
-		}*/
 		
 		$scope.updateCommandParameters = function () {
 			
-			$scope.dataProcessing = true;
-			$(".btn-info").addClass("disabled");
+			$scope.finalizeTestPlan = true;
+			$(".btn").addClass("disabled");
 			var jobDeviceId = $rootScope.jobDeviceId;
 			var jobId = $rootScope.JobId;
 			$scope.uiTreeJSON = $rootScope.uiTreeJSON;
@@ -200,14 +97,14 @@ oTech.controller('testPlanCommandOverride',
 
                     if ($rootScope.uiTreeJSON[0].nodes[i].nodes[j].nodes.length <= 0) {
 						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
+						$(".btn").removeClass("disabled");
                         $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
                         return 0;
 
                     }
                     else if (!$rootScope.uiTreeJSON[0].nodes[i].nodes[j].nodes[0].id) {
 						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
+						$(".btn").removeClass("disabled");
                         $scope.validateTestPlanData("Please Select Parameters ");
                         return 0;
 
@@ -279,32 +176,28 @@ oTech.controller('testPlanCommandOverride',
 			promise.then(
                 function (data) {
                     if (data.status == "Success") {
-						$scope.dataProcessing = false;
-                        $rootScope.Message = "  Updated Successfully";
-                        $('#MessageColor').css("color", "red");
-                        $('#MessagePopUp').modal('show');
+						$scope.successMessageTestPlanFinalId = true;
+                        $scope.successMessageTestPlanFinal = "Updated Successfully...";
                         $timeout(function () {
-                            $('#MessagePopUp').modal('hide');
+                        	$scope.finalizeTestPlan = false;
+                        	$scope.successMessageTestPlanFinalId = false;
                         }, 2000);
-						
-                       $(".btn-info").removeClass("disabled");
-						$('.treeSection').css("display", "block");
+                       $(".btn").removeClass("disabled");
                     }
                     else {
-						$scope.dataProcessing = false;
-                        $rootScope.Message = " " + data.status;
-                        $('#MessageColor').css("color", "red");
-                        $('#MessagePopUp').modal('show');
+                        $scope.errMessageTestPlanFinalId = true;
+                        $scope.errMessageTestPlanFinal = data.status;
                         $timeout(function () {
-                            $('#MessagePopUp').modal('hide');
+                        	$scope.finalizeTestPlan = false;
+                        	$scope.errMessageTestPlanFinalId = false;
                         }, 2000);
-						$(".btn-info").removeClass("disabled");
-						$('.treeSection').css("display", "block");
+						$(".btn").removeClass("disabled");
 
                     }
 
                 },
                 function (err) {
+                	$(".btn").removeClass("disabled");
                     console.log(err);
                 }
             );
@@ -380,65 +273,190 @@ oTech.controller('testPlanCommandOverride',
 		var VirtualDevice = [];
 		jsonArray = [];
 		var deepCopyObject = "";
-		$scope.counter = 1;
+		$scope.counter = 0;
 		
+		$scope.tree2 = [];
 		promise2 = testScriptService.fetchVirtualDevices(token, userId);
             promise2.then(
                 function (data) {
 					$scope.inputcommand=true;
                     VirtualDevice = data;
 					for(var i=0; i< data.length ; i++){
+						/*$scope.tree2 = [];
+						angular.forEach($scope.uiTreeJSON, function (item1) {
+	                        
+							 $scope.taskExecuter = [];
+	                        angular.forEach(item1.nodes, function (item2) {
+	                        	$scope.commandExecuter = [];
+	                            angular.forEach(item2.nodes, function (item3) {
+	                            	$scope.commandExecuterCommand = [];
+	                                angular.forEach(item3.nodes, function (item4) {
+	                                	
+	                                    var commandExecuterCommandDesc = {
+	                                    		 "id": item4.id,
+	 	 	                                    "title": item4.title,
+	 	 	                                    "sequenceNo": item4.sequenceNo,
+	 	 	                                    "loop": item4.loop,
+	 	 	                                  "commandParams": item4.commandParams,
+	 	 	                                "commandId": item4.commandId,
+	                                        "children": []
+	                                    };
+	                                    $scope.commandExecuterCommand.push(commandExecuterCommandDesc);
+	                                });
+
+	                                var commandExecuterDesc = {
+	                                		 "id": item3.id,
+	 	                                    "title": item3.title,
+	 	                                    "sequenceNo": item3.sequenceNo,
+	 	                                    "loop": item3.loop,
+	 	                                    "children": $scope.commandExecuterCommand
+	                                };
+	                                $scope.commandExecuter.push(commandExecuterDesc);
+	                            });
+	                            
+	                            var taskExecuterDesc = {
+	                                    "id": item2.id,
+	                                    "title": item2.title,
+	                                    "sequenceNo": item2.sequenceNo,
+	                                    "loop": item2.loop,
+	                                    "children": $scope.commandExecuter
+	                                };
+	                            $scope.taskExecuter.push(taskExecuterDesc);
+	                           
+	                        });
+	                        
+	                        var testPlan = {
+                                    "id": item1.id,
+                                    "title": item1.title,
+                                    "sequenceNo": item1.sequenceNo,
+                                    "loop": item1.loop,
+                                    "children": $scope.taskExecuter
+                                };
+                            $scope.tree2.push(testPlan);
+	                        
+	                    });*/
+						
 							jsonArray.push({id:VirtualDevice[i].name,deviceId:VirtualDevice[i].id,content:$scope.uiTreeJSON});
 					}
-					deepCopyObject = jQuery.extend(true, new Object(), jsonArray);
-					var temp = {};
-					temp['deviceProfileName'] = "Device Profile Name 1";
-					temp['id'] = VirtualDevice[0].name;
-					temp['deviceId'] = VirtualDevice[0].id;
-					temp['content'] = $scope.uiTreeJSON;
-					$scope.tabs.push(temp);
+					deepCopyObject = jQuery.extend(true, {}, jsonArray);
+					
 					$scope.dataLoading = false;
                 },
                 function (err) {
                     console.log(err);
                 }
             );
+            
+            $scope.tree_col_defs = [
+								{
+								    field: "commandParams",
+								    displayName: "Default Params",
+								    cellTemplate: '',
+								    sortable: true,
+								    filterable: true
+								},
+                               {
+                                   field: "loop",
+                                   sortable: true,
+                                   filterable: true
+                               },
+                               {
+                                   field: "sequenceNo",
+                                   displayName: "Sequence No.",
+                                   sortable: true,
+                                   filterable: true
+                               },
+                               
+                           ];
 
 		
 		/** Function to add a new tab **/
+           $scope.boolean = false;
+            $scope.deviceProvileName = function() {
+            	$scope.boolean = false;
+            	$scope.err = false;
+			};
+           
 		$scope.addTab = function(){
-			$scope.counter++;
-			var temp = {};
-			temp['deviceProfileName'] = "Device Profile Name "+$scope.counter;
-			temp['id'] = deepCopyObject[$scope.tabs.length].id;
-			temp['deviceId'] = deepCopyObject[$scope.tabs.length].deviceId;
-			temp['content'] = jQuery.extend(true, new Object(), deepCopyObject[$scope.tabs.length].content);
-			$scope.tabs.push(temp);
-			$scope.selectedTab = $scope.tabs.length - 1; 
+			
+			if($scope.deviceProfileName == undefined || $scope.deviceProfileName == ""){
+				$scope.addProfileErrorMsg = "Blank not allowed.."
+					$scope.err = true;
+				$timeout(function () {
+					$scope.err = false;
+                }, 3000);
+				return false;
+			}
+			
+			if($scope.tabs.length > 0){
+			for (var i = 0; i < $scope.tabs.length; i++){
+				if($scope.tabs[i].deviceProfileName == $scope.deviceProfileName){
+					
+					$scope.boolean = true;
+					$scope.addProfileErrorMsg = "Please provide unique profile.."
+					$scope.err = true;
+					$timeout(function () {
+						$scope.err = false;
+                    }, 3000);
+				}
+			}
+			if(!$scope.boolean){
+				var temp = {};
+				temp['deviceProfileName'] = $scope.deviceProfileName;
+				temp['id'] = deepCopyObject[$scope.counter].id;
+				temp['index'] = $scope.counter;
+				temp['deviceId'] = deepCopyObject[$scope.counter].deviceId;
+				temp['content'] =  jQuery.extend(true, new Object(), deepCopyObject[$scope.counter].content);
+				$scope.tabs.push(temp);
+				$scope.counter++;
+				}
+			
+			}else{
+				var temp = {};
+				temp['deviceProfileName'] = $scope.deviceProfileName;
+				temp['id'] = deepCopyObject[$scope.counter].id;
+				temp['index'] = $scope.counter;
+				temp['deviceId'] = deepCopyObject[$scope.counter].deviceId;
+				temp['content'] =  jQuery.extend(true, new Object(), deepCopyObject[$scope.counter].content);
+				$scope.tabs.push(temp);
+				$scope.tree2 =  $scope.tabs[$scope.counter].content;
+				$scope.counter++;
+				$scope.activeProfile = $scope.tabs[0].index;
+			}
+			
+			
 		}
 		
 		/** Function to delete a tab **/
-		$scope.deleteTab = function(index){
-			 $scope.selectedTab = index;
-			$scope.tabs.splice(index,1); //remove the object from the array based on index
+		$scope.removeFancyTree = function(mapping){
+			// $scope.selectedTab = mapping.id;
+			$scope.tabs.splice(mapping.index,1);
+			$scope.counter--;//remove the object from the array based on index
 		}
 		
 		$scope.selectedTab = 0; //set selected tab to the 1st by default.
 		
 		/** Function to set selectedTab **/
-		$scope.selectTab = function(index){
-			$scope.selectedTab = index;
+		$scope.veiwFancyTree = function(mapping){
+			$scope.tree2 =  $scope.tabs[mapping.index].content;
+			
+			$scope.activeProfile = mapping.index;
+			
+			/*if ($rootScope.tree_data) {
+                setTimeout(function () {
+                    $rootScope.$apply($rootScope.my_tree.expand_all());
+                }, 10);
+            }*/
+			//$scope.rows = $scope.tabs[mapping.id].content;
+			//$scope.renderRowForTree($scope.rows) ;
 		}
 		
-		//Functions
-        $scope.gotoStep = function(index) {
-          $scope.selectedTab = index;
-        }
 		
-		 $scope.save = function() {
+
+		 $scope.saveTestPlan = function() {
           
-			$scope.dataProcessing = true;
-			$(".btn-info").addClass("disabled");
+			 $scope.finalizeTestPlan = true;
+			$(".btn").addClass("disabled");
 			$rootScope.uiTreeJSON = $scope.uiTreeJSON;
             
 
@@ -457,14 +475,14 @@ oTech.controller('testPlanCommandOverride',
 
                     if ($scope.uiTreeJSON[0].nodes[i].nodes[j].nodes.length <= 0) {
 						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
+						$(".btn").removeClass("disabled");
                         $scope.validateTestPlanData(1 + i + "   child Add Command  not existed");
                         return 0;
 
                     }
                     else if (!$scope.uiTreeJSON[0].nodes[i].nodes[j].nodes[0].id) {
 						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
+						$(".btn").removeClass("disabled");
                         $scope.validateTestPlanData("Please Select Parameters ");
                         return 0;
 
@@ -481,7 +499,6 @@ oTech.controller('testPlanCommandOverride',
             sendCreateData.taskVOList[0].taskLoop = $scope.uiTreeJSON[0].loop;
 			sendCreateData.taskVOList[0].useCaseId = $scope.usecaseVal;
 			$rootScope.usecaseId=$scope.usecaseVal;
-			$.cookie("usecaseId", $scope.usecaseVal);
 
             sendCreateData.taskVOList[0].taskCreatedBy = userId;
             sendCreateData.taskVOList[0].taskExecutorVOList = [];
@@ -600,67 +617,49 @@ oTech.controller('testPlanCommandOverride',
             promise = testScriptService.CreateSrvc(userId, jsonData, token);
 
 			$scope.dataProcessing = true;
-			$(".btn-info").addClass("disabled");
+			$(".btn").addClass("disabled");
             promise.then(
                 function (data) {
                     if (data.status == "Success") {
-						$scope.jobIsExitsError=false;
-                        $cookieStore.put('TestPLANId', data.NewTestPlan.jobId);
-                        $cookieStore.put('TestplanName', data.NewTestPlan.jobName);
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
-						$("#jobIsExitsSuccess").text("Test plan has been created successfully with Id :"+data.NewTestPlan.jobId+" ...");
-						 $timeout(function () {
-							 $location.path('/dashboard/testScript');
-	                        }, 2000);
-						$scope.jobIsExitsSuccess=true;
+
+                    	$scope.successMessageTestPlanFinalId = true;
+                        $scope.successMessageTestPlanFinal = "Test plan has been created with Id : "+data.NewTestPlan.jobId
+                        $timeout(function () {
+                        	$scope.finalizeTestPlan = false;
+                        	$scope.successMessageTestPlanFinalId = false;
+                        	 $location.path('/dashboard/testPlanTestRunAdministration');
+                        }, 2000);
+                    	$(".btn").removeClass("disabled");
                     }
                     else {
-						$scope.jobIsExitsSuccess=false;
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
-						$("#jobIsExitsError").text("This test plan allready created...")
-						$scope.jobIsExitsError=true;
+                    	
+                    	$scope.errMessageTestPlanFinalId = true;
+                        $scope.errMessageTestPlanFinal = "This test plan allready created...";
+                        $timeout(function () {
+                        	$scope.finalizeTestPlan = false;
+                        	$scope.errMessageTestPlanFinalId = false;
+                        }, 2000);
+						$(".btn").removeClass("disabled");
                     }
 
 
                 },
                 function (err) {
+                 	$scope.errMessageTestPlanFinalId = true;
+                    $scope.errMessageTestPlanFinal = "Error Occuring While creating the Test Plan..";
+                    $timeout(function () {
+                    	$scope.finalizeTestPlan = false;
+                    	$scope.errMessageTestPlanFinalId = false;
+                    }, 2000);
+					$(".btn").removeClass("disabled");
                     console.log(err);
                 }
             );
-
-
-            /*var assignVirtualDevice = function assignVirtualDevice(token, assignVirtualDevice_Data) {
-
-                promise1 = testScriptService.assignVirtualDevice(userId, token, JSON.stringify(assignVirtualDevice_Data));
-                promise1.then(
-                    function (data) {
-                        if (data.status == "success") {
-                            $location.path('/dashboard/testScript/createTestPlan/testPlanCreated');
-							$scope.dataProcessing = false;
-                        }
-                        else {
-                            $rootScope.Message = " " + data.status;
-                            $('#MessageColor').css("color", "red");
-                            $('#MessagePopUp').modal('show');
-                            $timeout(function () {
-                                $('#MessagePopUp').modal('hide');
-                            }, 2000);
-
-                        }
-
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-            }*/
         }
 		 
-	
 		
 		
+		 
 
 		
 	});

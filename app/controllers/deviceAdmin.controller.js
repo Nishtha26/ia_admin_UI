@@ -84,7 +84,7 @@ oTech.controller('deviceAdminController',
 				$scope.dataLoading = false;		
 				$scope.deviceAdminGridOptions.data = data.devicesList;
 				for(var i=0; i<$scope.deviceAdminGridOptions.data.length; i++){
-				//	$scope.deviceAdminGridOptions.data[i].statusFlag =  $scope.deviceAdminGridOptions.data[i].statusFlag == 0 ?  "Yet to be approved/Rejected" :  "Approved" ;                           
+					$scope.deviceAdminGridOptions.data[i].statusFlag =  $scope.deviceAdminGridOptions.data[i].statusFlag === 0 ?  "Yet to be approved/Rejected" :  "Approved" ;                           
                }
 				$scope.gridApi.selection.selectRow($scope.deviceAdminGridOptions.data[0]); //extra code
 			},

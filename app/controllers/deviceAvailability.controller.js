@@ -2,10 +2,8 @@
 oTech.controller('deviceAvailabilityController',
 	function ($scope, $rootScope, $location, AppServices,GraphServices,GraphMaximizeServices, $stateParams) {
 		
-//			var userId = sessionStorage.userId;
-//		var token = sessionStorage.token;
-	var token = sessionStorage.getItem("token");
-	var userId = sessionStorage.getItem("userId");
+			var userId = sessionStorage.userId;
+		var token = sessionStorage.token;
 		$rootScope.role = sessionStorage.getItem("role");
 		$scope.loading = true;
 		$scope.dataLoading=false;

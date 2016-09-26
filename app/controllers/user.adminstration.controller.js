@@ -1,5 +1,5 @@
 oTech.controller('userAdminstrationController',
-	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout) {
+	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout ,$filter) {
 				var token = sessionStorage.getItem("token");
 				var userId = sessionStorage.getItem("userId");
 				$rootScope.role =sessionStorage.getItem("role");
@@ -58,6 +58,15 @@ oTech.controller('userAdminstrationController',
 		}
 		$scope.getDashBoardMenu();
 		$scope.getFavouriteReports();
+		
+		$scope.showErrorMessage = function(divId,msg){
+			
+				$rootScope.showErrorMessage(divId,msg);
+			
+		}
+		$scope.showSuccessMessage = function (divId,msg) {
+			$rootScope.showSuccessMessage(divId,msg);
+	}
 		/* pagination code  start ****************/
 		
 		var startLimit = 1;
@@ -68,7 +77,6 @@ oTech.controller('userAdminstrationController',
 		$scope.totalRecords=0;
 
 
-		
 		$scope.range = function() {
 					var rangeSize = 6;
 					var ps = [];
@@ -94,7 +102,7 @@ oTech.controller('userAdminstrationController',
 				};
 								
 				$scope.DisablePrevPage = function() {
-					return $scope.currentPage === 0 ? "disabled" : "";
+					return $scope.currentPage == 0 ? "disabled" : "";
 				 };
 				 
 				 $scope.pageCount = function() {
@@ -155,7 +163,6 @@ oTech.controller('userAdminstrationController',
 					$scope.createNewDatasource();
 					$scope.currentPage = n;
 				};
-
 	
 		
 		/* pagination code  end ***********************/
@@ -184,7 +191,7 @@ oTech.controller('userAdminstrationController',
 					$scope.createCompanyId = true;
 		             $scope.tableCompanyId = false;
 					 $scope.status =true;
-					
+					$("#firstname").focus();
 					$('#email-8').attr('readonly', false);
 					$("#username-7").attr('readonly', false);
 					$("#username-7").val("") ;
@@ -197,20 +204,18 @@ oTech.controller('userAdminstrationController',
 					$("#companyId").val("");
 					if($rootScope.role=="ROLE_OTADMIN"){
 //					$("#customer-8").val("");
-					$("#customer-8").select2().select2('val','');
+					$("#customer-8").select2()[0].value='';
 //					$('#customer-8').attr('readonly', false);
 					}
 					else{
 						$("#customer-8").val("");	
 					}
 					$scope.selectedUserGroup=[];
-					$("#firstname").focus();
 				//	$(".errors").hide();
 			 }
 			 $('.table-emailAdd').click(function(){
 				
 				$('.emailAdd').slideToggle();
-				$("#customer_name").focus();
 			 });
 			 
 			 
@@ -228,6 +233,7 @@ $scope.userTableGridOptions = oApp.config.userTableGridOptions;
 $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		// console.log(gridApi);
 		    $scope.gridApi = gridApi;
+		 //   $scope.gridApi.grid.registerRowsProcessor( $scope.refreshData, 200 );
 		  $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
 			  
 		$scope.currentRow=row;
@@ -276,7 +282,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			$scope.status =false;
 			/* To Display Values in Form Elements  When Table Row is Clicked*/
 			$scope.activeUserGroups=	userGroupList;
-			//$("#firstname").val(row[0].firstName) ;
+			$("#firstname").val(row[0].firstName) ;
 			$scope.firstname=row[0].firstName;
 //			$scope.firstname=row[0].firstName;
 			$("#lastname").val(row[0].lastName) ;
@@ -296,13 +302,8 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 //			$("#customer-8").val(row.entity.companyName);
 			
 			$scope.tablerole =row[0].roleName;
-//			$("#customer-8").select2().select2('val',row.entity.companyName);
-			if($rootScope.role=="ROLE_OTADMIN"){
-				$("#customer-8").select2().select2('val',row[0].companyName);
-			}
-			else{
-				$("#customer-8").val(row[0].companyName);
-			}
+			
+		
 		//	$('#customer-8').attr('readonly', true);
 			$("#role-8").val(row[0].status);
 			$scope.selectedUserGroup=row[0].userGroupName;
@@ -313,27 +314,49 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			
 
 			
-		
+			updatePage();
+			$("#edit_role").select2()[0].value=row[0].roleName;
+//			$("#customer-8").select2().select2('val',row.entity.companyName);
+			if($rootScope.role=="ROLE_OTADMIN"){
+			//	$("#customer-8").select2().select('val',row[0].companyName);
+				$("#customer-8").select2()[0].value=row[0].companyName;
+				
+			}
+			else{
+				$("#customer-8").val(row[0].companyName);
+			}
 			
 	}
 	
+	function updatePage() {
+	 	$("#create_new_user_label").hide();
+	 	$("#user_list_label").hide();
+	 	//$("#user_edit_label").show();
+	 	//$("#create_device_body_div").hide();
+	 	$("#user_create_div").show();
+	 	$("#user_list_div").hide();
+	 	$("#cancel_user_edit_label").show();
+	 	
+	 }
+
+
 	$scope.UpdateUser =function(){
 		//alert("hai");
 			 var username         = $("#username-7").val() ;
 			 var password         = $("#password").val() ;
 			 var matchingPassword =	$("#cnfpassword").val() ;
-			 var status           =$("#role-8").val();
+			 var status           =$scope.currentRow.entity.status;
 			 var firstName        =$("#firstname").val() ;
 			 var lastName         =	$("#lastname").val() ;
-			 var companyId        =	 $("#companyId").val();
+//			 var companyId        =	 $("#companyId").val();
 			 var email            =	$("#email-8").val() ;	
 			 var roleName         =	$(".edit-role").val() ;
 			 var dbPassword         =	$("#orgPassword").val() ;
 //			 var companyName      = $("#customer-8").select2().select2('val');
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2().select2('val');
-				}
+					companyName = $("#customer-8").select2()[0].value;
+				}	
 				else{
 					companyName=	$("#customer-8").val();
 				}
@@ -359,25 +382,33 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 				  row.entity.email=email;
 				  row.entity.roleName=roleName;
 				  row.entity.companyName=companyName;	
-				  	$rootScope.Message = "user updated successfully";
-				 $('#MessageColor').css("color", "green");
-				 $('#MessagePopUp').modal('show');
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				 // 	$rootScope.Message = "user updated successfully";
+				// $('#MessageColor').css("color", "green");
+				// $('#MessagePopUp').modal('show');
+				
+				//$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				
 				 $scope.dataLoading=false;
-		          
+				 $("#cancel_user_edit_label").hide();
+				 	$("#create_new_user_label").show();
+				 	$("#user_create_div").hide();
+				 	$("#user_edit_div").hide();
+				 	$("#edit_device_body_div").hide();
+				 	$("#user_list_div").show();
+				 	 $scope.showSuccessMessage('input_user_error_message',"User updated successfully");
 			     },
 			     function(err){
-						$rootScope.Message = "error occured during updation";
-				 $('#MessageColor').css("color", "green");
-				 $('#MessagePopUp').modal('show');
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+			    	 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+					//	$rootScope.Message = "error occured during updation";
+			//	 $('#MessageColor').css("color", "green");
+			//	 $('#MessagePopUp').modal('show');
+			//	$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				 $scope.dataLoading=false;
 			     }
 		       );
 			}	
 				else{
-					
+					 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
 					$(this).parent().parent().find(".errors").show();
 					 $scope.dataLoading=false;
 				}
@@ -385,7 +416,85 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			} 
 		}
 		  });
+		
 }; 
+/*$scope.filter = function() {
+    $scope.gridApi.grid.refresh();
+  };*/
+//var allFilterdata=allOfTheData;
+$scope.singleFilter = function() {
+ // var allFilterdata=allOfTheData;
+    $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+    $scope.userTableGridOptions.data = $scope.userTableGridOptions.data.slice( 0, $scope.endLimit);
+   // allOfTheData=$scope.userTableGridOptions.data;
+   // $scope.createNewDatasource();
+    
+  /*var matcher = new RegExp($scope.searchText);
+    renderableRows.forEach( function( row ) {
+      var match = false;
+      [ 'username', 'status', 'firstName', 'email', 'roleName', 'companyName' ].forEach(function( field ){
+        if ( row.entity[field].match(matcher) ){
+          match = true;
+        }
+      });
+      if ( !match ){
+        row.visible = false;
+      }
+    });
+    return renderableRows;*/
+   
+};
+$scope.cancelUserEdit=function(){
+	 $("#cancel_user_edit_label").hide();
+	 	$("#create_new_user_label").show();
+	 	$("#user_create_div").hide();
+	 	$("#user_edit_div").hide();
+	 	$("#edit_device_body_div").hide();
+	 	$("#user_list_div").show();
+	 }
+$scope.showAllUsersLabel=function(){
+	$("#user_list_div").show();
+ 	$("#user_create_div").hide();
+ 	$("#user_edit_div").hide();
+ 	$("#user_list_label").hide();
+ 	$("#show_user_details_div").hide();		 	
+ 	$("#create_new_user_label").show();
+ 	$("#cancel_user_edit_label").hide();
+ 	$("#cancel_user_create_label").hide();
+	 	
+	 }
+
+$scope.assignUserOfGroup=function(){
+	
+	$("#assign_user").show();
+	$("#user_list_div").hide();
+ 	$("#user_create_div").hide();
+ 	$("#user_edit_div").hide();
+ 	$("#user_list_label").hide();
+ 	$("#show_user_details_div").hide();		 	
+ 	$("#assign_user_cancel_label").show();
+ 	$("#create_new_user_label").hide();
+ 	$("#cancel_user_edit_label").hide();
+ 	$("#cancel_user_create_label").hide();
+	 	
+	 }
+$scope.cancelAssignUserLabel=function(){
+	$("#user_list_div").show();
+ 	$("#user_create_div").hide();
+ 	
+ 	$("#group_list_label").show();
+ 	$("#user_edit_div").hide();
+ 	$("#user_list_label").hide();
+ 	$("#show_user_details_div").hide();		 	
+ 	$("#create_new_user_label").show();
+ 	$("#cancel_user_edit_label").hide();
+ 	$("#cancel_user_create_label").hide();
+ 	$("#assign_user_cancel_label").hide();
+ 	$("#assign_user").hide();
+	 	
+	 }
+
+
 /*Create user*/	
 $scope.CreateUser =function(){
 	
@@ -400,7 +509,7 @@ $scope.CreateUser =function(){
 			 var roleName         =	$("#role").val() ;
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2().select2('val');
+					companyName = $("#customer-8").select2()[0].value;
 				}
 				else{
 					companyName=	$("#customer-8").val();
@@ -420,27 +529,37 @@ $scope.CreateUser =function(){
 				
 				$rootScope.Message = data.status;
 				if(data.status=="error"){
-				$rootScope.Message=data.errorDescription;
+				/*$rootScope.Message=data.errorDescription;
 				$('#MessageColor').css("color", "red");
-				 $('#MessagePopUp').modal('show');
+				 $('#MessagePopUp').modal('show');*/
+					$scope.showErrorMessage('input_user_error_message',data.errorDescription);
 				 
 				}
 				if(data.status=="success"){
 				$scope.userTableGridOptions.data.push(newuserdata);
-				$rootScope.Message="user created successfully";
+				/*$rootScope.Message="user created successfully";
 				 $('#MessageColor').css("color", "green");
 				 $('#MessagePopUp').modal('show');
-				 $scope.cancel();
+				 $scope.cancel();*/
+			//	 $("#input_group_error_message").text('User created successfully');
+			//		$("#input_group_error_message").css('color', 'green');
+			//		$("#input_group_error_message").show();
+					
 				 $scope.userTableData();
+				 
+				 $scope.showAllUsersLabel();
+				 $scope.showSuccessMessage('input_user_error_message',"User created successfully");
 				 }
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+			
+//				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
 				
 			   },
 			   function(err){
-				   $rootScope.Message = err.responseJSON.message; //"An error occured while creating the user. Please try later..";
+				   $scope.showErrorMessage('input_user_error_message',err.responseJSON.message);
+				/*   $rootScope.Message = err.responseJSON.message; 
 				 $('#MessageColor').css("color", "red");
 				 $('#MessagePopUp').modal('show');
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
 				
 			   }
 		       ); 
@@ -472,6 +591,13 @@ $scope.CreateUser =function(){
 			}
 		);
 	   }
+		$scope.getTableHeight = function() {
+		       var rowHeight = 40; // your row height
+		       var headerHeight = 58; // your header height
+		       return {
+		          height: ($scope.userTableGridOptions.data.length * rowHeight + headerHeight) + "px"
+		       };
+		    };
 		   $scope.createNewDatasource = function() {
 				$scope.dataLoading = true;
 				$scope.userTableGridOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
@@ -496,10 +622,10 @@ $scope.CreateUser =function(){
 			$scope.customers=customerList;
 				if($rootScope.role=="ROLE_OTADMIN"){
 					
-					 $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
+					/* $.getScript('//cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.min.js',function(){
 						    $("#customer-8").select2({
 						    });
-					 });
+					 });*/
 			/*	 $( "#customer-8" ).autocomplete({
 				source: customerList
    				 }); */
@@ -519,8 +645,6 @@ $scope.CreateUser =function(){
 /*Create Customer*/
 $scope.createCustomer =function(){
 	
-	
-	
 
 //	groupSelector.val(userGroupID).trigger("change"); 
 	
@@ -537,10 +661,11 @@ $scope.createCustomer =function(){
 				
 				if(data.errorDescription == "customer already exists"){
 					//$scope.errorMessage = true;
-						$rootScope.Message = data.errorDescription;
+				/*		$rootScope.Message = data.errorDescription;
 				 $('#MessageColor').css("color", "green");
 				 $('#MessagePopUp').modal('show');
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
+					  $scope.showErrorMessage('input_user_error_message',data.errorDescription);
 				}
 				if(data.status=="success"){
 					
@@ -550,7 +675,7 @@ $scope.createCustomer =function(){
 						if($rootScope.role=="ROLE_OTADMIN"){
 						//	$("#customer-8").select2().select2('val',customerName);
 							$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
-							$("#customer-8").select2().select2('val',customerName);
+							$("#customer-8").select2()[0].value =customerName;
 						//	$( "#customer-8" ).val(customerName);
 						}
 						else{
@@ -575,7 +700,6 @@ $scope.closerCreatePop =function(){
 	$("#customer_name").val("");
 	$('.emailAdd').slideToggle();
 }	
-
 
 $scope.userGroupList =function(){
 	
@@ -622,27 +746,32 @@ $scope.deleteUser =function(userNames,accountEnableStatus){
 		function(data){
 			$rootScope.Message = data.status;
 			if(data.status=="error"){
-			$rootScope.Message=data.errorDescription;
+				  $scope.showErrorMessage('input_user_error_message',data.errorDescription);
+		/*	$rootScope.Message=data.errorDescription;
 			$('#MessageColor').css("color", "red");
 			 $('#MessagePopUp').modal('show');
-			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
 			}
 			if(data.status=="success"){
 			
-			$rootScope.Message="User update successfully";
+			/*$rootScope.Message="User update successfully";
 			 $('#MessageColor').css("color", "green");
 			 $('#MessagePopUp').modal('show');
 			 $scope.cancel();
-			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
+		 $scope.showSuccessMessage('input_user_error_message',"User update successfully");
 			 $scope.userTableData();
 			 }
 			$scope.dataLoading=false;
 		},
 		function(err){
-			  $rootScope.Message = err.responseJSON.message; //"An error occured while creating the user. Please try later..";
+			
+			  $scope.showErrorMessage('input_user_error_message',err.responseJSON.message);
+		/*	  $rootScope.Message = err.responseJSON.message;
+			
 				 $('#MessageColor').css("color", "red");
 				 $('#MessagePopUp').modal('show');
-				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+				$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
 				$scope.dataLoading=false;
 		}
 	);
@@ -668,7 +797,7 @@ $scope.DeleteUserBtn=function(){
 	 if ( window.confirm(deletePopupMsg) ) {
 		 $scope.deleteUser(userNames,$scope.accountEnableStatus);
      }
-		 
+ 
 }
 $scope.DeleteBtnLabel=function(){
 	 $scope.isDeleteDisabled = true;
@@ -700,10 +829,847 @@ $scope.DeleteBtnLabel=function(){
 }
 
 $scope.pageReset();
-$('#myForm input ' ).blur(function() {
+/*$('#myForm input ' ).blur(function() {
 	if($scope.myForm.$invalid){
 		$(this).parent().parent().find(".errors").show();
 	}
-//	  alert( "Handler for .blur() called." );
+	});*/
+
+/*$scope.UpdateUserBtn=function(){
+	var row=$scope.currentRow;
+     clickedItem ="updateuser";
+	 $scope.updateButton =true;
+	 $scope.createButton =false;
+	 console.log(row);
+     console.log(row[0].companyName);
+			$scope.accountDiv =true;
+        $scope.addCustomer = false; 
+		$scope.role1 = false; 
+        $scope.role2 = true;
+		$scope.createCompanyId = false;
+        $scope.tableCompanyId = false;
+		$scope.status =false;
+		 To Display Values in Form Elements  When Table Row is Clicked
+		$scope.activeUserGroups=	userGroupList;
+		$("#firstname").val(row[0].firstName) ;
+		$scope.firstname=row[0].firstName;
+//		$scope.firstname=row[0].firstName;
+		$("#lastname").val(row[0].lastName) ;
+//		$scope.lastname=row[0].lastName;
+//		$("#password").val(row[0].password) ;
+		$scope.password=row[0].password;
+//		$("#cnfpassword").val(row[0].password) ;
+		$scope.passwordConfirmation=row[0].password;
+		$("#orgPassword").val(row[0].password) ;// for check password is change for not
+		
+//		$("#email-8").val(row[0].email) ;
+		$scope.mail=row[0].email;
+		$('#email-8').attr('readonly', true);
+//		$("#username-7").val(row[0].username) ;
+		$scope.userName=row[0].username;
+		$("#username-7").attr('readonly', true) ;
+//		$("#customer-8").val(row.entity.companyName);
+		
+		$scope.tablerole =row[0].roleName;
+		
+		$("#edit_role").select2()[0].value=row[0].roleName;
+//		$("#customer-8").select2().select2('val',row.entity.companyName);
+		if($rootScope.role=="ROLE_OTADMIN"){
+		//	$("#customer-8").select2().select('val',row[0].companyName);
+			$("#customer-8").select2()[0].value=row[0].companyName;
+			
+		}
+		else{
+			$("#customer-8").val(row[0].companyName);
+		}
+	//	$('#customer-8').attr('readonly', true);
+		$("#role-8").val(row[0].status);
+		$scope.selectedUserGroup=row[0].userGroupName;
+//		$(".errors").hide();
+		if($scope.myForm.$invalid){
+	//		$(this).parent().parent().find(".errors").show();
+		}
+		
+
+		
+		updatePage();
+		
+}*/
+/************************************************************************************************************************************************************/
+
+/*  user group data start */
+
+var startLimitUG = 1;
+$scope.itemsPerPageUG = 10;
+$scope.currentPageUG = 0;
+$scope.endLimitUG=$scope.itemsPerPage;
+var allOfTheDataUG;
+$scope.totalRecordsUG=0;
+
+
+$scope.rangeUG = function() {
+			var rangeSize = 6;
+			var ps = [];
+			var start;
+
+			start = $scope.currentPage;
+			if ( start > $scope.pageCountUG()-rangeSize ) {
+			start = $scope.pageCountUG()-rangeSize+1;
+			}
+
+			for (var i=start; i<start+rangeSize; i++) {
+			if(i>=0) 
+			ps.push(i);
+			}
+			return ps;
+		};
+
+		$scope.prevPageUG = function() {
+		if ($scope.currentPageUG > 0) {
+			$scope.setPagePrevUG($scope.currentPageUG-1);
+			//$scope.currentPage--;
+			}
+		};
+						
+		$scope.DisablePrevPageUG = function() {
+			return $scope.currentPageUG == 0 ? "disabled" : "";
+		 };
+		 
+		 $scope.pageCountUG = function() {
+			return Math.ceil($scope.totalRecordsUG/$scope.itemsPerPageUG)-1;
+		};
+		
+		$scope.nextPageUG = function() {
+			if ($scope.currentPageUG < $scope.pageCountUG()) {
+			$scope.setPageNextUG($scope.currentPageUG+1);
+			//$scope.currentPage++;
+			}
+		};
+		
+		$scope.DisableNextPageUG = function() {
+			return $scope.currentPageUG === $scope.pageCountUG() ? "disabled" : "";
+		};
+		
+		 $scope.setPageUG = function(n) {
+			 $scope.dataLoading = true;
+			$scope.endLimitUG = ($scope.itemsPerPage*(n+1));
+			if($scope.endLimitUG > $scope.totalRecordsUG){
+				var reminder = $scope.totalRecordsUG % $scope.itemsPerPageUG;
+				if(reminder > 0){
+					$scope.endLimitUG = $scope.endLimitUG - ($scope.itemsPerPageUG-reminder);
+				}
+			}
+			 
+			startLimitUG = ($scope.itemsPerPageUG*n);
+			$scope.createNewDatasourceUG();
+			$scope.currentPageUG = n;
+		};
+		
+		 $scope.setPagePrevUG = function(n) {
+			 $scope.dataLoading = true;
+			$scope.endLimitUG = ($scope.itemsPerPageUG*(n+1));
+			if($scope.endLimitUG > $scope.totalRecordsUG){
+				var reminder = $scope.totalRecordsUG % $scope.itemsPerPageUG;
+				if(reminder > 0){
+					$scope.endLimitUG = $scope.endLimitUG - ($scope.itemsPerPageUG-reminder);
+				}
+			}
+			 
+			startLimitUG = ($scope.itemsPerPageUG*n);
+			$scope.createNewDatasourceUG();
+			$scope.currentPageUG = n;
+		};
+		 $scope.setPageNextUG = function(n) {
+			 $scope.dataLoading = true;
+			$scope.endLimitUG = ($scope.itemsPerPageUG*(n+1));
+			if($scope.endLimitUG > $scope.totalRecordsUG){
+				var reminder = $scope.totalRecordsUG % $scope.itemsPerPageUG;
+				if(reminder > 0){
+					$scope.endLimit = $scope.endLimitUG - ($scope.itemsPerPageUG-reminder);
+				}
+			}
+			 
+			startLimitUG = ($scope.itemsPerPageUG*(n));
+			$scope.createNewDatasourceUG();
+			$scope.currentPageUG = n;
+		};
+		
+		  $scope.singleFilterUserGroup = function() {
+			  $scope.addUsergroupsGridOptions.data = $filter('filter')(allOfTheDataUG, $scope.searchTextUserGroup, undefined);
+			    $scope.addUsergroupsGridOptions.data = $scope.addUsergroupsGridOptions.data.slice( 0, $scope.endLimit);
+			}
+		  $scope.singleFilterForAllUser = function() {
+			  $scope.allusersgroupGridOptions.data = $filter('filter')($scope.allusersgroupGrid, $scope.searchTextForAlluser, undefined);
+			    $scope.allusersgroupGridOptions.data = $scope.allusersgroupGridOptions.data.slice( 0, $scope.endLimit);
+			}
+		  $scope.singleFilterForExistUser = function() {
+			  $scope.existingusersGridOptions.data = $filter('filter')($scope.existingusersGridData, $scope.searchTextForExistuser, undefined);
+			    $scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice( 0, $scope.endLimit);
+			}
+
+		  $scope.createNewDatasourceUG = function() {
+				$scope.dataLoading = true;
+				$scope.addUsergroupsGridOptions.data = allOfTheDataUG.slice( startLimitUG, $scope.endLimitUG);
+				$scope.dataLoading = false;
+			}
+var deletePopupMsg="Are you want to delete this user group?";
+$scope.currentRowUserGroup;
+
+$scope.addUsergroupsGridOptions = oApp.config.addUsergroupsGridOptions;
+$scope.addUsergroupsGridOptions.onRegisterApi = function( gridApi ) { 
+$scope.gridApi = gridApi;
+$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+	console.log(row);
+	
+	console.log("row select status "+row.isSelected);
+	if(row.isSelected){
+	$scope.currentRowUserGroup=row.entity;
+	userGroupId = row.entity.userGroupId ;
+	groupName = row.entity.userGroupName;
+	$scope.isUpdateDisabled = false;
+	$scope.isDeleteDisabled = false;
+	$scope.isAssignDisabled = false;
+	
+	}
+	else{
+		$scope.pageReset();	
+	}
+	$scope.assignuser= false;
+//	$scope.allusersgroupData();
+//	$scope.existingusersData();
+	
+}); 
+};
+
+//  for displaying usergroups list
+
+$scope.pageReset=function(){
+$scope.isUpdateDisabled = true;
+$scope.isDeleteDisabled = true;
+$scope.isAssignDisabled = true;
+	 
+}
+$scope.pageReset();
+$scope.availableUsergroupsGrid = function(){
+  $scope.userDataLoading = true;
+promise = AppServices.getAvailableUsergroupsData(userId, token);
+promise.then(
+function(data){
+	$scope.totalRecordsUG = data.length;
+	$scope.addUsergroupsGridOptions.data = data;
+	allOfTheDataUG = data;
+	$scope.addUsergroupsGridOptions.data = data.slice( 0, $scope.itemsPerPage);
+	$scope.gridApi.selection.selectRow($scope.addUsergroupsGridOptions.data[0]);
+	  $scope.userDataLoading = false;
+},
+function(err){
+	  $scope.userDataLoading = false;
+}
+);
+}
+
+
+/*To Show Add User groups Div*/	  
+
+$scope.showUsergroups =function(){
+$scope.userDiv =true;
+$scope.assignuser= false;
+$scope.updateButton =false;
+$scope.createButton =true;
+$scope.createNewGroupLabel();
+}
+
+/*Cancel button */
+
+$scope.cancel =function(){
+$scope.userDiv =false;
+$scope.assignuser= false;
+$scope.user_group="";
+}
+/*Function Call  to create New User groups */
+
+$scope.addUsergroup =function(){
+var usergroup =$("#user_group").val();
+var userid =userId; //$("#user_id").val();
+console.log("user group"+":"+usergroup + ","+"userid"+":"+userid);
+
+if($scope.usergroupform.$valid){
+$scope.userDataLoading = true;
+promise = AppServices.addUsers(token,usergroup,userid);
+promise.then(
+function(data){
+	
+	$scope.availableUsergroupsGrid();
+	$scope.pageReset();
+	if(data.status=="success"){
+	// $rootScope.Message = "successfully created the usergroup";
+	 //$('#MessageColor').css("color", "green");
+		  $scope.showSuccessMessage('input_group_error_message',"Group created successfully");
+		/*$("#input_group_error_message").text('Group created successfully');
+ 		$("#input_group_error_message").css('color', 'green');
+ 		$("#input_group_error_message").show();*/
+	 $scope.user_group="";
+//	 $scope.cancel();
+	 $scope.groupListLabel();
+	 }
+	 if(data.status=="failure"){
+//	 $rootScope.Message = "error occured while creating the usergroup";
+		  $scope.showErrorMessage('input_group_error_message',"Error occured while creating the usergroup ... try again");
+	/* $("#input_group_error_message").text('Error occured while creating the usergroup ... try again');
+		$("#input_group_error_message").css('color', 'red');
+ 		$("#input_group_error_message").show();*/
+	// $('#MessageColor').css("color", "red");
+	 }
+	// $('#MessagePopUp').modal('show');
+	//$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+	// $scope.cancel();
+	  $scope.userDataLoading = false;
+},
+function(err){
+	 $("#input_group_error_message").text('Error occured while creating the usergroup ... try again');
+		$("#input_group_error_message").css('color', 'red');
+		$("#input_group_error_message").show();
+	//$rootScope.Message = "error occured while creating the usergroup";
+	// $('#MessageColor').css("color", "red");
+	// $('#MessagePopUp').modal('show');
+	$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+	  $scope.userDataLoading = false;
+}
+);
+}
+else{
+	//$( "#usergroupform" ).submit();
+	$("user_group").focus();
+//	$scope.usergroupform.$error = true;
+}
+}
+
+
+/*
+	Function to add user to list
+*/
+$scope.addUser = function(){
+
+$scope.addinguserData();
+
+}
+/* unassign user */
+$scope.removeUser = function(){
+//   alert("unassign");
+$scope.unassignUserData();
+}
+
+/*
+for all user group list
+*/
+$scope.allusersgroupGridOptions = oApp.config.allusersgroupGridOptions;
+$scope.allusersgroupGridOptions.onRegisterApi = function( gridApi ) { //extra code
+$scope.gridApi = gridApi;
+$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+	console.log(row);
+	luserId = row.entity.userId ;
+	customerId = row.entity.customerId;
+	lusername = row.entity.username ;
+	lastName = row.entity.lastName;
+}); 
+};
+
+
+$scope.allusersgroupData = function(){
+$scope.userDataLoading=true;
+promise = AppServices.GetallusersgroupData( token , userGroupId);
+promise.then(
+function(data){
+	$scope.allusersgroupGrid = data;
+	$scope.allusersgroupGridOptions.data = data;
+	//$scope.gridApi.selection.selectRow($scope.allusersgroupGridOptions.data[0]); //extra code
+	//updateAlluserslist()
+	$scope.userDataLoading=false;
+},
+function(err){
+	$scope.userDataLoading=false;
+}
+);
+}
+function updateAlluserslist(){
+	 $('.assign-user').append('<option value="apples">Apples</option><option value="oranges" selected>Oranges</option>');
+     $('.assign-user').trigger('bootstrapDualListbox.refresh', true);
+	
+}
+/*
+for existing users
+
+*/
+$scope.existingusersGridOptions = oApp.config.existingusersGridOptions;
+
+$scope.existingusersGridOptions.onRegisterApi = function( gridApi ) { //extra code
+
+$scope.gridApi = gridApi;
+$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+		luserId=row.entity.userId;
+		userGroupId=row.entity.userGroupId;
+        console.log(row);
+		//console.log(row.entity.userGroupName);
+		console.log(row.entity.userId);
+		console.log(groupName);
+		console.log(row.entity.customerId);
+		
+		
+  }); 
+};
+
+
+$scope.existingusersData = function(){
+$scope.userDataLoading=true;
+promise = AppServices.GetexistingusersData( token,userGroupId,groupName);
+promise.then(
+function(data){
+	console.log(data);
+	$scope.existingusersGridData = data;
+	$scope.existingusersGridOptions.data = data;
+	
+	//$scope.gridApi.selection.selectRow($scope.existingusersGridOptions.data[0]); //extra code
+	$scope.userDataLoading=false;
+},
+function(err){
+	$scope.userDataLoading=false;
+}
+);
+}
+/*
+	Function for adding user to already existing users
+*/
+$scope.addinguserData = function(){
+$scope.userDataLoading=true;
+var adddata ={userGroupName:groupName,username:lusername,lastName:lastName};
+promise = AppServices.GetadduserData( token,groupName,luserId,customerId);
+promise.then(
+function(data){
+	
+	if (data.status =="success")
+	{
+		//alert(data.status);
+		$scope.existingusersData();
+		$scope.allusersgroupData();
+		//$scope.existingusersGridOptions.data.push(adddata);
+	}
+	
+	else{
+		console.log(data.status);}
+	$scope.userDataLoading=false;
+	
+},
+function(err){
+	$scope.userDataLoading=false;
+}
+);
+}
+/*
+	Function for unassigning user from user group
+*/
+$scope.unassignUserData = function(){
+console.log(token);
+console.log(groupName);
+console.log(luserId);
+$scope.userDataLoading=true;  
+var adddata ={userGroupName:groupName,username:lusername,lastName:lastName};
+promise = AppServices.GetunassignUserData( token,groupName,luserId);
+
+promise.then(
+function(data){
+	
+	if (data.status =="success"){
+		//alert(data.status);
+		$scope.existingusersData();
+		$scope.allusersgroupData();
+		}
+	else
+		console.log(error);
+	$scope.userDataLoading=false;
+},
+function(err){
+	$scope.userDataLoading=false;
+}
+);
+} 
+
+$scope.availableUsergroupsGrid();
+//	$scope.allusersgroupData();
+
+$scope.assignUsersLoad=function(){
+  $scope.userDiv =false;
+ $scope.assignuser= true;
+$scope.allusersgroupData();
+$scope.existingusersData();
+
+
+}
+
+$scope.UpdateUserGroupBtn=function(){
+
+  $scope.userDiv =true;
+  $scope.assignuser= false;
+  $scope.updateButton =true;
+  $scope.createButton =false;
+  $("#user_group").val(groupName);
+  $scope.groupEditLabel();
+}
+$scope.updateUserGroup=function(){
+//	userGroupId
+ /* $scope.userDiv =true;
+  $scope.assignuser= false;
+  $scope.updateButton =true;
+  $scope.createButton =false;
+  $("#user_group").val(groupName);*/
+
+var groupNameNew= $("#user_group").val();
+if(!$scope.usergroupform.$invalid){
+	
+	  $scope.userDataLoading = true;
+promise = AppServices.updateUsergroupData( token , userGroupId,groupNameNew);
+promise.then(
+function(data){
+	
+	$scope.availableUsergroupsGrid();
+	$scope.pageReset();
+	if(data.status=="success"){
+	// $rootScope.Message = "successfully update the usergroup";
+	// $('#MessageColor').css("color", "green");
+	 //$scope.user_group="";
+		$("#input_group_error_message").text('Group Update successfully');
+ 		$("#input_group_error_message").css('color', 'green');
+ 		$("#input_group_error_message").show();
+	 $scope.user_group="";
+//	 $scope.cancel();
+	 $scope.groupListLabel();
+//	 $scope.cancel();
+	 }
+	 if(data.status=="failure"){
+	// $rootScope.Message = "error occured while creating the usergroup";
+	// $('#MessageColor').css("color", "red");
+		 $("#input_group_error_message").text('Error occured while updating the usergroup');
+			$("#input_group_error_message").css('color', 'red');
+	 		$("#input_group_error_message").show();
+	 }
+	 $('#MessagePopUp').modal('show');
+	$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+	 $scope.cancel();
+	  $scope.userDataLoading = false;
+},
+function(err){
+	
+//	$rootScope.Message = "error occured while creating the usergroup";
+	// $('#MessageColor').css("color", "red");
+	// $('#MessagePopUp').modal('show');
+//	$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+	 $("#input_group_error_message").text('Error occured while updating the usergroup');
+		$("#input_group_error_message").css('color', 'red');
+		$("#input_group_error_message").show();
+	  $scope.userDataLoading = false;
+}
+);
+}
+else{
+	//alert("Error..");
+	$(this).parent().parent().find(".errors").show();
+	$("#user_group").focus();
+}
+
+}
+$scope.deleteUsergroup=function(){
+  $scope.userDataLoading = true;
+	promise = AppServices.deleteUsergroupData( token , userGroupId);
+	promise.then(
+	function(data){
+		
+		$scope.availableUsergroupsGrid();
+		$scope.pageReset();
+		if(data.status=="success"){
+			  $scope.showSuccessMessage('input_group_error_message',"Successfully delete the usergroup");
+		/* $rootScope.Message = "Successfully delete the usergroup";
+		 $('#MessageColor').css("color", "green");*/
+		 $scope.user_group="";
+	//	 $scope.cancel();
+		 }
+		 if(data.status=="failure"){
+			  $scope.showErrorMessage('input_group_error_message',"Error occured while creating the usergroup");
+		/* $rootScope.Message = "Error occured while creating the usergroup";
+		 $('#MessageColor').css("color", "red");*/
+		 }
+		// $('#MessagePopUp').modal('show');
+		//$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+		 $scope.cancel();
+		  $scope.userDataLoading = false;
+	},
+	function(err){
+		  $scope.showErrorMessage('input_group_error_message',"Error occured while creating the usergroup");
+		/*$rootScope.Message = "Error occured while creating the usergroup";
+		 $('#MessageColor').css("color", "red");
+		 $('#MessagePopUp').modal('show');
+		$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
+		  $scope.userDataLoading = false;
+	}
+	);
+	
+}    
+
+$scope.DeleteUserGroupBtn=function(){
+if(userGroupId!=''){
+if ( window.confirm(deletePopupMsg) ) {
+	 $scope.deleteUsergroup();
+}
+}
+else{
+	$rootScope.Message = "Usergroup is not selected ";
+	 $('#MessageColor').css("color", "red");
+	 $('#MessagePopUp').modal('show');
+	$timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);
+}
+	 
+}
+
+
+$scope.getTableHeightUserGroup = function() {
+    var rowHeight = 40; // your row height
+    var headerHeight = 58; // your header height
+    var footerPage=0;
+    return {
+       height: ($scope.addUsergroupsGridOptions.data.length * rowHeight + headerHeight+footerPage) + "px"
+    };
+ };
+
+ $scope.groupListLabel=function(){
+	 	$("#group_create_div").hide();
+	 	$("#group_edit_div").hide();
+	 	$("#group_list_div").show();
+		$("#create_new_group_label").show();
+	 	$("#group_list_label").show();
+	 	$("#create_new_group_label").show();
+	 	$("#group_cancel_edit_label").hide();
+	 	$("#input_group_error_message").text('');
+	 	$("#group_cancel_create_label").hide();
+	 	$("#assign_user").hide();
+	 	$("#assign_user_cancel_label").hide();
+		
+	}
+// $("#create_new_group_label").click(function(){
+	 $scope.createNewGroupLabel=function(){
+		 
+	 	$("#group_create_div").show();
+	 	$("#group_edit_div").hide();
+	 	$("#group_list_div").hide();
+	 	$("#group_list_label").show();
+	 	$("#create_new_group_label").hide();
+	 	$("#group_cancel_edit_label").hide();
+		$("#input_group_error_message").text('');
+		$("#group_cancel_create_label").show();
+		$("#input_group_error_message").text('');
+		$("#assign_user").hide();
+	 	$("#assign_user_cancel_label").hide();
+		
+	 }
+
+	$scope.groupEditLabel=function(){
+		
+			$("#group_create_div").show();
+			$("#group_list_label").show();
+		 	$("#group_edit_div").hide();
+		 	$("#group_list_div").hide();
+		 	$("#create_new_group_label").hide();
+		 	$("#group_cancel_edit_label").show();
+		 	$("#input_group_error_message").text('');
+		 	$("#assign_user").hide();
+		 	$("#assign_user_cancel_label").hide();
+		}
+
+	$scope.groupCancelEditLabel=function(){
+	$("#group_create_div").hide();
+		$("#group_edit_div").hide();
+		$("#group_list_div").show();
+		$("#group_list_label").show();
+		$("#create_new_group_label").show();
+		$("#group_edit_label").hide();
+		$("#group_cancel_edit_label").hide();
+		$("#assign_user").hide();
+	 	$("#assign_user_cancel_label").hide();
+		$("#input_group_error_message").text('');
+	}
+	
+	$scope.groupCancelCreateLabel=function(){
+		$("#group_create_div").hide();
+			$("#group_edit_div").hide();
+			$("#group_list_div").show();
+			$("#group_list_label").show();
+			$("#create_new_group_label").show();
+			$("#group_edit_label").hide();
+			$("#group_cancel_edit_label").hide();
+			$("#assign_user").hide();
+		 	$("#assign_user_cancel_label").hide();
+			$("#input_group_error_message").text('');
+			$("#group_cancel_create_label").hide();
+		}
+	$scope.DetailUserBtn=function(){
+		$("#user_list_div").hide();
+	 	$("#user_create_div").hide();
+	 	$("#user_edit_div").hide();
+	 	$("#user_list_label").show();
+	 	$("#show_user_details_div").show();
+	 	$("#create_new_user_label").hide();
+	 	$("#cancel_user_edit_label").hide();
+	 	$("#cancel_user_create_label").hide();
+	 	$("#assign_user").hide();
+	 	$("#assign_user_cancel_label").hide();
+	}
+	$scope.assignUserOfGroup=function(){
+		
+		$("#assign_user").show();
+	 	$("#assign_user_cancel_label").show();
+	 	$("#group_list_label").show();
+		$("#group_create_div").hide();
+	 	$("#group_edit_div").hide();
+	 	$("#group_list_div").hide();
+	 	
+	 	$("#create_new_group_label").hide();
+	 	$("#group_cancel_edit_label").hide();
+	 	$("#input_group_error_message").text('');
+		 
+	 	$scope.assignUsersLoad();
+		 }
+	$scope.cancelAssignUserLabel=function(){
+		$("#group_list_label").show();
+	 	$("#create_new_group_label").show();
+		$("#group_list_div").show();
+		$("#assign_user").hide();
+	 	$("#assign_user_cancel_label").hide();
+		$("#group_create_div").hide();
+	 	$("#group_edit_div").hide();
+	 	//$("#group_list_div").hide();
+	 	
+	 	$("#group_cancel_edit_label").hide();
+	 	$("#input_group_error_message").text('');
+		 	
+		 }
+	
+	$(function() {
+		
+		 var assignUser =$('.assign-user').bootstrapDualListbox({
+		        preserveSelectionOnMove: 'moved',
+		        moveOnSelect: false
+		    });
+		
+		
 	});
+
+/* user group data  end*/
+
+/*************************************************************************************************/
+// start datatable demo
+
+$scope.message = '';            
+
+$scope.myCallback = function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {            
+    $('td:eq(2)', nRow).bind('click', function() {
+        $scope.$apply(function() {
+            $scope.someClickHandler(aData);
+        });
+    });
+    return nRow;
+};
+
+$scope.someClickHandler = function(info) {
+    $scope.message = 'clicked: '+ info.price;
+};
+
+$scope.columnDefs = [ 
+    { "mDataProp": "category", "aTargets":[0]},
+    { "mDataProp": "name", "aTargets":[1] },
+    { "mDataProp": "price", "aTargets":[2] }
+]; 
+
+$scope.overrideOptions = {
+    "bStateSave": true,
+    "iCookieDuration": 2419200, /* 1 month */
+    "bJQueryUI": true,
+    "bPaginate": true,
+    "bLengthChange": true,
+    "bFilter": true,
+    "bInfo": true,
+    "bDestroy": true
+};
+
+
+$scope.sampleProductCategories = [
+
+      {
+        "name": "1948 Porsche 356-A Roadster",
+        "price": 53.9,
+          "category": "Classic Cars",
+          "action":"x"
+      },
+      {
+        "name": "1948 Porsche Type 356 Roadster",
+        "price": 62.16,
+    "category": "Classic Cars",
+          "action":"x"
+      },
+      {
+        "name": "1949 Jaguar XK 120",
+        "price": 47.25,
+    "category": "Classic Cars",
+          "action":"x"
+      }
+      ,
+      {
+        "name": "1936 Harley Davidson El Knucklehead",
+        "price": 24.23,
+    "category": "Motorcycles",
+          "action":"x"
+      },
+      {
+        "name": "1957 Vespa GS150",
+        "price": 32.95,
+    "category": "Motorcycles",
+          "action":"x"
+      },
+      {
+        "name": "1960 BSA Gold Star DBD34",
+        "price": 37.32,
+    "category": "Motorcycles",
+          "action":"x"
+      }
+   ,
+      {
+        "name": "1900s Vintage Bi-Plane",
+        "price": 34.25,
+    "category": "Planes",
+          "action":"x"
+      },
+      {
+        "name": "1900s Vintage Tri-Plane",
+        "price": 36.23,
+    "category": "Planes",
+          "action":"x"
+      },
+      {
+        "name": "1928 British Royal Navy Airplane",
+        "price": 66.74,
+    "category": "Planes",
+          "action":"x"
+      },
+      {
+        "name": "1980s Black Hawk Helicopter",
+        "price": 77.27,
+    "category": "Planes",
+          "action":"x"
+      },
+      {
+        "name": "ATA: B757-300",
+        "price": 59.33,
+    "category": "Planes",
+          "action":"x"
+      }
+  
+];            
+    
+
 });
