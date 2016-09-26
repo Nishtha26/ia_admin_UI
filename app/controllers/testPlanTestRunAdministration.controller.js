@@ -1127,6 +1127,11 @@ oTech.controller('testPlanTestRunAdministration',
 	 	        deepCopyObject = "";
 	 	        $scope.RealDevicesOptions.data = [];
 	 	       $scope.DeviceMapping.data = [];
+	 	       
+	 	      $("#mappingDataTable").css("display","block");
+	 	     $("#testRunDeviceDataTable").css("display","none");
+	 	     $scope.CreateTestRunRealDeviceOptions.data = [];
+	 	       
 	 	      $('#tableForTaskAndCommandGroup > tbody').empty();
 	        	TestPlanId = row.entity.testplanId;
 	        	
@@ -1169,6 +1174,7 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.renderHtmlForTask = function(taskTableArray){
 				var html = "";
                 angular.forEach(taskTableArray, function (node, index) {
+                	if(node.loop != '0'){
                     html += '<tr class="border-double" style="background-color: #CCD0DA;">'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
 					        	'<td class="text-right"><input type="text"  style="width: 40px;" maxlength="4" value="'+node.sequenceNo+'" readonly/></td>'+
@@ -1189,13 +1195,14 @@ oTech.controller('testPlanTestRunAdministration',
 							        	'<td class="text-right"><input type="text" value="'+node.loop+'" style="width: 40px;" maxlength="4"  readonly/></td>'+
 							        '</tr>'+
 							        '<tr style="background-color: #F9FCF1;">'+
-							        	'<td colspan="3"><span class="text-italic">'+node.commandParams+'</span></td>'+
+							        	'<td colspan="3"><span class="text-italic" style="word-wrap: break-word;">'+node.commandParams+'</span></td>'+
 							        	
 							        '</tr>';
 	                            });
 	        			}
                         });
-                    }
+                     }
+                   }
                 });
                 $('#tableForTaskAndCommandGroup > tbody').empty();
                 $('#tableForTaskAndCommandGroup > tbody').append(html);
@@ -1453,6 +1460,20 @@ oTech.controller('testPlanTestRunAdministration',
 			                        $("#mappingDataTable").css("display","none");
 			                        $scope.CreateTestRunRealDeviceOptions.data = data.testRunDeviceData;
 			                        $("#testRunDeviceDataTable").css("display","block");
+			                        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+			                		promise.then(
+			                			function (data) {
+			                				$scope.loadAllTestRuns = false;
+			                				$scope.hideFilter = true;
+			                				$scope.allTestRuns.data = [];
+			                				$scope.allTestRunsTemp = data.testRunsForTestPlan
+			                				$scope.allTestRuns.data = $scope.allTestRunsTemp;
+			                				$scope.searchTestRuns = $scope.allTestRunsTemp;
+			                			},
+			                			function (err) {
+			                				console.log(err);
+			                			}
+			                		);
 			                    },
 			                    function (err) {
 			                        console.log(err);
