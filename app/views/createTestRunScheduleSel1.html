@@ -41,6 +41,10 @@ height: 230px!important;
      width: 92%;
     margin-left: 30px;
  }
+ 
+ .errorOnSchedule{
+ margin: 0px 29px;
+ }
 
 </style>
 <div ng-include="'app/views/header.html'"></div>
@@ -61,17 +65,15 @@ height: 230px!important;
 										<div class="form-group" style="margin-bottom: 5px;">
 											<div class="col-md-4">
 												<label style="margin-left: 16px;">Schedule Start Date
-													& Time <span class="error-star"></span>
+													& Time </span>
 												</label>
 											</div>
 											<div class="col-md-4">
-												<label style="margin-left: 24px;"> End Date: <span
-													class="error-star"></label>
+												<label style="margin-left: 24px;"> End Date: </label>
 											</div>
 
 											<div class="col-md-4">
 												<label style="margin-left: 33px;"> Select Recurrence:
-													<span class="error-star">
 												</label>
 											</div>
 
@@ -82,25 +84,20 @@ height: 230px!important;
 													<input class=" input_width form-control"
 														ng-model="Datendtime" style="background-color: #FFFFFF"
 														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
-														name="Datendtime" required />
-													<div ng-show="form.$submitted || form.Datendtime.$touched">
-														<div ng-show="form.Datendtime.$error.required"
-															style="color: red">**Please Select Start Date and
+														name="Datendtime"  />
+												<i class="icon-place fa fa-calendar"></i>
+														<div ng-show="datentimeError"
+															style="color: red" class="errorOnSchedule">*Please Select Start Date and
 															Time</div>
-													</div>
-													<i class="icon-place fa fa-calendar"></i>
 													
 												</div>
 												<div class="col-md-4">
 													<input class=" input_width form-control" ng-model="EndDate"
 														style="background-color: #FFFFFF" datetime-picker
-														date-format="yyyy-MM-dd" name="EndDate" required />
-													<div ng-show="form.$submitted || form.EndDate.$touched">
-														<div ng-show="form.EndDate.$error.required"
-															style="color: red">**Please Select End Time</div>
-													</div>
-													<i class="icon-place fa fa-calendar"></i>
-													
+														date-format="yyyy-MM-dd" name="EndDate" />
+														<i class="icon-place fa fa-calendar"></i>
+														<div ng-show="endDateError"
+															style="color: red" class="errorOnSchedule">*Please Select End Time</div>
 												</div>
 
 												<div class="col-sm-4">
@@ -111,10 +108,6 @@ height: 230px!important;
 														<option>Daily</option>
 
 													</select>
-													<div ng-show="form.$submitted || form.recurrence.$touched">
-														<div ng-show="form.recurrence.$error.required"
-															style="color: red">**Please Select Recurrence</div>
-													</div>
 
 												</div>
 											</div>

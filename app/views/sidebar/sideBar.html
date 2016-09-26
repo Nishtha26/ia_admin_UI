@@ -1,0 +1,77 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		// required to set the select2 box default to placeholder value
+		$('.select').select2();
+		
+$(function () {
+			
+		    var sidebar = $('.sidebar');
+		    var top = sidebar.offset().top - parseFloat(sidebar.css('margin-top'));
+
+		    $(window).scroll(function (event) {
+		      var y = $(this).scrollTop();
+		    //  alert("y " + y+" top "+ top);
+		      if (y >= top) {
+		        sidebar.addClass('fixed');
+		      } else {
+		        sidebar.removeClass('fixed');
+		      }
+		    });
+		}); 
+
+
+
+	});
+
+</script>
+<style>
+.fixed{
+    position: fixed;
+    top: 25px;
+    width:220px!important;
+    }
+    
+</style>
+<div class="sidebar sidebar-opposite sidebar-default" style="min-width: 220px; padding-right: 0px;">
+					<div class="sidebar-fixed">
+						<div class="sidebar-content">
+
+							<!-- Navigation -->
+							<div class="sidebar-category">
+								<div class="category-title h6">
+									<span>Commands Pallette</span>
+									<hr />
+									<div class="form-group">
+
+										<select class="select" ng-model='commandCategory'
+											ng-options='obj.nodes as obj.title for obj in commandCategoryList'
+											class='form-control'
+											ng-change="onCategoryChange(commandCategory)"></select>
+									</div>
+								</div>
+
+								<div class="category-content no-padding">
+									<!-- <ul class="nav navigation" id='commands_lister' ui-tree="optionsTree1" data-clone-enabled="true" data-nodrop-enabled="true">
+									<li class="draggable col-lg-12 text-violet-600" draggable="true" ng-model='command' style="padding: 10px;" ng-repeat=" command in commands" >{{command.title}}</li>
+								      <div ui-tree-nodes="" ng-model="commands" >
+								        <li ng-repeat="command in commands" ui-tree-node data-nodrag style="padding: 10px;">{{command.title}}</li>
+								      </div> -->
+
+									<ul class="nav navigation" ui-tree="optionsTree1"
+										id="tree1-root" data-clone-enabled="true"
+										data-nodrop-enabled="true">
+										<ol ui-tree-nodes="" ng-model="commands">
+											<li ng-repeat="node in commands"
+												data-collapsed="!commands.expanded" ui-tree-node
+												ng-include="'nodes_renderer5.html'"></li>
+										</ol>
+									</ul>
+									</ul>
+								</div>
+
+							</div>
+							<!-- /navigation -->
+
+						</div>
+					</div>
+				</div>

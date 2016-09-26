@@ -2,9 +2,12 @@ oTech
 		.controller(
 				'deviceMeasurementsController',
 				function($scope, $rootScope, $location, AppServices,
-						$stateParams) {
+						$stateParams,$filter) {
 					$scope.dataLoading = true;
+					$scope.err = false;
+					$scope.dataLoadingImage=oApp.config.loadingImageName;
 					$scope.listItem = 'APN';
+					
 					var link = "APN";
 					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
@@ -38,6 +41,11 @@ oTech
 						promise = AppServices.getmeasurementList(token);
 						promise.then(function(data) {
 							$scope.devices = data;
+							
+							//$("#category").val(link);
+							
+							
+							//$("#select2-category-container").val("APN");
 
 						}, function(err) {
 							console.log(err);
@@ -143,14 +151,34 @@ oTech
 								$scope.currentPage = n;
 							};
 					
+							$scope.singleFilterForDM = function() {
+								  $scope.devicesMeasurementGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+								    $scope.devicesMeasurementGridOptions.data = $scope.devicesMeasurementGridOptions.data.slice( 0, $scope.endLimit);
+								}
+
 					
 					
-					
-					
+							$scope.getTableHeight = function() {
+							    var rowHeight = 40; // your row height
+							    var headerHeight = 44; // your header height
+							    var footerPage=15;
+							    var gridHeight=0;
+							    var dataCount=$scope.devicesMeasurementGridOptions.data.length;
+							    gridHeight=($scope.devicesMeasurementGridOptions.data.length * rowHeight + headerHeight+footerPage);
+							    $(".ui-grid-viewport").css("height",gridHeight-headerHeight);
+							    $(".ui-grid-menu-mid").css("height","450px;");
+							    //$(".")
+							    return {
+							       height:  gridHeight + "px"
+							    };
+							 };
 					
 					$scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
 					/* measurement list apn */
 					$scope.showDeviceList = function(link) {
+					/*	$scope.dataLoading = true;
+						$scope.err = false;*/
+						$scope.devicesMeasurementGridOptions.data=[];
 						if(link == 'APN')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
 						else if (link == 'Applications')
@@ -220,11 +248,14 @@ oTech
 								$scope.createNewDatasource();
 							$scope.dataLoading = false;
 							} else {
-								
 								$('.ui-grid-viewport').css("display","none");
+								allOfTheData = data.apnData;
+
+								$scope.createNewDatasource();
 								$scope.dataLoading = false;
 								$scope.err = true;
 							}
+							$("#category").select2()[0].value =$scope.listItem;
 						}, function(err) {
 							$scope.err = true;
 								$scope.dataLoading = false;
@@ -239,15 +270,23 @@ oTech
 
 					$scope.getDashBoardMenu();
 					$scope.getFavouriteReports();
-					$scope.getmeasurementList();
+					// A $( document ).ready() block.
+					$( document ).ready(function() {
+						$scope.getmeasurementList();
+					});
+					
 					$scope.showDeviceList(link);
 					$scope.openDevicedata = function(id,value) {
 						$scope.dataLoading = true;
 						
-						link = id;
+						link = id
 						$scope.listItem = value;
 						$scope.reset();
 						$scope.showDeviceList(link);
 					}
+					 $('#category').change(function(){
+							
+						 $scope.openDevicedata($(this).val(),$("#category option:selected").text());
+						 });
 
 				});

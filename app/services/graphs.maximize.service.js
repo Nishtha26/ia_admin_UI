@@ -138,21 +138,21 @@ oTech.service('GraphMaximizeServices',
                     dataClasses: [{
                         from: 1,
                         to: 1,
-                        color: '#40ff00',
+                        color: '#C5E65C',
                         
                         name: 'Heart Beat'
                     }, 
                     {
                         from: 0,
                         to: 0,
-                        color: '#ff0000',
+                        color: '#DB020D',
                         name: 'No Heart Beat'
                     },
                     {
                         from: 2,
                         to: 2,
                       
-                        color: '#4d4dff',
+                        color: '#0767A3',
                         name: 'Job Running'
                     }
                     ]

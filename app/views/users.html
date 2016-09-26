@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Orchestra Tech - Intelliagent</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+
+
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+	<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
+	<!-- /theme JS files -->
+
+	
+	<!-- includes HTML -->
+	<script src="http://www.w3schools.com/lib/w3data.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar bg-white border-bottom-primary-300" style='height: 50px;'>
+	  <div class="navbar-header">
+	    <a href="index.html"><img src='assets/images/logo.png'></img></a>
+
+	    <ul class="nav navbar-nav pull-right visible-xs-block">
+	      <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+	    </ul>
+	  </div>
+
+	</div>
+	<!-- /main navbar -->
+
+	<!-- Second navbar -->
+	<div w3-include-html="menus/_level_two.html"></div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<span class="text-semibold">Users</span>
+				</h4>
+			</div>
+
+			<div class="heading-elements">
+				<div class="heading-btn-group">
+					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+				
+
+			<div class="row">
+					
+				<div class="col-lg-12">
+					
+					<!-- User Groups -->
+					<div class="col-md-4">
+						
+
+						<!-- User Groups -->
+						<div class="panel panel-white">
+							<div class="panel-heading">
+								<h5 class="panel-title">User Groups</h5>
+								<div class="heading-elements">
+									<ul class="icons-list">
+                		<li id='create_new_group_label'><span class='label label-primary'>Create Group</span></li>
+                		<li id='group_list_label' style="display: none;"><span class='label label-default'>Groups List</span></li>
+                		<li id='group_cancel_edit_label' style="display: none;"><span class='label label-warning'>Cancel Edit</span></li>
+                	</ul>
+              	</div>
+							</div>
+
+
+							<!-- Group list div -->
+							<DIV class='panel-body' id='group_list_div'>
+								<label class="control-label col-lg-12">Existing Groups List</label>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Created By</th>
+											<th>Created On</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>SamGroup</td>
+											<td>admin</td>
+											<td>09/09/2015</td>
+											<td class="text-center">
+												<ul class="icons-list">
+													<li class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-menu-right">
+															<li class='delete_group'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete Group</a></li>
+															<li class="edit_group"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit Group</a></li>
+															<li class="show_users"><a href="#"><i class="icon-users4 text-green-800"></i> Show Users</a></li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>myNewGroup</td>
+											<td>admin</td>
+											<td>09/15/2015</td>
+											<td class="text-center">
+												<ul class="icons-list">
+													<li class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-menu-right">
+															<li class='delete_group'><a href="#" class="text-muted"><i class="icon-backspace2 text-muted"></i> Delete Group</a></li>
+															<li class="edit_group"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit Group</a></li>
+															<li class="show_users"><a href="#"><i class="icon-users4 text-green-800"></i> Show Users</a></li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</DIV>
+							<!-- /group list div -->
+
+							<!-- edit group div -->
+							<div class="panel-body" id='group_edit_div' style='display: none;'>
+
+								<form class="form-horizontal" action="#">
+									<fieldset class="content-group">
+										<legend class="text-bold">Group Name</legend>
+										<div class="form-group">
+											<div class="col-lg-12">
+												<div class="input-group">
+													<input type="text" class="form-control" placeholder="Group Name" id='group_name_input_control'>
+													<span class="input-group-addon" id='group_add_submit_button'>Go</span>
+												</div>
+											</div>
+											<div id="input_group_error_message" style='display: none; margin-top: 15px; '></div>
+										</div>
+									</fieldset>
+								</form>
+
+							</div>
+							<!-- /edit group div -->
+
+							<!-- create group div -->
+							<div class="panel-body" id='group_create_div' style='display: none;'>
+
+								<form class="form-horizontal" action="#">
+									<fieldset class="content-group">
+										<legend class="text-bold">Group Name</legend>
+										<div class="form-group">
+											<div class="col-lg-12">
+												<div class="input-group">
+													<input type="text" class="form-control" placeholder="Group Name" id='group_name_input_control'>
+													<span class="input-group-addon" id='group_add_submit_button'>Go</span>
+												</div>
+											</div>
+											<div id="input_group_error_message" style='display: none; margin-top: 15px; '></div>
+										</div>
+									</fieldset>
+								</form>
+
+
+							</div>
+							<!-- /create group div -->
+						</div>
+						<!-- /User Groups -->
+					</div>
+					<!-- /User Groups -->
+
+					<!-- Users -->
+					<div class="col-md-8">
+						<!-- Users -->
+						<div class="panel panel-white">
+							<div class="panel-heading">
+								<h5 class="panel-title">Users</h5>
+								<div class="heading-elements">
+									<ul class="icons-list">
+                		<li id='create_new_user_label'><span class='label label-primary'>Create User</span></li>
+                		<li id='user_list_label' style="display: none;"><span class='label label-default'>Users List</span></li>
+                		<li id='cancel_user_edit_label' style="display: none;"><span class='label label-warning'>Cancel Edit</span></li>
+                	</ul>
+              	</div>
+							</div>
+
+
+							<!-- Group list div -->
+							<DIV class='panel-body' id='user_list_div'>
+								<label class="control-label col-lg-12">Existing Users List</label>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Groups</th>
+											<th>Created By</th>
+											<th>Created On</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>Sam Bobbins</td>
+											<td>AdminGroup, SetupGroup</td>
+											<td>admin</td>
+											<td>09/09/2015</td>
+											<td class="text-center">
+												<ul class="icons-list">
+													<li class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-menu-right">
+															<li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
+															<li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
+															<li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Anthony Carrell</td>
+											<td>myNewGroup, maintenance group</td>
+											<td>admin</td>
+											<td>09/15/2015</td>
+											<td class="text-center">
+												<ul class="icons-list">
+													<li class="dropdown">
+														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+														<ul class="dropdown-menu dropdown-menu-right">
+															<li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
+															<li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
+															<li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</DIV>
+							<!-- /group list div -->
+
+							<!-- edit group div -->
+							<div class="panel-body" id='user_edit_div' style='display: none;'>
+								
+
+							</div>
+							<!-- /edit group div -->
+
+							<!-- create group div -->
+							<div class="panel-body" id='user_create_div' style='display: none;'>
+								
+
+								<!-- User creation form -->
+								<div class="row">
+									<div class="col-md-12">
+											
+										<fieldset>
+							        <legend class="text-semibold"><i class="icon-user-plus position-left"></i> User details</legend>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>First name:</label>
+														<input type="text" placeholder="Eugene" class="form-control">
+													</div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Last name:</label>
+														<input type="text" placeholder="Kopyov" class="form-control">
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Email:</label>
+														<input type="text" placeholder="eugene@kopyov.com" class="form-control">
+													</div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Username:</label>
+														<input type="text" placeholder="username for login purposes" class="form-control">
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+                            <label>Password:</label>
+														<input type="password" placeholder="password" class="form-control">
+                          </div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Password Confirmation:</label>
+														<input type="password" placeholder="password confirmation" class="form-control">
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label>Role:</label>
+														<select data-placeholder="Select your state" class="select">
+															<option value="AK">OT Admin</option>
+															<option value="HI">IA Admin</option>
+															<option value="WV">Reporting</option>
+														</select>
+
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label>Customer:</label>
+														<select data-placeholder="Select your state" class="select">
+															<option value="AK">T-Mobile</option>
+															<option value="HI">HTC</option>
+															<option value="HI">Cisco</option>
+															<option value="HI">Samsung</option>
+															<option value="HI">LG</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-12">
+													<a href='#'>Add New Customer</a>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-12">
+													
+													<!-- Switchery toggles -->
+													<div class="panel panel-white">
+														<div class="panel-heading">
+															<h5 class="panel-title">Select User Groups</h5>
+														</div>
+
+														<div class="panel-body">
+
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="content-group-lg">
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
+																				</label>
+																			</div>
+																		</div>
+
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Admin Group
+																				</label>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Maintenance Group
+																				</label>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Data Entry Group
+																				</label>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+
+																<div class="col-md-12">
+																	<div class="content-group-lg">
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
+																				</label>
+																			</div>
+																		</div>
+
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
+																				</label>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
+																				</label>
+																			</div>
+																		</div>
+
+																		<div class="col-md-3">
+																			<div class="checkbox checkbox-switchery switchery-xs">
+																				<label>
+																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
+																				</label>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+															</div>
+
+														</div>
+													</div>
+													<!-- /switchery toggles -->
+
+												</div>
+											</div>
+
+											<div class="row pull-right">
+												<button class="btn btn-primary">Submit</button>
+											</div>
+										</fieldset>
+
+									</div>
+								</div>
+								<!-- /User creation form -->
+
+
+							</div>
+							<!-- /create group div -->
+						</div>
+						<!-- /Users -->
+
+					</div>
+					<!-- /User -->
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+
+		<!-- Footer -->
+		<div class="footer text-muted">
+			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+		</div>
+		<!-- /footer -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		 w3IncludeHTML();		
+
+		 // group functions
+		 $("#create_new_group_label").click(function(){
+		 	$("#group_create_div").show();
+		 	$("#group_edit_div").hide();
+		 	$("#group_list_div").hide();
+		 	$("#group_list_label").show();
+		 	$("#create_new_group_label").hide();
+		 	$("#group_cancel_edit_label").hide();
+		 });
+
+		 $("#group_list_label").click(function(){
+		 	$("#group_create_div").hide();
+		 	$("#group_edit_div").hide();
+		 	$("#group_list_div").show();
+		 	$("#group_list_label").hide();
+		 	$("#create_new_group_label").show();
+		 	$("#group_cancel_edit_label").hide();
+		 });
+
+		 $("#group_cancel_edit_label").click(function(){
+		 	$("#group_create_div").hide();
+		 	$("#group_edit_div").hide();
+		 	$("#group_list_div").show();
+		 	$("#group_list_label").hide();
+		 	$("#create_new_group_label").show();
+		 	$("#group_edit_label").hide();
+		 });
+
+		 // delete group functionality
+		 $(".delete_group").click(function() {
+		 	if (confirm('Deleting group..... Are you sure?')){
+			 	$(this).closest('tr').hide();
+		 	}
+		 	else{
+		 		null();
+		 	}
+		 });
+
+		 $("#group_add_submit_button").click(function() {
+		 	if ($("#group_name_input_control").val() === 'test'){
+		 		$("#input_group_error_message").text('This group name is already taken ... try again');
+		 		$("#input_group_error_message").css('color', 'red');
+		 		$("#input_group_error_message").show();
+		 	}
+		 	else{
+				$("#input_group_error_message").text('Group created successfully');
+		 		$("#input_group_error_message").css('color', 'green');
+		 		$("#input_group_error_message").show();
+		 	}
+		 });
+
+
+		 // Create User Functionality
+		 $("#create_new_user_label").click(function() {
+		 	$("#user_list_div").hide();
+		 	$("#user_create_div").show();
+		 	$("#user_edit_div").hide();
+		 	$("#user_list_label").show();
+		 	$("#create_new_user_label").hide();
+		 	$("#cancel_user_edit_label").hide();
+
+		 });
+
+		 $("#user_list_label").click(function() {
+		 	$("#user_list_div").show();
+		 	$("#user_create_div").hide();
+		 	$("#user_edit_div").hide();
+		 	$("#user_list_label").hide();
+		 	$("#create_new_user_label").show();
+		 	$("#cancel_user_edit_label").hide();
+		 });
+
+
+	});
+
+</script>

@@ -160,12 +160,13 @@ color:rgb(35, 35, 35);
                            <div class="row">
                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<form class="form-horizontal" name="usergroupform">
+									 
 												<div class="form-group">
 													<label for="user_group" class="col-sm-4 control-label">User Group <span class="error-star"></span></label>
 													<div class="col-sm-4">
-														<input type="text" class="form-control form-custom-input" name="user_group" id="user_group" ng-model="user_group" required >
-														<span class="errors" ng-show="usergroupform.testPlanName.$touched && createtestplan.$submitted" ng-messages="createtestplan.user_group.$error">User Group is required</span>
-														<!-- <span ng-show="usergroupform.user_group.$error.minlength" class="errors"> User Group field length should not be less than 2 characters</span> -->
+														<input type="text" class="form-control form-custom-input" name="user_group" id="user_group" ng-model="user_group" required ng-minlength="3">
+														<span class="errors" ng-show="usergroupform.user_group.$dirty && usergroupform.user_group.$error.required">User Group is required</span>
+														<span ng-show="usergroupform.user_group.$error.minlength" class="errors"> User Group field length should not be less than 3 characters</span>
 													</div>
 												</div>
 										<!--		<div class="form-group">

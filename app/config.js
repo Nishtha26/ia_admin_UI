@@ -189,13 +189,11 @@ oApp.config = {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
 		columnDefs: [
-		         	{ field: 'jobId',width:150,
-		    			displayName : 'Test Run Id'  },
-			{ field: 'jobName',width:150,
+			{ name: 'jobName',width:150,
 			displayName : 'Test Run Name'  },
-			{ field: 'jobDescription' ,width:150,
+			{ name: 'jobDescription' ,width:150,
 		displayName : 'Test Run Description' },
-		{ displayName : 'Device Id', field: 'deviceId' ,width:150},
+		{ displayName : 'Device Id', name: 'deviceId' ,width:150},
 			{ name: 'taskId' ,width:150},
 			{ name: 'jobPriority',width:150 },
 			{ name: 'jobCreatedBy' ,width:150},
@@ -210,7 +208,7 @@ oApp.config = {
 			{ name: 'taskName' ,width:150},
 			{ name: 'runNum' ,width:150},
 		
-
+			
 			
 		]
 	},
@@ -218,11 +216,10 @@ oApp.config = {
 		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 25,
 		columnDefs: [
-{displayName:'deviceId', field: 'deviceId' ,width:150},
 			{ name: 'deviceName' ,width:150},
-			{ displayName:'Carrier', field: 'carrier' ,width:150},
+			{ name: 'userId' ,width:150},
 			{ name: 'customerName' ,width:150},
-//			{ name: 'workUrl',width:150 },
+			{ name: 'workUrl',width:150 },
 			{ name: 'msisdn' ,width:150},
 			{ name: 'network' ,width:150},
 			{ name: 'region',width:150 },
@@ -231,23 +228,21 @@ oApp.config = {
 			{ name: 'imei' ,width:150},
 			{ name: 'imsi' ,width:150},
 			{ name: 'iacVersion' ,width:150},
-		/*	{ name: 'logLevel' ,width:150},*/
-			/*{ name: 'notificationType' ,width:150},*/
-			{ displayName:'lastPing', field: 'lastPingDateTime' ,width:150},
+			{ name: 'logLevel' ,width:150},
+			{ name: 'notificationType' ,width:150},
+			{ name: 'lastPing' ,width:150},
 			
-	/*		{ name: 'loginTimestamp' ,width:150},
+			{ name: 'loginTimestamp' ,width:150},
 			{ name: 'loginDeviceTime' ,width:150},
-			{ name: 'deviceType' ,width:150},*/
+			{ name: 'deviceType' ,width:150},
 			{ name: 'networkType' ,width:150},
 			{ name: 'statusFlag' ,width:150},
-			
 		]
 	},
 	deviceListGridOptions : {
 		//paginationPageSizes: [1,25, 50, 75],
 		//paginationPageSize: 25,
 		enableVerticalScrollbar :0,
-		enableHorizontalScrollbar : 1,
 		columnDefs: [
 		         	//	 {headerName: "Device", field: "deviceId", width: 90},
 						{ name: 'deviceId' ,width:150},
@@ -265,9 +260,9 @@ oApp.config = {
 						{ name: 'lastPing' ,width:150},
 						{ name: 'jobId' ,width:150},
 						{ name: 'jobName' ,width:150},
-						{ name: 'jobStatusTime' ,width:150 },
-						{ name: 'jobStartDate' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"},
-						{ name: 'jobEndDate' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+						{ name: 'jobStatusTime' ,width:"10%" },
+						{ name: 'jobStartDate' ,width:"10%" },
+						{ name: 'jobEndDate' ,width:"10%" },
 				//	 {headerName: "workUrl", field: "workUrl", width: 100},
 		/*	{ name: 'deviceName' ,width:150},
 			{ name: 'workUrl',width:150 },
@@ -321,12 +316,12 @@ oApp.config = {
         paginationPageSizes: [25, 50, 75],
 		paginationPageSize: 25,
 		enableSorting: true,
-	    enableFilter: true,
+	    enableFilter: false,
 	    enableColResize: true,
-		enableRowSelection: true,  // for selection
-		enableColumnMenus: true, //to hide ascending and descending colomn menu names
+		enableRowSelection: false,  // for selection
+		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
-		enableFiltering: true,
+		enableFiltering: false,
 		enableGridMenu: true,		// for searching
 		multiSelect:false,
 		enableVerticalScrollbar :0,
@@ -387,7 +382,10 @@ oApp.config = {
                 return '' + row.entity.timeStamp + '';
               }},
 		 
-			{headerName: "appName", field: "appName", width: 110},
+			{headerName: "appName", field: "appName", width: 110, cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.appName + '';
+	             }},
 			{headerName: "appRss", field: "appRss", width: 100},
 			{headerName: "appBatteryLevel", field: "appBatteryLevel", width: 150},
 			{headerName: "appCpuUsage", field: "appCpuUsage", width: 100},
@@ -1289,22 +1287,37 @@ oApp.config = {
 		    enableFilter: true,
 		    enableColResize: true,
 			enableRowSelection: true,  // for selection
-			enableColumnMenus: true, //to hide ascending and descending column menu names
+			enableColumnMenus: false, //to hide ascending and descending column menu names
 			enableRowHeaderSelection: false, // this is for check box to appear on grid options
-			enableFiltering: true,
-			enableGridMenu: true,		// for searching
-			multiSelect:true,
+			enableFiltering: false,
+			enableGridMenu: false,		// for searching
+			multiSelect:false,
 			enableScrollbars : false,
 			enableHorizontalScrollbar : 0,
 			enableVerticalScrollbar : 0,
+	
 		columnDefs: [
 			{ name: 'username' ,width:"14%"},
 			{ name: 'status',width:"14%" },
-			{ name: 'firstName' ,width:"14%"},
-			{ name: 'lastName' ,width:"14%"},			
+			{ displayName:'Name', field: 'firstName' ,width:"14%"},
+			/*{ name: 'lastName' ,width:"14%"},	*/		
 			{ name: 'email' ,width:"15%"},
 			{ name: 'roleName' ,width:"14%"},
 			{ name: 'companyName' ,width:"14.8%"},
+	 {name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
+				enableColumnMenu: false, enableSorting: false,cellTemplate:
+         '<ul class="icons-list">'+
+			'<li class="dropdown">'+
+		'<a  class="dropdown-toggle" data-toggle="dropdown">'+
+			'<i class="icon-menu9"></i>'+
+		'</a>'+
+		'<ul class="dropdown-menu dropdown-menu-right">'+
+			'<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserBtn()"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>'+
+			'<li class="edit_user"><a ng-click="grid.appScope.UpdateUserBtn();"><i class="icon-pencil5 text-primary user_editor_link"></i> Edit User</a></li>'+
+			'<li class="show_user"><a "><i class="icon-user text-muted"></i> Show Detail</a></li>'+
+		'</ul>'+
+	'</li>'+
+'</ul>'}
 			
 		/*	{ name: 'username' ,width:"20%"},
 			{ name: 'status',width:"10%" },
@@ -1360,22 +1373,37 @@ addUsergroupsGridOptions :{
 	 paginationPageSizes: [20, 40, 60],
 		paginationPageSize: 20,
 		enableSorting: true,
-	    enableFilter: true,
+	    enableFilter: false,
 	    enableColResize: true,
 		enableRowSelection: true,  // for selection
-		enableColumnMenus: true, //to hide ascending and descending column menu names
+		enableColumnMenus: false, //to hide ascending and descending column menu names
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
-		enableFiltering: true,
-		enableGridMenu: true,		// for searching
+		enableFiltering: false,
+		enableGridMenu: false,		// for searching
 		multiSelect:false,
 		enableScrollbars : false,
 		enableHorizontalScrollbar : 0,
 		enableVerticalScrollbar : 0,
 		columnDefs: [
-			{ name: 'userGroupId' ,width:"25%"},
-			{ name: 'userGroupName',width:"25%" },
-			{ name: 'createdBy',field:"createdByName", width:"24%" },
-			{ name: 'createdDate',width:"24%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  }		
+			{ displayName:'Id', field: 'userGroupId' ,width:"10%"},
+			{ displayName:'Name',  field: 'userGroupName',width:"25%" },
+			{ displayName: 'Created By',field:"createdByName", width:"20%" },
+			{ displayName:'Created On', field: 'createdDate',width:"30%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
+			{name:'Actions', 
+				enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '15%',cellClass: 'ui-grid-cell-button',
+				enableColumnMenu: false, enableSorting: false,cellTemplate:
+		         '<ul class="icons-list">'+
+					'<li class="dropdown">'+
+				'<a  class="dropdown-toggle" data-toggle="dropdown">'+
+					'<i class="icon-menu9"></i>'+
+				'</a>'+
+				'<ul class="dropdown-menu dropdown-menu-right">'+
+					'<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserGroupBtn()"><i class="icon-backspace2 text-warning-800"></i> Delete User Group</a></li>'+
+					'<li class="edit_user"><a ng-click="grid.appScope.UpdateUserGroupBtn()"><i class="icon-pencil5 text-primary user_editor_link"></i> Edit User Group</a></li>'+
+					'<li class="show_user"><a ng-click="grid.appScope.assignUserOfGroup()" ><i class="icon-users4 text-green-800"></i> Assign Users</a></li>'+
+				'</ul>'+
+			'</li>'+
+		'</ul>'}		
 		]	
 	},
 
@@ -1470,45 +1498,51 @@ quickrunGridOptions : {
 //		paginationPageSizes: [1,25, 50, 75],
 		paginationPageSize: 6,
 		enableColumnMenus: false, //to hide ascending and descending colomn menu names
-		enableRowSelection: true,  // for selection
+		enableRowSelection: false,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,  // for searching
 		multiSelect:false,
 //		 paginationPageSizes: [20, 40, 60],
 //			paginationPageSize: 20,
-			enableSorting: true,
-		    enableFilter: true,
+			enableSorting: false,
+		    enableFilter: false,
 //		    enableColResize: true,
-//			enableRowSelection: true,  // for selection
+			enableRowSelection: true,  // for selection
 //			enableColumnMenus: true, //to hide ascending and descending column menu names
 //			enableRowHeaderSelection: false, // this is for check box to appear on grid options
-			enableFiltering: true,
+			enableFiltering: false,
 //			enableGridMenu: true,		// for searching
 			multiSelect:false,
 			enableVerticalScrollbar :2,
+			enableHorizontalScrollbar:0,
 		columnDefs: [
-			{ name: 'username' ,width:"33%"},
-			{ name: 'firstName',width:"31%"},
-			{ name: 'lastName' ,width:"32%"},
+			{ name: 'username' ,width:"45%"},
+			/*{ name: 'firstName',width:"14%"},
+			{ name: 'lastName' ,width:"14%"},*/
+			{ displayName: 'Name',field: 'firstName', width:"45%",
+				  cellTemplate: '<div class="ui-grid-cell-contents">'+
+				'{{row.entity.firstName}} {{row.entity.lastName}}</div>}}'}
 		]
 	},
 		existingusersGridOptions : {
 //		paginationPageSizes: [1,25, 50, 75],
-		paginationPageSize: 6,
+	
 		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowSelection: true,  // for selection
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,  // for searching
 		multiSelect:false,
-		enableSorting: true,
-	    enableFilter: true,
-		enableFiltering: true,
+		enableSorting: false,
+	    enableFilter: false,
+	    enableHorizontalScrollbar:0,
 	    enableVerticalScrollbar :2,
 		columnDefs: [
 			//{ name: 'userGroupName' ,width:100},
-			{ name: 'username',width:"33%" },
-			{ name: 'firstName',width:"31%" },
-			{ name: 'lastName' ,width:"32%"}
+			{ name: 'username',width:"45%" },
+			{ displayName: 'Name',field: 'firstName', width:"45%",
+				  cellTemplate: '<div class="ui-grid-cell-contents">'+
+				'{{row.entity.firstName}} {{row.entity.lastName}}</div>}}'}
+		/*	{ name: 'lastName' ,width:"14%"}*/
 			
 			
 		]
@@ -1558,7 +1592,7 @@ quickrunGridOptions : {
 			{ name: 'deviceId' ,width:150},
 			{ name: 'deviceType' ,width:150},
 			{ name: 'networkType' ,width:150},
-			{ displayName: 'Device Status',field:'deviceStatus' ,width:150},
+			{ name: 'statusFlag' ,width:150},
 		]
 	},
 	virtualDeviceGridOptions : {
@@ -1611,42 +1645,73 @@ quickrunGridOptions : {
 	
 	// added by punit
 	myDevicesGridOptions : {
-		paginationPageSizes: [20, 40, 60],
-		paginationPageSize: 20,
+		
+		
 		enableSorting: true,
-	    enableFilter: true,
+	    enableFilter: false,
 	    enableColResize: true,
 		enableRowSelection: true,  // for selection
-		enableColumnMenus: true, //to hide ascending and descending colomn menu names
+		
+	        enableRowSelection: true,
+		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
-		enableFiltering: true,
-		enableGridMenu: true,		// for searching
+		enableFiltering: false,			// for searching
+		enableGridMenu: true,		
 		multiSelect:false,
 		enableVerticalScrollbar :0,
 		columnDefs: [
-			{ name: 'deviceId' ,width:150,pinnedLeft:true},
-			{ name: 'deviceName',width:150 },
-			{ name: 'deviceType' ,width:150},
-			{ headerName: 'Carrier' ,width:150,field:'carrier'},
+			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true, allowCellFocus : false},
+			{displayName: 'Name', field: 'deviceName',width:"15%" },
 			{ name: 'model' ,width:"20%"},
 			{ name: 'manufacturer' ,width:"10%"},
-			{displayName:'IMSI', name: 'imsi' ,width:150},
-			{displayName:'IMEI', name: 'imei' ,width:150},
-			{displayName:'MSISDN', name: 'msisdn' ,width:"15%"},
+		
+			{ displayName: 'Job Status', field: 'statusFlag' ,width:"18%",
+				  cellTemplate: '<div class="ui-grid-cell-contents">'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -1"><span class="label label-success">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -2"><span class="label label-default">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -3"><span class="label label-success ">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -4"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -5"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -6"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
+					 ' </span></div>'},
+						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+			 {name:'Actions', enableCellSelection: true,pinnedRight:true,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',cellClass: 'ui-grid-cell-button task_detailed_viewer',
+				enableColumnMenu: false, enableSorting: false,cellTemplate:
+					'<span ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
+        /* '<ul class="icons-list">'+
+			'<li class="dropdown">'+
+		'<a  class="dropdown-toggle" data-toggle="dropdown">'+
+			'<i class="icon-menu9"></i>'+
+		'</a>'+
+		'<ul class="dropdown-menu dropdown-menu-right">'+
+			'<li ><a class="device_availability_link"  ng-click="grid.appScope.availabilityDeviceBody()"><i class="icon-map text-success"></i> Availability</a></li>'+
+			'<li ><a ng-click="grid.appScope.UpdateUserBtn();"><i class="icon-wrench2 text-primary user_editor_link"></i> Device  Map</a></li>'+
+			
+		'</ul>'+
+	'</li>'+
+'</ul>'},*/
+			{ name: 'deviceType' ,width:150},
+			{ headerName: 'Carrier' ,width:150,field:'carrier'},
+			
+			
+			{displayName:'IMSI', field: 'imsi' ,width:150},
+			{displayName:'IMEI', field: 'imei' ,width:150},
+			{displayName:'MSISDN', field: 'msisdn' ,width:"15%"},
 			{ name: 'networkType' ,width:"15%"},
 			{ name: 'region' ,width:"15%"},
-			{ name: 'statusFlag' ,width:"15%"},
-			{displayName: 'Last Ping', name: 'lastPingDateTime' ,width:150,cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
-			{ name: 'jobId' ,width:150},
+			
+			
+			{ name: 'jobId' ,width:100},
 			{ name: 'jobName' ,width:150},
-			{ displayName:'Job Status Time', name: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
-			{  displayName: 'Job Start Date Time' ,name: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
-			{displayName: 'Job End Date Time' , name: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
+			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
 			
 			
 		]
 	},
-
+	loadingImageName : 'images/loading_new.gif',
 	menuData : null
 }
 	
