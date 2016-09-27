@@ -97,17 +97,6 @@ oTech.controller('testPlanTestRunAdministration',
                            }},
                      	{name:'Created Date',field: 'createdDate', width: '20%'},
          				{name:'Created By',field: 'createdByName', width: '15%'},
-         				  /* {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
-                            '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},*/
-         				  /* {name:'Take Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
-                            '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 50%;height:75%;padding-top:1%" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
-         					  '<option value="">Action</option>' +
-         					  '<option value="{{row.entity.testplanId}}-View">View Test Runs</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Create">Create Test Run</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Edit">Edit Test Plan</option> '+
-         					  '<option value="{{row.entity.testplanId}}-Clone">Clone Test Plan</option> '+
-         					'</select>'}*/
-         				
          				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
          					enableColumnMenu: false, enableSorting: false,cellTemplate:
          	         '<ul class="icons-list">'+
@@ -243,7 +232,7 @@ oTech.controller('testPlanTestRunAdministration',
 		 
 		 $scope.singleFilter = function() {
 			    $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( startLimit, $scope.endLimit);
+			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( 0, $scope.endLimit);
 			   
 			};
 			
