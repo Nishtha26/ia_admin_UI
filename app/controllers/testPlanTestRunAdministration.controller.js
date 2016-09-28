@@ -106,8 +106,8 @@ oTech.controller('testPlanTestRunAdministration',
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
          			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-stats text-primary"></i> View Test Plan</a></li>'+
-         				'<li ng-if="row.entity.exitTestRuns"><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
-         				'<li ng-if="row.entity.exitTestRuns"><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 0"><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 0"><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
          				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
          				'<li ><a ng-click="grid.appScope.clone(row);"><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
          			'</ul>'+

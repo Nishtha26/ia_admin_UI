@@ -29,6 +29,17 @@ z-index: 1002;
 .devices-graph{
 	margin-left:20px;
 }
+.status_graph span em {
+    display: inline-block;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;}
+    .status_graph span:nth-child(1) em {
+    background-color: rgba(92, 107, 192,0.5);
+    }
+    .status_graph span:nth-child(2) em {
+    background-color: rgba(97,184,100,0.5);
+}
 </style>
 
 
@@ -138,7 +149,7 @@ z-index: 1002;
 														</div>
 
 														<h3 class="no-margin">{{availableDeviceCount}}</h3>
-														<div class="text-muted text-size-small">New Available Devices</div>
+														<div class="text-muted text-size-small"> Available Devices</div>
 													</div>
 
 													<div class="container-fluid">
