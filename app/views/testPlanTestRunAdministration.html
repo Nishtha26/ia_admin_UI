@@ -339,50 +339,50 @@ position: absolute;
 						<div class="col-lg-6">
 
 							<!-- A div to show the test plan reports -->
-							<div class="col-lg-12 display_test_plan_reports" style='display:none; '>
+							<div class="col-lg-12 display_test_plan_reports" ng-show="testPlanView">
 
 							<div class="panel panel-white">
 								<div class="panel-heading">
-									<h5 class="panel-title">Test run details</h5>
+									<h5 class="panel-title">Test Plan details</h5>
 								</div>
 								<div class="panel-body">
 									<!-- Top Stats row -->
 									<div class="row">
 										<!-- current flight -->
-										<div class="col-md-4">
+										<!-- <div class="col-md-4">
 											<div class="panel text-center">
 												<div class="panel-body">
-				                	<!-- Progress counter -->
+				                	Progress counter
 													<div class="content-group-sm svg-center position-relative" id="hours-available-progress"></div>
-													<!-- /progress counter -->
+													/progress counter
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<!-- /current flight -->
 
 										<!-- Total Runs -->
 										<div class="col-md-4">
 											<div class="row">
-												<div class="col-xs-sm">
+												<!-- <div class="col-xs-sm">
 													<div class="col-md-4">
 														<button class="btn bg-indigo btn-block btn-float btn-float-lg" type="button">
 															<i class="icon-task"></i>
 															<span>14 Tasks</span>
 														</button>
 													</div>
-												</div>
+												</div> -->
 												<div class="col-md-4">
 													<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
 														<span>12 Runs</span>
 													</button>
 												</div>
-												<div class="col-md-4">
+												<!-- <div class="col-md-4">
 													<button class="btn bg-success btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
 														<span>6 Passes</span>
 													</button>
-												</div>
+												</div> -->
 											</div>
 											<div class="row" style="margin-top: 40px;">
 												<div class="col-xs-sm">
@@ -392,7 +392,7 @@ position: absolute;
 														<span>12 Dev's</span>
 													</button>
 													</div>
-													<div class="col-md-4">
+													<!-- <div class="col-md-4">
 													<button class="btn bg-violet btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
 														<span>2 Aborts</span>
@@ -403,7 +403,7 @@ position: absolute;
 														<i class="icon-stats-bars"></i>
 														<span>4 Failures</span>
 													</button>
-													</div>
+													</div> -->
 																				
 												</div>
 											</div>
@@ -411,158 +411,65 @@ position: absolute;
 										<!-- /Total Runs -->
 
 										<!-- Next Scheduled Run -->
-										<div class="col-md-4">
+										<!-- <div class="col-md-4">
 											<div class="panel text-center">
 												<div class="panel-body">
-				                	<!-- Progress counter -->
+				                	Progress counter
 													<div><i class="text-size-large icon-calendar3 text-orange-600" style='font-size: 70px;'></i></div>
 													<div><h2 class='mt-15 mb-5'>27th Dec 2016</h2></div>
 													<div class="text-semibold text-center">@ 3:30 AM CST</div>
 													<div class="text-semibold text-center">Next Test Flight</div>
 													<div class="text-muted text-center">(in 23 days)</div>
-													<!-- /progress counter -->
+													/progress counter
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<!-- /Next scheduled run -->
 									</div>
 									<!-- /Top Stats row -->
 
 									<!-- Bottom Tasks Row -->
-									<div class="row task_groups_div" style='min-height: 383px; max-height: 383px; overflow: auto;'>
+									<div class="row task_groups_div" style='min-height: 383px; max-height: 383px; overflow: auto;' ng-show="testCaseDetails">
 										<h5>Test Case List</h5>
 										<hr />
-										<div class="col-md-4">	
+										<div class="col-md-4" ng-repeat="testPlanDetail in testPlanViewDetails">	
 											<div class="panel border-left-lg border-left-primary">
 												<div class="panel-body">
 													<div class="row">
 														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#1. Call the mobile device</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 3 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 23 Commands</p>
+															<h6 class="no-margin-top"><a href ng-click="viewCommands(testPlanDetail.node,testPlanDetail.commandCount)" class='task_detailed_view'>{{testPlanDetail.testCaseName}}</a></h6>
+															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; {{testPlanDetail.commandGroupCount}} Command Groups</p>
+															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; {{testPlanDetail.commandCount}} Commands</p>
+															
 														</div>
 													</div>
 												</div>
 
 												<div class="panel-footer">
 													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
+														<li>Commands: <span class="text-semibold">{{testPlanDetail.commandCount}}</span></li>
 													</ul>
 												</div>
 											</div>
 										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#2. Send SMS</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 2 Command groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 12 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#3. Receive Acknowledgement</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 1 Command Group</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 9 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#4. Send MMS</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 2 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 4 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#5. Receive Acknowledgement</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 3 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 13 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#6. Close Connection</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 4 Command groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 22 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
+										
 									</div>
 									<!-- /Bottom Tasks Row -->
 
 									<!-- Bottom Commands Row -->
-									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto; display:none;'>
+									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto;' ng-show="commandsDetails">
 										<div class="panel panel-white">
 											<div class="panel-heading">
-												<h6 class="panel-title">Call the mobile device - <span class='text-muted'>(19 Commands)</span></h6>
+												<h6 class="panel-title"><span class='text-muted'>({{totalCommandsCount}} Commands)</span></h6>
 												<div class="heading-elements">
 													<ul class="icons-list">
-														<li><span class='label label-primary close_commands_div'>Back to Task Groups</span></li>
+														<li><span class='label label-primary close_commands_div' ng-click="backToTestCaseGroup()">Back to Test Case Groups</span></li>
 													</ul>
 												</div>
 											</div>
 
 											<div class="panel-body">
-												<table class="table">
+												<table class="table" style="table-layout:fixed;">
 													<thead>
 														<th>Loop</th>
 														<th>Name</th>
@@ -571,69 +478,14 @@ position: absolute;
 														<th>Params</th>
 													</thead>
 													<tbody>
-														<tr>
-															<td>9</td>
-															<td>First Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
+														<tr ng-repeat="listOfCommand in listOfCommands track by $index">
+															<td>{{listOfCommand.commandGroupLoop}}</td>
+															<td>{{listOfCommand.commandGroupName}}</td>
+															<td>{{listOfCommand.CommandName}}</td>
+															<td>{{listOfCommand.commandLoop}}</td>
+															<td style="word-wrap: break-word;">{{listOfCommand.commandParams}}</td>
 														</tr>
-														<tr>
-															<td>1</td>
-															<td>First Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>10</td>
-															<td>First Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>14</td>
-															<td>First Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>2</td>
-															<td>Second Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>6</td>
-															<td>Second Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>11</td>
-															<td>Second Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>100</td>
-															<td>Second Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>50</td>
-															<td>Third Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
+														
 													</tbody>
 												</table>
 											</div>

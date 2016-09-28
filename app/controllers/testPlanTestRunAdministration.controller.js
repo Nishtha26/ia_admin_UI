@@ -105,6 +105,7 @@ oTech.controller('testPlanTestRunAdministration',
          				'<i class="icon-menu9"></i>'+
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
+         			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-stats text-primary"></i> View Test Plan</a></li>'+
          				'<li ><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
          				'<li ><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
          				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
@@ -1932,6 +1933,70 @@ oTech.controller('testPlanTestRunAdministration',
 
             }
 	       /* end edit test plan*/
+	        
+	        /* view test plan */
+	        $scope.viewTestPlan = function(row){
+	        	$scope.testPlanViewDetails = [];
+	        	$scope.testPlanView = true;
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	$scope.testCaseDetails = true;
+	                	$scope.commandsDetails = false;
+								$scope.testPlanView = data.jobVO[0];
+							angular.forEach($scope.testPlanView.nodes , function (children) {
+								var temp = {};
+								var i = 0;
+								$scope.testPlanViewCommandDetails = [];
+								angular.forEach(children.nodes , function (childNode) {
+									
+									angular.forEach(childNode.nodes , function (childOfChildNode) {
+										var tempArrayForCommandGroupAndCommand = {};
+									  tempArrayForCommandGroupAndCommand['commandGroupLoop'] = childNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandGroupName'] = childNode.title;
+									  tempArrayForCommandGroupAndCommand['CommandName'] = childOfChildNode.title;
+									  tempArrayForCommandGroupAndCommand['commandLoop'] = childOfChildNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandParams'] = childOfChildNode.commandParams;
+									  tempArrayForCommandGroupAndCommand['index'] = i;
+									  i++;
+									  $scope.testPlanViewCommandDetails.push(tempArrayForCommandGroupAndCommand);
+									});
+									
+									
+								});
+								
+								temp['node'] = $scope.testPlanViewCommandDetails;
+								temp['testCaseName'] = children.title;
+								temp['commandGroupCount'] = children.nodes.length;
+								temp['commandGroupName'] = "Command Groups";
+								temp['commandCount'] = i;
+								temp['commands'] = "Commands";  
+								$scope.testPlanViewDetails.push(temp);
+							});
+	                },
+	                function (err) {
+	                    console.log(err);
+	                }
+	                );
+	        }
+	        
+	        
+	        $scope.viewCommands = function(listOfCommandsTemp,totalCommandsCountTemp){
+	        	$scope.testCaseDetails = false;
+	        	$scope.commandsDetails = true;
+	        	$scope.listOfCommands = [];
+	        	$scope.totalCommandsCount = totalCommandsCountTemp;
+	        	$scope.listOfCommands = listOfCommandsTemp;
+	        	
+	        	
+	        }
+	        
+	        $scope.backToTestCaseGroup = function(){
+	        	$scope.testCaseDetails = true;
+	        	$scope.commandsDetails = false;
+	        }
+	       
+	        /* view test plan */
 		
       
       
