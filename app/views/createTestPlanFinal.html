@@ -75,6 +75,36 @@ background:none;
 .panel {
     margin-bottom: 5px;
     }
+   
+.popover > .arrow:after{
+border:none
+content:" ";
+}
+
+.popover > .arrow{
+bordrer:none
+}
+
+.popover {
+display:block;
+}
+
+
+.popover.top > .arrow{
+    border-top-color: none; 
+    border-top-color: none;
+    bottom: 0px;
+}
+
+.editable-container.popover {
+    width: 25%;
+    min-width: 200px;
+}
+
+.popover-content {
+    padding: 0 0 20px 0px;
+}
+
 </style>	
 	
 <script type="text/ng-template" id="nodrop_nodes_renderer2.html">
@@ -90,7 +120,7 @@ background:none;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%;"/><i class="icon-pencil5 text-green-800 user_editor_link"></i></span></div>
+<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span></div>
 <div class="col-lg-2 col-sm-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" /></div> 
 <div class="col-lg-2 col-sm-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
 </span>
@@ -231,4 +261,40 @@ background:none;
 
 	</div>
 	<!-- /page container -->
-
+ 
+<div class="popover fade top in editable-container editable-popup"
+	role="tooltip" id="popovercommand" ng-show="showPopover"
+	style="  -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
+	<div class="arrow" style="left: 50%;"></div>
+	<h3 class="popover-title">Edit Command Parameters</h3>
+	<div class="popover-content">
+		<div>
+			<!-- <div class="editableform-loading" ></div> -->
+			<form class="editableform" style="">
+				<div class="control-group form-group">
+					<!-- dynamic append -->
+					<div class="editable-input">
+						
+						
+					</div>
+					<!-- end dynamic append -->
+					<div class="editable-buttons editable-buttons-bottom">
+					<button type="button" ng-click="addField('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-plus3"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersAction('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-check"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersClose();"
+							class="btn btn-default btn-icon editable-cancel">
+							<i class="icon-x"></i>
+						</button>
+					</div>
+					<div class="editable-error-block help-block" style="display: none;"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

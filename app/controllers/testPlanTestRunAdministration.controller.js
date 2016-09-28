@@ -97,17 +97,6 @@ oTech.controller('testPlanTestRunAdministration',
                            }},
                      	{name:'Created Date',field: 'createdDate', width: '20%'},
          				{name:'Created By',field: 'createdByName', width: '15%'},
-         				  /* {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
-                            '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},*/
-         				  /* {name:'Take Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
-                            '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 50%;height:75%;padding-top:1%" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
-         					  '<option value="">Action</option>' +
-         					  '<option value="{{row.entity.testplanId}}-View">View Test Runs</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Create">Create Test Run</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Edit">Edit Test Plan</option> '+
-         					  '<option value="{{row.entity.testplanId}}-Clone">Clone Test Plan</option> '+
-         					'</select>'}*/
-         				
          				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
          					enableColumnMenu: false, enableSorting: false,cellTemplate:
          	         '<ul class="icons-list">'+
@@ -116,6 +105,7 @@ oTech.controller('testPlanTestRunAdministration',
          				'<i class="icon-menu9"></i>'+
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
+         			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-stats text-primary"></i> View Test Plan</a></li>'+
          				'<li ><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
          				'<li ><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
          				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
@@ -243,7 +233,7 @@ oTech.controller('testPlanTestRunAdministration',
 		 
 		 $scope.singleFilter = function() {
 			    $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( startLimit, $scope.endLimit);
+			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( 0, $scope.endLimit);
 			   
 			};
 			
@@ -1127,6 +1117,11 @@ oTech.controller('testPlanTestRunAdministration',
 	 	        deepCopyObject = "";
 	 	        $scope.RealDevicesOptions.data = [];
 	 	       $scope.DeviceMapping.data = [];
+	 	       
+	 	      $("#mappingDataTable").css("display","block");
+	 	     $("#testRunDeviceDataTable").css("display","none");
+	 	     $scope.CreateTestRunRealDeviceOptions.data = [];
+	 	       
 	 	      $('#tableForTaskAndCommandGroup > tbody').empty();
 	        	TestPlanId = row.entity.testplanId;
 	        	
@@ -1169,6 +1164,7 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.renderHtmlForTask = function(taskTableArray){
 				var html = "";
                 angular.forEach(taskTableArray, function (node, index) {
+                	if(node.loop != '0'){
                     html += '<tr class="border-double" style="background-color: #CCD0DA;">'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
 					        	'<td class="text-right"><input type="text"  style="width: 40px;" maxlength="4" value="'+node.sequenceNo+'" readonly/></td>'+
@@ -1189,13 +1185,14 @@ oTech.controller('testPlanTestRunAdministration',
 							        	'<td class="text-right"><input type="text" value="'+node.loop+'" style="width: 40px;" maxlength="4"  readonly/></td>'+
 							        '</tr>'+
 							        '<tr style="background-color: #F9FCF1;">'+
-							        	'<td colspan="3"><span class="text-italic">'+node.commandParams+'</span></td>'+
+							        	'<td colspan="3"><span class="text-italic" style="word-wrap: break-word;">'+node.commandParams+'</span></td>'+
 							        	
 							        '</tr>';
 	                            });
 	        			}
                         });
-                    }
+                     }
+                   }
                 });
                 $('#tableForTaskAndCommandGroup > tbody').empty();
                 $('#tableForTaskAndCommandGroup > tbody').append(html);
@@ -1453,6 +1450,20 @@ oTech.controller('testPlanTestRunAdministration',
 			                        $("#mappingDataTable").css("display","none");
 			                        $scope.CreateTestRunRealDeviceOptions.data = data.testRunDeviceData;
 			                        $("#testRunDeviceDataTable").css("display","block");
+			                        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+			                		promise.then(
+			                			function (data) {
+			                				$scope.loadAllTestRuns = false;
+			                				$scope.hideFilter = true;
+			                				$scope.allTestRuns.data = [];
+			                				$scope.allTestRunsTemp = data.testRunsForTestPlan
+			                				$scope.allTestRuns.data = $scope.allTestRunsTemp;
+			                				$scope.searchTestRuns = $scope.allTestRunsTemp;
+			                			},
+			                			function (err) {
+			                				console.log(err);
+			                			}
+			                		);
 			                    },
 			                    function (err) {
 			                        console.log(err);
@@ -1922,6 +1933,70 @@ oTech.controller('testPlanTestRunAdministration',
 
             }
 	       /* end edit test plan*/
+	        
+	        /* view test plan */
+	        $scope.viewTestPlan = function(row){
+	        	$scope.testPlanViewDetails = [];
+	        	$scope.testPlanView = true;
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	$scope.testCaseDetails = true;
+	                	$scope.commandsDetails = false;
+								$scope.testPlanView = data.jobVO[0];
+							angular.forEach($scope.testPlanView.nodes , function (children) {
+								var temp = {};
+								var i = 0;
+								$scope.testPlanViewCommandDetails = [];
+								angular.forEach(children.nodes , function (childNode) {
+									
+									angular.forEach(childNode.nodes , function (childOfChildNode) {
+										var tempArrayForCommandGroupAndCommand = {};
+									  tempArrayForCommandGroupAndCommand['commandGroupLoop'] = childNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandGroupName'] = childNode.title;
+									  tempArrayForCommandGroupAndCommand['CommandName'] = childOfChildNode.title;
+									  tempArrayForCommandGroupAndCommand['commandLoop'] = childOfChildNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandParams'] = childOfChildNode.commandParams;
+									  tempArrayForCommandGroupAndCommand['index'] = i;
+									  i++;
+									  $scope.testPlanViewCommandDetails.push(tempArrayForCommandGroupAndCommand);
+									});
+									
+									
+								});
+								
+								temp['node'] = $scope.testPlanViewCommandDetails;
+								temp['testCaseName'] = children.title;
+								temp['commandGroupCount'] = children.nodes.length;
+								temp['commandGroupName'] = "Command Groups";
+								temp['commandCount'] = i;
+								temp['commands'] = "Commands";  
+								$scope.testPlanViewDetails.push(temp);
+							});
+	                },
+	                function (err) {
+	                    console.log(err);
+	                }
+	                );
+	        }
+	        
+	        
+	        $scope.viewCommands = function(listOfCommandsTemp,totalCommandsCountTemp){
+	        	$scope.testCaseDetails = false;
+	        	$scope.commandsDetails = true;
+	        	$scope.listOfCommands = [];
+	        	$scope.totalCommandsCount = totalCommandsCountTemp;
+	        	$scope.listOfCommands = listOfCommandsTemp;
+	        	
+	        	
+	        }
+	        
+	        $scope.backToTestCaseGroup = function(){
+	        	$scope.testCaseDetails = true;
+	        	$scope.commandsDetails = false;
+	        }
+	       
+	        /* view test plan */
 		
       
       
