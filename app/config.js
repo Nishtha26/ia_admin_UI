@@ -46,9 +46,9 @@ oApp.config = {
 		datasets : [
 		{
 			label: "",
-			fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
+			fillColor: "rgba(92, 107, 192,0.5)",
+            strokeColor: "rgba(92, 107, 192,1)",
+            pointColor: "rgba(92, 107, 192,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
@@ -56,9 +56,9 @@ oApp.config = {
 		},
 		{
 			label: "",
-			fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
+			fillColor: "rgba(97,184,100,0.5)",
+            strokeColor: "rgba(97,184,100,1)",
+            pointColor: "rgba(97,184,100,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",

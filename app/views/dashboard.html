@@ -1,3 +1,37 @@
+<style>
+.icons-list li .live, .icons-list li .replay{
+margin:5px;
+padding:4px 8px;
+}
+.map-popup .form-group{
+	margin:10px 0;
+}
+#devicesel .select2-selection {
+width: 100%; margin-left: 0px; margin-top: -13px; margin-bottom: -23px;
+}
+#devicesel .select2-container--open .select2-dropdown{
+left:-5px !important;}
+.angularjs-datetime-picker{
+z-index: 1002;
+}
+.vertical{
+    -webkit-transform:rotate(-90deg);
+    -moz-transform:rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform:rotate(-90deg);
+    transform: rotate(-90deg);
+    transform-origin: left top 0;
+    float: left;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+}
+.devices-graph{
+	margin-left:20px;
+}
+</style>
+
+
 <!-- Header Start -->
 	<div ng-include="'app/views/header/header.html'"></div>
 	<!-- Header End -->
@@ -12,16 +46,16 @@
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
-					<span class="text-semibold">Home</span> - Dashboard
+					<!-- <span class="text-semibold">Home</span> - Dashboard -->
 					<small class="display-block">Welcome, {{name | capitalize}}</small>
 				</h4>
 			</div>
 
-			<div class="heading-elements">
+			<!-- <div class="heading-elements">
 				<div class="heading-btn-group">
 					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	
@@ -43,7 +77,7 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="panel panel-white">
-										<div class="panel-heading"><h6>Device Usage &nbsp; <!-- <span class="label label-primary">3.6% Current Active</span></h6> -->
+										<div class="panel-heading"><h6>Devices  &nbsp;  <span class="label label-primary">{{activeDeviceCountPer}}% Current Active</span></h6> 
 											<div class="heading-elements">
 											
 												<!-- <div class="form-group">
@@ -172,9 +206,12 @@
 												</div>
 											</div>
 										</div> -->
-<span class="device_graph_text"># of Devices</span>
+										
 										<div class="content-group-sm" >
-											<canvas id="canvas" height="270px" width="600px"></canvas>
+											<span class="device_graph_text vertical"># of Devices</span>
+											<div class="devices-graph">
+												<canvas id="canvas" height="270px" width="600px"></canvas>
+											</div>
 										</div>
 										<div id="devices_online_stats"></div>
 									</div>
@@ -195,12 +232,12 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="panel panel-white">
-										<div class="panel-heading"><h6>Test Runs &nbsp; <span class="label label-primary">9.6% Current Active</span></h6>
+										<div class="panel-heading"><h6>Test Runs &nbsp;  <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
 											<div class="heading-elements">
 												<div class="form-group">
 													<div class="input-group">
 														<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-														<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+														<input id="testRunDate" type="text" readonly="readonly" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
 													</div>
 												</div>
 											</div>
@@ -213,7 +250,7 @@
 												<!-- Members online -->
 												<div class="panel bg-teal-400">
 													<div class="panel-body">
-														<h3 class="no-margin">45</h3>
+														<h3 class="no-margin">{{totalTestPlanCount}}</h3>
 														<div class="text-muted text-size-small">New Test Plans</div>
 													</div>
 
@@ -229,11 +266,11 @@
 												<!-- Members online -->
 												<div class="panel bg-primary-400">
 													<div class="panel-body">
-														<div class="heading-elements">
+													<!-- 	<div class="heading-elements">
 															<span class="heading-text badge bg-teal-800">19.4%</span>
-														</div>
+														</div> -->
 
-														<h3 class="no-margin">8</h3>
+														<h3 class="no-margin">{{totalTestRunCount}}</h3>
 														<div class="text-muted text-size-small">New Test Runs</div>
 													</div>
 
@@ -250,11 +287,11 @@
 												<!-- Members online -->
 												<div class="panel bg-indigo-400">
 													<div class="panel-body">
-														<div class="heading-elements">
+													<!-- 	<div class="heading-elements">
 															<span class="heading-text badge bg-teal-800">3%</span>
-														</div>
+														</div> -->
 
-														<h3 class="no-margin">2</h3>
+														<h3 class="no-margin">{{totalActiveTestRunCount}}</h3>
 														<div class="text-muted text-size-small">Currently Active</div>
 													</div>
 
@@ -349,25 +386,67 @@
 					<div class="panel-heading">
 						<h5 class="panel-title">Map</h5>
 						<div class="heading-elements">
-							<ul class="icons-list">
-		                		<li><a data-action="collapse"></a></li>
-		                		<li><a data-action="reload"></a></li>
-		                		<li><a data-action="close"></a></li>
+							<ul class="icons-list map-popup">
+								<li class="pointer-link live"><span class="label label-info">Live</span></li>
+		                		<li class="dropdown replay">
+							    <a class="dropdown-toggle pointer-link" data-toggle="dropdown" aria-expanded="true"><span class="label label-info ">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
+							
+							    
+                			<div class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
+						<form name="customerform">
+							<div class="row">
+
+							<div id="devicesel" class="col-sm-12 form-group">
+							<label>Devices:</label> <select id="deviceId" name="deviceId" class="select" style="">
+							<option ng-repeat="device in DeviceList"
+										ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
+							</select>
+							</div>
+						<div class="col-sm-12 form-group">
+								<label>From: </label>
+								<div class="input-group date ">
+									 <span class="input-group-addon">
+										<span class="icon-calendar22"></span>
+									</span>
+									<input id="fromDate" name="fromDate" ng-model="fromDate" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm"> 
+								</div>
+							</div>
+							<div class="col-sm-12 form-group">
+								<label>To: </label>
+								<div class="input-group date ">
+								 <span class="input-group-addon">
+										<span class="icon-calendar22"></span>
+									</span>
+									<input id="toDate" name="toDate" ng-model="toDate" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm"> 
+									
+								</div>
+							</div>
+					
+										
+							<div class="col-sm-12 form-group text-center">
+									<input id="device_av_btn" class="btn btn-success btn-sm" type="submit" ng-click="showReplayMap();" value="Replay Map">
+							</div> 
+							
+								
+							</div>
+						</form>
+					</div>
+					</li>
+		                		
+		               
 		                	</ul>
 	                	</div>
 					</div>
 
 					<div class="panel-body">
-					<!-- 	<p class="content-group">
-						A <code>geochart</code> is a map of a country, a continent, or a region with areas identified in one of three ways: <span class="text-semibold">region</span> mode, <span class="text-semibold">markers</span>
-						 mode and <span class="text-semibold">text</span> mode. A geochart is rendered within the browser using
-						  <code>SVG</code> or <code>VML</code>. Note that the geochart is not scrollable or draggable, and it's a
-						   line drawing rather than a terrain map. The <code>regions</code> style 
-						   fills entire regions (typically countries) with colors corresponding to the values that you assign.
-						   </p> -->
-
 					
-							<div class="map-container" id="Map"></div>
+					<div class="map-container" id="Map"></div>
+						
+					</div>
+					
+					<div class="panel-body" id="rePlayMap_container" style="display:none;">
+					
+					<div class="map-container" id="rePlayMap"></div>
 						
 					</div>
 				</div>
@@ -388,3 +467,12 @@
 	<!-- /page container -->
 
 
+<script> 
+$(function () {
+$('.select').select2(
+		/* {
+    minimumResultsForSearch: Infinity
+} */
+);
+});
+</script>

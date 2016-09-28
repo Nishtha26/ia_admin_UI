@@ -94,7 +94,7 @@
 				deviceDataHTML='<table class="table table-striped table_padding">'
 					+ '<thead><tr>' + '<th>Device Details</th>'
 					+ '</tr></thead>' + '<tbody>'
-					+ '<tr><td>Active Date (MM/dd/yyyy hh:mm) </td><td>' + getFormattedDate(device.lastMsgRecvTimeStamp)
+					+ '<tr><td>Active Date  </td><td>' + jQuery.format.date(device.lastMsgRecvTimeStamp, oApp.constant.GRID_DATE_TIME_FORMAT)
 					+ '</td></tr>' 
 					+ '<tr><td>Device ID           </td><td>' + device.deviceId
 					+ '</td></tr>' + '<tr><td>Latitude            </td><td>'
@@ -121,7 +121,7 @@
 					,boxStyle: { 
 						background: "url('images/tipbox.gif') no-repeat"
 						/*,opacity: 0.75*/
-						,width: "290px"
+						,width: "325px"
 					}
 					,closeBoxMargin: "12px 19px -30px 2px"
 					,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
