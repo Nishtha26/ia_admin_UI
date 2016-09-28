@@ -273,11 +273,12 @@
 			
 			var boxText = document.createElement("div");
 			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); ";
-			deviceDataHTML='<table class="table table-striped table_padding">'
-				+ '<thead><tr>' + '<th>Device Details</th>'
+			deviceDataHTML='<table class="table table-striped table_padding" style="width: 300px">'
+				+ '<thead><tr>' + '<th colspan="2">Device Details for [ '+jQuery.format.date(device.lastMsgRecvTimeStamp, oApp.constant.GRID_DATE_TIME_FORMAT)+' ]</th>'
 				+ '</tr></thead>' + '<tbody>'
 				+ '<tr><td>Device ID           </td><td>' + device.deviceId
-				+ '</td></tr>' + '<tr><td>Latitude            </td><td>'
+				+ '</td></tr>'
+				+ '<tr><td>Latitude            </td><td>'
 				+ device.deviceLogJson[1].Latitude + '</td></tr>'
 				+ '<tr><td>Longitude           </td><td>'
 				+ device.deviceLogJson[2].Longitude + '</td></tr>'

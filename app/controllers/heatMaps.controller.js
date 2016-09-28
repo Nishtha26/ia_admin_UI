@@ -9,6 +9,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     		var userId = sessionStorage.userId;
                                     		$rootScope.role = sessionStorage.role;
                                     		$scope.dataLoading3 = true;
+                                    		$scope.loadingImageName= oApp.config.loadingImageName;
                                     				/*
                                     				To get dashboard menu data
                                     			*/
@@ -111,16 +112,19 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     		
                                     		HeatMapsService.defaultHeatMap();
                                     		$scope.showMarketList = function(){
-                                    			$scope.dataLoading = true;
+                                    			$scope.marketDataLoading = true;
+                                    		//	$scope.dataLoading = true;
                                     			promise = HeatMapsService.GetMarketData(userId, token);
                                     			promise.then(
                                     				function(data){
                                     					$scope.marketList = data;
+                                    					$scope.marketDataLoading = false;
                                     				//	alert(data);
                                     					
                                     				},
                                     				function(err){
                                     					console.log(err);
+                                    					$scope.marketDataLoading = false;
                                     				}
                                     			);
                                     		}
@@ -133,24 +137,25 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 		   $scope.configuarationDiv =false;
                                 		   $scope.deviceGroupDiv =false;
                                 		   $scope.errdiv =false ;
-                                		   $scope.dataLoading3 = true;
+                                		   $scope.deviceDataLoading = true;
                                 			promise = HeatMapsService.GetDeviceListForMarket(userId,token,market);
                                 			promise.then(
                                 				function(data){
                                 					if(data.length > 0){
-                                					$scope.dataLoading3 = false;
+                                						  $scope.deviceDataLoading  = false;
                                 				//	$scope.deviceDiv =true;
                                 					console.log(data);
                                 					$scope.deviceList = data;
                                 					}
                                 					else{
                                 					$scope.deviceDiv =false;
-                                                    $scope.dataLoading3 = false;
+                                					  $scope.deviceDataLoading = false;
                                      				$scope.errdiv =true ;	
                                 					}
                                 					//$("#target").val($("#target option:last").val());
                                 				},
                                 				function(err){
+                                					  $scope.deviceDataLoading = false;
                                 				}
                                 			);
                                 		}
@@ -210,7 +215,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 		//	    var technology=$('#technology').val();
                                 			    var technology=getCheckBoxValue('technology');
                                 			    
-                                				   $scope.dataLoading3 = true;
+                                				   $scope.mapDataLoading = true;
                                 					if(!$scope.heatmap_form.$invalid){
                                 			     var data = {"marketName" : marketName, "deviceId":deviceId ,"fromDate" : fromDate,"toDate" : toDate,"category":category, "location":location,"technology":technology}; 
                                 			     var heatMapInput=data;
@@ -226,7 +231,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 					/*	console.log("centerInfo"+data.centerInfo);
                                 						console.log("centerInfo"+data.coordinateDetails);*/
                                 						if(data.coordinateDetails.length> 0){
-                                							$scope.dataLoading3 = false;
+                                							$scope.mapDataLoading = false;
                                 						var	showTechnologyFilter=data.showTechnologyFilter;
                                 							$(".mashupContainer2").css("display",'');
                                 							$("#kpiImage").attr("src",data.kpiImage);
@@ -253,7 +258,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 						else{
                                 							 alert('No Records Was Found')
                                 							HeatMapsService.defaultHeatMap();
-                                				            	$scope.dataLoading3 = false;
+                                				            	$scope.mapDataLoading = false;
                                 						    }
                                 						
                                 					},

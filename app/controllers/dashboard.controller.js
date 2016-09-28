@@ -246,7 +246,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	/*
 		To get Executive status data
 	*/
-	$scope.getExecutiveStatusData = function(date){
+	$scope.getExecutiveStatusData = function(date)
+	{
 		
 		 // promise = GraphServices.GetExecutiveStatusData(userId,'2015-05-19', token);
 		promise = GraphServices.GetExecutiveStatusData(userId,date, token);
@@ -295,18 +296,40 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 			}
 		);
 	}
-/*	$scope.findDeviceCount();
-	$scope.findActiveDeviceCount();
+	
+	$scope.deviceCountInfo = function(){
+		promise = GraphServices.deviceCountInfo(userId, token);
+		promise.then(
+			function(data){
+				$scope.registeredDeviceCount = data.registered;
+				$scope.approvedDeviceCount = data.approved;
+				$scope.availableDeviceCount = data.available;
+				var approvedDevicePer=($scope.approvedDeviceCount*100)/$scope.registeredDeviceCount;
+				$scope.approvedDeviceCountPer=(!isNaN(approvedDevicePer))? parseFloat(approvedDevicePer).toFixed(2):0;
+				var availableDevicePer=($scope.availableDeviceCount*100)/$scope.approvedDeviceCount;
+				$scope.availableDeviceCountPer=(!isNaN(availableDevicePer))? parseFloat(availableDevicePer).toFixed(2):0;;
+			},
+			function(err){
+			}
+		);
+	}
+	
+//	$scope.findDeviceCount();
+	$scope.deviceCountInfo();
+	$scope.getDeviceUsageData();
+/*	$scope.findActiveDeviceCount();
 	$scope.findScheduledJobCount();
 	$scope.findActiveJobCount();
 	$scope.getDashBoardMenu();
 	$scope.getFavouriteReports();
-	$scope.getDeviceUsageData();
-	$scope.getDeviceAvailabilityData();
+	
+	$scope.getDeviceAvailabilityData();*/
 	var date = $rootScope.getTodayDate();
 	$scope.getExecutiveStatusData(date);
-	$scope.getMapData();*/
-	/*$(function () {
+	$scope.getMapData();
+	
+	  
+	 $(function () {
 		$("#datepicker").datepicker({ 
 			autoclose: true, 
 			todayHighlight: true,
@@ -318,7 +341,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				$scope.getExecutiveStatusData(date)
 			});
 	});
-	*/
+	
 	
 	$scope.jobListGridOptions = oApp.config.jobListGridOptions;//For Jobs Grid View
 	
@@ -453,14 +476,14 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	var timer=$interval(function(){
 	
 	console.log('updating divs after 30 seconds.....');
-//	$scope.findDeviceCount();
+	$scope.findDeviceCount();
 //	$scope.findActiveDeviceCount();
 //	$scope.findScheduledJobCount();
 //	$scope.findActiveJobCount();
 //	$scope.getDeviceAvailabilityData();
 	//$scope.getDeviceUsageData();
-//	$scope.getExecutiveStatusData(date);
-	//$scope.getMapData();
+	$scope.getExecutiveStatusData(date);
+	$scope.getMapData();
 	
 	},60 * 1000);
 

@@ -1,5 +1,4 @@
 
-<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
 <!-- Header Start -->
 	<div ng-include="'app/views/header/header.html'"></div>
 	<!-- Header End -->
@@ -8,7 +7,7 @@
 	<!-- /second navbar -->
 	<!-- Page header -->
 <!-- 		<script type="text/javascript" src="assets/js/pages/form_select2.js"></script> -->
-	<div class="page-header">
+	<!-- <div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
@@ -22,7 +21,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- /page header -->
 	<!-- Page container -->
 	<div class="page-container">
@@ -42,9 +41,9 @@
 
 						<div class="form-group col-lg-3">
 							<label class="text-semibold">Category</label>
-							<select id="category"  class="select"  >
+							<select id="category"  class="form-control select"  >
 							
-							<option ng-repeat = "(id,val) in devices"   value="{{id}}">{{val}}</option>
+							<option ng-repeat ="(id,val) in devices"   value="{{id}}">{{val}}</option>
 					
 							</select>
 						</div>
@@ -88,7 +87,8 @@
 									</div>	
 				
 	</div>	
-	 <img class="loading loading-imgac" src="images/loading_new.gif" ng-show="dataLoading"></img>		 
+			 <img id="dataLoadingDM" class="loading loading-imgac" src="{{dataLoadingImage}}" style="display: none;"></img>
+		
 				<!-- 	<table class="table table-bordered table-hover datatable-highlight" >
 						
 							<thead>
