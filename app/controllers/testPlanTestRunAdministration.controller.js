@@ -106,8 +106,8 @@ oTech.controller('testPlanTestRunAdministration',
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
          			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-stats text-primary"></i> View Test Plan</a></li>'+
-         				'<li ><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
-         				'<li ><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
+         				'<li ng-if="row.entity.exitTestRuns"><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
+         				'<li ng-if="row.entity.exitTestRuns"><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
          				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
          				'<li ><a ng-click="grid.appScope.clone(row);"><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
          			'</ul>'+
@@ -1936,14 +1936,19 @@ oTech.controller('testPlanTestRunAdministration',
 	        
 	        /* view test plan */
 	        $scope.viewTestPlan = function(row){
-	        	$scope.testPlanViewDetails = [];
 	        	$scope.testPlanView = true;
+	        	$scope.dataLoadingForTestPlanView = true;
+	        	$scope.testPlanViewDetails = [];
 	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
 	            promise.then(
 	                function (data) {
+	                	$scope.dataLoadingForTestPlanView = false;
+	                	
 	                	$scope.testCaseDetails = true;
 	                	$scope.commandsDetails = false;
 								$scope.testPlanView = data.jobVO[0];
+								$scope.testRunCountForTestPlan = data.isMappedTestPlanTestRun[0].testRunCountForTestPlan;
+								$scope.testRunDeviceAllocatedCount = data.isMappedTestPlanTestRun[0].testRunDeviceAllocatedCount;
 							angular.forEach($scope.testPlanView.nodes , function (children) {
 								var temp = {};
 								var i = 0;
@@ -1997,6 +2002,67 @@ oTech.controller('testPlanTestRunAdministration',
 	        }
 	       
 	        /* view test plan */
+	        
+	        /* popover for the edit the test plan */
+	        
+	        $scope.createFrom = function (scope,e) {
+				$scope.showPopover = true;
+					overrideNode= scope;
+					commandIndex=0;
+					var updateCommandParameters = scope.$modelValue.commandParams;
+					$(".editable-input").empty();
+					//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
+					updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
+							
+						//		$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+	//console.log("updateCommandParameters"+updateCommandParameters);
+						if (updateCommandParameters.indexOf("=") >= 0){
+							
+							var commandParam=updateCommandParameters.split('=');
+							console.log("commandParam: "+commandParam);
+							$(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="'+commandParam[0]+'" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="'+commandParam[1]+'" class="form-control"/></div></div>');
+
+						}
+					//	$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+						commandIndex=i;
+						  });
+					$('.popover').css("top", $(e.target).offset().top+24);
+					 
+	        }
+			
+			$scope.addField = function (formID) {
+//				$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+				 commandIndex++;
+				$(".editable-input").append('<div class="editable-address form-group col-md-12 "><div class="col-md-6"><input class="form-control" name="commandLabel[' + commandIndex + '].Name" type="text" value="" /></div><div class="col-md-6"><input class="form-control" name="command[' + commandIndex + '].Name" type="text" value="" /></div></div>');
+				$("input[name='commandLabel["+ commandIndex +"].Name']").focus(); 
+	        }
+			
+			$scope.updateCommandParametersAction = function (formID) {
+				var updatedParametrs = "";
+			/*	$('#'+formID+' input').each(
+					function(index){  
+					var input = $(this);
+					if(input.attr('type')!='hidden' && input.val() !='' && input.val() != undefined)
+					updatedParametrs+=input.val()+",";
+				}
+				);*/
+				for(var index=0;index<=commandIndex;index++){
+					if($("input[name='commandLabel["+ index +"].Name']").val()!=undefined && $("input[name='commandLabel["+ index +"].Name']").val() != '' && $("input[name='command[" + index +"].Name']").val() != undefined && $("input[name='command[" + index +"].Name']").val() != '')
+					updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
+				}
+			//	console.log("updatedParametrs"+updatedParametrs);
+			if(overrideNode.$modelValue.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
+				 overrideNode.$modelValue.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
+				 $scope.isUpdatable =true;
+				 
+			}
+			$scope.showPopover = false;
+	        }
+			
+			$scope.updateCommandParametersClose = function () {
+				$scope.showPopover = false;
+			}
+			/* end popover */
 		
       
       
