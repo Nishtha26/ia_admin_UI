@@ -159,12 +159,49 @@ float:left;
 }
 
 .form-control{
-height:37px;
+	height:37px;
+	display:inline-block;
 }
 .loaderandwait{
-position: absolute;
+	position: absolute;
     top: 50%;
     left: 38%;}
+    
+    
+.popover > .arrow:after{
+border:none
+content:" ";
+}
+
+.popover > .arrow{
+bordrer:none
+}
+
+.popover {
+display:block;
+}
+
+
+.popover.top > .arrow{
+    border-top-color: none; 
+    border-top-color: none;
+    bottom: 0px;
+}
+
+.editable-container.popover {
+    width: 20%;
+    min-width: 200px;
+}
+
+.popover-content {
+    padding: 0 0 20px 0px;
+}
+.form-control-label{
+	border:none;
+}
+.editable-click, a.editable-click, .editable-click:hover, a.editable-click:hover{
+    border-bottom: none;
+}
 </style>
 <!-- 
 <script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
@@ -234,9 +271,9 @@ position: absolute;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" /></span></div>
-<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px;" maxlength="4" type="text" /></div> 
-<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
+<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 85%;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link" style="padding-left:10px;"></i></a></span></div>
+<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" /></div> 
+<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
 </span>
 
 <ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -348,86 +385,30 @@ position: absolute;
 								<div class="panel-body">
 									<!-- Top Stats row -->
 									<div class="row">
-										<!-- current flight -->
-										<!-- <div class="col-md-4">
-											<div class="panel text-center">
-												<div class="panel-body">
-				                	Progress counter
-													<div class="content-group-sm svg-center position-relative" id="hours-available-progress"></div>
-													/progress counter
-												</div>
-											</div>
-										</div> -->
-										<!-- /current flight -->
-
 										<!-- Total Runs -->
-										<div class="col-md-4">
+										<div class="col-md-12">
 											<div class="row">
-												<!-- <div class="col-xs-sm">
-													<div class="col-md-4">
-														<button class="btn bg-indigo btn-block btn-float btn-float-lg" type="button">
-															<i class="icon-task"></i>
-															<span>14 Tasks</span>
-														</button>
-													</div>
-												</div> -->
-												<div class="col-md-4">
+												
+												<div class="col-md-6">
 													<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
-														<span>12 Runs</span>
+														<span>{{testRunCountForTestPlan}} Runs</span>
 													</button>
 												</div>
-												<!-- <div class="col-md-4">
-													<button class="btn bg-success btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>6 Passes</span>
-													</button>
-												</div> -->
-											</div>
-											<div class="row" style="margin-top: 40px;">
-												<div class="col-xs-sm">
-													<div class="col-md-4">
+												<div class="col-md-6">
 													<button class="btn bg-pink btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-screen3"></i>
-														<span>12 Dev's</span>
+														<span>{{testRunDeviceAllocatedCount}} Dev's</span>
 													</button>
 													</div>
-													<!-- <div class="col-md-4">
-													<button class="btn bg-violet btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>2 Aborts</span>
-													</button>
-													</div>
-													<div class="col-md-4">
-													<button class="btn bg-warning btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>4 Failures</span>
-													</button>
-													</div> -->
-																				
-												</div>
 											</div>
+											
 										</div>
 										<!-- /Total Runs -->
 
-										<!-- Next Scheduled Run -->
-										<!-- <div class="col-md-4">
-											<div class="panel text-center">
-												<div class="panel-body">
-				                	Progress counter
-													<div><i class="text-size-large icon-calendar3 text-orange-600" style='font-size: 70px;'></i></div>
-													<div><h2 class='mt-15 mb-5'>27th Dec 2016</h2></div>
-													<div class="text-semibold text-center">@ 3:30 AM CST</div>
-													<div class="text-semibold text-center">Next Test Flight</div>
-													<div class="text-muted text-center">(in 23 days)</div>
-													/progress counter
-												</div>
-											</div>
-										</div> -->
-										<!-- /Next scheduled run -->
 									</div>
 									<!-- /Top Stats row -->
-
+										<img class="loading loading-imgac" src="images/loading_new.gif"  ng-show="dataLoadingForTestPlanView"></img>
 									<!-- Bottom Tasks Row -->
 									<div class="row task_groups_div" style='min-height: 383px; max-height: 383px; overflow: auto;' ng-show="testCaseDetails">
 										<h5>Test Case List</h5>
@@ -457,7 +438,7 @@ position: absolute;
 									<!-- /Bottom Tasks Row -->
 
 									<!-- Bottom Commands Row -->
-									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto;' ng-show="commandsDetails">
+									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto; margin-top: 15px;' ng-show="commandsDetails">
 										<div class="panel panel-white">
 											<div class="panel-heading">
 												<h6 class="panel-title"><span class='text-muted'>({{totalCommandsCount}} Commands)</span></h6>
@@ -519,7 +500,7 @@ position: absolute;
 								<li ng-class="{ active: isSet(1) }" ><a href ng-click="setTab(1)" data-toggle="tab">Create New Test Run</a></li>
 								<li ng-class="{ active: isSet(2) }" ><a href ng-click="setTab(2)" data-toggle="tab">Edit Test Plan</a></li>
 								<li ng-class="{ active: isSet(3) }"><a href ng-click="setTab(3)" data-toggle="tab">Existing Test Runs</a></li>
-								<li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Flight History</a></li>
+								<!-- <li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Flight History</a></li> -->
 							</ul>
 
 							<div class="tab-content">
@@ -1331,6 +1312,41 @@ position: absolute;
 			</div>
 		<!-- /DeviceNotification_List -->
 		
-		
+	<div class="popover fade top in editable-container editable-popup"
+	role="tooltip" id="popovercommand" ng-show="showPopover"
+	style="left:50.5%; -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
+	<div class="arrow" style="left: 50%;"></div>
+	<h3 class="popover-title">Edit Command Parameters</h3>
+	<div class="popover-content">
+		<div>
+			<!-- <div class="editableform-loading" ></div> -->
+			<form class="editableform" style="">
+				<div class="control-group form-group">
+					<!-- dynamic append -->
+					<div class="editable-input">
+						
+						
+					</div>
+					<!-- end dynamic append -->
+					<div class="editable-buttons editable-buttons-bottom">
+					<button type="button" ng-click="addField('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-plus3"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersAction('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-check"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersClose();"
+							class="btn btn-default btn-icon editable-cancel">
+							<i class="icon-x"></i>
+						</button>
+					</div>
+					<div class="editable-error-block help-block" style="display: none;"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>	
 
 	

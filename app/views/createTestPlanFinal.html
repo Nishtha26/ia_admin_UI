@@ -75,7 +75,9 @@ background:none;
 .panel {
     margin-bottom: 5px;
     }
-   
+   .form-control {
+    height: 30px !important;
+    }
 .popover > .arrow:after{
 border:none
 content:" ";
@@ -97,14 +99,16 @@ display:block;
 }
 
 .editable-container.popover {
-    width: 25%;
+    width: 20%;
     min-width: 200px;
 }
 
 .popover-content {
     padding: 0 0 20px 0px;
 }
-
+.form-control-label{
+	border:none;
+}
 </style>	
 	
 <script type="text/ng-template" id="nodrop_nodes_renderer2.html">
@@ -120,7 +124,7 @@ display:block;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span></div>
+<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%; padding-left:0px;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span></div>
 <div class="col-lg-2 col-sm-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" /></div> 
 <div class="col-lg-2 col-sm-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
 </span>
@@ -264,7 +268,7 @@ display:block;
  
 <div class="popover fade top in editable-container editable-popup"
 	role="tooltip" id="popovercommand" ng-show="showPopover"
-	style="  -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
+	style="left:50.5%; -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
 	<div class="arrow" style="left: 50%;"></div>
 	<h3 class="popover-title">Edit Command Parameters</h3>
 	<div class="popover-content">
