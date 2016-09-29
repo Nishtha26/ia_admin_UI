@@ -1,6 +1,6 @@
 
 oTech.controller('MyDevicesController',
-	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter) {
+	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants) {
 		$scope.loading = true;
 		var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
@@ -214,13 +214,14 @@ oTech.controller('MyDevicesController',
 		 	$("#device_maps").hide();
 		 	$(".d_tab").removeClass("active");
 		 	$("#availability_tab").addClass("active");
+		
+		 	$scope.gridApi.selection.clearSelectedRows();
+		 	row.isSelected=!row.isSelected;
+	 	  $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+
+	      $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
 		 	
-		 	
-		 	//  $scope.gridApi.selection.clearSelectedRows();
-		 	//  $scope.myDevicesGridOptions.enableRowSelection = !$scope.myDevicesGridOptions.enableRowSelection;
-		 	//    $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
-		 	 //  if($scope.gridApi.selection.selectRow){
-		           $scope.gridApi.selection.selectRow(row);
+           $scope.gridApi.selection.selectRow(row);
 		       	$("#device_facets_container").fadeOut('left slow');
 			 	$("#device_facets_container").fadeOut('left slow');
 			 	$.when($("#device_facets_container").slideUp('slow')).then(function() {
@@ -352,6 +353,9 @@ oTech.controller('MyDevicesController',
 				//	$("#liveMapLink").addClass("viewimage_links-active");
 					$("#device_facets_container").hide();
 				 	$("#live_device_map_container").show();
+				 	if($scope.gridApi!=undefined){
+				 	 $scope.gridApi.selection.clearSelectedRows();
+				 	}
 			}
 			 $scope.getMapData = function(){
 				 $scope.ShowLive();

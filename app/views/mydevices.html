@@ -8,7 +8,7 @@
 
 
 	<!-- Page header -->
-	<div class="page-header">
+<!-- 	<div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
@@ -16,13 +16,13 @@
 				</h4>
 			</div>
 
-			<div class="heading-elements">
+		 	<div class="heading-elements">
 				<div class="heading-btn-group">
 					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
 				</div>
-			</div>
+			</div> 
 		</div>
-	</div>
+	</div> -->
 	<!-- /page header -->
 
 
@@ -141,7 +141,7 @@
 						<div class="col-lg-6" >
 							<div class="panel panel-flat" id="live_device_map_container" >
 								<div class="panel-heading device-live-map-heading">
-									<h6 class="panel-title">Devices on map</h6>
+									<h6 class="panel-title">Live Devices</h6>
 						
 								</div>
 							<div class="panel-body" id="live_device_container" ng-show ="ShowLiveMap">
@@ -153,7 +153,7 @@
 
 							<div class="panel panel-flat" id="device_facets_container" style="display: none;">
 								<div class="panel-heading">
-									<h6 class="panel-title">Device Facets</h6>
+									<h6 class="panel-title">Device Feature</h6>
 						<!-- 			<div class="heading-elements">
 										<ul class="icons-list">
 	                		<li><a data-action="collapse"></a></li>
@@ -168,7 +168,7 @@
 										<ul class="nav nav-tabs">
 										<!-- href="#availability" */ -->
 											<li id="availability_tab" href="availability" class="d_tab active"><a data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a></li>
-											<li ng-click="deviceMapDefault()" class="d_tab"><!-- href="#device_maps" --><a  data-toggle="tab">Device Maps</a></li>
+											<li ng-click="deviceMapDefault()" class="d_tab"><!-- href="#device_maps" --><a  data-toggle="tab">Replay View</a></li>
 										<!-- 	<li><a href="#drive_routes" data-toggle="tab">Drive Routes</a></li> -->
 										</ul>
 
@@ -186,21 +186,24 @@
 												 <div class="col-sm-5 form-group">
 													<label class="col-sm-3" >Start Date: </label>
 													<div class="col-sm-9 input-group date " >
+														 <span class="input-group-addon">
+															<span class="icon-calendar22"></span>
+														</span>
 														<input id="startDate" name="startDate" ng-model="startDate"
 															class="form-control" style="height: 37px;" 
-															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> <span class="input-group-addon">
-															<span class="glyphicon glyphicon-calendar"></span>
-														</span>
+															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> 
+														
 													</div>
 												</div>
 												<div class="col-sm-5 form-group">
 													<label class="col-sm-3">End Date: </label>
 													<div class="col-sm-9 input-group date " >
-														<input id="endDate" name="endDate" ng-model="endDate" class="form-control"
-															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > <span
-															class="input-group-addon"> <span
-															class="glyphicon glyphicon-calendar"></span>
+													 <span class="input-group-addon">
+															<span class="icon-calendar22"></span>
 														</span>
+														<input id="endDate" name="endDate" ng-model="endDate" class="form-control"
+															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > 
+														
 													</div>
 												</div>
 
@@ -223,21 +226,23 @@
 												 <div class="col-sm-5 form-group">
 													<label class="col-sm-3" >From: </label>
 													<div class="col-sm-9 input-group date " >
+													 <span class="input-group-addon">
+															<span class="icon-calendar22"></span>
+														</span>
 														<input id="fromDateMap" name="fromDateMap" ng-model="fromDateMap"
 															class="form-control" style="height: 37px;" 
-															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> <span class="input-group-addon">
-															<span class="glyphicon glyphicon-calendar"></span>
-														</span>
+															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> 
 													</div>
 												</div>
 												<div class="col-sm-5 form-group">
 													<label class="col-sm-3">To: </label>
 													<div class="col-sm-9 input-group date " >
-														<input id="toDateMap" name="toDateMap" ng-model="toDateMap" class="form-control"
-															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > <span
-															class="input-group-addon"> <span
-															class="glyphicon glyphicon-calendar"></span>
+													 <span class="input-group-addon">
+															<span class="icon-calendar22"></span>
 														</span>
+														<input id="toDateMap" name="toDateMap" ng-model="toDateMap" class="form-control"
+															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > 
+													
 													</div>
 												</div>
 
