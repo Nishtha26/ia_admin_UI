@@ -24,7 +24,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	}
 	 
-	 
+	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
 
          $location.path('/dashboard/createTestPlan');
@@ -329,13 +329,13 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		var today=new Date()
 		var today2=new Date();
 		var endDateTime=today;
-		today2.setDate(today2.getDate() - 1);
-		var startDateTime=today2;
+		//today2.setDate(today2.getDate() - 1);
+		var startDateTime=today;/*today*/
 		
 		
 		var endDateTimeStr =jQuery.format.date(endDateTime, "yyyy-MM-dd HH:mm");
-			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd HH:mm");
-		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy")+"-"+jQuery.format.date(endDateTimeStr, "MM/dd/yyyy"))
+			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd 00:00");
+		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy"))
 		promise = testScriptService.countTestUsage( token,userId, startDateTimeStr,endDateTimeStr);
 		promise.then(
 			function(data){
@@ -512,6 +512,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.populateDeviceList();
 	
 	$scope.showReplayMap = function(){
+	 	if(!$scope.replayform.$invalid){
+    		
 		var deviceId = $('#deviceId').val(); 
 		
 		$scope.dataLoadingMap=true;
@@ -561,6 +563,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 					$scope.dataLoadingMap=false;
 				}
 			);
+	 	}
 	}
 	 $scope.closeReplayDropDown=function(){
 		  $("#replay_content").toggle();
