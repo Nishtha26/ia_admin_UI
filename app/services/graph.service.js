@@ -273,6 +273,17 @@ row.push(toolTipText);
 });
 labels.push(row);
 });
+
+if(labels.length==0){
+	row=[];
+	row.push("");
+	row.push(0);
+	row.push("");
+	
+	labels.push(row)
+	
+	
+}
 var max = 0;
 for(var i =0; i < labels.length; i++) {
 if(labels[i].length > max) {
@@ -293,6 +304,7 @@ for(var i = 0; i < (max - 1)/2; i++) {
 data.addColumn('number', '');
 data.addColumn({type:'string',role:'tooltip'}); 
 }
+
 data.addRows(labels);
 
 

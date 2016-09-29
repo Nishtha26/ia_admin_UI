@@ -6,11 +6,7 @@ padding:4px 8px;
 .map-popup .form-group{
 	margin:10px 0;
 }
-#devicesel .select2-selection {
-width: 100%; margin-left: 0px; margin-top: -13px; margin-bottom: -23px;
-}
-#devicesel .select2-container--open .select2-dropdown{
-left:-5px !important;}
+
 .angularjs-datetime-picker{
 z-index: 1002;
 }
@@ -35,10 +31,27 @@ z-index: 1002;
     width: 10px;
     height: 10px;}
     .status_graph span:nth-child(1) em {
-    background-color: rgba(92, 107, 192,0.5);
+    background-color: rgba(95, 146, 146,0.5);
     }
     .status_graph span:nth-child(2) em {
     background-color: rgba(97,184,100,0.5);
+}
+.display-equal{
+	 display: flex;
+}
+.equal .heading-elements{
+	
+	flex: 1;
+}
+.equal .panel-heading{
+padding:25px 20px;	
+}
+.map-info{
+	padding:5px 10px;
+}
+.map-active{
+	font-weight:bold;
+	text-decoration: underline;
 }
 </style>
 
@@ -82,11 +95,11 @@ z-index: 1002;
 					<div class="col-lg-12">
 						
 					<!-- Devices Div -->
-						<div class="col-lg-6">
+						
 
 							<!-- Device Synopsis Row -->
-							<div class="row">
-								<div class="col-lg-12">
+							
+								<div class="col-lg-6">
 									<div class="panel panel-white">
 										<div class="panel-heading"><h6>Devices  &nbsp;  <span class="label label-primary">{{activeDeviceCountPer}}% Current Active</span></h6> 
 											<div class="heading-elements">
@@ -163,85 +176,10 @@ z-index: 1002;
 
 										</div>
 									</div>
-								</div>
-							</div>
-							<!-- /Device Synopsis Row -->
-
-							<!-- Device stats -->
-							<div class="row">
-								<div class="col-lg-12">									
-									<div class="panel panel-flat">
-										<div class="panel-heading">
-											<h6 class="panel-title">Device Usage</h6>
-								 			<div class="heading-elements">
-								 				<div class="status_graph text-capitalize"> <!-- pull-right -->
-											<span><em></em> Active</span>
-											<span><em></em> Idle</span>
-										</div>
-										<!-- 		<form class="heading-form" action="#">
-													<div class="form-group">
-														<select class="change-date select-sm" id="select_date">
-															<optgroup label="<i class='icon-watch pull-right'></i> Time period">
-																<option value="val1">June, 29 - July, 5</option>
-																<option value="val2">June, 22 - June 28</option>
-																<option value="val3" selected="selected">June, 15 - June, 21</option>
-																<option value="val4">June, 8 - June, 14</option>
-															</optgroup>
-														</select>
-													</div>
-												</form> -->
-						           </div> 
-										</div>
-
-							<!-- 			<div class="container-fluid">
-											<div class="row text-center">
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-plus2 position-left text-slate"></i>56</h5>
-														<span class="text-muted text-size-small">Registrations This Week</span>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-plus position-left text-slate"></i> 328</h5>
-														<span class="text-muted text-size-small">Registrations This Month</span>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-wave position-left text-slate"></i>234</h5>
-														<span class="text-muted text-size-small">Devices Touched</span>
-													</div>
-												</div>
-											</div>
-										</div> -->
-										
-										<div class="content-group-sm" >
-											<span class="device_graph_text vertical"># of Devices</span>
-											<div class="devices-graph">
-												<canvas id="canvas" height="270px" width="600px"></canvas>
-											</div>
-										</div>
-										<div id="devices_online_stats"></div>
 									</div>
-								</div>
-							</div>
-							<!-- /Device stats -->
-
-				
-
-						</div>
-					<!-- /Devices Div -->
-
-
-					<!-- Test Runs Div -->
-						<div class="col-lg-6">
-
-							<!-- Tests Synopsis Row -->
-							<div class="row">
-								<div class="col-lg-12">
+									<!-- Tests Synopsis Row -->
+								
+								<div class="col-lg-6">
 									<div class="panel panel-white">
 										<div class="panel-heading"><h6>Test Runs &nbsp;  <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
 											<div class="heading-elements">
@@ -318,16 +256,52 @@ z-index: 1002;
 										</div>
 									</div>
 								</div>
-							</div>
+						
 							<!-- /Tests Synopsis Row -->
+							</div>
+							</div>
+						
+							<!-- /Device Synopsis Row -->
+							
+							
+							
+							
 
-
-							<!-- Test stats -->
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="panel panel-flat">
+							<!-- Device stats -->
+							<div class="row  display-equal">
+								<div class="col-lg-12">		
+								<div class="col-lg-6  equal">							
+									<div class="panel panel-white">
 										<div class="panel-heading">
-											<h6 class="panel-title">Test Plan Execution Status</h6>
+											<h6 class="panel-title">Device Usage</h6>
+								 			<div class="heading-elements" style="top: 67%;">
+								 				<div class="status_graph text-capitalize"> <!-- pull-right -->
+											<span><em></em> Active &nbsp; &nbsp;</span>
+											<span><em></em> Idle</span>
+										</div>
+										
+						           </div> 
+										</div>
+
+						
+										
+										<div class="content-group-sm" >
+											<span class="device_graph_text vertical"># of Devices</span>
+											<div class="devices-graph" style="height:313px;">
+												<canvas id="canvas" height="208px" width="600px"></canvas>
+											</div>
+										</div>
+										<div id="devices_online_stats"></div>
+									</div>
+								</div>
+								<!-- /Device stats -->
+								<!-- Test Runs Div -->
+						<div class="col-lg-6 equal">
+							<!-- Test stats -->
+							
+									<div class="panel panel-white">
+										<div class="panel-heading">
+											<h6 class="panel-title">Test Run Execution Status</h6>
 											<div class="heading-elements">
 												<!-- <form class="heading-form" action="#"> -->
 													<div class="form-group">
@@ -342,7 +316,7 @@ z-index: 1002;
 										<!-- <div style="float:right;position:relative;top:-25px;"> -->
 										<div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy">
 											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-											<input class="form-control" id="dat" type="text" readonly style="width:100px;" />
+											<input class="form-control" id="dat" type="text" readonly style="width:100%;" />
 											
 										</div>
 									<!-- </div> -->
@@ -379,39 +353,58 @@ z-index: 1002;
 										<div class="content-group-sm" id="test_plans_lines"></div>
 										<div id="chart_div" style="height:314px;"></div>
 									</div>
-								</div>
-							</div>
+								
 							<!-- /Test stats -->
 
 							
 
 						</div>
 					<!-- /Test Runs Div -->
+								
+								
+								
+							</div>
+							</div>
+							
+		
+					<!-- /Devices Div -->
 
 
-					</div>
-				</div>
 					<div class="row">
 					<div class="col-lg-12">
-					<div class="panel panel-flat">
-					<div class="panel-heading">
-						<h5 class="panel-title">Map</h5>
+					<div class="col-lg-12">
+					<div class="panel panel-white">
+					<div class="panel-heading" style="padding:20px;">
+						<h5 class="panel-title" ng-show="live_heading">Map</h5>
+						<h5 class="panel-title" ng-show="replay_heading">Replay View</h5>
 						<div class="heading-elements">
 							<ul class="icons-list map-popup">
-								<li class="pointer-link live"><span class="label label-info">Live</span></li>
+								<li class="pointer-link live" ng-click="getMapData();"><span id="live_span" class="label label-primary map-info map-active">Live</span></li>
 		                		<li class="dropdown replay">
-							    <a class="dropdown-toggle pointer-link" data-toggle="dropdown" aria-expanded="true"><span class="label label-info ">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
+							    <a class="dropdown-toggle pointer-link" ng-click="closeReplayDropDown();"><span id="replay_span" class="label label-primary map-info">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
 							
 							    
-                			<div class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
-						<form name="customerform">
+                			<div id="replay_content" class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
+                			<img alt="close" class="pointer-link" style="float: right;" src="images/close.gif" ng-click="closeReplayDropDown();"/>
+						<form id="replayform" name="replayform" novalidate>
 							<div class="row">
 
 							<div id="devicesel" class="col-sm-12 form-group">
-							<label>Devices:</label> <select id="deviceId" name="deviceId" class="select" style="">
+							<label>Devices:</label> 
+							<select id="deviceId" name="deviceId" ng-model="deviceId" class="select" required>
+							<option value="">Select </option>
 							<option ng-repeat="device in DeviceList"
 										ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
 							</select>
+									<div class="clear"></div>
+									<div 
+										ng-show="replayform.deviceId.$touched || replayform.$submitted"
+										ng-messages="replayform.deviceId.$error"
+										class="errors ">
+										<div ng-message="required">**Device is required</div>
+
+
+									</div>
 							</div>
 						<div class="col-sm-12 form-group">
 								<label>From: </label>
@@ -419,8 +412,17 @@ z-index: 1002;
 									 <span class="input-group-addon">
 										<span class="icon-calendar22"></span>
 									</span>
-									<input id="fromDate" name="fromDate" ng-model="fromDate" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm"> 
+									<input id="fromDate" name="fromDate" ng-model="fromDate"  class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm" required> 
 								</div>
+									<div class="clear"></div>
+									<div
+										ng-show="replayform.fromDate.$touched || replayform.$submitted"
+										ng-messages="replayform.fromDate.$error"
+										class="errors ">
+										<div ng-message="required">**From Date is required</div>
+										
+
+									</div>
 							</div>
 							<div class="col-sm-12 form-group">
 								<label>To: </label>
@@ -428,14 +430,24 @@ z-index: 1002;
 								 <span class="input-group-addon">
 										<span class="icon-calendar22"></span>
 									</span>
-									<input id="toDate" name="toDate" ng-model="toDate" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm"> 
+									<input id="toDate" name="toDate" ng-model="toDate" max-date="dtmax" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm" required> 
 									
 								</div>
+									<div class="clear"></div>
+									<div
+										ng-show="replayform.toDate.$touched || replayform.$submitted"
+										ng-messages="replayform.toDate.$error"
+										class="errors ">
+										<div ng-message="required">**To Date is required</div>
+										
+
+									</div>
 							</div>
 					
 										
 							<div class="col-sm-12 form-group text-center">
-									<input id="device_av_btn" class="btn btn-success btn-sm" type="submit" ng-click="showReplayMap();" value="Replay Map">
+							<button type="submit" class="btn btn-success"  ng-click="showReplayMap()" >Replay Map</button>
+									<!-- <input  class="btn btn-success btn-sm" ng-disabled="replayform.$invalid" type="submit" ng-click="showReplayMap();" value="Replay Map"> -->
 							</div> 
 							
 								
@@ -448,20 +460,23 @@ z-index: 1002;
 		                	</ul>
 	                	</div>
 					</div>
-
-					<div class="panel-body">
+<img class="loading loading-imgac" src="{{loadingImageName}}"
+										ng-show="dataLoadingMap" style="position: absolute;z-index:1;top:25%;"></img>
+					<div class="panel-body" ng-show="livemap_container">
 					
 					<div class="map-container" id="Map"></div>
 						
 					</div>
 					
-					<div class="panel-body" id="rePlayMap_container" style="display:none;">
+					<div class="panel-body" ng-show="replaymap_container"  id="rePlayMap_container" >
 					
 					<div class="map-container" id="rePlayMap"></div>
 						
 					</div>
 				</div>
-				</div></div>
+				</div>
+				</div>
+				</div>
 			</div>
 			<!-- /main content -->
 
