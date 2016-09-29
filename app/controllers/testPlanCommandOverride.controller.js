@@ -640,7 +640,7 @@ oTech.controller('testPlanCommandOverride',
                     else {
                     	
                     	$scope.errMessageTestPlanFinalId = true;
-                        $scope.errMessageTestPlanFinal = "This test plan allready created...";
+                        $scope.errMessageTestPlanFinal = "This test plan already created...";
                         $timeout(function () {
                         	$scope.finalizeTestPlan = false;
                         	$scope.errMessageTestPlanFinalId = false;
