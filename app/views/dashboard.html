@@ -327,7 +327,7 @@ z-index: 1002;
 								<div class="col-lg-12">
 									<div class="panel panel-flat">
 										<div class="panel-heading">
-											<h6 class="panel-title">Test Plan Execution Status</h6>
+											<h6 class="panel-title">Test Run Execution Status</h6>
 											<div class="heading-elements">
 												<!-- <form class="heading-form" action="#"> -->
 													<div class="form-group">
@@ -395,15 +395,17 @@ z-index: 1002;
 					<div class="col-lg-12">
 					<div class="panel panel-flat">
 					<div class="panel-heading">
-						<h5 class="panel-title">Map</h5>
+						<h5 class="panel-title" ng-show="live_heading">Map</h5>
+						<h5 class="panel-title" ng-show="replay_heading">Replay View</h5>
 						<div class="heading-elements">
 							<ul class="icons-list map-popup">
-								<li class="pointer-link live"><span class="label label-info">Live</span></li>
+								<li class="pointer-link live" ng-click="getMapData();"><span class="label label-info">Live</span></li>
 		                		<li class="dropdown replay">
-							    <a class="dropdown-toggle pointer-link" data-toggle="dropdown" aria-expanded="true"><span class="label label-info ">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
+							    <a class="dropdown-toggle pointer-link" ng-click="closeReplayDropDown();"><span class="label label-info ">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
 							
 							    
-                			<div class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
+                			<div id="replay_content" class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
+                			<img alt="close" class="pointer-link" style="float: right;" src="images/close.gif" ng-click="closeReplayDropDown();"/>
 						<form name="customerform">
 							<div class="row">
 
@@ -448,14 +450,15 @@ z-index: 1002;
 		                	</ul>
 	                	</div>
 					</div>
-
-					<div class="panel-body">
+<img class="loading loading-imgac" src="{{loadingImageName}}"
+										ng-show="dataLoadingMap"></img>
+					<div class="panel-body" ng-show="livemap_container">
 					
 					<div class="map-container" id="Map"></div>
 						
 					</div>
 					
-					<div class="panel-body" id="rePlayMap_container" style="display:none;">
+					<div class="panel-body" ng-show="replaymap_container"  id="rePlayMap_container" >
 					
 					<div class="map-container" id="rePlayMap"></div>
 						

@@ -10,7 +10,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
     };	
 	var token = sessionStorage.getItem("token");
 	var userId = sessionStorage.getItem("userId");
-	
+	$scope.loadingImageName= oApp.config.loadingImageName;
 	 var allOfTheData;
 	 
 	 $scope.signOut = function(){
@@ -275,6 +275,12 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		To get Map data
 	*/
 	$scope.getMapData = function(){
+		$("#replay_content").hide();
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=true;
+		$scope.replay_heading=false;
+		$scope.livemap_container=true;
+		$scope.replaymap_container=false;
 		promise = MapServices.GetMapLocations(userId, token);
 		promise.then(
 			function(data){
@@ -291,8 +297,10 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				}
 				}
 				MapServices.DahsboardShowMap(deviceData, lat, lon);
+				$scope.dataLoadingMap=false;
 			},
 			function(err){
+				$scope.dataLoadingMap=false;
 			}
 		);
 	}
@@ -373,8 +381,11 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				 date = document.getElementById('dat').value;
 				$scope.getExecutiveStatusData(date)
 			});
+		
+		
+		
 	});
-	
+
 	
 	$scope.jobListGridOptions = oApp.config.jobListGridOptions;//For Jobs Grid View
 	
@@ -503,7 +514,14 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.showReplayMap = function(){
 		var deviceId = $('#deviceId').val(); 
 		
-
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=false;
+		$scope.replay_heading=true;
+		$scope.livemap_container=false;
+		$scope.replaymap_container=true;
+		
+		
+		
 		 var fromDate = $('#fromDate').val();
 		 var toDate = $('#toDate').val();
 		 
@@ -528,6 +546,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				//	 console.log("from replay js");
 				//	 console.log("lon"+lon);
 					MapServices.showReplayMap(deviceData,lat, lon);
+					 $("#replay_content").toggle();
 					}
 					else{
 						   MapServices.clearReplayMap();
@@ -536,12 +555,16 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 						    alert('No Records Was Found')
 						 
 					    }
+				$scope.dataLoadingMap=false;
 				},
 				function(err){
+					$scope.dataLoadingMap=false;
 				}
 			);
 	}
-	
+	 $scope.closeReplayDropDown=function(){
+		  $("#replay_content").toggle();
+	}
 	 $scope.onPageSizeChanged = function() {
         $scope.createNewDatasource();
     };
@@ -573,7 +596,9 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 //	$scope.getDeviceAvailabilityData();
 	//$scope.getDeviceUsageData();
 	$scope.getExecutiveStatusData(date);
+	if($scope.livemap_container){
 	$scope.getMapData();
+	}
 	
 	},60 * 1000);
 
