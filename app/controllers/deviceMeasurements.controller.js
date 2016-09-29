@@ -6,9 +6,9 @@ oTech
 					$scope.dataLoading = true;
 					$scope.err = false;
 					$scope.dataLoadingImage=oApp.config.loadingImageName;
-					$scope.listItem = 'APN';
+					$scope.listItem = 'Location';
 					
-					var link = "APN";
+					var link = "Location";
 					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
 					var userId = sessionStorage.getItem("userId");
@@ -42,10 +42,7 @@ oTech
 						promise.then(function(data) {
 							$scope.devices = data;
 							
-							//$("#category").val(link);
 							
-							
-							//$("#select2-category-container").val("APN");
 
 						}, function(err) {
 							console.log(err);
@@ -176,8 +173,9 @@ oTech
 					$scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
 					/* measurement list apn */
 					$scope.showDeviceList = function(link) {
-					/*	$scope.dataLoading = true;
-						$scope.err = false;*/
+//						$scope.dataLoadingDM = true;
+						$("#dataLoadingDM").show();
+						/*$scope.err = false;*/
 						$scope.devicesMeasurementGridOptions.data=[];
 						if(link == 'APN')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
@@ -230,11 +228,11 @@ oTech
 						if(startLimit==1){
 							startLimit=0;
 						}
-						
+						$('.ui-grid-viewport').css("display","none");
 						promise = AppServices.GetMeasurementsapnData(userId,
 								token, $scope.itemsPerPage, startLimit, link);
 						promise.then(function(data) {
-							$scope.dataLoading = true;
+//							$scope.dataLoadingDM = true;
 							$scope.err = false;
 							$scope.totalRecords = data.totalRecords;
 							$scope.datalists = data.apnData;
@@ -246,19 +244,23 @@ oTech
 								allOfTheData = data.apnData;
 
 								$scope.createNewDatasource();
-							$scope.dataLoading = false;
+						//	$scope.dataLoadingDM = false;
+								$("#dataLoadingDM").hide();
 							} else {
 								$('.ui-grid-viewport').css("display","none");
 								allOfTheData = data.apnData;
 
 								$scope.createNewDatasource();
-								$scope.dataLoading = false;
+							//	$scope.dataLoadingDM = false;
+								$("#dataLoadingDM").hide();
 								$scope.err = true;
 							}
-							$("#category").select2()[0].value =$scope.listItem;
+						//	$("#category").select2()[0].value =link;
+							$("#category").val(link)
 						}, function(err) {
 							$scope.err = true;
-								$scope.dataLoading = false;
+							//	$scope.dataLoadingDM = false;
+							$("#dataLoadingDM").hide();
 							console.log(err);
 						});
 					}
@@ -272,20 +274,26 @@ oTech
 					$scope.getFavouriteReports();
 					// A $( document ).ready() block.
 					$( document ).ready(function() {
+						
 						$scope.getmeasurementList();
+						/*  $('.select').select2({
+						        minimumResultsForSearch: Infinity
+						    });*/
 					});
 					
 					$scope.showDeviceList(link);
 					$scope.openDevicedata = function(id,value) {
-						$scope.dataLoading = true;
+						
 						
 						link = id
+//						$scope.reset();
 						$scope.listItem = value;
-						$scope.reset();
+						
+						//$scope.dataLoading = true;
 						$scope.showDeviceList(link);
 					}
 					 $('#category').change(function(){
-							
+//							alert("");
 						 $scope.openDevicedata($(this).val(),$("#category option:selected").text());
 						 });
 

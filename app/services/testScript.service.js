@@ -867,7 +867,7 @@ oTech.service('testScriptService',
         }
 		
 		
-		service.createCloneTestplan = function (token,userId, startDateTime,endDateTime) {
+		service.countTestUsage = function (token,userId, startDateTime,endDateTime) {
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/testPlan/countNewTestPlanTestRunTestRunActive",

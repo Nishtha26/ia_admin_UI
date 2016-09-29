@@ -329,5 +329,30 @@ var chartDiv=document.getElementById('chart_div');
 
 }
 
+/*
+Function to get count of Registered, Licensed , Available device 
+*/
+
+service.deviceCountInfo = function(userId, token){
+var deferred = $q.defer();
+$.ajax({
+	    url : oApp.config.BASE_URL + "rest/devices/deviceCountInfo",
+	    type: "POST",
+		data : {token:token,userId:userId},
+		headers :{
+		'Content-Type': 'application/x-www-form-urlencoded'
+		},
+	    success: function(data)
+	    {
+			deferred.resolve(data);
+	    },
+	    error: function (err)
+	    {
+			deferred.reject(err);
+	    }
+    });	
+	return deferred.promise;
+} 
+
 		return service;
 }])
