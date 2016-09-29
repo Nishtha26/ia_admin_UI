@@ -13,7 +13,6 @@ oTech
 					$scope.commandError = false;
 					$scope.createTestPlan = {};
 					var sendCreateData = {};
-					
 					if(messages.length==1){
 						for(var i=0; i < messages[0].length; i++){
 						      if(messages[0][i].key == "testPlanName")
@@ -381,7 +380,9 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.shareData.push({'key':'testPlanName','value':$scope.testPlanName});
 						$scope.shareData.push({'key':'testPlanDescription','value':$scope.testPlanDescription});
 						$scope.shareData.push({'key':'usecase','value':$scope.usecaseVal});
-						
+						if(messages.length == 1){
+							messages.splice(0,1);
+						}
 						messages.add($scope.shareData);
 						$(".btn").addClass("disabled");
 						sendCreateData.jobName = $scope.testPlanName;

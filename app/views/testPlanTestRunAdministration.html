@@ -308,7 +308,7 @@ display:block;
 
 
 	<!-- Page header -->
-	<div class="page-header">
+	<!-- <div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
@@ -322,7 +322,7 @@ display:block;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- /page header -->
 
 
@@ -409,13 +409,13 @@ display:block;
 												<div class="col-md-6">
 													<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
-														<span>{{testRunCountForTestPlan}} Runs</span>
+														<span>{{testRunCountForTestPlan}} Test Runs</span>
 													</button>
 												</div>
 												<div class="col-md-6">
 													<button class="btn bg-pink btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-screen3"></i>
-														<span>{{testRunDeviceAllocatedCount}} Dev's</span>
+														<span>{{testRunDeviceAllocatedCount}} Devices</span>
 													</button>
 													</div>
 											</div>
@@ -854,7 +854,7 @@ display:block;
 										 			</div>
 									 			</div>
 						 			 <div id="testRunMappedDevices" ui-grid="testRunMappedDevices" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid"  >
-						 			  <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+						 			  <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingOfAllTestRuns"></img>
 						 			 </div>
 						 			
 									<!-- /test run devices ui grid -->

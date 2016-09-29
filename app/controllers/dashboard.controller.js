@@ -281,6 +281,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.replay_heading=false;
 		$scope.livemap_container=true;
 		$scope.replaymap_container=false;
+		$("#live_span").addClass("map-active");
+		$("#replay_span").removeClass("map-active");
 		promise = MapServices.GetMapLocations(userId, token);
 		promise.then(
 			function(data){
@@ -521,6 +523,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.replay_heading=true;
 		$scope.livemap_container=false;
 		$scope.replaymap_container=true;
+		$("#live_span").removeClass("map-active");
+		$("#replay_span").addClass("map-active");
 		
 		
 		
