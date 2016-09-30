@@ -10,7 +10,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
     };	
 	var token = sessionStorage.getItem("token");
 	var userId = sessionStorage.getItem("userId");
-	
+	$scope.loadingImageName= oApp.config.loadingImageName;
 	 var allOfTheData;
 	 
 	 $scope.signOut = function(){
@@ -24,7 +24,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	}
 	 
-	 
+	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
 
          $location.path('/dashboard/createTestPlan');
@@ -275,6 +275,14 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		To get Map data
 	*/
 	$scope.getMapData = function(){
+		$("#replay_content").hide();
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=true;
+		$scope.replay_heading=false;
+		$scope.livemap_container=true;
+		$scope.replaymap_container=false;
+		$("#live_span").addClass("map-active");
+		$("#replay_span").removeClass("map-active");
 		promise = MapServices.GetMapLocations(userId, token);
 		promise.then(
 			function(data){
@@ -291,8 +299,10 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				}
 				}
 				MapServices.DahsboardShowMap(deviceData, lat, lon);
+				$scope.dataLoadingMap=false;
 			},
 			function(err){
+				$scope.dataLoadingMap=false;
 			}
 		);
 	}
@@ -321,13 +331,13 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		var today=new Date()
 		var today2=new Date();
 		var endDateTime=today;
-		today2.setDate(today2.getDate() - 1);
-		var startDateTime=today2;
+		//today2.setDate(today2.getDate() - 1);
+		var startDateTime=today;/*today*/
 		
 		
 		var endDateTimeStr =jQuery.format.date(endDateTime, "yyyy-MM-dd HH:mm");
-			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd HH:mm");
-		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy")+"-"+jQuery.format.date(endDateTimeStr, "MM/dd/yyyy"))
+			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd 00:00");
+		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy"))
 		promise = testScriptService.countTestUsage( token,userId, startDateTimeStr,endDateTimeStr);
 		promise.then(
 			function(data){
@@ -373,8 +383,11 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				 date = document.getElementById('dat').value;
 				$scope.getExecutiveStatusData(date)
 			});
+		
+		
+		
 	});
-	
+
 	
 	$scope.jobListGridOptions = oApp.config.jobListGridOptions;//For Jobs Grid View
 	
@@ -501,9 +514,20 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$scope.populateDeviceList();
 	
 	$scope.showReplayMap = function(){
+	 	if(!$scope.replayform.$invalid){
+    		
 		var deviceId = $('#deviceId').val(); 
 		
-
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=false;
+		$scope.replay_heading=true;
+		$scope.livemap_container=false;
+		$scope.replaymap_container=true;
+		$("#live_span").removeClass("map-active");
+		$("#replay_span").addClass("map-active");
+		
+		
+		
 		 var fromDate = $('#fromDate').val();
 		 var toDate = $('#toDate').val();
 		 
@@ -528,6 +552,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				//	 console.log("from replay js");
 				//	 console.log("lon"+lon);
 					MapServices.showReplayMap(deviceData,lat, lon);
+					 $("#replay_content").toggle();
 					}
 					else{
 						   MapServices.clearReplayMap();
@@ -536,12 +561,17 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 						    alert('No Records Was Found')
 						 
 					    }
+				$scope.dataLoadingMap=false;
 				},
 				function(err){
+					$scope.dataLoadingMap=false;
 				}
 			);
+	 	}
 	}
-	
+	 $scope.closeReplayDropDown=function(){
+		  $("#replay_content").toggle();
+	}
 	 $scope.onPageSizeChanged = function() {
         $scope.createNewDatasource();
     };
@@ -573,7 +603,9 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 //	$scope.getDeviceAvailabilityData();
 	//$scope.getDeviceUsageData();
 	$scope.getExecutiveStatusData(date);
+	if($scope.livemap_container){
 	$scope.getMapData();
+	}
 	
 	},60 * 1000);
 
