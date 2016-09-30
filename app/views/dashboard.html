@@ -181,12 +181,16 @@ padding:25px 20px;
 								
 								<div class="col-lg-6">
 									<div class="panel panel-white">
-										<div class="panel-heading"><h6>Test Runs &nbsp;  <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
+										<div class="panel-heading"><h6>Test Runs &nbsp; 					
+										<img class="loading " src="images/loading_new.gif"
+										id="dataLoadingTest" style="height:25px;width:25px;display:none;position:absolute;top: 34%;left: 70%;" ></img> <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
 											<div class="heading-elements">
 												<div class="form-group">
+										
 													<div class="input-group">
+										
 														<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-														<input id="testRunDate" type="text" readonly="readonly" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+														<input id="testRunDate" type="text"  class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
 													</div>
 												</div>
 											</div>
@@ -460,7 +464,7 @@ padding:25px 20px;
 		                	</ul>
 	                	</div>
 					</div>
-<img class="loading loading-imgac" src="{{loadingImageName}}"
+<img class="loading loading-imgac" src="images/loading_new.gif"
 										ng-show="dataLoadingMap" style="position: absolute;z-index:1;top:25%;"></img>
 					<div class="panel-body" ng-show="livemap_container">
 					
@@ -500,5 +504,6 @@ $('.select').select2(
     minimumResultsForSearch: Infinity
 } */
 );
+
 });
 </script>
