@@ -23,7 +23,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.listTypeForPagination = "";
 	
 	}
-	 
+	 $scope.startUsageDate = "";
 	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
 
@@ -327,17 +327,36 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		);
 	}
 	
-	$scope.testUsage = function(){
+
+	$scope.testUsageLoad = function(){
 		var today=new Date()
-		var today2=new Date();
-		var endDateTime=today;
+//		var today2=new Date();
+//		var endDateTime=today;
 		//today2.setDate(today2.getDate() - 1);
-		var startDateTime=today;/*today*/
+//		var startDateTime=today;/*today*/
 		
+		var start = today;
+
+		$('.daterange-basic').daterangepicker({
+			  startDate: start,
+		      endDate: start,
+			locale: {
+			      format: 'YYYY-MM-DD'
+			    },
+			    
+		    applyClass: 'bg-slate-600',
+		    cancelClass: 'btn-default'
+		});
 		
-		var endDateTimeStr =jQuery.format.date(endDateTime, "yyyy-MM-dd HH:mm");
-			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd 00:00");
-		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy"))
+		var endDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd HH:mm");
+			var startDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd 00:00");
+		//$("#testRunDate").val(jQuery.format.date(startDateTime, "yyyy-MM-dd"))
+			
+			$scope.testUsage(startDateTimeStr,endDateTimeStr);
+	}
+	
+	$scope.testUsage= function(startDateTimeStr,endDateTimeStr){
+		$("#dataLoadingTest").show();
 		promise = testScriptService.countTestUsage( token,userId, startDateTimeStr,endDateTimeStr);
 		promise.then(
 			function(data){
@@ -345,6 +364,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				$scope.totalDevicesAllocatedForTestRunCount = data[0].totalDevicesAllocatedForTestRunCount;
 				$scope.totalTestPlanCount = data[0].totalTestPlanCount;
 				$scope.totalTestRunCount = data[0].totalTestRunCount;
+				$("#dataLoadingTest").hide();
 				/*var approvedDevicePer=($scope.approvedDeviceCount*100)/$scope.registeredDeviceCount;
 				$scope.approvedDeviceCountPer=(!isNaN(approvedDevicePer))? parseFloat(approvedDevicePer).toFixed(2):0;
 				var availableDevicePer=($scope.availableDeviceCount*100)/$scope.approvedDeviceCount;
@@ -353,10 +373,12 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				$scope.activeDeviceCountPer=(!isNaN(activeDeviceCountPer))? parseFloat(activeDeviceCountPer).toFixed(2):0.00;;*/
 			},
 			function(err){
+				$("#dataLoadingTest").hide();
 			}
 		);
-	} 
-	$scope.testUsage();
+	}
+	
+	$scope.testUsageLoad();
 //	$scope.findDeviceCount();
 	$scope.deviceCountInfo();
 	$scope.getDeviceUsageData();
@@ -385,7 +407,17 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 			});
 		
 		
-		
+/*		var start = moment();
+		$scope.startUsageDate=start;
+		$('.daterange-basic').daterangepicker({
+			  startDate: start,
+		      endDate: start,
+			locale: {
+			      format: 'YYYY-MM-DD'
+			    },
+		    applyClass: 'bg-slate-600',
+		    cancelClass: 'btn-default'
+		});*/
 	});
 
 	
@@ -621,6 +653,23 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
                         });
 	 
 	
+	  
+	 $(function () {
+		
+		
+		var startDateTimeStr=""
+			var	endDateTimeStr="";
+
+		$('.daterange-basic').on('apply.daterangepicker', function(ev, picker) {
+			
+			startDateTimeStr=picker.startDate.format('YYYY-MM-DD 00:00')
+			  console.log("startDateTimeStr "+startDateTimeStr);
+			endDateTimeStr=picker.endDate.format('YYYY-MM-DD 23:59')
+			  console.log("endDateTimeStr: "+endDateTimeStr);
+			$scope.testUsage(startDateTimeStr,endDateTimeStr);
+			});
+		
+	});
 	 
 						
 	   
