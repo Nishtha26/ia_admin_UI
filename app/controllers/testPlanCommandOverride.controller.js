@@ -207,11 +207,12 @@ oTech.controller('testPlanCommandOverride',
 		}
 		
 		
-		$scope.createFrom = function (scope) {
+		$scope.createFrom = function (scope,e) {
+			$scope.showPopover = true;
 				overrideNode= scope;
 				commandIndex=0;
 				var updateCommandParameters = scope.$modelValue.commandParams;
-				$("#updateCommandParametersForm").empty();
+				$(".editable-input").empty();
 				//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
 				updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
 						
@@ -221,20 +222,20 @@ oTech.controller('testPlanCommandOverride',
 						
 						var commandParam=updateCommandParameters.split('=');
 						console.log("commandParam: "+commandParam);
-						$("#updateCommandParametersForm").append('<div><input name="commandLabel[' + i + '].Name" type="text" value="'+commandParam[0]+'" />=<input name="command[' + i + '].Name" type="text" value="'+commandParam[1]+'" /></div><br/>');
+						$(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="'+commandParam[0]+'" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="'+commandParam[1]+'" class="form-control"/></div></div>');
 
 					}
 				//	$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
 					commandIndex=i;
 					  });
-					  
+				$('.popover').css("top", $(e.target).offset().top+24);
 				 
         }
 		
 		$scope.addField = function (formID) {
 //			$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
 			 commandIndex++;
-			$("#updateCommandParametersForm").append('<div><input name="commandLabel[' + commandIndex + '].Name" type="text" value="" />=<input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+			$(".editable-input").append('<div class="editable-address form-group col-md-12 "><div class="col-md-6"><input class="form-control" name="commandLabel[' + commandIndex + '].Name" type="text" value="" /></div><div class="col-md-6"><input class="form-control" name="command[' + commandIndex + '].Name" type="text" value="" /></div></div>');
 			$("input[name='commandLabel["+ commandIndex +"].Name']").focus(); 
         }
 		
@@ -257,7 +258,12 @@ oTech.controller('testPlanCommandOverride',
 			 $scope.isUpdatable =true;
 			 
 		}
+		$scope.showPopover = false;
         }
+		
+		$scope.updateCommandParametersClose = function () {
+			$scope.showPopover = false;
+		}
 		
 		
 		$scope.testPlanGoForTestRun = function () {
@@ -634,7 +640,7 @@ oTech.controller('testPlanCommandOverride',
                     else {
                     	
                     	$scope.errMessageTestPlanFinalId = true;
-                        $scope.errMessageTestPlanFinal = "This test plan allready created...";
+                        $scope.errMessageTestPlanFinal = "This test plan already created...";
                         $timeout(function () {
                         	$scope.finalizeTestPlan = false;
                         	$scope.errMessageTestPlanFinalId = false;

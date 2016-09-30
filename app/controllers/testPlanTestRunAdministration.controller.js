@@ -97,17 +97,6 @@ oTech.controller('testPlanTestRunAdministration',
                            }},
                      	{name:'Created Date',field: 'createdDate', width: '20%'},
          				{name:'Created By',field: 'createdByName', width: '15%'},
-         				  /* {name:'Action', enableRowSelection: false, headerCellClass: $scope.highlightFilteredHeader, cellTemplate:
-                            '<a href="" ng-click="grid.appScope.viewTestPlanTestRun({{row.entity.testplanId}})">View Test Runs</a>'},*/
-         				  /* {name:'Take Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
-                            '<select class="form-control" style=" border-color: #eaeaea;margin-left:7%;margin-top:2%;width: 50%;height:75%;padding-top:1%" ng-model="actions" ng-change="grid.appScope.update(this,row)">'+
-         					  '<option value="">Action</option>' +
-         					  '<option value="{{row.entity.testplanId}}-View">View Test Runs</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Create">Create Test Run</option>'+
-         					  '<option value="{{row.entity.testplanId}}-Edit">Edit Test Plan</option> '+
-         					  '<option value="{{row.entity.testplanId}}-Clone">Clone Test Plan</option> '+
-         					'</select>'}*/
-         				
          				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
          					enableColumnMenu: false, enableSorting: false,cellTemplate:
          	         '<ul class="icons-list">'+
@@ -116,8 +105,9 @@ oTech.controller('testPlanTestRunAdministration',
          				'<i class="icon-menu9"></i>'+
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
-         				'<li ><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
-         				'<li ><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
+         			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 1"><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 0"><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
          				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
          				'<li ><a ng-click="grid.appScope.clone(row);"><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
          			'</ul>'+
@@ -243,7 +233,7 @@ oTech.controller('testPlanTestRunAdministration',
 		 
 		 $scope.singleFilter = function() {
 			    $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( startLimit, $scope.endLimit);
+			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( 0, $scope.endLimit);
 			   
 			};
 			
@@ -515,15 +505,15 @@ oTech.controller('testPlanTestRunAdministration',
 	            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 	    				Devices = [];
 	    				notificationTypes = [];
-	    				$scope.dataProcessing = true;
 	    				
 	                    //Get devices service
 	    				if(row.isSelected){
+	    					$scope.dataProcessingOfAllTestRuns = true;
 	    					$rootScope.jobId = row.entity.testrunId;
 	    					promise = testScriptService.ViewTestRunDeviceService(userId, token, row.entity.testrunId);
 		                    promise.then(
 		                        function (data) {
-		                        	$scope.dataProcessing = false;
+		                        	$scope.dataProcessingOfAllTestRuns = false;
 		                        	 $scope.testRunMappedDevices.data = data.testRunDeviceData;
 		 	                        $scope.searchTestRunMappedDevices = data.testRunDeviceData
 		    						/*$timeout(function () {
@@ -607,7 +597,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                {field: 'deviceModel', name: ' Device Model', headerCellClass: $scope.highlightFilteredHeader},
 	                {field: 'deviceManufacturer', name: 'Device Manufacturer', headerCellClass: $scope.highlightFilteredHeader},
 	               /* {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},*/
-					{field: 'jobProgress', name: 'Job Monitoring', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b>{{row.entity.jobProgress}}%</b></uib-progressbar></div>'},
+					{field: 'jobProgress', name: 'Test Run Monitoring', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b>{{row.entity.jobProgress}}%</b></uib-progressbar></div>'},
 					/*{field: 'action', name: 'Action', cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrl}}" target="_blank">{{row.entity.action}}</a>' +'</div>' },
 					{field: 'deviceLogLevel', name: ' Device Log Level', headerCellClass: $scope.highlightFilteredHeader},*/
 					{name:'Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -638,10 +628,10 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		$scope.startJob = function(){
 			$(".btn").addClass("disabled");
-			$scope.dataProcessing = true;
+			$scope.dataProcessingOfAllTestRuns = true;
 			
 			if($rootScope.jobId == undefined || $rootScope.jobId == ""){
-				$scope.dataProcessing = false;
+				$scope.dataProcessingOfAllTestRuns = false;
 				$scope.errorMsg = true;
 				 $timeout(function () {
 					 $scope.errorMsg = false;
@@ -650,7 +640,7 @@ oTech.controller('testPlanTestRunAdministration',
 				return false;
 			}
 			if(Devices.length <= 0){
-				$scope.dataProcessing = false;
+				$scope.dataProcessingOfAllTestRuns = false;
 				 $scope.errorMsgForDevice = true;
 				 $scope.msg = "Please select Device..";
 				 $timeout(function () {
@@ -670,7 +660,7 @@ oTech.controller('testPlanTestRunAdministration',
 			promise.then(
 				function(data){
 	                   
-	                    	$scope.dataProcessing = false;
+	                    	$scope.dataProcessingOfAllTestRuns = false;
 							$scope.successMsg = true;
 							$rootScope.msg1 = "";
 	                        $rootScope.msg1 = " " + data.message;
@@ -701,7 +691,7 @@ oTech.controller('testPlanTestRunAdministration',
 							);
 	                },
 				function(err){
-					$scope.dataProcessing = false;
+					$scope.dataProcessingOfAllTestRuns = false;
 					$(".btn").removeClass("disabled");
 					console.log(err);
 				}
@@ -711,10 +701,10 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		$scope.stopJob = function(){
 			$(".btn").addClass("disabled");
-			$scope.dataProcessing = true;
+			$scope.dataProcessingOfAllTestRuns = true;
 			
 			if($rootScope.jobId == undefined || $rootScope.jobId == ""){
-							$scope.dataProcessing = false;
+							$scope.dataProcessingOfAllTestRuns = false;
 							$scope.errorMsg = true;
 							 $timeout(function () {
 								 $scope.errorMsg = false;
@@ -724,7 +714,7 @@ oTech.controller('testPlanTestRunAdministration',
 			}
 			
 			if(Devices.length <= 0){
-							$scope.dataProcessing = false;
+							$scope.dataProcessingOfAllTestRuns = false;
 							$scope.errorMsgForDevice = true;
 							$rootScope.msg = "Please select device.. ";
 							 $timeout(function () {
@@ -744,7 +734,7 @@ oTech.controller('testPlanTestRunAdministration',
 			promise.then(
 				function(data){
 	                   
-							$scope.dataProcessing = false;
+							$scope.dataProcessingOfAllTestRuns = false;
 							$(".btn").removeClass("disabled");
 							$scope.successMsg = true;
 							$rootScope.msg1 = "";
@@ -769,7 +759,7 @@ oTech.controller('testPlanTestRunAdministration',
 							);
 	                },
 				function(err){
-					$scope.dataProcessing = false;
+					$scope.dataProcessingOfAllTestRuns = false;
 					$(".btn").removeClass("disabled");
 					console.log(err);
 				}
@@ -779,10 +769,10 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		$scope.reStartJob = function(){
 			$(".btn").addClass("disabled");
-			$scope.dataProcessing = true;
+			$scope.dataProcessingOfAllTestRuns = true;
 			
 			if($rootScope.jobId == undefined || $rootScope.jobId == ""){
-				$scope.dataProcessing = false;
+				$scope.dataProcessingOfAllTestRuns = false;
 				$scope.errorMsg = true;
 				 $timeout(function () {
 					 $scope.errorMsg = false;
@@ -790,7 +780,7 @@ oTech.controller('testPlanTestRunAdministration',
 							return false;
 			}
 			if(Devices.length <= 0){
-				$scope.dataProcessing = false;
+				$scope.dataProcessingOfAllTestRuns = false;
 				$scope.errorMsgForDevice = true;
 				$rootScope.msg = "Please select device.. ";
 				 $timeout(function () {
@@ -810,7 +800,7 @@ oTech.controller('testPlanTestRunAdministration',
 			promise.then(
 				function(data){
 	                    
-	                    	$scope.dataProcessing = false;
+	                    	$scope.dataProcessingOfAllTestRuns = false;
 							$scope.successMsg = true;
 							$rootScope.msg1 = "";
 	                        $rootScope.msg1 = " " + data.message;
@@ -842,7 +832,7 @@ oTech.controller('testPlanTestRunAdministration',
 
 	                },
 				function(err){
-					$scope.dataProcessing = false;
+					$scope.dataProcessingOfAllTestRuns = false;
 					$(".btn").removeClass("disabled");
 					console.log(err);
 				}
@@ -899,8 +889,8 @@ oTech.controller('testPlanTestRunAdministration',
 	            enableRowSelection: true,
 	            multiSelect: false,
 	            columnDefs: [
-	                {field: 'jobStatus', name: 'Job Status', headerCellClass: $scope.highlightFilteredHeader},
-	                {field: 'jobStatusTime', name: 'Job Status Time', headerCellClass: $scope.highlightFilteredHeader},
+	                {field: 'jobStatus', name: 'Test Run Status', headerCellClass: $scope.highlightFilteredHeader},
+	                {field: 'jobStatusTime', name: 'Test Run Status Time', headerCellClass: $scope.highlightFilteredHeader},
 	                {field: 'iaCommandName', name: 'Command Name', headerCellClass: $scope.highlightFilteredHeader},
 	            ]
 	        };
@@ -1063,7 +1053,7 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		 $scope.showJobStatusOnDeviceList = function(deviceId,jobId){
 	    		$scope.dataLoadingPopup = true;
-	    	 $scope.header = "Job Status"
+	    	 $scope.header = "Test Run Status"
 	    	// $scope.jobStatusList = [];
 	    		promise = testScriptService.showJobStatusOnDeviceList(userId,token,deviceId,jobId);
 	    		promise.then(
@@ -1127,6 +1117,11 @@ oTech.controller('testPlanTestRunAdministration',
 	 	        deepCopyObject = "";
 	 	        $scope.RealDevicesOptions.data = [];
 	 	       $scope.DeviceMapping.data = [];
+	 	       
+	 	      $("#mappingDataTable").css("display","block");
+	 	     $("#testRunDeviceDataTable").css("display","none");
+	 	     $scope.CreateTestRunRealDeviceOptions.data = [];
+	 	       
 	 	      $('#tableForTaskAndCommandGroup > tbody').empty();
 	        	TestPlanId = row.entity.testplanId;
 	        	
@@ -1169,6 +1164,7 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.renderHtmlForTask = function(taskTableArray){
 				var html = "";
                 angular.forEach(taskTableArray, function (node, index) {
+                	if(node.loop != '0'){
                     html += '<tr class="border-double" style="background-color: #CCD0DA;">'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
 					        	'<td class="text-right"><input type="text"  style="width: 40px;" maxlength="4" value="'+node.sequenceNo+'" readonly/></td>'+
@@ -1189,13 +1185,14 @@ oTech.controller('testPlanTestRunAdministration',
 							        	'<td class="text-right"><input type="text" value="'+node.loop+'" style="width: 40px;" maxlength="4"  readonly/></td>'+
 							        '</tr>'+
 							        '<tr style="background-color: #F9FCF1;">'+
-							        	'<td colspan="3"><span class="text-italic">'+node.commandParams+'</span></td>'+
+							        	'<td colspan="3"><span class="text-italic" style="word-wrap: break-word;">'+node.commandParams+'</span></td>'+
 							        	
 							        '</tr>';
 	                            });
 	        			}
                         });
-                    }
+                     }
+                   }
                 });
                 $('#tableForTaskAndCommandGroup > tbody').empty();
                 $('#tableForTaskAndCommandGroup > tbody').append(html);
@@ -1453,6 +1450,20 @@ oTech.controller('testPlanTestRunAdministration',
 			                        $("#mappingDataTable").css("display","none");
 			                        $scope.CreateTestRunRealDeviceOptions.data = data.testRunDeviceData;
 			                        $("#testRunDeviceDataTable").css("display","block");
+			                        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+			                		promise.then(
+			                			function (data) {
+			                				$scope.loadAllTestRuns = false;
+			                				$scope.hideFilter = true;
+			                				$scope.allTestRuns.data = [];
+			                				$scope.allTestRunsTemp = data.testRunsForTestPlan
+			                				$scope.allTestRuns.data = $scope.allTestRunsTemp;
+			                				$scope.searchTestRuns = $scope.allTestRunsTemp;
+			                			},
+			                			function (err) {
+			                				console.log(err);
+			                			}
+			                		);
 			                    },
 			                    function (err) {
 			                        console.log(err);
@@ -1543,7 +1554,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                "jobEndDate": $scope.EndDate,
 	                "recurrence": $scope.recurrence,
 	                "deviceList": createTestRunDevices,
-	                "operation": "trigger_job",
+	                "operation": "schedule",
 	            })
 	            $scope.waitMsgForSchedule1 = true;
 	            $(".schedule").attr("disabled", "disabled");
@@ -1570,6 +1581,9 @@ oTech.controller('testPlanTestRunAdministration',
 	                    	$scope.waitMsgForSchedule1 = false;
 	                    	$scope.successMsgForSchedule = true;
 	                        $rootScope.successMsgForScheduleModel = "Test Run has been Scheduled Successfully";
+	                        $timeout(function () {
+                            	$scope.successMsgForSchedule = false;
+                            }, 3000);
 
 	                       
 	                        $(".schedule").removeAttr("disabled");
@@ -1601,7 +1615,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                "jobDescription": $scope.jobTemplateDescription,
 	                "jobCreatedBy": userId,
 	                "deviceList": createTestRunDevices,
-	                "operation": "trigger_job",
+	                "operation": "start_now",
 	            })
 	            
 	            $(".schedule").attr("disabled", "disabled");
@@ -1628,7 +1642,9 @@ oTech.controller('testPlanTestRunAdministration',
 	                    	$scope.waitMsgForSchedule = false;
 	                    	$scope.successMsgForSchedule = true;
 	                        $rootScope.successMsgForScheduleModel = " Test run started successfully ";
-
+	                        $timeout(function () {
+                            	$scope.successMsgForSchedule = false;
+                            }, 3000);
 	                        $(".schedule").removeAttr("disabled");
 	                    }
 
@@ -1649,6 +1665,7 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.deviceProfileCounter = 0;
 			var cloneCopyOfJobDevice = "";
 	        $scope.editTestPlan = function(row){
+	        	$scope.editTestPlanTab = true;
 	        	$scope.dataProcessing = true;
 	        	editVirtualDevice = [];
 		        $scope.deviceProfileListForEdit = [];
@@ -1918,10 +1935,140 @@ oTech.controller('testPlanTestRunAdministration',
     	                    console.log(err);
     	                }
     	            );
-
+    				$scope.editTestPlanTab = false;
 
             }
 	       /* end edit test plan*/
+	        
+	        /* view test plan */
+	        $scope.viewTestPlan = function(row){
+	        	$scope.testPlanView = true;
+	        	$scope.dataLoadingForTestPlanView = true;
+	        	$scope.testPlanViewDetails = [];
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	$scope.dataLoadingForTestPlanView = false;
+	                	
+	                	$scope.testCaseDetails = true;
+	                	$scope.commandsDetails = false;
+								$scope.testPlanView = data.jobVO[0];
+								$scope.testRunCountForTestPlan = data.isMappedTestPlanTestRun[0].testRunCountForTestPlan;
+								$scope.testRunDeviceAllocatedCount = data.isMappedTestPlanTestRun[0].testRunDeviceAllocatedCount;
+							angular.forEach($scope.testPlanView.nodes , function (children) {
+								var temp = {};
+								var i = 0;
+								$scope.testPlanViewCommandDetails = [];
+								angular.forEach(children.nodes , function (childNode) {
+									
+									angular.forEach(childNode.nodes , function (childOfChildNode) {
+										var tempArrayForCommandGroupAndCommand = {};
+									  tempArrayForCommandGroupAndCommand['commandGroupLoop'] = childNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandGroupName'] = childNode.title;
+									  tempArrayForCommandGroupAndCommand['CommandName'] = childOfChildNode.title;
+									  tempArrayForCommandGroupAndCommand['commandLoop'] = childOfChildNode.loop;
+									  tempArrayForCommandGroupAndCommand['commandParams'] = childOfChildNode.commandParams;
+									  tempArrayForCommandGroupAndCommand['index'] = i;
+									  i++;
+									  $scope.testPlanViewCommandDetails.push(tempArrayForCommandGroupAndCommand);
+									});
+									
+									
+								});
+								
+								temp['node'] = $scope.testPlanViewCommandDetails;
+								temp['testCaseName'] = children.title;
+								temp['commandGroupCount'] = children.nodes.length;
+								temp['commandGroupName'] = "Command Groups";
+								temp['commandCount'] = i;
+								temp['commands'] = "Commands";  
+								$scope.testPlanViewDetails.push(temp);
+							});
+	                },
+	                function (err) {
+	                    console.log(err);
+	                }
+	                );
+	        }
+	        
+	        
+	        $scope.viewCommands = function(listOfCommandsTemp,totalCommandsCountTemp){
+	        	$scope.testCaseDetails = false;
+	        	$scope.commandsDetails = true;
+	        	$scope.listOfCommands = [];
+	        	$scope.totalCommandsCount = totalCommandsCountTemp;
+	        	$scope.listOfCommands = listOfCommandsTemp;
+	        	
+	        	
+	        }
+	        
+	        $scope.backToTestCaseGroup = function(){
+	        	$scope.testCaseDetails = true;
+	        	$scope.commandsDetails = false;
+	        }
+	       
+	        /* view test plan */
+	        
+	        /* popover for the edit the test plan */
+	        
+	        $scope.createFrom = function (scope,e) {
+				$scope.showPopover = true;
+					overrideNode= scope;
+					commandIndex=0;
+					var updateCommandParameters = scope.$modelValue.commandParams;
+					$(".editable-input").empty();
+					//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
+					updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
+							
+						//		$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+	//console.log("updateCommandParameters"+updateCommandParameters);
+						if (updateCommandParameters.indexOf("=") >= 0){
+							
+							var commandParam=updateCommandParameters.split('=');
+							console.log("commandParam: "+commandParam);
+							$(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="'+commandParam[0]+'" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="'+commandParam[1]+'" class="form-control"/></div></div>');
+
+						}
+					//	$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="'+updateCommandParameters+'" /></div><br/>');
+						commandIndex=i;
+						  });
+					$('.popover').css("top", $(e.target).offset().top+24);
+					 
+	        }
+			
+			$scope.addField = function (formID) {
+//				$("#updateCommandParametersForm").append('<div><input name="command[' + commandIndex + '].Name" type="text" value="" /></div><br/>');
+				 commandIndex++;
+				$(".editable-input").append('<div class="editable-address form-group col-md-12 "><div class="col-md-6"><input class="form-control" name="commandLabel[' + commandIndex + '].Name" type="text" value="" /></div><div class="col-md-6"><input class="form-control" name="command[' + commandIndex + '].Name" type="text" value="" /></div></div>');
+				$("input[name='commandLabel["+ commandIndex +"].Name']").focus(); 
+	        }
+			
+			$scope.updateCommandParametersAction = function (formID) {
+				var updatedParametrs = "";
+			/*	$('#'+formID+' input').each(
+					function(index){  
+					var input = $(this);
+					if(input.attr('type')!='hidden' && input.val() !='' && input.val() != undefined)
+					updatedParametrs+=input.val()+",";
+				}
+				);*/
+				for(var index=0;index<=commandIndex;index++){
+					if($("input[name='commandLabel["+ index +"].Name']").val()!=undefined && $("input[name='commandLabel["+ index +"].Name']").val() != '' && $("input[name='command[" + index +"].Name']").val() != undefined && $("input[name='command[" + index +"].Name']").val() != '')
+					updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
+				}
+			//	console.log("updatedParametrs"+updatedParametrs);
+			if(overrideNode.$modelValue.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
+				 overrideNode.$modelValue.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
+				 $scope.isUpdatable =true;
+				 
+			}
+			$scope.showPopover = false;
+	        }
+			
+			$scope.updateCommandParametersClose = function () {
+				$scope.showPopover = false;
+			}
+			/* end popover */
 		
       
       
@@ -1932,5 +2079,4 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		
     
-
 

@@ -18163,6 +18163,12 @@ label.display-block {
     height: 50px;
     margin-left:50%
 }
+.img-loading-small{
+	position: absolute;
+    width: 30px;
+    height: 30px;
+    
+}
 .error{ 
 	color: red;}
 	

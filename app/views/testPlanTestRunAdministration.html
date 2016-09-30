@@ -159,12 +159,66 @@ float:left;
 }
 
 .form-control{
-height:37px;
+	height:37px;
+	display:inline-block;
 }
 .loaderandwait{
-position: absolute;
+	position: absolute;
     top: 50%;
     left: 38%;}
+    
+    
+.popover > .arrow:after{
+border:none
+content:" ";
+}
+
+.popover > .arrow{
+bordrer:none
+}
+
+.popover {
+display:block;
+}
+
+
+.popover.top > .arrow{
+    border-top-color: none; 
+    border-top-color: none;
+    bottom: 0px;
+}
+
+.editable-container.popover {
+    width: 20%;
+    min-width: 200px;
+}
+
+.popover-content {
+    padding: 0 0 20px 0px;
+}
+.form-control-label{
+	border:none;
+}
+.editable-click, a.editable-click, .editable-click:hover, a.editable-click:hover{
+    border-bottom: none;
+}
+
+.nav-tabs > .active {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+    color: #fff;
+}
+
+.nav-tabs > .active > a:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+    color: #fff;
+    
+}
+
+.nav-tabs.nav-tabs-bottom > li.active > a, .nav-tabs.nav-tabs-bottom > li.active > a:hover, .nav-tabs.nav-tabs-bottom > li.active > a:focus{
+    border-bottom: none; 
+}
 </style>
 <!-- 
 <script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
@@ -234,9 +288,9 @@ position: absolute;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" /></span></div>
-<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px;" maxlength="4" type="text" /></div> 
-<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
+<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 85%;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link" style="padding-left:10px;"></i></a></span></div>
+<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" /></div> 
+<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
 </span>
 
 <ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -254,7 +308,7 @@ position: absolute;
 
 
 	<!-- Page header -->
-	<div class="page-header">
+	<!-- <div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
@@ -268,7 +322,7 @@ position: absolute;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- /page header -->
 
 
@@ -339,230 +393,81 @@ position: absolute;
 						<div class="col-lg-6">
 
 							<!-- A div to show the test plan reports -->
-							<div class="col-lg-12 display_test_plan_reports" style='display:none; '>
+							<div class="col-lg-12 display_test_plan_reports" ng-show="testPlanView">
 
 							<div class="panel panel-white">
 								<div class="panel-heading">
-									<h5 class="panel-title">Test run details</h5>
+									<h5 class="panel-title">Test Plan details</h5>
 								</div>
 								<div class="panel-body">
 									<!-- Top Stats row -->
 									<div class="row">
-										<!-- current flight -->
-										<div class="col-md-4">
-											<div class="panel text-center">
-												<div class="panel-body">
-				                	<!-- Progress counter -->
-													<div class="content-group-sm svg-center position-relative" id="hours-available-progress"></div>
-													<!-- /progress counter -->
-												</div>
-											</div>
-										</div>
-										<!-- /current flight -->
-
 										<!-- Total Runs -->
-										<div class="col-md-4">
+										<div class="col-md-12">
 											<div class="row">
-												<div class="col-xs-sm">
-													<div class="col-md-4">
-														<button class="btn bg-indigo btn-block btn-float btn-float-lg" type="button">
-															<i class="icon-task"></i>
-															<span>14 Tasks</span>
-														</button>
-													</div>
-												</div>
-												<div class="col-md-4">
+												
+												<div class="col-md-6">
 													<button class="btn bg-blue btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-stats-bars"></i>
-														<span>12 Runs</span>
+														<span>{{testRunCountForTestPlan}} Test Runs</span>
 													</button>
 												</div>
-												<div class="col-md-4">
-													<button class="btn bg-success btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>6 Passes</span>
-													</button>
-												</div>
-											</div>
-											<div class="row" style="margin-top: 40px;">
-												<div class="col-xs-sm">
-													<div class="col-md-4">
+												<div class="col-md-6">
 													<button class="btn bg-pink btn-block btn-float btn-float-lg" type="button">
 														<i class="icon-screen3"></i>
-														<span>12 Dev's</span>
+														<span>{{testRunDeviceAllocatedCount}} Devices</span>
 													</button>
 													</div>
-													<div class="col-md-4">
-													<button class="btn bg-violet btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>2 Aborts</span>
-													</button>
-													</div>
-													<div class="col-md-4">
-													<button class="btn bg-warning btn-block btn-float btn-float-lg" type="button">
-														<i class="icon-stats-bars"></i>
-														<span>4 Failures</span>
-													</button>
-													</div>
-																				
-												</div>
 											</div>
+											
 										</div>
 										<!-- /Total Runs -->
 
-										<!-- Next Scheduled Run -->
-										<div class="col-md-4">
-											<div class="panel text-center">
-												<div class="panel-body">
-				                	<!-- Progress counter -->
-													<div><i class="text-size-large icon-calendar3 text-orange-600" style='font-size: 70px;'></i></div>
-													<div><h2 class='mt-15 mb-5'>27th Dec 2016</h2></div>
-													<div class="text-semibold text-center">@ 3:30 AM CST</div>
-													<div class="text-semibold text-center">Next Test Flight</div>
-													<div class="text-muted text-center">(in 23 days)</div>
-													<!-- /progress counter -->
-												</div>
-											</div>
-										</div>
-										<!-- /Next scheduled run -->
 									</div>
 									<!-- /Top Stats row -->
-
+										<img class="loading loading-imgac" src="images/loading_new.gif"  ng-show="dataLoadingForTestPlanView"></img>
 									<!-- Bottom Tasks Row -->
-									<div class="row task_groups_div" style='min-height: 383px; max-height: 383px; overflow: auto;'>
+									<div class="row task_groups_div" style='min-height: 383px; max-height: 383px; overflow: auto;' ng-show="testCaseDetails">
 										<h5>Test Case List</h5>
 										<hr />
-										<div class="col-md-4">	
+										<div class="col-md-4" ng-repeat="testPlanDetail in testPlanViewDetails">	
 											<div class="panel border-left-lg border-left-primary">
 												<div class="panel-body">
 													<div class="row">
 														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#1. Call the mobile device</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 3 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 23 Commands</p>
+															<h6 class="no-margin-top"><a href ng-click="viewCommands(testPlanDetail.node,testPlanDetail.commandCount)" class='task_detailed_view'>{{testPlanDetail.testCaseName}}</a></h6>
+															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; {{testPlanDetail.commandGroupCount}} Command Groups</p>
+															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; {{testPlanDetail.commandCount}} Commands</p>
+															
 														</div>
 													</div>
 												</div>
 
 												<div class="panel-footer">
 													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
+														<li>Commands: <span class="text-semibold">{{testPlanDetail.commandCount}}</span></li>
 													</ul>
 												</div>
 											</div>
 										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#2. Send SMS</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 2 Command groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 12 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#3. Receive Acknowledgement</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 1 Command Group</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 9 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#4. Send MMS</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 2 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 4 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#5. Receive Acknowledgement</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 3 Command Groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 13 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="panel border-left-lg border-left-primary">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<h6 class="no-margin-top"><a href="#" class='task_detailed_view'>#6. Close Connection</a></h6>
-															<p class="mb-15"><i class="text-primary icon-code"></i>&nbsp; 4 Command groups</p>
-															<p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp; 22 Commands</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="panel-footer">
-													<ul>
-														<li>Commands: <span class="text-semibold">23</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
+										
 									</div>
 									<!-- /Bottom Tasks Row -->
 
 									<!-- Bottom Commands Row -->
-									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto; display:none;'>
+									<div class="row commands_div" style='min-height: 383px; max-height: 383px; overflow: auto; margin-top: 15px;' ng-show="commandsDetails">
 										<div class="panel panel-white">
 											<div class="panel-heading">
-												<h6 class="panel-title">Call the mobile device - <span class='text-muted'>(19 Commands)</span></h6>
+												<h6 class="panel-title"><span class='text-muted'>({{totalCommandsCount}} Commands)</span></h6>
 												<div class="heading-elements">
 													<ul class="icons-list">
-														<li><span class='label label-primary close_commands_div'>Back to Task Groups</span></li>
+														<li><span class='label label-primary close_commands_div' ng-click="backToTestCaseGroup()">Back to Test Case Groups</span></li>
 													</ul>
 												</div>
 											</div>
 
 											<div class="panel-body">
-												<table class="table">
+												<table class="table" style="table-layout:fixed;">
 													<thead>
 														<th>Loop</th>
 														<th>Name</th>
@@ -571,69 +476,14 @@ position: absolute;
 														<th>Params</th>
 													</thead>
 													<tbody>
-														<tr>
-															<td>9</td>
-															<td>First Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
+														<tr ng-repeat="listOfCommand in listOfCommands track by $index">
+															<td>{{listOfCommand.commandGroupLoop}}</td>
+															<td>{{listOfCommand.commandGroupName}}</td>
+															<td>{{listOfCommand.CommandName}}</td>
+															<td>{{listOfCommand.commandLoop}}</td>
+															<td style="word-wrap: break-word;">{{listOfCommand.commandParams}}</td>
 														</tr>
-														<tr>
-															<td>1</td>
-															<td>First Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>10</td>
-															<td>First Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>14</td>
-															<td>First Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>2</td>
-															<td>Second Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>6</td>
-															<td>Second Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>11</td>
-															<td>Second Group</td>
-															<td>Create_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>100</td>
-															<td>Second Group</td>
-															<td>Send_MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
-														<tr>
-															<td>50</td>
-															<td>Third Group</td>
-															<td>Transmit MMS</td>
-															<td>80</td>
-															<td>p-80 c-30 v-40</td>
-														</tr>
+														
 													</tbody>
 												</table>
 											</div>
@@ -662,13 +512,13 @@ position: absolute;
 					<div class="panel-heading"><h5>Test Runs</h5></div>
 					<div class="panel-body">
 						
-						<div class="tabbable">
-							<ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-								<li ng-class="{ active: isSet(1) }" ><a href ng-click="setTab(1)" data-toggle="tab">Create New Test Run</a></li>
-								<li ng-class="{ active: isSet(2) }" ><a href ng-click="setTab(2)" data-toggle="tab">Edit Test Plan</a></li>
-								<li ng-class="{ active: isSet(3) }"><a href ng-click="setTab(3)" data-toggle="tab">Existing Test Runs</a></li>
-								<li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Flight History</a></li>
-							</ul>
+							<div class="tabbable tab-content-bordered">
+						       <ul class="nav nav-tabs nav-tabs-bottom nav-justified bg-primary">
+						        <li ng-class="{'active': isSet(1)  }" ><a href ng-click="setTab(1)" data-toggle="tab">Create New Test Run</a></li>
+						        <li ng-show="editTestPlanTab" ng-class="{ active: isSet(2) }" ><a href ng-click="setTab(2)" data-toggle="tab">Edit Test Plan</a></li>
+						        <li ng-class="{ active: isSet(3) }"><a href ng-click="setTab(3)" data-toggle="tab">Existing Test Runs</a></li>
+						        <!-- <li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Flight History</a></li> -->
+						       </ul>
 
 							<div class="tab-content">
 
@@ -1004,7 +854,7 @@ position: absolute;
 										 			</div>
 									 			</div>
 						 			 <div id="testRunMappedDevices" ui-grid="testRunMappedDevices" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid"  >
-						 			  <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+						 			  <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingOfAllTestRuns"></img>
 						 			 </div>
 						 			
 									<!-- /test run devices ui grid -->
@@ -1479,6 +1329,41 @@ position: absolute;
 			</div>
 		<!-- /DeviceNotification_List -->
 		
-		
+	<div class="popover fade top in editable-container editable-popup"
+	role="tooltip" id="popovercommand" ng-show="showPopover"
+	style="left:50.5%; -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
+	<div class="arrow" style="left: 50%;"></div>
+	<h3 class="popover-title">Edit Command Parameters</h3>
+	<div class="popover-content">
+		<div>
+			<!-- <div class="editableform-loading" ></div> -->
+			<form class="editableform" style="">
+				<div class="control-group form-group">
+					<!-- dynamic append -->
+					<div class="editable-input">
+						
+						
+					</div>
+					<!-- end dynamic append -->
+					<div class="editable-buttons editable-buttons-bottom">
+					<button type="button" ng-click="addField('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-plus3"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersAction('updateCommandParametersForm');"
+							class="btn btn-primary btn-icon editable-submit">
+							<i class="icon-check"></i>
+						</button>
+						<button type="button" ng-click="updateCommandParametersClose();"
+							class="btn btn-default btn-icon editable-cancel">
+							<i class="icon-x"></i>
+						</button>
+					</div>
+					<div class="editable-error-block help-block" style="display: none;"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>	
 
 	

@@ -12,11 +12,11 @@ z-index:99
 	<!-- /second navbar -->
 <!-- Page header -->
 <!-- Page header -->
-	<div class="page-header">
+<!-- 	<div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
 				<h4>
-					<span class="text-semibold">Heat</span> - maps
+					<span class="text-semibold">Heatmap</span> 
 				</h4>
 			</div>
 
@@ -24,7 +24,7 @@ z-index:99
 				<div class="heading-btn-group">
 					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
 				</div>
-			</div>
+			</div> 
 		</div>
 	</div>
 	<!-- /page header -->
@@ -41,12 +41,12 @@ z-index:99
 				<div class="sidebar-content">
 
 					<!-- Title -->
-					<div class="category-title h6" style="border-bottom: 1px solid #ddd; padding-bottom:13px;">
-						<span>Dashboard Configurator</span>
+				 	<div class="category-title h6" style="border-bottom: 1px solid #ddd; padding-bottom:13px;">
+						<span>Search</span>
 						<ul class="icons-list">
-							<li><a ><i class="icon-gear"></i></a></li>
+							<li><a ><i class="icon-search4"></i></a></li>
 						</ul>
-					</div>
+					</div> 
 					<!-- /title -->
 
 
@@ -62,7 +62,7 @@ z-index:99
 
 
 									<div class="form-group">
-										<label>Markets</label>
+										<label>Market</label>
 										<!-- <select class="select" id='networking_view_selector'>
 											<option value="heat_maps">Dallas</option>
 											<option value="device_view">Plano</option>
@@ -74,6 +74,9 @@ z-index:99
 					 <option ng-repeat="marketName in marketList" ng-selected="device.selected" >{{marketName}}</option> 
 
 					</select>
+					
+						 <img id="marketDataLoading" align="middle" ng-show="marketDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"  
+						 style="top: 35%;"></img>
 									<div class="clear"></div>
 									<div
 										ng-show="heatmap_form.marketName.$touched || heatmap_form.$submitted"
@@ -92,6 +95,8 @@ z-index:99
 										<option value="">Select </option>
 						 	<option ng-repeat="device in deviceList" ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option> 
 									</select>
+									 <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"  
+						 style="top: 35%;"></img>
 									<div class="clear"></div>
 									<div
 										ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted"
@@ -104,7 +109,7 @@ z-index:99
 									<br />
 								</div>
 									<div class="form-group">
-										<label>Category</label>
+										<label>KPI</label>
 										<select id="category" name="category" class="select" ng-Model="category" >
 										<option value="">Select </option>
 											 <option ng-repeat="(id, val) in heatMapCateogoryList" ng-selected="id.selected" value="{{id}}">{{val}}</option>
@@ -245,7 +250,7 @@ z-index:99
 				<!-- Circle shapes -->
 				<div class="panel panel-white">
 					<div class="panel-heading">
-						<h5 class="panel-title">Heat Maps</h5>
+						<h5 class="panel-title">Heatmap</h5>
 				<!-- 		<div class="heading-elements">
 							<ul class="icons-list">
 	          		<li><a data-action="collapse"></a></li>
@@ -260,9 +265,11 @@ z-index:99
 			<label   class="kpiTitle"> 	&nbsp;&nbsp;</label>	
     
 			</div>
-			<div class="mashupContainer2" style="height: 60px; width: 290px; display: none;" >
-			<img id="kpiImage" src=""  width="290" height="60"  />
+			<div class="mashupContainer2" style="height: 60px; width: 290px; position: absolute; z-index:5; display:none;" >
+			<img id="kpiImage" src=""  width="100%" height="60"  />
 			</div> 
+							 <img id="mapDataLoading" align="middle" ng-show="mapDataLoading" class="loading" src="images/please_wait.gif"  
+						 style="position:absolute;top: 34%;z-index: 1;left: 46%"></img>
 						 <div id="DefaultReplayMap" ng-show ="DefaultReplayMap" class="map-container"  style=" width:99%;position:relative;height: 560px;  position:relative;"></div>
 					</div>
 				</div>

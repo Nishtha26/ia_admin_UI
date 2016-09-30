@@ -46,9 +46,9 @@ oApp.config = {
 		datasets : [
 		{
 			label: "",
-			fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
+			fillColor: "rgba(92, 107, 192,0.5)",
+            strokeColor: "rgba(92, 107, 192,1)",
+            pointColor: "rgba(92, 107, 192,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
@@ -56,9 +56,9 @@ oApp.config = {
 		},
 		{
 			label: "",
-			fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
+			fillColor: "rgba(97,184,100,0.5)",
+            strokeColor: "rgba(97,184,100,1)",
+            pointColor: "rgba(97,184,100,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
@@ -132,8 +132,8 @@ oApp.config = {
 			type : "Network Performance"
 		}
 	],
-	BASE_URL:'http://test.orchestratec.net:8080/IAPORTAL/',
-	MEASUREMENT_URL :'http://test.orchestratec.net:8080/IAPORTAL/rest/measurement/',
+	BASE_URL:'http://192.168.1.71:8080/IAPORTAL/',
+	MEASUREMENT_URL :'http://192.168.1.71:8080/IAPORTAL/rest/measurement/',
 	REPORT_HOST_URL :'http://iareport.orchestratec.net/',
     REPORT_NAME:'ConsolidatedKPI5_13/HomePage',
 	jobListGridOptions : {
@@ -1103,6 +1103,31 @@ oApp.config = {
 		],
 		columnDefsclickscreenimage : [
 			// this row just shows the row index, doesn't use any data from the row
+			{displayName: "Job Id", field: "jobId" ,pinnedLeft:true},
+			{displayName: "Device Id", field: "deviceId"},
+		   {displayName: "Test Case Id", field: "testcaseId"},
+		   
+			{displayName: "Click Time", field: "clickDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickDeviceLocalTime + '';
+	             }},
+			{displayName: "Click Time (MS)", field: "clickTimeMs", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickTimeMs + '';
+	             }},
+			{displayName: "Click UTC Time", field: "clickUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickUTCTime + '';
+	             }},
+			{displayName: "Time Zone", field: "clickTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickTimeZone + '';
+	             }},
+			{headerName: "clickType", field: "clickType"},
+			{headerName: "fileName", field: "fileName"},
+			{displayName: "Position X", field: "positionX"},
+			{displayName: "Position Y", field: "positionY"}
+	
 			
 			
 			
@@ -1652,7 +1677,7 @@ quickrunGridOptions : {
 	    enableColResize: true,
 		enableRowSelection: true,  // for selection
 		
-	        enableRowSelection: true,
+	        enableRowSelection: false,
 		enableColumnMenus: false, //to hide ascending and descending colomn menu names
 		enableRowHeaderSelection: false, // this is for check box to appear on grid options
 		enableFiltering: false,			// for searching
@@ -1676,9 +1701,11 @@ quickrunGridOptions : {
 					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
 					 ' </span></div>'},
 						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
-			 {name:'Actions', enableCellSelection: true,pinnedRight:true,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',cellClass: 'ui-grid-cell-button task_detailed_viewer',
+			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',
+							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
-					'<span ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
+					'<span class="pointer-link"  '+
+					' ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
         /* '<ul class="icons-list">'+
 			'<li class="dropdown">'+
 		'<a  class="dropdown-toggle" data-toggle="dropdown">'+

@@ -1,5 +1,5 @@
 ﻿
-oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $location, AppServices, $stateParams, MapServices, GraphServices, $timeout,$interval){
+oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $location, AppServices, $stateParams, MapServices, GraphServices,testScriptService, $timeout,$interval){
 	$rootScope.name = sessionStorage.getItem("username");
 	$scope.email = sessionStorage.getItem("email");
 	$rootScope.role = sessionStorage.getItem("role");
@@ -10,7 +10,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
     };	
 	var token = sessionStorage.getItem("token");
 	var userId = sessionStorage.getItem("userId");
-	
+	$scope.loadingImageName= oApp.config.loadingImageName;
 	 var allOfTheData;
 	 
 	 $scope.signOut = function(){
@@ -24,7 +24,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	}
 	 
-	 
+	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
 
          $location.path('/dashboard/createTestPlan');
@@ -246,7 +246,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	/*
 		To get Executive status data
 	*/
-	$scope.getExecutiveStatusData = function(date){
+	$scope.getExecutiveStatusData = function(date)
+	{
 		
 		 // promise = GraphServices.GetExecutiveStatusData(userId,'2015-05-19', token);
 		promise = GraphServices.GetExecutiveStatusData(userId,date, token);
@@ -274,6 +275,14 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		To get Map data
 	*/
 	$scope.getMapData = function(){
+		$("#replay_content").hide();
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=true;
+		$scope.replay_heading=false;
+		$scope.livemap_container=true;
+		$scope.replaymap_container=false;
+		$("#live_span").addClass("map-active");
+		$("#replay_span").removeClass("map-active");
 		promise = MapServices.GetMapLocations(userId, token);
 		promise.then(
 			function(data){
@@ -290,23 +299,80 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				}
 				}
 				MapServices.DahsboardShowMap(deviceData, lat, lon);
+				$scope.dataLoadingMap=false;
+			},
+			function(err){
+				$scope.dataLoadingMap=false;
+			}
+		);
+	}
+	
+	$scope.deviceCountInfo = function(){
+		promise = GraphServices.deviceCountInfo(userId, token);
+		promise.then(
+			function(data){
+				$scope.registeredDeviceCount = data.registered;
+				$scope.approvedDeviceCount = data.approved;
+				$scope.availableDeviceCount = data.available;
+				$scope.activeDeviceCount = data.activeDevice;
+				var approvedDevicePer=($scope.approvedDeviceCount*100)/$scope.registeredDeviceCount;
+				$scope.approvedDeviceCountPer=(!isNaN(approvedDevicePer))? parseFloat(approvedDevicePer).toFixed(2):0;
+				var availableDevicePer=($scope.availableDeviceCount*100)/$scope.approvedDeviceCount;
+				$scope.availableDeviceCountPer=(!isNaN(availableDevicePer))? parseFloat(availableDevicePer).toFixed(2):0;
+				var activeDeviceCountPer=($scope.activeDeviceCount*100)/$scope.approvedDeviceCount;
+				$scope.activeDeviceCountPer=(!isNaN(activeDeviceCountPer))? parseFloat(activeDeviceCountPer).toFixed(2):0.00;;
 			},
 			function(err){
 			}
 		);
 	}
-/*	$scope.findDeviceCount();
-	$scope.findActiveDeviceCount();
+	
+	$scope.testUsage = function(){
+		var today=new Date()
+		var today2=new Date();
+		var endDateTime=today;
+		//today2.setDate(today2.getDate() - 1);
+		var startDateTime=today;/*today*/
+		
+		
+		var endDateTimeStr =jQuery.format.date(endDateTime, "yyyy-MM-dd HH:mm");
+			var startDateTimeStr =jQuery.format.date(startDateTime, "yyyy-MM-dd 00:00");
+		$("#testRunDate").val(jQuery.format.date(startDateTime, "MM/dd/yyyy"))
+		promise = testScriptService.countTestUsage( token,userId, startDateTimeStr,endDateTimeStr);
+		promise.then(
+			function(data){
+				$scope.totalActiveTestRunCount = data[0].totalActiveTestRunCount;
+				$scope.totalDevicesAllocatedForTestRunCount = data[0].totalDevicesAllocatedForTestRunCount;
+				$scope.totalTestPlanCount = data[0].totalTestPlanCount;
+				$scope.totalTestRunCount = data[0].totalTestRunCount;
+				/*var approvedDevicePer=($scope.approvedDeviceCount*100)/$scope.registeredDeviceCount;
+				$scope.approvedDeviceCountPer=(!isNaN(approvedDevicePer))? parseFloat(approvedDevicePer).toFixed(2):0;
+				var availableDevicePer=($scope.availableDeviceCount*100)/$scope.approvedDeviceCount;
+				$scope.availableDeviceCountPer=(!isNaN(availableDevicePer))? parseFloat(availableDevicePer).toFixed(2):0;
+				var activeDeviceCountPer=($scope.activeDeviceCount*100)/$scope.approvedDeviceCount;
+				$scope.activeDeviceCountPer=(!isNaN(activeDeviceCountPer))? parseFloat(activeDeviceCountPer).toFixed(2):0.00;;*/
+			},
+			function(err){
+			}
+		);
+	} 
+	$scope.testUsage();
+//	$scope.findDeviceCount();
+	$scope.deviceCountInfo();
+	$scope.getDeviceUsageData();
+/*	$scope.findActiveDeviceCount();
 	$scope.findScheduledJobCount();
 	$scope.findActiveJobCount();
 	$scope.getDashBoardMenu();
 	$scope.getFavouriteReports();
-	$scope.getDeviceUsageData();
-	$scope.getDeviceAvailabilityData();
+	
+	$scope.getDeviceAvailabilityData();*/
 	var date = $rootScope.getTodayDate();
 	$scope.getExecutiveStatusData(date);
-	$scope.getMapData();*/
-	/*$(function () {
+	$scope.getMapData();
+	
+	  
+	 $(function () {
 		$("#datepicker").datepicker({ 
 			autoclose: true, 
 			todayHighlight: true,
@@ -317,8 +383,11 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 				 date = document.getElementById('dat').value;
 				$scope.getExecutiveStatusData(date)
 			});
+		
+		
+		
 	});
-	*/
+
 	
 	$scope.jobListGridOptions = oApp.config.jobListGridOptions;//For Jobs Grid View
 	
@@ -428,7 +497,81 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 			}
 		);
 	}
+	$scope.populateDeviceList = function(){
+		$scope.dataLoading = true;
+		startLimit=1;
+		promise = AppServices.GetDeviceData(userId, token);
+		promise.then(
+			function(data){
+				$scope.DeviceList =  data.devicesList;
+			
+			},
+			function(err){
+				
+			}
+		);
+	}
+	$scope.populateDeviceList();
 	
+	$scope.showReplayMap = function(){
+	 	if(!$scope.replayform.$invalid){
+    		
+		var deviceId = $('#deviceId').val(); 
+		
+		$scope.dataLoadingMap=true;
+		$scope.live_heading=false;
+		$scope.replay_heading=true;
+		$scope.livemap_container=false;
+		$scope.replaymap_container=true;
+		$("#live_span").removeClass("map-active");
+		$("#replay_span").addClass("map-active");
+		
+		
+		
+		 var fromDate = $('#fromDate').val();
+		 var toDate = $('#toDate').val();
+		 
+		 var data = {"deviceId" : deviceId,"fromDate" : fromDate,"toDate" : toDate}; 
+		 console.log(data);
+		
+			$scope.DefaultReplayMap = false ;
+			$scope.rePlayMap = true;
+			promise = MapServices.getreplay(token,data);
+			promise.then(
+				function(data){  if(data.length > 0){
+					var lat = [];
+					var lon = [];
+					var deviceData = [];
+					for(var s in data){
+						if(data[s].deviceLogJson[1].Latitude!=0 && data[s].deviceLogJson[2].Longitude!=0){
+							deviceData.push(data[s]);
+						lat.push(data[s].deviceLogJson[1].Latitude);
+						lon.push(data[s].deviceLogJson[2].Longitude);
+						}
+					}  
+				//	 console.log("from replay js");
+				//	 console.log("lon"+lon);
+					MapServices.showReplayMap(deviceData,lat, lon);
+					 $("#replay_content").toggle();
+					}
+					else{
+						   MapServices.clearReplayMap();
+						     $scope.DefaultReplayMap = true ;
+		  	                $scope.rePlayMap =false ;
+						    alert('No Records Was Found')
+						 
+					    }
+				$scope.dataLoadingMap=false;
+				},
+				function(err){
+					$scope.dataLoadingMap=false;
+				}
+			);
+	 	}
+	}
+	 $scope.closeReplayDropDown=function(){
+		  $("#replay_content").toggle();
+	}
 	 $scope.onPageSizeChanged = function() {
         $scope.createNewDatasource();
     };
@@ -453,14 +596,16 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	var timer=$interval(function(){
 	
 	console.log('updating divs after 30 seconds.....');
-//	$scope.findDeviceCount();
+	$scope.findDeviceCount();
 //	$scope.findActiveDeviceCount();
 //	$scope.findScheduledJobCount();
 //	$scope.findActiveJobCount();
 //	$scope.getDeviceAvailabilityData();
 	//$scope.getDeviceUsageData();
-//	$scope.getExecutiveStatusData(date);
-	//$scope.getMapData();
+	$scope.getExecutiveStatusData(date);
+	if($scope.livemap_container){
+	$scope.getMapData();
+	}
 	
 	},60 * 1000);
 

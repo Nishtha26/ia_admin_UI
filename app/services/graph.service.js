@@ -273,6 +273,17 @@ row.push(toolTipText);
 });
 labels.push(row);
 });
+
+if(labels.length==0){
+	row=[];
+	row.push("");
+	row.push(0);
+	row.push("");
+	
+	labels.push(row)
+	
+	
+}
 var max = 0;
 for(var i =0; i < labels.length; i++) {
 if(labels[i].length > max) {
@@ -293,6 +304,7 @@ for(var i = 0; i < (max - 1)/2; i++) {
 data.addColumn('number', '');
 data.addColumn({type:'string',role:'tooltip'}); 
 }
+
 data.addRows(labels);
 
 
@@ -328,6 +340,31 @@ var chartDiv=document.getElementById('chart_div');
     google.visualization.errors.addError(chartDiv,"Data is not available for specified date period");
 
 }
+
+/*
+Function to get count of Registered, Licensed , Available device 
+*/
+
+service.deviceCountInfo = function(userId, token){
+var deferred = $q.defer();
+$.ajax({
+	    url : oApp.config.BASE_URL + "rest/devices/deviceCountInfo",
+	    type: "POST",
+		data : {token:token,userId:userId},
+		headers :{
+		'Content-Type': 'application/x-www-form-urlencoded'
+		},
+	    success: function(data)
+	    {
+			deferred.resolve(data);
+	    },
+	    error: function (err)
+	    {
+			deferred.reject(err);
+	    }
+    });	
+	return deferred.promise;
+} 
 
 		return service;
 }])
