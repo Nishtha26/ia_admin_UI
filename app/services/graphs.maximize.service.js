@@ -55,7 +55,7 @@ oTech.service('GraphMaximizeServices',
 		            csv: chartData
 				  }
 		        ,
-
+		        credits: { enabled: false },
 		        chart: {
 		            type: 'heatmap'/*,
 		            inverted: true*/

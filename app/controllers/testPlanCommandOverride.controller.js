@@ -635,7 +635,6 @@ oTech.controller('testPlanCommandOverride',
                         	$scope.successMessageTestPlanFinalId = false;
                         	 $location.path('/dashboard/testPlanTestRunAdministration');
                         }, 2000);
-                    	$(".btn").removeClass("disabled");
                     }
                     else {
                     	
