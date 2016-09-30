@@ -397,7 +397,7 @@ display:block;
 
 							<div class="panel panel-white">
 								<div class="panel-heading">
-									<h5 class="panel-title">Test Plan details</h5>
+									<h5 class="panel-title">Test Plan Details</h5>
 								</div>
 								<div class="panel-body">
 									<!-- Top Stats row -->
@@ -525,9 +525,9 @@ display:block;
 								<!-- Create new test run -->
 								<div class="tab-pane" ng-class="{ active: isSet(1) }" ng-show="createNewTestRunTab">
 									
-									<div class="col-lg-12">
+									<div class="col-lg-12" style=" max-height: 800px; overflow: auto;">
 										<!-- Commands listing div -->
-										<div class="col-lg-4"  style='min-height: 700px; max-height: 700px; overflow: auto;'>
+										<div class="col-lg-4"  style='min-height: 700px; max-height: 700px; overflow: auto; margin-top: 10px;'>
 											<div class="row">
 												<div class="form-group">
 												<div class="col-md-3" style="padding-top:6px;">Device Profiles: </div>
@@ -791,7 +791,7 @@ display:block;
 														</ol>
 													</span>	
 												</ul> 
-												<img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessing"></img>
+												<img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingForEditTestPlan"></img>
 												
 										</div>
 									</div>

@@ -105,11 +105,11 @@ oTech.controller('testPlanTestRunAdministration',
          				'<i class="icon-menu9"></i>'+
          			'</a>'+
          			'<ul class="dropdown-menu dropdown-menu-right">'+
-         			'<li ><a  ng-click="grid.appScope.viewTestPlan(row)" ><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>'+
-         				'<li ng-if="row.entity.isExitTestRuns == 1"><a  ng-click="grid.appScope.viewTestRuns(row)" class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
-         				'<li ng-if="row.entity.isExitTestRuns == 0"><a ng-click="grid.appScope.editTestPlan(row);" class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
-         				'<li ><a ng-click="grid.appScope.createTestRun(row);" class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
-         				'<li ><a ng-click="grid.appScope.clone(row);"><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
+         			'<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
+         				'<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
+         				'<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
          			'</ul>'+
          		'</li>'+
          	'</ul>'},
@@ -1109,12 +1109,15 @@ oTech.controller('testPlanTestRunAdministration',
 	        $scope.createTestRun = function(row) {
 	        	$scope.dataLoading = true;
 	        	$(".save").addClass("disabled");
+	        	$(".schedule").attr("disabled", "disabled");
 	        	$scope.scrollToTestRunDiv();
 	        	$scope.createNewTestRunTab = true;
 	        	$scope.mainTab = 1;
 	        	TestPlanId = ""; 
 	 	        $scope.deviceProfileList = [];
 	 	        deepCopyObject = "";
+	 	        realDevices = [];
+	 	        VirtualDevicelist = [];
 	 	        $scope.RealDevicesOptions.data = [];
 	 	       $scope.DeviceMapping.data = [];
 	 	       
@@ -1397,8 +1400,6 @@ oTech.controller('testPlanTestRunAdministration',
 	        
 
 	        $scope.CreateTestrun = function () {
-	        	$(".save").addClass("disabled");
-	        	$scope.waitMsgForSchedule = true;
 	        	if($scope.deviceProfileList.length == 0){
 	        		$scope.deviceProfileListError = true;
 	        		  $timeout(function () {
@@ -1430,7 +1431,8 @@ oTech.controller('testPlanTestRunAdministration',
 	            });
 	        	
 	            if ($rootScope.RowRealDevices != null) {
-					$(".btn-info").addClass("disabled");
+	            	$(".save").addClass("disabled");
+	            	$scope.waitMsgForSchedule = true;
 	                var TestRunData = $rootScope.CreateTestRun_Data;
 	                promise = testScriptService.CreateTestRun(TestRunData, token, userId);
 	                promise.then(
@@ -1666,7 +1668,7 @@ oTech.controller('testPlanTestRunAdministration',
 			var cloneCopyOfJobDevice = "";
 	        $scope.editTestPlan = function(row){
 	        	$scope.editTestPlanTab = true;
-	        	$scope.dataProcessing = true;
+	        	$scope.dataProcessingForEditTestPlan = true;
 	        	editVirtualDevice = [];
 		        $scope.deviceProfileListForEdit = [];
 		        deepCopyObjectForEditTestPlan = "";
@@ -1714,7 +1716,7 @@ oTech.controller('testPlanTestRunAdministration',
 			                    // for default view of tree on 0th index
 			                    $scope.tree2 =  $scope.deviceProfileListForEdit[0].content;
 								$scope.activeProfile = 0;
-								$scope.dataProcessing = false;
+								$scope.dataProcessingForEditTestPlan = false;
 		                    }
 		                    else if($scope.isMappedTestPlanTestRun == "isExist"){
 		                    	$scope.errorMsg = true;
@@ -1731,6 +1733,7 @@ oTech.controller('testPlanTestRunAdministration',
 						
 	                },
 	                function (err) {
+	                	$scope.dataProcessingForEditTestPlan = false;
 	                    console.log(err);
 	                }
 	            );
@@ -1818,7 +1821,7 @@ oTech.controller('testPlanTestRunAdministration',
 	        
 	        $scope.update = function() {
                 
-    			$scope.dataProcessing = true;
+    			$scope.dataProcessingForEditTestPlan = true;
     			$(".editTestPlan").addClass("disabled");
     			sendCreateData.jobDeviceVOList = [];
     			sendCreateData.jobId = $scope.tree2[0].jobId;
@@ -1908,7 +1911,7 @@ oTech.controller('testPlanTestRunAdministration',
     				promise.then(
     	                function (data) {
     	                    if (data.status == "Success") {
-    						   $scope.dataProcessing = false;
+    						   $scope.dataProcessingForEditTestPlan = false;
     	                       $(".editTestPlan").removeClass("disabled");
     	                       $scope.successMessageEditTestPlanId = true;
     	                       $scope.successMessageEditTestPlan = "Test plan has been updated successfully ....";
@@ -1920,7 +1923,7 @@ oTech.controller('testPlanTestRunAdministration',
     	                      
     	                    }
     	                    else {
-    							$scope.dataProcessing = false;
+    							$scope.dataProcessingForEditTestPlan = false;
     							$scope.errMessageEditTestPlanId = true;
     	                       $scope.errMessageEditTestPlan = "Error Occuring while updating ...";
     							$(".editTestPlan").removeClass("disabled");
@@ -1932,6 +1935,7 @@ oTech.controller('testPlanTestRunAdministration',
 
     	                },
     	                function (err) {
+    	                	$scope.dataProcessingForEditTestPlan = false;
     	                    console.log(err);
     	                }
     	            );

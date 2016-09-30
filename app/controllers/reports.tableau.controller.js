@@ -39,7 +39,7 @@ oTech.controller('ReportsTableauController',
 				
 			}
    	 $scope.loadTableauUrl();
-	
+	$scope.pageName="CallPerformance";
         $scope.inNewWindow = function(){
         	//alert(tableauURL);
         	window.open(tableauURL,'mywin','left=180,top=10,width=1500,height=auto,toolbar=1,resizable=0');
