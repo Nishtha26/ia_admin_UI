@@ -952,7 +952,7 @@
 *
 * ---------------------------------------------------------------------------- */
 .footer {
-  position: absolute;
+  position: relative;
   bottom: 20px;
 }
 .footer-fixed {
@@ -18272,3 +18272,12 @@ label.display-block {
 .ot-btn{
 	margin:10px;
 }
+/* heat map start*/
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;text-align:center}
+		.tg td{font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#999;color:#444;text-align:center}
+		.tg th{font-size:14px;font-weight:450;padding:10px 5px;border-style:solid;border-width:1px 0px;overflow:hidden;word-break:normal;border-color:#26ADE4;color:#000;background-color:none;text-align:center}
+		.tg .tg-s6z2{text-align:center}
+		.tg .tg-vn4c{background-color:#fff;text-align:center}
+		.tg .tg-xkia{color:#666699;text-align:center}
+		.tg .tg-5hgy{background-color:#fff;text-align:center}	
+		/* heat map end*/
