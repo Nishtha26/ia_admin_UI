@@ -481,7 +481,7 @@ var technology=heatMapInput.technology;
 		}
 		function deviceDetailBox(deviceDetail,device,kpi,startDate,endDate){
 			var boxText = document.createElement("div");
-			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); ";
+			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);width:100%;border-bottom:1px solid #26ADE4; ";
 			deviceDataHTML=deviceDetailContent(kpi,device,startDate,endDate,deviceDetail);
 			
 			
@@ -496,7 +496,7 @@ var technology=heatMapInput.technology;
 		
 		var start_time=""; var end_time="";
 		var r = 0.0001;
-		if(kpi=="RSSI" /*&& device!=null && (str_devices_3g.contains(device)*/ || (!"LTE"==deviceInfo.networkType &&  deviceInfo.lacId!=0)) {     //RSSI, 3G, LAC ID not 0
+		if(kpi=="RSSI" /*&& device!=null && (str_devices_3g.contains(device)*/ && (!("LTE"==deviceInfo.networkType) &&  deviceInfo.lacId!=0)) {     //RSSI, 3G, LAC ID not 0
 			var cellLabel = "";
 			var cellValue = "";
 			if(("WCDMA"==deviceInfo.networkType || "HSPA"== deviceInfo.networkType)
@@ -564,7 +564,7 @@ var technology=heatMapInput.technology;
 			str += "<td class='tg-5hgy'>"+(deviceInfo.lacId == 0 ? "" : deviceInfo.lacId)+"</td>  ";
 			str += "  </tr>   ";
 			str += "  </table>   ";
-		} else if((kpi=="RSSI" && device!=null) /*&& (str_devices_3g.contains(device)*/ || (!"LTE"== deviceInfo.networkType)) {     //RSSI, 3G, LAC ID is 0
+		} else if((kpi=="RSSI" && device!=null) /*&& (str_devices_3g.contains(device)*/ && (!("LTE"== deviceInfo.networkType))) {     //RSSI, 3G, LAC ID is 0
 
 			var cellLabel = "";
 			var cellValue = "";
@@ -977,7 +977,7 @@ var technology=heatMapInput.technology;
 			str += "<td class='tg-5hgy'>"+(deviceInfo.lacId == 0 ? "" : deviceInfo.lacId)+"</td>  ";
 			str += "  </tr>   ";
 			str += "  </table>   ";
-		}  else if(kpi=="PING" /*&& ((device!=null && str_devices_3g.contains(device))*/ || !"LTE"== deviceInfo.networkType) {  // Latency, 3G
+		}  else if(kpi=="PING" /*&& ((device!=null && str_devices_3g.contains(device))*/ && (!("LTE"== deviceInfo.networkType))) {  // Latency, 3G
 			
 			str = "<table class='tg'>                                       "+
 				"  <tr>                                                   "+

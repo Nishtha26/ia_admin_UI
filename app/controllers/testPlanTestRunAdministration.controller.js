@@ -1,4 +1,3 @@
-
 oTech.controller('testPlanTestRunAdministration',
     function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore,$filter) {
         var userId = sessionStorage.getItem("userId");
@@ -1120,6 +1119,7 @@ oTech.controller('testPlanTestRunAdministration',
 	 	        VirtualDevicelist = [];
 	 	        $scope.RealDevicesOptions.data = [];
 	 	       $scope.DeviceMapping.data = [];
+	 	      $scope.phoneNo = "";
 	 	       
 	 	      $("#mappingDataTable").css("display","block");
 	 	     $("#testRunDeviceDataTable").css("display","none");
@@ -1135,12 +1135,51 @@ oTech.controller('testPlanTestRunAdministration',
 		                
 		                deepCopyObject = jQuery.extend(true, new Object(), data);
 	                    for(var i=0; i < deepCopyObject.jobVO.length; i++){
+	                    	$scope.makeVioceCallPhoneNo = false;
+	                    	$scope.answerVioceCallPhoneNo = false;
 	                    	var arr = jQuery.makeArray( deepCopyObject.jobVO[i] );
-							$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr});
+	                    	
+	                    	angular.forEach(arr[0].nodes, function (node, index) { // test case level
+	                            if ('nodes' in node) { 
+	                                angular.forEach(node.nodes, function (node, index) { // command group level
+	                                 if(node.sequenceNo != '0'){
+	                                	if ('nodes' in node) { // command level
+		        	                            angular.forEach(node.nodes, function (node, index) {
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'MakeVoiceCall'){
+		        	        							 $scope.makeVioceCallPhoneNo = true;
+		        	        						 }
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
+		        	        							 $scope.answerVioceCallPhoneNo = true;
+		        	        						 }
+		        	                            });
+		        	        			}
+	                                 }
+	                                });
+	                             }
+	                           
+	                        });
+	                    	if($scope.makeVioceCallPhoneNo){
+	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':$scope.makeVioceCallPhoneNo});
+	                    	}
+	                    	if($scope.answerVioceCallPhoneNo){
+	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':$scope.answerVioceCallPhoneNo});
+	                    	}
+	                    	if(!$scope.answerVioceCallPhoneNo && !$scope.makeVioceCallPhoneNo){
+	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':false});
+	                    	}
+							
 	                    }
 	                    
 	                    $scope.selectedOption = $scope.deviceProfileList[0];
 	                    $scope.taskTableArray = $scope.deviceProfileList[0].content[0].nodes;
+	                    if($scope.deviceProfileList[0].phoneNo){
+	                    $scope.showOnlyDeviceProfileAndPhoneNo = true;
+	                    $scope.showOnlyDeviceProfile = false;
+	                    }else{
+	                    	$scope.showOnlyDeviceProfileAndPhoneNo = false;
+	                    	$scope.showOnlyDeviceProfile = true;
+	                    }
+	                    
 	                    $scope.renderHtmlForTask($scope.taskTableArray);
 		                promise = testScriptService.getRealDevices(token, userId);
 		    	        promise.then(
@@ -1175,6 +1214,7 @@ oTech.controller('testPlanTestRunAdministration',
 					        '</tr>';
                     if ('nodes' in node) {
                         angular.forEach(node.nodes, function (node, index) {
+                        	if(node.sequenceNo != '0'){
 					         html += '<tr class="border-double" >'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
 					        	'<td class="text-right"><input type="text" value="'+node.sequenceNo+'"  style="width: 40px;" maxlength="4"  readonly/></td>'+
@@ -1193,6 +1233,7 @@ oTech.controller('testPlanTestRunAdministration',
 							        '</tr>';
 	                            });
 	        			}
+                       }
                         });
                      }
                    }
@@ -1202,8 +1243,17 @@ oTech.controller('testPlanTestRunAdministration',
 			}
 			
 			 $scope.changeDeviceProfile = function(){
+				 $scope.phoneNo = "";
 				 $scope.taskTableArray = [];
 				 $scope.taskTableArray =  $scope.selectedOption.content[0].nodes;
+				 if($scope.selectedOption.phoneNo){
+	                    $scope.showOnlyDeviceProfileAndPhoneNo = true;
+	                    $scope.showOnlyDeviceProfile = false;
+	                    }else{
+	                    	$scope.showOnlyDeviceProfileAndPhoneNo = false;
+	                    	$scope.showOnlyDeviceProfile = true;
+	                    }
+				 
 				 $scope.renderHtmlForTask($scope.taskTableArray);
 			 }
 	        
@@ -1263,6 +1313,17 @@ oTech.controller('testPlanTestRunAdministration',
 					var VirtualDeviceName = $scope.selectedOption.deviceName;
 					var VirtualDeviceId = $scope.selectedOption.deviceId;
 					var deviceProfileName = $scope.selectedOption.deviceProfileName;
+					var phoneNumber = "";
+					if($scope.selectedOption.phoneNo && $scope.phoneNo != undefined && $scope.phoneNo != ""){
+						phoneNumber = $scope.phoneNo;
+					}else if($scope.selectedOption.phoneNo){
+						row.isSelected = false;
+						$scope.errorForPhoneNo = true;
+						 $timeout(function () {
+							 $scope.errorForPhoneNo = false;
+	                     }, 3000);
+						 return false;
+					}
 					var RealDeviceName = row.entity.deviceName;
 					var RealDeviceId =  row.entity.deviceId;
 					if(row.isSelected && VirtualDeviceName != undefined){
@@ -1279,7 +1340,8 @@ oTech.controller('testPlanTestRunAdministration',
 									'testplanId': TestPlanId,
 									'testrunId': 0,
 									'virtualDeviceId': VirtualDeviceId,
-									'realDeviceId': RealDeviceId
+									'realDeviceId': RealDeviceId,
+									'phoneNumber':phoneNumber
 	                            });
 						VirtualDevicelist.push({
 									'testplanId': TestPlanId,
@@ -1296,13 +1358,28 @@ oTech.controller('testPlanTestRunAdministration',
 						}
 					}
 					$scope.addRealDevices = function () {
+						if($scope.selectedOption.phoneNo && ($scope.phoneNo == undefined || $scope.phoneNo == "")){
+							$scope.errorForPhoneNo = true;
+							 $timeout(function () {
+								 $scope.errorForPhoneNo = false;
+		                     }, 3000);
+							 return false;
+						}
+						if( realDevices.length == 0 ){
+							$scope.deviceProfileListError = true;
+							 $timeout(function () {
+								 $scope.deviceProfileListError = false;
+		                     }, 3000);
+							 return false;
+						}
+						
 						 $scope.DeviceMapping.data =  jQuery.makeArray(realDevices);
 						//$scope.DeviceMapping.data = jQuery.extend(true, new Object(), Devices);
 						 angular.forEach($scope.gridApi1.selection.getSelectedRows(), function (data, index) {
 				                 //angular.copy(data, $scope.DeviceMapping.data);
 						        $scope.RealDevicesOptions.data.splice($scope.RealDevicesOptions.data.lastIndexOf(data), 1);
 						      });
-			                }
+			            }
 					
 					//$scope.TestRunCreate_Data(VirtualDevicelist);				 
 	                $scope.dataProcessing = false;
@@ -1421,7 +1498,8 @@ oTech.controller('testPlanTestRunAdministration',
 							'testplanId': $scope.DeviceMapping.data[i].testplanId,
 							'testrunId': 0,
 							'virtualDeviceId': $scope.DeviceMapping.data[i].VirtualDeviceId,
-							'realDeviceId': $scope.DeviceMapping.data[i].realDeviceId
+							'realDeviceId': $scope.DeviceMapping.data[i].realDeviceId,
+							'phoneNumber': $scope.DeviceMapping.data[i].phoneNumber
 			        	});
 	        	}
 	        	$rootScope.CreateTestRun_Data = JSON.stringify({
@@ -1939,7 +2017,6 @@ oTech.controller('testPlanTestRunAdministration',
     	                    console.log(err);
     	                }
     	            );
-    				$scope.editTestPlanTab = false;
 
             }
 	       /* end edit test plan*/

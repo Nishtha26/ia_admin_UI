@@ -529,15 +529,33 @@ display:block;
 										<!-- Commands listing div -->
 										<div class="col-lg-4"  style='min-height: 700px; max-height: 700px; overflow: auto; margin-top: 10px;'>
 											<div class="row">
-												<div class="form-group">
+											<!-- if it is not VQT -->
+												<div class="form-group" ng-show="showOnlyDeviceProfile">
 												<div class="col-md-3" style="padding-top:6px;">Device Profiles: </div>
 													<div class="col-md-9">
 														<select class='form-control'
 															ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
 															ng-model="selectedOption" ng-change="changeDeviceProfile()"></select>
 													</div>
-													<span  class="error_msg"  ng-show ="deviceProfileListError">Please select create new Test Run from Test Plan List..</span>
+													<span  class="error_msg"  ng-show ="deviceProfileListError">Please select Device from devices List *</span>
 												</div>
+												<!--/ if it is not VQT -->
+												
+												<!-- if it is VQT -->
+												<div class="form-group" ng-show="showOnlyDeviceProfileAndPhoneNo">
+												<div class="col-md-3" style="padding-top:6px;">Device Profiles: </div>
+													<div class="col-md-6">
+														<select class='form-control'
+															ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
+															ng-model="selectedOption" ng-change="changeDeviceProfile()"></select>
+													</div>
+													
+													<div class="col-md-3">
+														<input type="text" class="form-control" id="phoneNo" name="phoneNo"  ng-model="phoneNo" placeholder="Phone no." >
+																<span class="error_msg"  ng-show="errorForPhoneNo" >Phone no is required*</span>
+													</div>
+												</div>
+												<!-- if it is VQT -->
 											</div>
 											
 											<!-- <div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
