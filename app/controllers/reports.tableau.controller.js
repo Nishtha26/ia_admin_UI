@@ -55,7 +55,7 @@ oTech.controller('ReportsTableauController',
 		);*/
 	}	
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+	//	$scope.getFavouriteReports();
 	
 		
     	

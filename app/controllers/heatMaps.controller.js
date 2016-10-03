@@ -10,6 +10,16 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     		$rootScope.role = sessionStorage.role;
                                     		$scope.dataLoading3 = true;
                                     		$scope.loadingImageName= oApp.config.loadingImageName;
+                                    		
+                                    		$scope.showErrorMessage = function(divId,msg){
+                                    			
+                                				$rootScope.showErrorMessage(divId,msg);
+                                			
+                                		}
+                                		$scope.showSuccessMessage = function (divId,msg) {
+                                			$rootScope.showSuccessMessage(divId,msg);
+                                	}
+                                		
                                     				/*
                                     				To get dashboard menu data
                                     			*/
@@ -251,12 +261,15 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 							HeatMapsService.showHeatMap(heatMapInput,data.centerInfo,data.coordinateDetails,data.deviceInformation);
                                 							}
                                 							else{
-                                								alert('No Records Was Found')
+                                							//	alert('No Records Was Found')
+                                								$scope.showErrorMessage("heat_map_error","No Records Was Found");
+                                								
                                 								HeatMapsService.defaultHeatMap();
                                 							}
                                 						}
                                 						else{
-                                							 alert('No Records Was Found')
+                                							// alert('No Records Was Found')
+                                							 $scope.showErrorMessage("heat_map_error","No Records Was Found");
                                 							HeatMapsService.defaultHeatMap();
                                 				            	$scope.mapDataLoading = false;
                                 						    }
