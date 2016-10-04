@@ -1413,9 +1413,9 @@ oTech.controller('testPlanTestRunAdministration',
 			 	               return '' + row.entity.deviceName + '';
 			 	             }},
 	                    //{field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
-	    				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"30%", cellTooltip: 
+	    				{field: 'phoneNumber', name: 'phoneNumber', headerCellClass: $scope.highlightFilteredHeader,width:"30%", cellTooltip: 
 			 	               function( row, col ) {
-			 	               return '' + row.entity.manufacturer + '';
+			 	               return '' + row.entity.phoneNumber + '';
 			 	             }},
 	                ]
 	            };
