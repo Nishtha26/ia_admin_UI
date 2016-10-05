@@ -606,9 +606,9 @@ oTech.controller('testPlanTestRunAdministration',
 	         				'<i class="icon-menu9"></i>'+
 	         			'</a>'+
 	         			'<ul class="dropdown-menu dropdown-menu-right">'+
-	         				'<li ><a  ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});" data-toggle="modal" data-target="#DeviceNotification_List"><i class="icon-info22 text-primary"></i> Device Ack. Status</a></li>'+
-	         				'<li ><a ng-click="grid.appScope.showDeviceLogDetails({{row.entity.deviceId}});" data-toggle="modal" data-target="#Device_List"><i class="icon-list-unordered text-primary user_editor_link"></i> View Device Log</a></li>'+
-	         				'<li ><a ng-click="grid.appScope.showJobStatusOnDeviceList({{row.entity.deviceId}},{{row.entity.jobId}});" data-toggle="modal" data-target="#jobStatus"><i class=" icon-calendar5 text-primary"></i> View Shedule Info</a></li>'+
+	         				'<li ><a  ng-click="grid.appScope.showDeviceNotificationLogDetails(row);" data-toggle="modal" data-target="#DeviceNotification_List"><i class="icon-info22 text-primary"></i> Device Ack. Status</a></li>'+
+	         				'<li ><a ng-click="grid.appScope.showDeviceLogDetails(row);" data-toggle="modal" data-target="#Device_List"><i class="icon-list-unordered text-primary user_editor_link"></i> View Device Log</a></li>'+
+	         				'<li ><a ng-click="grid.appScope.showJobStatusOnDeviceList(row);" data-toggle="modal" data-target="#jobStatus"><i class=" icon-calendar5 text-primary"></i> View Shedule Info</a></li>'+
 	         			'</ul>'+
 	         		'</li>'+
 	         	'</ul>'},
@@ -894,13 +894,13 @@ oTech.controller('testPlanTestRunAdministration',
 	            ]
 	        };
 		
-		$scope.showDeviceLogDetails = function(deviceId,jobId){
+		$scope.showDeviceLogDetails = function(row){
 			$scope.header = "Device Log"
 			$scope.dataLoadingPopup = true;
-			if(jobId == undefined || jobId == '' || jobId == null){
+			
 				$scope.deviceLogListGridOptions.data = [];
 			$scope.header = "Device Log"
-			promise = testScriptService.showDeviceLogDetails(userId, token,deviceId);
+			promise = testScriptService.showDeviceLogDetails(userId, token,row.entity.deviceId);
 			promise.then(
 				function(data){
 					$scope.deviceLogList = data;
@@ -918,27 +918,9 @@ oTech.controller('testPlanTestRunAdministration',
 					$scope.dataLoadingPopup = false;
 				}
 			);
-		 }
 		 
-		 if(jobId != undefined){
-			$scope.header = "Device Status Log Details"
-			$scope.deviceStatusLogListGridOptions.data = [];
-			promise = testScriptService.showDeviceStatusDetails(userId,token,deviceId,jobId);
-			promise.then(
-				function(data){
-					$scope.deviceStatusLogList = data;
-					$scope.deviceStatusLogListGridOptions.data = data.deviceStausLogList;
-					$scope.dataLoadingPopup = false;
-					if($scope.deviceStatusLogListGridOptions.data.length <= 25)
-						$('.ui-grid-pager-panel').hide();
-					else
-						$('.ui-grid-pager-panel').show();
-				},
-				function(err){
-					$scope.dataLoadingPopup = false;
-				}
-			);
-		 }
+		 
+		 
 		}
 		
 		
@@ -964,10 +946,9 @@ oTech.controller('testPlanTestRunAdministration',
 		}
 		
 		$scope.showDeviceLogDetailsRefresh = function(scope){
-			$scope.header = "Device Log"
 			$scope.dataLoadingPopup = true;
 			$scope.header = "Device Log"
-			promise = testScriptService.showDeviceLogDetails(userId, token,scope.deviceLogListGridOptions.data[0].deviceId);
+			promise = testScriptService.showDeviceLogDetails(userId, token,scope.deviceLogListGridOptions.data[0].ia_device_id);
 			promise.then(
 				function(data){
 					$scope.deviceLogListGridOptions.data = [];
@@ -1000,11 +981,11 @@ oTech.controller('testPlanTestRunAdministration',
 					{field: 'retryCount', name: 'Retry Count', headerCellClass: $scope.highlightFilteredHeader},
 	            ]
 	        };
-		$scope.showDeviceNotificationLogDetails = function(deviceId,jobId){
+		$scope.showDeviceNotificationLogDetails = function(row){
 			$scope.dataLoadingPopup = true;
 		 $scope.header = "Device Notification Log Details"
 		 $scope.deviceNotificationLogListGridOptions.data = [];
-			promise = testScriptService.showDeviceNotificationLogDetails(userId,token,deviceId,jobId);
+			promise = testScriptService.showDeviceNotificationLogDetails(userId,token,row.entity.deviceId,row.entity.jobId);
 			promise.then(
 				function(data){
 					$scope.deviceNotificationLogList = data;
@@ -1050,11 +1031,11 @@ oTech.controller('testPlanTestRunAdministration',
 			);
 		}
 		
-		 $scope.showJobStatusOnDeviceList = function(deviceId,jobId){
+		 $scope.showJobStatusOnDeviceList = function(row){
 	    		$scope.dataLoadingPopup = true;
 	    	 $scope.header = "Test Run Status"
 	    	// $scope.jobStatusList = [];
-	    		promise = testScriptService.showJobStatusOnDeviceList(userId,token,deviceId,jobId);
+	    		promise = testScriptService.showJobStatusOnDeviceList(userId,token,row.entity.deviceId,row.entity.jobId);
 	    		promise.then(
 	    			function(data){
 	    				$scope.commandInfoList = $.parseJSON(data.commandInfo);
