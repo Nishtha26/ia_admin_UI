@@ -20,7 +20,7 @@ oTech.controller('userAdminstrationController',
 			ROLE_IAADMIN : ['ROLE_IAADMIN','ROLE_REPORTING'],
 			ROLE_REPORTING : ['ROLE_REPORTING']	
 		};
-		var deletePopupMsg="Are you want to delete this user(s)?"
+		var deletePopupMsg="Do you want to delete this user(s)?"
 		$scope.accountDiv =false;
 		$scope.addCustomer = false; 
 		$scope.role1 = false; 
@@ -57,7 +57,7 @@ oTech.controller('userAdminstrationController',
 			}
 		}
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+	//	$scope.getFavouriteReports();
 		
 		$scope.showErrorMessage = function(divId,msg){
 			
@@ -202,9 +202,11 @@ oTech.controller('userAdminstrationController',
 					$("#email-8").val("") ;
 					$("#role-8").val("");
 					$("#companyId").val("");
+					$scope.roleName=$rootScope.role;
 					if($rootScope.role=="ROLE_OTADMIN"){
-//					$("#customer-8").val("");
-					$("#customer-8").select2()[0].value='';
+					$("#customer-8").val("");
+//					$("#customer-8").select2()[0].value='';
+						 
 //					$('#customer-8').attr('readonly', false);
 					}
 					else{
@@ -212,6 +214,7 @@ oTech.controller('userAdminstrationController',
 					}
 					$scope.selectedUserGroup=[];
 				//	$(".errors").hide();
+					
 			 }
 			 $('.table-emailAdd').click(function(){
 				
@@ -315,11 +318,14 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 
 			
 			updatePage();
-			$("#edit_role").select2()[0].value=row[0].roleName;
+			//$("#edit_role").select2()[0].value=row[0].roleName;
+			$scope.tablerole=row[0].roleName;
 //			$("#customer-8").select2().select2('val',row.entity.companyName);
 			if($rootScope.role=="ROLE_OTADMIN"){
 			//	$("#customer-8").select2().select('val',row[0].companyName);
-				$("#customer-8").select2()[0].value=row[0].companyName;
+//				$("#customer-8").select2()[0].value=row[0].companyName;
+				$("#customer-8").val(row[0].companyName);
+				$scope.customer=row[0].companyName;
 				
 			}
 			else{
@@ -355,7 +361,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 //			 var companyName      = $("#customer-8").select2().select2('val');
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2()[0].value;
+					companyName = $("#customer-8").val();
 				}	
 				else{
 					companyName=	$("#customer-8").val();
@@ -408,7 +414,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		       );
 			}	
 				else{
-					 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+				//	 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
 					$(this).parent().parent().find(".errors").show();
 					 $scope.dataLoading=false;
 				}
@@ -444,6 +450,10 @@ $scope.singleFilter = function() {
     return renderableRows;*/
    
 };
+$scope.cancelUserCreate=function(){
+	
+	$scope.myForm.$setPristine();
+	 }
 $scope.cancelUserEdit=function(){
 	 $("#cancel_user_edit_label").hide();
 	 	$("#create_new_user_label").show();
@@ -509,7 +519,7 @@ $scope.CreateUser =function(){
 			 var roleName         =	$("#role").val() ;
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2()[0].value;
+					companyName = $("#customer-8").val();
 				}
 				else{
 					companyName=	$("#customer-8").val();
@@ -575,16 +585,19 @@ $scope.CreateUser =function(){
 		$scope.userTableData = function(){
 			$scope.dataLoading=true;
 			$scope.pageReset();
+			$scope.searchText="";
 		promise = AppServices.GetuserTableData(userId, token);
 		promise.then(
 			function(data){
 				$scope.totalRecords = data.length;
-				allOfTheData = data;
-//				$scope.userTableGridOptions.data = data;
+			//	allOfTheData = data;
+				$scope.userTableGridOptions.data = data;
+				allOfTheData=$scope.userTableGridOptions.data;
 				$scope.userTableGridOptions.data = data.slice( 0, $scope.itemsPerPage);
 				//console.log($scope.serverSettingsGridOptions.data[0]);
 				$scope.gridApi.selection.selectRow($scope.userTableGridOptions.data[0]); //extra code
 				$scope.dataLoading=false;
+			
 			},
 			function(err){
 				$scope.dataLoading=false;
@@ -654,7 +667,7 @@ $scope.createCustomer =function(){
 			return;
 		}
 		else{
-			$scope.dataLoading=true;
+			$scope.dataLoadingCustomer=true;
 		promise = AppServices.createCustomerUserAdministration(customerName, token);
 		promise.then(
 			function(data){
@@ -674,25 +687,28 @@ $scope.createCustomer =function(){
 //					$("#customer-8").select2().select2('val',customerName);
 						if($rootScope.role=="ROLE_OTADMIN"){
 						//	$("#customer-8").select2().select2('val',customerName);
-							$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
-							$("#customer-8").select2()[0].value =customerName;
-						//	$( "#customer-8" ).val(customerName);
+						//	$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
+							//$("#customer-8").select2()[0].value =customerName;
+							customerList.push(customerName);
+							$( "#customer-8" ).val(customerName);
+								$scope.customer=customerName;
 						}
 						else{
 							$("#customer-8").val(customerName);
 						}
 					
 				}
-				$scope.dataLoading=false;
+				$scope.dataLoadingCustomer=false;
+				$('.emailAdd').slideToggle();
 			},
 			function(err){
-				$scope.dataLoading=false;
+				$scope.dataLoadingCustomer=false;
 			}
 		);
 	   
 		}
 	
-	$('.emailAdd').slideToggle();
+	
 }	
 /*Close Create Customer popup*/
 $scope.closerCreatePop =function(){
@@ -705,7 +721,7 @@ $scope.userGroupList =function(){
 	
 	
 	
-	
+
 	promise = AppServices.GetActiveuserGroupsData(userId, token);
 	promise.then(
 		function(data){
@@ -815,13 +831,13 @@ $scope.DeleteBtnLabel=function(){
 	 }
 	if($scope.selectedUsers.length==isActiveCount){
 		$scope.deleteLabel="Deactivate";
-		deletePopupMsg="Are you want to deactivate this user(s)?"
+		deletePopupMsg="Do you want to deactivate this user(s)?"
 		 $scope.isDeleteDisabled = false;
 		 $scope.accountEnableStatus=0;
 	}
 	if($scope.selectedUsers.length==isDeactiveCount){
 		$scope.deleteLabel="Activate";
-		deletePopupMsg="Are you want to activate this user(s)?"
+		deletePopupMsg="Do you want to activate this user(s)?"
 		 $scope.accountEnableStatus=1;
 		 $scope.isDeleteDisabled = false;
 	}
@@ -1051,6 +1067,7 @@ $scope.isAssignDisabled = true;
 }
 $scope.pageReset();
 $scope.availableUsergroupsGrid = function(){
+  $scope.searchTextUserGroup = "";
   $scope.userDataLoading = true;
 promise = AppServices.getAvailableUsergroupsData(userId, token);
 promise.then(

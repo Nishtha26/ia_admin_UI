@@ -385,10 +385,11 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 /*	$scope.findActiveDeviceCount();
 	$scope.findScheduledJobCount();
 	$scope.findActiveJobCount();
-	$scope.getDashBoardMenu();
+	
 	$scope.getFavouriteReports();
 	
 	$scope.getDeviceAvailabilityData();*/
+	$scope.getDashBoardMenu();
 	var date = $rootScope.getTodayDate();
 	$scope.getExecutiveStatusData(date);
 	$scope.getMapData();

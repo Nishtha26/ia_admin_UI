@@ -30,7 +30,7 @@ oTech.controller('deviceAvailabilityController',
 			}
 		}
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+//		$scope.getFavouriteReports();
 		$('#parent-list').on('click', 'li', function (e) {
 			$("#parent-list li").removeClass('active');
 			$(e.currentTarget).addClass('active');
