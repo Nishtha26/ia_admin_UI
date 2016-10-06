@@ -1,4 +1,4 @@
-<script type="text/javascript" src="assets/js/pages/form_select2.js"></script>
+<!-- <script type="text/javascript" src="assets/js/pages/form_select2.js"></script> -->
 <!-- 	  <script type="text/javascript" src="assets/js/pages/form_dual_listboxes.js"></script> -->
 <style>
 .name-inline{
@@ -15,6 +15,8 @@ display: inline!important;
 margin-left: 0px !important;
 padding-left:5px;
 }
+.dropdown-menu{
+border:1px solid #00BCD4;}
 </style>
 
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
@@ -71,7 +73,7 @@ padding-left:5px;
 								<h5 class="panel-title">User Groups</h5>
 								<div class="heading-elements">
 									<ul class="icons-list">
-						<li id='group_list_label' ><span class='label label-info pointer-link' ng-click="groupListLabel()">Groups List</span></li>
+						<li id='group_list_label' ><span class='label label-info pointer-link' ng-click="groupListLabel();availableUsergroupsGrid();">Groups List</span></li>
                 		<li id='create_new_group_label'><span class='label label-primary pointer-link' ng-click="showUsergroups()">Create Group</span></li>
                 		<li id='group_cancel_create_label' style="display: none;" ng-click="groupCancelCreateLabel()"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='group_cancel_edit_label' style="display: none;" ng-click="groupCancelEditLabel()"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
@@ -264,11 +266,11 @@ padding-left:5px;
 								<h5 class="panel-title">Users</h5>
 								<div class="heading-elements">
 									<ul class="icons-list">
-						<li id='show_all_users_label'><span class='label label-info pointer-link'>All Users</span></li>
+						<li id='show_all_users_label' ng-click="userTableData()"><span class='label label-info pointer-link'>All Users</span></li>
                 		<li id='create_new_user_label'><span class='label label-primary pointer-link' ng-click="toCreateNewUserAccount()">Create User</span></li>
                 		<li id='user_list_label' style="display: none;"><span class='label label-default pointer-link'>Users List</span></li>
                 		<li id='cancel_user_edit_label' ng-click="cancelUserEdit();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
-                		<li id='cancel_user_create_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
+                		<li id='cancel_user_create_label' ng-click="cancelUserCreate();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='cancel_user_detail_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Detail</span></li>
                 	</ul>
               	</div>
@@ -403,18 +405,27 @@ padding-left:5px;
 								<!-- User creation form -->
 								<div class="row">
 									<div class="col-md-12">
-											
+								<form  id="myForm" name="myForm"   novalidate="novalidate">
 										<fieldset>
-											<form id="myForm" name="myForm"  role="form" name="myForm" >
-							        <legend class="text-semibold"><i class="icon-user-plus position-left"></i> User details</legend>
+											
+							        <legend class="text-semibold"> <i class="icon-user-plus position-left"></i> User details</legend>
 
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>First name:</label>
-														<input type="text" name="firstname" id="firstname" placeholder="Enter First name" class="form-control" />
-														<span ng-show="myForm.firstname.$error.required" class="errors validation-error-label"> **Firstname field should not be empty</span>
-												<span ng-show="myForm.firstname.$error.minlength" class="errors validation-error-label"> **Firstname field length should not be less than 2 characters</span>
+														<input type="text" name="firstname" ng-model="firstname" id="firstname" placeholder="Enter First name" class="form-control" ng-minlength="2" required ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+														<!-- <span ng-show="myForm.firstname.$error.required" class="errors validation-error-label"> **Firstname field should not be empty</span>
+												<span ng-show="myForm.firstname.$error.minlength" class="errors validation-error-label"> **Firstname field length should not be less than 2 characters</span> -->
+													<div 
+																ng-show="myForm.firstname.$touched || myForm.$submitted"
+																ng-messages="myForm.firstname.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**First Name field should not be empty</div>
+																<span  ng-message= "minlength" class="errors">**First Name length should not be less than 2 characters</span>
+																<div ng-message="pattern">**First Name should be alphanumeric </div>
+																
+									             </div>
 													</div>
 												</div>
 
@@ -430,9 +441,18 @@ padding-left:5px;
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Email:</label>
-														<input placeholder="Enter Email" class="form-control" type="email" name="mail"  id="email-8"  ng-model="mail" required />
-														 <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors validation-error-label"> **Email field should not be empty</span>
-												<span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors validation-error-label"> **Email is invalid</span>
+														<input placeholder="Enter Email" class="form-control" type="email" name="mail"  id="email-8"  ng-model="mail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required />
+														 <!-- <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors validation-error-label"> **Email field should not be empty</span>
+												<span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors validation-error-label"> **Email is invalid</span> -->
+													<div 
+																ng-show="myForm.mail.$touched || myForm.$submitted"
+																ng-messages="myForm.mail.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**Email field should not be empty</div>
+																 <span  ng-message= "email" class="errors">**Email is invalid</span>
+																  <div ng-message="pattern">**Email is invalid</div>
+																
+									             </div>
 													</div>
 												</div>
 
@@ -441,8 +461,16 @@ padding-left:5px;
 														<label>Username:</label>
 														<input type="text" placeholder="Enter username for login purposes" class="form-control" name="userName" id="username-7" ng-model="userName"
 				 					 required ng-minlength="2" />
-				 					   <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors validation-error-label"> **User name field should not be empty</span>
-												<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors validation-error-label"> **User name field length should not be less than 2 characters</span>
+				 					 	<div 
+																ng-show="myForm.userName.$touched || myForm.$submitted"
+																ng-messages="myForm.userName.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**User name field should not be empty</div>
+																<span  ng-message= "minlength" class="errors">**User name field length should not be less than 2 characters</span>
+																
+									    </div>
+				 					 <!--   <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors validation-error-label"> **User name field should not be empty</span>
+									<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors validation-error-label"> **User name field length should not be less than 2 characters</span> -->
 													</div>
 												</div>
 											</div>
@@ -451,19 +479,34 @@ padding-left:5px;
 												<div class="col-md-6">
 													<div class="form-group">
                             <label>Password:</label>
-														<input type="password" placeholder="Enter password" class="form-control" id="password" name="password" required ng-model="password" ng-trim="true" />
-														<span class="help-block errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span>
+														<input autocomplete="off" type="password" placeholder="Enter password" class="form-control" id="password" name="password" required ng-model="password" ng-trim="true" />
+														<!-- <span class=" errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span> -->
+                          	<div 
+																ng-show="myForm.password.$touched || myForm.$submitted"
+																ng-messages="myForm.password.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**Password field should not be empty</div>
+																
+									    </div>
                           </div>
 												</div>
 
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Password Confirmation:</label>
-														<input type="password" placeholder="Enter password confirmation" class="form-control" id="cnfpassword" name="passwordConfirmation" 
-														required ng-model="passwordConfirmation" ng-trim="true" password-match="password" />
-														 <span class="help-block ng-hide errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span>
+														<input autocomplete="off" type="password" placeholder="Enter password confirmation" class="form-control" id="cnfpassword" name="passwordConfirmation" 
+														 ng-model="passwordConfirmation" ng-trim="true" required password-match="password" />
+														<!--  <span class="help-block ng-hide errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span> -->
 											  <!--div style="color:red" ng-show="errormsg"> Password do not match </div-->
-											  <div class="help-block errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.passwordMatch">Passwords do not match.</div>
+											  <!-- <div class=" errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.passwordMatch">Passwords do not match.</div> -->
+											  	<div 
+																ng-show="myForm.$submitted"
+																ng-messages="myForm.passwordConfirmation.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**Confirm Password field should not be empty</div>
+																<div ng-message="passwordMatch" class="errors">**Passwords do not match</div>
+																
+									                   </div>
 													</div>
 												</div>
 											</div>
@@ -471,7 +514,7 @@ padding-left:5px;
 												<div class="col-md-6">
 													<div class="form-group" ng-show="role1">
 													<label > Role</label>
-													<select id="role" name="roleName"    ng-model="roleName" class="select roleadmin" >
+													<select id="role" name="roleName"    ng-model="roleName" class="form-control select roleadmin" >
 														 	<option  ng-repeat="item in roleList[role]" >{{item}}</option> 
 														
 														</select>
@@ -481,40 +524,35 @@ padding-left:5px;
 													</div>
 													  <div class="form-group" ng-show="role2">
 											<label > Role</label>
-											<select class="select edit-role" id="edit_role"  class="select"  data-ng-model="tablerole" data-placeholder="Select Role" >
+											<select class="form-control select edit-role" id="edit_role"   data-ng-model="tablerole" data-placeholder="Select Role" >
 												<option  ng-repeat="item in roleList[role]" >{{item}}</option>
 											</select>
 										  </div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-6" style="padding-right: 0px ! important;">
 													<div class="form-group">
+														<div class="col-md-6">
 														<label>Customer:</label>
-														<select id="customer-8" name="company" ng-model="customer" data-placeholder="Select Customer" class="select">
-														<option value="">Select </option>
-														<option ng-repeat="customer in customers" ng-model="customer">{{customer}}</option>
-														</select>
-														  <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span>
-													</div>
-												</div>
-												<div class="col-md-12">
+														</div>
+														<div class="col-md-6">
 															<div ng-show="{{role == 'ROLE_OTADMIN'}}">
 												<!-- data-toggle="dropdown"  -->
 												
-												<a id="add-Customer" href="" class="table-emailAdd" ng-show="addCustomer">
-												Add New Customer
+												<a id="add-Customer" href="" class="table-emailAdd pull-right" ng-show="addCustomer">
+												Add New Customer <i class="icon-plus-circle2 text-primary"></i>
 													</a>
-													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd" style="width:400px; margin-left: 12px; position: absolute; top: 0px; left: 16%;">
+													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd" style="width: 350px;margin-left: 12px;position: absolute;top: 20px;left: -107%;">
 														<form class="form-horizontal" name="customerform">
 															<div class="col-sm-12">
 															<br/>
 																<div class="form-group">
-																	<label for="customer_name" class="col-sm-4 control-label" >Customer Name :</label>
+																	<label for="customer_name" class="col-sm-5 control-label" >Customer Name :</label>
 																	
-																	<div class="col-sm-8">
+																	<div class="col-sm-7">
 														<input type="text" class="form-control font-adduser" id="customer_name"  >
-														  <span id="customer_name-msg"  class="errors"> **Customer field should not be empty</span>
+														  <span id="customer_name-msg" style="display:none;"  class="errors"> **Customer Name field should not be empty</span>
 														  <div class="user-btns"  style="text-align:center;">
-																 <img class="loading" src="images/ajax-loader.gif"  ng-show="dataLoadingCustomer"></img>	
+														  <img class="loading" src="images/loading_new.gif"  ng-show="dataLoadingCustomer" style="position: absolute; z-index: 1; width: 30px; top: 2px; right: 15px;"></img>	
 																 	<button class="btn btn-info ot-btn" type="button"  ng-click="createCustomer()">Save</button>
 																	<button class="btn btn-info ot-btn" type="button" ng-click="closerCreatePop()">Cancel</button>
 																</div>
@@ -528,6 +566,23 @@ padding-left:5px;
 										
 												</div>
 												</div>
+												
+														</div>
+														<select id="customer-8" name="customer" ng-model="customer" data-placeholder="Select Customer" class="form-control select" required>
+														<option value="">Select </option>
+														<option ng-repeat="customer in customers" >{{customer}}</option>
+														</select>
+														<!--   <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span> -->
+														  	<div 
+																ng-show="myForm.customer.$touched || myForm.$submitted"
+																ng-messages="myForm.customer.$error"
+																class="errors">
+																<div ng-message="required" class="errors">**Customer field should not be empty</div>
+																
+									                   </div>
+													</div>
+												</div>
+												
 											</div>
 									
 								
@@ -578,15 +633,15 @@ padding-left:5px;
 											</div>
 
 											<div class="row pull-right" ng-show="createButton">
-												<button  class="btn btn-primary"  ng-click="CreateUser()">Submit</button>
+												<input type="submit"  class="btn btn-primary"  ng-click="CreateUser()" value="Submit" />
 											</div>
 											 <div  class="row pull-right"  ng-show="updateButton"> 
-										  <button type="button" class="btn btn-info ot-btn"  ng-click="UpdateUser()">Update</button>
+										  <button type="submit" class="btn btn-info ot-btn"  ng-click="UpdateUser()">Update</button>
 										<!--   <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button> -->
 										  </div>
-										  </form>
+										 
 										</fieldset>
-
+ 									</form>
 									</div>
 								</div>
 								<!-- /User creation form -->

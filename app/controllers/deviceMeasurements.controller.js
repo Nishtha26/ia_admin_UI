@@ -271,7 +271,7 @@ oTech
 					}
 
 					$scope.getDashBoardMenu();
-					$scope.getFavouriteReports();
+//					$scope.getFavouriteReports();
 					// A $( document ).ready() block.
 					$( document ).ready(function() {
 						

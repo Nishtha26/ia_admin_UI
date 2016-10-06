@@ -18281,3 +18281,8 @@ label.display-block {
 		.tg .tg-xkia{color:#666699;text-align:center}
 		.tg .tg-5hgy{background-color:#fff;text-align:center}	
 		/* heat map end*/
+		
+select * {
+    padding: 5px 15px;
+    font-weight: 450;
+}
