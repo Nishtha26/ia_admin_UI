@@ -20,7 +20,7 @@ oTech.controller('userAdminstrationController',
 			ROLE_IAADMIN : ['ROLE_IAADMIN','ROLE_REPORTING'],
 			ROLE_REPORTING : ['ROLE_REPORTING']	
 		};
-		var deletePopupMsg="Are you want to delete this user(s)?"
+		var deletePopupMsg="Do you want to delete this user(s)?"
 		$scope.accountDiv =false;
 		$scope.addCustomer = false; 
 		$scope.role1 = false; 
@@ -325,6 +325,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			//	$("#customer-8").select2().select('val',row[0].companyName);
 //				$("#customer-8").select2()[0].value=row[0].companyName;
 				$("#customer-8").val(row[0].companyName);
+				$scope.customer=row[0].companyName;
 				
 			}
 			else{
@@ -360,7 +361,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 //			 var companyName      = $("#customer-8").select2().select2('val');
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2()[0].value;
+					companyName = $("#customer-8").val();
 				}	
 				else{
 					companyName=	$("#customer-8").val();
@@ -413,7 +414,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		       );
 			}	
 				else{
-					 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+				//	 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
 					$(this).parent().parent().find(".errors").show();
 					 $scope.dataLoading=false;
 				}
@@ -589,8 +590,9 @@ $scope.CreateUser =function(){
 		promise.then(
 			function(data){
 				$scope.totalRecords = data.length;
-				allOfTheData = data;
-//				$scope.userTableGridOptions.data = data;
+			//	allOfTheData = data;
+				$scope.userTableGridOptions.data = data;
+				allOfTheData=$scope.userTableGridOptions.data;
 				$scope.userTableGridOptions.data = data.slice( 0, $scope.itemsPerPage);
 				//console.log($scope.serverSettingsGridOptions.data[0]);
 				$scope.gridApi.selection.selectRow($scope.userTableGridOptions.data[0]); //extra code
@@ -829,13 +831,13 @@ $scope.DeleteBtnLabel=function(){
 	 }
 	if($scope.selectedUsers.length==isActiveCount){
 		$scope.deleteLabel="Deactivate";
-		deletePopupMsg="Are you want to deactivate this user(s)?"
+		deletePopupMsg="Do you want to deactivate this user(s)?"
 		 $scope.isDeleteDisabled = false;
 		 $scope.accountEnableStatus=0;
 	}
 	if($scope.selectedUsers.length==isDeactiveCount){
 		$scope.deleteLabel="Activate";
-		deletePopupMsg="Are you want to activate this user(s)?"
+		deletePopupMsg="Do you want to activate this user(s)?"
 		 $scope.accountEnableStatus=1;
 		 $scope.isDeleteDisabled = false;
 	}

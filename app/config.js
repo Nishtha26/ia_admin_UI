@@ -388,7 +388,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.appName + '';
 	             }},
-			{displayName: "Rss", field: "appRss", width: 100},
+			{displayName: "RSS", field: "appRss", width: 100},
 			{displayName: "Battery Level", field: "appBatteryLevel", width: 150},
 			{displayName: "CPU Usage", field: "appCpuUsage", width: 100},
 			{displayName: "DL Volumn", field: "appDlVolumn", width: 100},
@@ -396,8 +396,8 @@ oApp.config = {
 			{displayName: "UL Volumn", field: "appUlVolumn", width: 100},
 			{displayName: "UL Speed", field: "appUlSpeed", width: 100},
 			{displayName: "Run Status", field: "appRunStatus", width: 100},
-			{displayName: "APP PSS", field: "appPss", width: 100},
-			{displayName: "APP USS", field: "appUss", width: 100},
+			{displayName: "App PSS", field: "appPss", width: 100},
+			{displayName: "App USS", field: "appUss", width: 100},
 			{headerName: "sessionId", field: "sessionId", width: 100, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.sessionId + '';
@@ -412,7 +412,7 @@ oApp.config = {
                 return '' + row.entity.utcTime + '';
               }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone", width: 150},
-			{displayName: "APP State", field: "appState", width: 100},
+			{displayName: "App State", field: "appState", width: 100},
 			{headerName: "numberThread", field: "numberThread", width: 100},
 			{headerName: "appFbground", field: "appFbground", width: 100, cellTooltip: 
                 function( row, col ) {
@@ -433,20 +433,20 @@ oApp.config = {
                 function( row, col ) {
                 return '' + row.entity.timeStamp + '';
               }},
-			{headerName: "ipPublicV4", field: "ipPublicV4", cellTooltip: 
+			{displayName: "IP Public V4", field: "ipPublicV4", cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.ipPublicV4 + '';
               }},
 			{headerName: "dupId", field: "dupId"},
-			{headerName: "ipPrivateV4", field: "ipPrivateV4", cellTooltip: 
+			{displayName: "IP Private V4", field: "ipPrivateV4", cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.ipPrivateV4 + '';
               }},
-			{headerName: "ipPublicV6", field: "ipPublicV6", cellTooltip: 
+			{displayName: "IP Public V6", field: "ipPublicV6", cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.ipPublicV6 + '';
               }},
-			{headerName: "ipPrivateV6", field: "ipPrivateV6", cellTooltip: 
+			{headerName: "IP Private V6", field: "ipPrivateV6", cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.ipPrivateV6 + '';
               }},
@@ -468,11 +468,11 @@ oApp.config = {
                function( row, col ) {
                return '' + row.entity.jobStartTime + '';
              }},
-			{headerName: "jobStartTimeMs", field: "jobStartTimeMs", cellTooltip: 
+			{displayName: "Job StartTime(MS)", field: "jobStartTimeMs", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.jobStartTimeMs + '';
 	             }},
-			{headerName: "pci", field: "pci"},
+			{displayName: "PCI", field: "pci"},
 			{headerName: "cellId", field: "cellId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.cellId + '';
@@ -481,11 +481,11 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.cellName + '';
 	             }},
-			{headerName: "channelBandWidth", field: "channelBandWidth", cellTooltip: 
+			{displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.channelBandWidth + '';
 	             }},
-			{headerName: "fileUrl", field: "fileUrl", cellTooltip: 
+			{displayName: "File URL", field: "fileUrl", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.fileUrl + '';
 	             }}
@@ -493,31 +493,31 @@ oApp.config = {
 		columnDefslocation : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
-			{headerName: "jobId", field: "jobId"},
-		   {headerName: "timeStamp", field: "timeStamp", width:200, cellTooltip: 
+			{headerName: "deviceId", field: "deviceId" ,width:100,pinnedLeft:true},
+			{headerName: "jobId", field: "jobId",width:100},
+		   {headerName: "timeStamp", field: "timeStamp", width:250, cellTooltip: 
                function( row, col ) {
                return '' + row.entity.timeStamp + '';
              }},
-			{headerName: "locationProvider", field: "locationProvider", cellTooltip: 
+			{headerName: "locationProvider", field: "locationProvider" ,width:200, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.locationProvider + '';
 	             }},
-			{displayName: "Altitude", field: "collectAltitude", cellTooltip: 
+			{displayName: "Altitude", field: "collectAltitude" ,width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.collectAltitude + '';
 	             }},
-			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+			{headerName: "sessionId", field: "sessionId" ,width:150, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.sessionId + '';
 	             }},
-			{displayName: "Longitude", field: "xParam"},
-			{displayName: "Latitude", field: "yParam"},
-			{headerName: "testcaseId", field: "testcaseId",width:250, cellTooltip: 
+			{displayName: "Longitude", field: "xParam",width:200},
+			{displayName: "Latitude", field: "yParam" ,width:200},
+			{headerName: "testcaseId", field: "testcaseId",width:300, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }},
-			{headerName: "lastLocationTime", field: "lastLocationTime", cellTooltip: 
+			{headerName: "lastLocationTime", field: "lastLocationTime" ,width:250, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.lastLocationTime + '';
 	             }}
@@ -525,7 +525,7 @@ oApp.config = {
 		columnDefsmms : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "mmsId", field: "mmsId",pinnedLeft:true},
+			{displayName: "MMS Id", field: "mmsId",pinnedLeft:true},
 			{headerName: "deviceId", field: "deviceId" },
 		   {headerName: "jobId", field: "jobId"},
 			{headerName: "callingPartyNumber", field: "callingPartyNumber", cellTooltip: 
@@ -540,11 +540,11 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.timeZone + '';
 	             }},
-			{headerName: "mmsTime", field: "mmsTime", cellTooltip: 
+			{displayName: "MMS Time", field: "mmsTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsTime + '';
 	             }},
-			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
@@ -552,12 +552,12 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.deviceLocalTime + '';
 	             }},
-			{headerName: "mmsText", field: "mmsText", cellTooltip: 
+			{displayName: "MMS Text", field: "mmsText", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsText + '';
 	             }},
-			{headerName: "mmsFileSize", field: "mmsFileSize"},
-			{headerName: "mmsFileName", field: "mmsFileName", cellTooltip: 
+			{displayName: "MMS File Size", field: "mmsFileSize"},
+			{displayName: "MMS File Name", field: "mmsFileName", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsFileName + '';
 	             }},
@@ -637,7 +637,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.smsTime + '';
 	             }},
-			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
@@ -673,20 +673,20 @@ oApp.config = {
 	             }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
 			{headerName: "nodeType", field: "nodeType"},
-			{headerName: "serverIp", field: "serverIp", cellTooltip: 
+			{displayName: "Server IP", field: "serverIp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.serverIp + '';
 	             }},
 			{headerName: "serverPort", field: "serverPort"},
-			{headerName: "clientIp", field: "clientIp", cellTooltip: 
+			{displayName: "Client IP", field: "clientIp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.clientIp + '';
 	             }},
 			{headerName: "clientPort", field: "clientPort"},
 			{headerName: "timeDuration", field: "timeDuration"},
 			{headerName: "dataTransfered", field: "dataTransfered"},
-			{headerName: "bandWidth", field: "bandWidth"},
-			{headerName: "tcpWindowSize", field: "tcpWindowSize"},
+			{displayName: "Bandwidth", field: "bandWidth"},
+			{displayName: "TCP Window Size", field: "tcpWindowSize"},
 			{headerName: "networkType", field: "networkType"},
 			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
@@ -710,24 +710,24 @@ oApp.config = {
 	             }},
 			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
 			{headerName: "nodeType", field: "nodeType"},
-			{headerName: "serverIP", field: "serverIP", cellTooltip: 
+			{displayName: "Server IP", field: "serverIP", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.serverIP + '';
 	             }},
 			{headerName: "serverPort", field: "serverPort"},
-			{headerName: "clientIP", field: "clientIP", cellTooltip: 
+			{displayName: "Client IP", field: "clientIP", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.clientIP + '';
 	             }},
 			{headerName: "clientPort", field: "clientPort"},
 			{headerName: "timeDuration", field: "timeDuration"},
 			{headerName: "dataTransfered", field: "dataTransfered"},
-			{headerName: "bandWidth", field: "bandWidth"},
-			{headerName: "dataGramSize", field: "dataGramSize"},
-			{headerName: "udpBufferSize", field: "udpBufferSize"},
+			{displayName: "Bandwidth", field: "bandWidth"},
+			{displayName: "Datagram Size", field: "dataGramSize"},
+			{displayName: "UDP BufferSize", field: "udpBufferSize"},
 			{headerName: "jitter", field: "jitter"},
-			{headerName: "dataGramLost", field: "dataGramLost"},
-			{headerName: "dataGramTotal", field: "dataGramTotal"},
+			{displayName: "Datagram Lost", field: "dataGramLost"},
+			{displayName: "Datagram Total", field: "dataGramTotal"},
 			{headerName: "networkType", field: "networkType"},
 			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
@@ -748,7 +748,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.voiceCallDeviceLocalTime + '';
 	             }},
-			{headerName: "voiceCallUTCTime", field: "voiceCallUTCTime", cellTooltip: 
+			{displayName: "Voice Call UTC Time", field: "voiceCallUTCTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.voiceCallUTCTime + '';
 	             }},
@@ -764,60 +764,60 @@ oApp.config = {
 		columnDefswifiinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId" ,pinnedLeft:true},
-			{headerName: "deviceId", field: "deviceId"},
-		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+			{headerName: "autoId", field: "autoId" ,width:100,pinnedLeft:true},
+			{headerName: "deviceId", field: "deviceId",width:100},
+		   {headerName: "jobId", field: "jobId",width:100},
+			{headerName: "timeStamp", field: "timeStamp",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeStamp + '';
 	             }},
-			{headerName: "APN", field: "wifiApn", cellTooltip: 
+			{headerName: "APN", field: "wifiApn",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiApn + '';
 	             }},
-			{displayName: "SSID", field: "wifiSsId", cellTooltip: 
+			{displayName: "SSID", field: "wifiSsId",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiSsId + '';
 	             }},
-			{displayName: "IP Address", field: "wifiIpAddress", cellTooltip: 
+			{displayName: "IP Address", field: "wifiIpAddress",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiIpAddress + '';
 	             }},
-			{displayName: "Mac Address", field: "wifiMacAddress", cellTooltip: 
+			{displayName: "Mac Address", field: "wifiMacAddress",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiMacAddress + '';
 	             }},
-			{displayName: "BSS Id", field: "wifiBssId", cellTooltip: 
+			{displayName: "BSS Id", field: "wifiBssId",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiBssId + '';
 	             }},
-			{displayName: "Signal Level", field: "wifiSignalLevel"},
-			{displayName: "Frequency", field: "wifiFrequency"},
-			{displayName: "Security", field: "wifiSecurity", cellTooltip: 
+			{displayName: "Signal Level", field: "wifiSignalLevel",width:100},
+			{displayName: "Frequency", field: "wifiFrequency",width:100},
+			{displayName: "Security", field: "wifiSecurity",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiSecurity + '';
 	             }},
-			{headerName: "Status", field: "wifiStatus"},
-			{displayName: "AP Time", field: "apTime", cellTooltip: 
+			{headerName: "Status", field: "wifiStatus",width:100},
+			{displayName: "AP Time", field: "apTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.apTime + '';
 	             }},
-			{displayName: "AP DeviceLocationTime", field: "apDeviceLocationTime", cellTooltip: 
+			{displayName: "AP DeviceLocationTime", field: "apDeviceLocationTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.apDeviceLocationTime + '';
 	             }},
-			{displayName: "AP UTC Time", field: "apUtcTime", cellTooltip: 
+			{displayName: "AP UTC Time", field: "apUtcTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.apUtcTime + '';
 	             }},
-			{displayName: "AP Time Zone", field: "apTimeZone", cellTooltip: 
+			{displayName: "AP Time Zone", field: "apTimeZone",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.apTimeZone + '';
 	             }},
-			{displayName: "Link Speed", field: "wifiLinkSpeed"},
-			{displayName: "AP Distance", field: "wifiApDistance"},
-			{displayName: "SNR", field: "wifiSnr"},
-			{displayName: "Testcase Id", field: "testcaseId", cellTooltip: 
+			{displayName: "Link Speed", field: "wifiLinkSpeed",width:100},
+			{displayName: "AP Distance", field: "wifiApDistance",width:100},
+			{displayName: "SNR", field: "wifiSnr",width:100},
+			{displayName: "Testcase Id", field: "testcaseId",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }}
@@ -825,30 +825,30 @@ oApp.config = {
 		columnDefswifitrafficinfo : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{displayName: "Collect Id", field: "wifiCollectId" ,pinnedLeft:true},
-			{headerName: "jobId", field: "jobId"},
+			{displayName: "Collect Id", field: "wifiCollectId" ,width:100,pinnedLeft:true},
+			{headerName: "jobId", field: "jobId",width:100},
 		   {headerName: "deviceId", field: "deviceId"},
-			{headerName: "initialConnectedState", field: "initialConnectedState"},
-			{headerName: "finalConnectedState", field: "finalConnectedState"},
-			{headerName: "timeTakenToConnect", field: "timeTakenToConnect"},
-			{headerName: "timeTakenToDisconnect", field: "timeTakenToDisconnect"},
-			{displayName: "Info Time", field: "wifiInfoTime", cellTooltip: 
+			{headerName: "initialConnectedState", field: "initialConnectedState",width:100},
+			{headerName: "finalConnectedState", field: "finalConnectedState",width:100},
+			{headerName: "timeTakenToConnect", field: "timeTakenToConnect",width:100},
+			{headerName: "timeTakenToDisconnect", field: "timeTakenToDisconnect",width:100},
+			{displayName: "Info Time", field: "wifiInfoTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.wifiInfoTime + '';
 	             }},
-			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+			{headerName: "timeZone", field: "timeZone",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeZone + '';
 	             }},
-			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time", field: "utcTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
-			{displayName: "Device Local Time", field: "deviceLocalTime", cellTooltip: 
+			{displayName: "Device Local Time", field: "deviceLocalTime",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.deviceLocalTime + '';
 	             }},
-			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+			{headerName: "testcaseId", field: "testcaseId",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }}
@@ -865,7 +865,7 @@ oApp.config = {
 	               return '' + row.entity.sessionTime + '';
 	             }},
 			{headerName: "sessionDeviceLocalTime", field: "sessionDeviceLocalTime"},
-			{headerName: "sessionUTCTime", field: "sessionUTCTime", cellTooltip: 
+			{displayName: "Session UTC Time", field: "sessionUTCTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.sessionUTCTime + '';
 	             }},
@@ -905,7 +905,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.pingDeviceLocalTime + '';
 	             }},
-			{headerName: "pingUTCTime", field: "pingUTCTime", width: 100, cellTooltip: 
+			{displayName: "Ping UTC Time", field: "pingUTCTime", width: 100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.pingUTCTime + '';
 	             }},
@@ -918,11 +918,11 @@ oApp.config = {
 			{headerName: "noPktsTxed", field: "noPktsTxed", width: 100},
 			{headerName: "noPktsRxed", field: "noPktsRxed", width: 100},
 			{headerName: "totalTime", field: "totalTime", width: 100},
-			{headerName: "rttMin", field: "rttMin", width: 100},
-			{headerName: "rttAvg", field: "rttAvg", width: 100},
-			{headerName: "rttMax", field: "rttMax", width: 100},
-			{headerName: "rttMdev", field: "rttMdev", width: 100},
-			{headerName: "rttUnit", field: "rttUnit", width: 100},
+			{displayName: "RTT Min", field: "rttMin", width: 100},
+			{displayName: "RTT Avg", field: "rttAvg", width: 100},
+			{displayName: "RTT Max", field: "rttMax", width: 100},
+			{displayName: "RTT Mdev", field: "rttMdev", width: 100},
+			{displayName: "RTT Unit", field: "rttUnit", width: 100},
 			{headerName: "wholeStr", field: "wholeStr", width: 100},
 			{headerName: "sessionId", field: "sessionId", width: 100, cellTooltip: 
 	               function( row, col ) {
@@ -949,14 +949,14 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.uploadDeviceLocalTime + '';
 	             }},
-			{headerName: "uploadUTCTime", field: "uploadUTCTime", cellTooltip: 
+			{displayName: "Upload UTC Time", field: "uploadUTCTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.uploadUTCTime + '';
 	             }},
 			{headerName: "uploadType", field: "uploadType"},
 			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
 			{headerName: "uploadProcess", field: "uploadProcess"},
-			{headerName: "uploadFileUrl", field: "uploadFileUrl", cellTooltip: 
+			{displayName: "Upload File URL", field: "uploadFileUrl", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.uploadFileUrl + '';
 	             }},
@@ -989,7 +989,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.emailTime + '';
 	             }},
-			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
@@ -1076,14 +1076,14 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.mplayerDeviceLocalTime + '';
 	             }},
-			{headerName: "mplayerUTCTime", field: "mplayerUTCTime", cellTooltip: 
+			{displayName: "Mplayer UTC Time", field: "mplayerUTCTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mplayerUTCTime + '';
 	             }},
 			{headerName: "mplayerType", field: "mplayerType"},
 			{headerName: "mobileNetWorkType", field: "mobileNetWorkType"},
 			{headerName: "mplayerProgress", field: "mplayerProgress"},
-			{headerName: "mplayerFileUrl", field: "mplayerFileUrl", cellTooltip: 
+			{displayName: "Mplayer File URL", field: "mplayerFileUrl", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mplayerFileUrl + '';
 	             }},
@@ -1147,7 +1147,7 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.deviceLocalTime + '';
 	             }},
-			{headerName: "utcTime", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
@@ -1172,8 +1172,8 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }},
-			{headerName: "ftpServer", field: "ftpServer"},
-			{headerName: "ftpServerWaveFilePath", field: "ftpServerWaveFilePath", cellTooltip: 
+			{displayName: "FTP Server", field: "ftpServer"},
+			{displayName: "FTP Server Wave File Path", field: "ftpServerWaveFilePath", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.ftpServerWaveFilePath + '';
 	             }},
@@ -1199,14 +1199,14 @@ oApp.config = {
 	               function( row, col ) {
 	               return '' + row.entity.downloadDeviceLocalTime + '';
 	             }},
-			{headerName: "downloadUTCTime", field: "downloadUTCTime", cellTooltip: 
+			{displayName: "Download UTC Time", field: "downloadUTCTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.downloadUTCTime + '';
 	             }},
 			{headerName: "downloadType", field: "downloadType"},
 			{headerName: "mobileNetworkType", field: "mobileNetworkType"},
 			{headerName: "downloadProgress", field: "downloadProgress"},
-			{headerName: "downloadFileUrl", field: "downloadFileUrl", cellTooltip: 
+			{displayName: "Download File URL", field: "downloadFileUrl", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.downloadFileUrl + '';
 	             }},
@@ -1226,57 +1226,82 @@ oApp.config = {
 		columnDefsradio: [
 		         			// this row just shows the row index, doesn't use any data from the row
 		         			
-		         			{displayName: "Job Id", field: "jobId" ,pinnedLeft:true},
-		         			{displayName: "Device Id", field: "deviceId"},
-		         		   {displayName: "Cell Id", field: "cellId"},
-		         			{displayName: "Lac Id", field: "lacId"},
-		         			{displayName: "SNR", field: "evdoSnr"},
-		         			{displayName: "MCC", field: "mcc"},
-		         			{displayName: "MNC", field: "mnc"},
-		         			{displayName: "RAN Type", field: "networkType"},
-		         			{displayName: "Local Time", field: "deviceLocalTime", cellTooltip: 
+		         			{displayName: "Job Id", field: "jobId" ,width:100,pinnedLeft:true},
+		         			{displayName: "Device Id", field: "deviceId",width:100},
+		         		   {displayName: "Cell Id", field: "cellId",width:100},
+		         			{displayName: "Lac Id", field: "lacId",width:100},
+		         			{displayName: "SNR", field: "evdoSnr",width:100},
+		         			{displayName: "MCC", field: "mcc",width:100},
+		         			{displayName: "MNC", field: "mnc",width:100},
+		         			{displayName: "RAN Type", field: "networkType",width:100},
+		         			{displayName: "Local Time", field: "deviceLocalTime",width:150, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.deviceLocalTime + '';
 			     	             }},
-		         			{displayName: "Epoch Time", field: "time", cellTooltip: 
+		         			{displayName: "Epoch Time", field: "time",width:150, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.time + '';
 			     	             }},
-		         			{displayName: "Time Zone", field: "timeZone", cellTooltip: 
+		         			{displayName: "Time Zone", field: "timeZone",width:100, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.timeZone + '';
 			     	             }},
-		         			{displayName: "Signal Strength RSSI (dBm)", field: "signalStrenghRssi", cellTooltip: 
+		         			{displayName: "Signal Strength RSSI (dBm)",width:100, field: "signalStrenghRssi", cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.signalStrenghRssi + '';
 			     	             }},
-		         			{displayName: "Quality Ber", field: "gsmRxQualityBer", cellTooltip: 
+		         			{displayName: "Quality Ber", field: "gsmRxQualityBer",width:100, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.gsmRxQualityBer + '';
 			     	             }},
-		         			{displayName: "Cdma Evdo", field: "cdmaEcIo", cellTooltip: 
+		         			{displayName: "Cdma Evdo", field: "cdmaEcIo",width:100, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.cdmaEcIo + '';
 			     	             }},
-		         			{displayName: "LTE PCI", field: "ltePci", cellTooltip: 
+		         			{displayName: "LTE PCI", field: "ltePci",width:100, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.ltePci + '';
 			     	             }},
-		         			{displayName: "LTE RSRQ", field: "lteRsrq", cellTooltip: 
+		         			{displayName: "LTE RSRQ", field: "lteRsrq",width:100, cellTooltip: 
 			     	               function( row, col ) {
 			     	               return '' + row.entity.lteRsrq + '';
 			     	             }},
-		         			{displayName: "LTE RSSNR", field: "lteRssnr", cellTooltip: 
+		         			{displayName: "LTE RSSNR", field: "lteRssnr",width:100, cellTooltip: 
 		     	               function( row, col ) {
 		     	               return '' + row.entity.lteRssnr + '';
 		     	             }},
-		         			{displayName: "TestCase Id", field: "testcaseId", cellTooltip: 
+		         			{displayName: "TestCase Id", field: "testcaseId",width:250, cellTooltip: 
 		     	               function( row, col ) {
 		     	               return '' + row.entity.testcaseId + '';
 		     	             }}
 		         		],
 		columnDefsclickscreenxy : [
 			// this row just shows the row index, doesn't use any data from the row
+			{displayName: "Job Id", field: "jobId" ,pinnedLeft:true},
+			{displayName: "Device Id", field: "deviceId"},
+		   {displayName: "Test Case Id", field: "testcaseId"},
+		   
+			{displayName: "Click Time", field: "clickDeviceLocalTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickDeviceLocalTime + '';
+	             }},
+			{displayName: "Click Time (MS)", field: "clickTimeMs", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickTimeMs + '';
+	             }},
+			{displayName: "Click UTC Time", field: "clickUTCTime", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickUTCTime + '';
+	             }},
+			{displayName: "Time Zone", field: "clickTimeZone", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.clickTimeZone + '';
+	             }},
+			{headerName: "clickType", field: "clickType"},
+			{headerName: "fileName", field: "fileName"},
+			{displayName: "Position X", field: "positionX"},
+			{displayName: "Position Y", field: "positionY"}
+	
 			
 			
 			
@@ -1342,9 +1367,9 @@ oApp.config = {
 			'<i class="icon-menu9"></i>'+
 		'</a>'+
 		'<ul class="dropdown-menu dropdown-menu-right">'+
-			'<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserBtn()"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>'+
+			'<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserBtn()"><i class="icon-backspace2 text-warning-800"></i> Activate/Deactivate</a></li>'+
 			'<li class="edit_user"><a ng-click="grid.appScope.UpdateUserBtn();"><i class="icon-pencil5 text-primary user_editor_link"></i> Edit User</a></li>'+
-			'<li class="show_user"><a "><i class="icon-user text-muted"></i> Show Detail</a></li>'+
+		/*	'<li class="show_user"><a "><i class="icon-user text-muted"></i> Show Detail</a></li>'+*/
 		'</ul>'+
 	'</li>'+
 '</ul>'}
