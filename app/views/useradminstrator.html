@@ -15,6 +15,8 @@ display: inline!important;
 margin-left: 0px !important;
 padding-left:5px;
 }
+.dropdown-menu{
+border:1px solid #00BCD4;}
 </style>
 
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
@@ -527,9 +529,45 @@ padding-left:5px;
 											</select>
 										  </div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-6" style="padding-right: 0px ! important;">
 													<div class="form-group">
+														<div class="col-md-6">
 														<label>Customer:</label>
+														</div>
+														<div class="col-md-6">
+															<div ng-show="{{role == 'ROLE_OTADMIN'}}">
+												<!-- data-toggle="dropdown"  -->
+												
+												<a id="add-Customer" href="" class="table-emailAdd pull-right" ng-show="addCustomer">
+												Add New Customer <i class="icon-plus-circle2 text-primary"></i>
+													</a>
+													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd" style="width: 350px;margin-left: 12px;position: absolute;top: 20px;left: -107%;">
+														<form class="form-horizontal" name="customerform">
+															<div class="col-sm-12">
+															<br/>
+																<div class="form-group">
+																	<label for="customer_name" class="col-sm-5 control-label" >Customer Name :</label>
+																	
+																	<div class="col-sm-7">
+														<input type="text" class="form-control font-adduser" id="customer_name"  >
+														  <span id="customer_name-msg" style="display:none;"  class="errors"> **Customer Name field should not be empty</span>
+														  <div class="user-btns"  style="text-align:center;">
+														  <img class="loading" src="images/loading_new.gif"  ng-show="dataLoadingCustomer" style="position: absolute; z-index: 1; width: 30px; top: 2px; right: 15px;"></img>	
+																 	<button class="btn btn-info ot-btn" type="button"  ng-click="createCustomer()">Save</button>
+																	<button class="btn btn-info ot-btn" type="button" ng-click="closerCreatePop()">Cancel</button>
+																</div>
+																	</div>
+																	
+																</div>
+																
+															</div>
+														</form>
+													</div>
+										
+												</div>
+												</div>
+												
+														</div>
 														<select id="customer-8" name="customer" ng-model="customer" data-placeholder="Select Customer" class="form-control select" required>
 														<option value="">Select </option>
 														<option ng-repeat="customer in customers" >{{customer}}</option>
@@ -544,38 +582,7 @@ padding-left:5px;
 									                   </div>
 													</div>
 												</div>
-												<div class="col-md-12">
-															<div ng-show="{{role == 'ROLE_OTADMIN'}}">
-												<!-- data-toggle="dropdown"  -->
 												
-												<a id="add-Customer" href="" class="table-emailAdd" ng-show="addCustomer">
-												Add New Customer
-													</a>
-													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd" style="width:400px; margin-left: 12px; position: absolute; top: 0px; left: 16%;">
-														<form class="form-horizontal" name="customerform">
-															<div class="col-sm-12">
-															<br/>
-																<div class="form-group">
-																	<label for="customer_name" class="col-sm-4 control-label" >Customer Name :</label>
-																	
-																	<div class="col-sm-8">
-														<input type="text" class="form-control font-adduser" id="customer_name"  >
-														  <span id="customer_name-msg" style="display:none;"  class="errors"> **Customer Name field should not be empty</span>
-														  <div class="user-btns"  style="text-align:center;">
-																 <img class="loading" src="images/ajax-loader.gif"  ng-show="dataLoadingCustomer"></img>	
-																 	<button class="btn btn-info ot-btn" type="button"  ng-click="createCustomer()">Save</button>
-																	<button class="btn btn-info ot-btn" type="button" ng-click="closerCreatePop()">Cancel</button>
-																</div>
-																	</div>
-																	
-																</div>
-																
-															</div>
-														</form>
-													</div>
-										
-												</div>
-												</div>
 											</div>
 									
 								
