@@ -596,7 +596,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                {field: 'deviceModel', name: ' Device Model', headerCellClass: $scope.highlightFilteredHeader},
 	                {field: 'deviceManufacturer', name: 'Device Manufacturer', headerCellClass: $scope.highlightFilteredHeader},
 	               /* {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},*/
-					{field: 'jobProgress', name: 'Test Run Monitoring', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b>{{row.entity.jobProgress}}%</b></uib-progressbar></div>'},
+					{field: 'jobProgress', name: 'Test Run Monitoring', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b style="position: absolute;left: 40%;color: #3d3d3d;">{{row.entity.jobProgress}}%</b></uib-progressbar></div>'},
 					/*{field: 'action', name: 'Action', cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrl}}" target="_blank">{{row.entity.action}}</a>' +'</div>' },
 					{field: 'deviceLogLevel', name: ' Device Log Level', headerCellClass: $scope.highlightFilteredHeader},*/
 					{name:'Action', enableRowSelection: false, enableFiltering: false, width: '15%',enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -840,11 +840,14 @@ oTech.controller('testPlanTestRunAdministration',
 		
 		// job progress interval call till 100% job compleate
 						$scope.refreshCallForJobProgress = function(userId, token, testrunID) {
+							
 							promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
 			                promise.then(
 			                    function (data) {
+			                    	if($scope.testRunMappedDevices.data.length > 0 && $scope.testRunMappedDevices.data[0].jobId == testrunID){
 			                    	$scope.testRunMappedDevices.data = [];
 			                    	$scope.testRunMappedDevices.data = data.testRunDeviceData;
+			                    	}
 			                        
 			                    },
 			                    function (err) {
@@ -862,6 +865,7 @@ oTech.controller('testPlanTestRunAdministration',
 									}, function() {
 										console.log("Timer rejected!");
 									});
+							
 						}
 		
 		
@@ -1009,7 +1013,7 @@ oTech.controller('testPlanTestRunAdministration',
 		$scope.showDeviceNotificationLogDetailsRefresh = function(scope){
 			$scope.dataLoadingPopup = true;
 		 $scope.header = "Device Notification Log Details"
-			promise = testScriptService.showDeviceNotificationLogDetails(userId,token,scope.deviceNotificationLogListGridOptions.data[0].deviceId,$scope.deviceNotificationLogListGridOptions.data[0].jobId);
+			promise = testScriptService.showDeviceNotificationLogDetails(userId,token,scope.deviceNotificationLogListGridOptions.data[0].iaDeviceId,scope.deviceNotificationLogListGridOptions.data[0].iaJobId);
 			promise.then(
 				function(data){
 			    $scope.deviceNotificationLogListGridOptions.data = [];	
@@ -1065,7 +1069,10 @@ oTech.controller('testPlanTestRunAdministration',
 	                multiSelect: false,
 	                enableHorizontalScrollbar:0,
 	                columnDefs: [
-	                    {field: 'scheduleDateAndTime', name: 'Schedule Date & Time', headerCellClass: $scope.highlightFilteredHeader},
+	                    {field: 'scheduleDateAndTime', name: 'Schedule Date & Time', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
+	                        function( row, col ) {
+	                        return '' + row.entity.scheduleDateAndTime + '';
+	                      }},
 	                   // {field: 'commandId', name: 'CommandId', headerCellClass: $scope.highlightFilteredHeader},
 	                    {field: 'name', name: 'name', headerCellClass: $scope.highlightFilteredHeader},
 	    				{field: 'actionDuration', name: 'Action Duration', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
@@ -1118,6 +1125,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                    for(var i=0; i < deepCopyObject.jobVO.length; i++){
 	                    	$scope.makeVioceCallPhoneNo = false;
 	                    	$scope.answerVioceCallPhoneNo = false;
+	                    	$scope.sendSms = false;
 	                    	var arr = jQuery.makeArray( deepCopyObject.jobVO[i] );
 	                    	
 	                    	angular.forEach(arr[0].nodes, function (node, index) { // test case level
@@ -1132,6 +1140,9 @@ oTech.controller('testPlanTestRunAdministration',
 		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
 		        	        							 $scope.answerVioceCallPhoneNo = true;
 		        	        						 }
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS'){
+		        	        							 $scope.sendSms = true;
+		        	        						 }
 		        	                            });
 		        	        			}
 	                                 }
@@ -1145,7 +1156,10 @@ oTech.controller('testPlanTestRunAdministration',
 	                    	if($scope.answerVioceCallPhoneNo){
 	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':$scope.answerVioceCallPhoneNo});
 	                    	}
-	                    	if(!$scope.answerVioceCallPhoneNo && !$scope.makeVioceCallPhoneNo){
+	                    	if($scope.sendSms){
+	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':$scope.sendSms});
+	                    	}
+	                    	if(!$scope.answerVioceCallPhoneNo && !$scope.makeVioceCallPhoneNo && !$scope.sendSms){
 	                    		$scope.deviceProfileList.push({'deviceProfileName':deepCopyObject.jobVO[i].deviceProfileName,'deviceId':deepCopyObject.jobVO[i].deviceId,'deviceName':deepCopyObject.jobVO[i].deviceName,'content':arr,'phoneNo':false});
 	                    	}
 							
@@ -1971,7 +1985,6 @@ oTech.controller('testPlanTestRunAdministration',
     	                function (data) {
     	                    if (data.status == "Success") {
     						   $scope.dataProcessingForEditTestPlan = false;
-    	                       $(".editTestPlan").removeClass("disabled");
     	                       $scope.successMessageEditTestPlanId = true;
     	                       $scope.successMessageEditTestPlan = "Test plan has been updated successfully ....";
     	                       $timeout(function () {
