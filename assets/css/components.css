@@ -953,7 +953,9 @@
 * ---------------------------------------------------------------------------- */
 .footer {
   position: relative;
-  bottom: 20px;
+    bottom: 0;
+    padding-left: 29px;
+    padding-bottom:10px;
 }
 .footer-fixed {
   position: fixed;
@@ -18286,3 +18288,7 @@ select * {
     padding: 5px 15px;
     font-weight: 450;
 }
+ .error-star:after{
+    color: red;
+    content:"*";
+    }

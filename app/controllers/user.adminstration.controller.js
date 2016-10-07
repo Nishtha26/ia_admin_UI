@@ -1,5 +1,5 @@
 oTech.controller('userAdminstrationController',
-	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout ,$filter) {
+	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout ,$filter,$templateCache) {
 				var token = sessionStorage.getItem("token");
 				var userId = sessionStorage.getItem("userId");
 				$rootScope.role =sessionStorage.getItem("role");
@@ -20,6 +20,10 @@ oTech.controller('userAdminstrationController',
 			ROLE_IAADMIN : ['ROLE_IAADMIN','ROLE_REPORTING'],
 			ROLE_REPORTING : ['ROLE_REPORTING']	
 		};
+		  $templateCache.put('ui-grid/uiGridViewport',
+				    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+				  );
+
 		var deletePopupMsg="Do you want to delete this user(s)?"
 		$scope.accountDiv =false;
 		$scope.addCustomer = false; 
@@ -575,6 +579,11 @@ $scope.CreateUser =function(){
 		       ); 
 
 		   }
+			else{
+				// $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+			//	$(this).parent().parent().find(".errors").show();
+			//	 $scope.dataLoading=false;
+			}
 			
 			}	
 	 
@@ -1524,6 +1533,8 @@ $scope.getTableHeightUserGroup = function() {
 		 	$("#assign_user_cancel_label").hide();
 			$("#input_group_error_message").text('');
 			$("#group_cancel_create_label").hide();
+			$scope.usergroupform.$setPristine();
+			
 		}
 	$scope.DetailUserBtn=function(){
 		$("#user_list_div").hide();

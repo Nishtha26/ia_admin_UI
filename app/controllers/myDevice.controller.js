@@ -1,6 +1,6 @@
 
 oTech.controller('MyDevicesController',
-	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants) {
+	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants,$templateCache) {
 		$scope.loading = true;
 		var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
@@ -12,6 +12,9 @@ oTech.controller('MyDevicesController',
 		}
 		$scope.loadingImageName= oApp.config.loadingImageName;
 		$scope.name = sessionStorage.getItem("username");
+		 $templateCache.put('ui-grid/uiGridViewport',
+				    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+				  );
 		/*
 			To get dashboard menu data
 		*/

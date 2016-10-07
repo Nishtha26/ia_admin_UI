@@ -4,6 +4,9 @@
 /* .angular-ui-tree-nodes .angular-ui-tree-nodes {
     padding-left: 10px;
 } */
+.angular-ui-tree-node{
+	min-height:36px;
+}
 .panel-body {
     padding: 14px 14px 7px 14px;
 }
@@ -92,6 +95,9 @@ display:inline-block;
 width:40px;
 text-align:center;
 }
+hr{
+margin-bottom:5px !important;
+}
 </style>
 <script type="text/ng-template" id="nodes_renderer5.html">
   <div ui-tree-handle class="tree-node tree-node-content">
@@ -129,8 +135,10 @@ text-align:center;
 										<div class="heading-elements">
 											<ul class="icons-list">
 		                		<li><input type='text' class='form-control' placeholder='test case name' ng-model="node.title" style='width: 150px; padding: 7px 12px;' maxlength='50' /></li>
-		                		<li><input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 40px; padding: 2px 10px; text-align:center;' maxlength='4' /></li>
-		                		<li><input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 40px; padding: 2px 10px; text-align:center;' maxlength='4' /></li>
+								<li><span style="font-weight:normal; margin-right:5px; margin-left:7px;">Loop:</span> 
+									<input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' /></li>
+		                		<li><span style="font-weight:normal; margin-right:5px; margin-left:7px;">Sequence:</span> 
+									<input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' /></li>
 		                		<li><a><span class="label label-success add_command_group_label addButtonTestPlan" ng-click="newSubItem(this)">Add new command group</span></a></li>
 		                		<li><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></li>
 								<li><a data-action='collapse' ng-click='toggle(this)';></a></li>
@@ -387,9 +395,11 @@ text-align:center;
 				<!-- /main test script canvas -->
 
 				<!-- commands pallette -->
-			<div class="col-lg-2" style="padding-left: 0px !important;">
-				<div ng-include="'app/views/sidebar/sideBar.html'"></div>
-			</div>
+			
+				<div class="col-lg-2" style="padding-left: 0px !important;" >
+					<div ng-include="'app/views/sidebar/sideBar.html'"></div>
+				</div>
+			
 			<!-- /commands pallette -->
 					
 	

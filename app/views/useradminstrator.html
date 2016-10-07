@@ -16,7 +16,12 @@ margin-left: 0px !important;
 padding-left:5px;
 }
 .dropdown-menu{
-border:1px solid #00BCD4;}
+/*border:1px solid #00BCD4;*/}
+
+#allusersgroupGridOptions .ui-grid-viewport,#existingusersGridOptions .ui-grid-viewport {
+overflow-y: auto;
+	-webkit-overflow-scrolling: touch
+}
 </style>
 
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
@@ -100,7 +105,7 @@ border:1px solid #00BCD4;}
 						  </div>
 						  -->
 						  </div>
-								<div id="addUsergroupsGridOptions" ui-grid="addUsergroupsGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeightUserGroup()"   class="table table-hover grid" style="overflow:hidden;">
+								<div id="addUsergroupsGridOptions" ui-grid="addUsergroupsGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeightUserGroup()"   class="table table-hover grid" >
 
 								</div>
 															<div class="row">
@@ -132,7 +137,7 @@ border:1px solid #00BCD4;}
 
 								<form  class="ng-pristine ng-valid"  name="usergroupform" novalidate="novalidate">
 									<fieldset class="content-group">
-										<legend class="text-bold">Group Name</legend>
+										<legend class="text-bold">Group Name<span class="error-star"></span></legend> 
 										<div class="form-group">
 											<div class="col-lg-12">
 												<div class="">
@@ -150,7 +155,7 @@ border:1px solid #00BCD4;}
 									<div 
 																ng-show="usergroupform.user_group.$touched || usergroupform.$submitted"
 																ng-messages="usergroupform.user_group.$error"
-																class="errors validation-error-label">
+																class="errors">
 																<div ng-message="required">**User Group is required</div>
 																<span  ng-message= "minlength" class="errors"> User Group field length should not be less than 2 characters</span>
 																
@@ -270,7 +275,7 @@ border:1px solid #00BCD4;}
                 		<li id='create_new_user_label'><span class='label label-primary pointer-link' ng-click="toCreateNewUserAccount()">Create User</span></li>
                 		<li id='user_list_label' style="display: none;"><span class='label label-default pointer-link'>Users List</span></li>
                 		<li id='cancel_user_edit_label' ng-click="cancelUserEdit();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
-                		<li id='cancel_user_create_label' ng-click="cancelUserCreate();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
+                		<li id='cancel_user_create_label' ng-click="cancelUserCreate();"  style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='cancel_user_detail_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Detail</span></li>
                 	</ul>
               	</div>
@@ -306,7 +311,7 @@ border:1px solid #00BCD4;}
 						  </div>
 						  -->
 						  </div>
-								<div id="userTableGridOptions" ui-grid="userTableGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid" style="overflow:hidden;" >
+								<div id="userTableGridOptions" ui-grid="userTableGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid"  >
 								
 		
 								
@@ -413,7 +418,7 @@ border:1px solid #00BCD4;}
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>First name:</label>
+														<label>First name</label><span class="error-star"></span>
 														<input type="text" name="firstname" ng-model="firstname" id="firstname" placeholder="Enter First name" class="form-control" ng-minlength="2" required ng-pattern="/^[a-zA-Z0-9 ]*$/" />
 														<!-- <span ng-show="myForm.firstname.$error.required" class="errors validation-error-label"> **Firstname field should not be empty</span>
 												<span ng-show="myForm.firstname.$error.minlength" class="errors validation-error-label"> **Firstname field length should not be less than 2 characters</span> -->
@@ -431,7 +436,7 @@ border:1px solid #00BCD4;}
 
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>Last name:</label>
+														<label>Last name</label>
 														<input type="text" placeholder="Enter Last name" id="lastname"  class="form-control">
 													</div>
 												</div>
@@ -440,7 +445,7 @@ border:1px solid #00BCD4;}
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>Email:</label>
+														<label>Email</label><span class="error-star"></span>
 														<input placeholder="Enter Email" class="form-control" type="email" name="mail"  id="email-8"  ng-model="mail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required />
 														 <!-- <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors validation-error-label"> **Email field should not be empty</span>
 												<span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors validation-error-label"> **Email is invalid</span> -->
@@ -458,7 +463,7 @@ border:1px solid #00BCD4;}
 
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>Username:</label>
+														<label>Username</label><span class="error-star"></span>
 														<input type="text" placeholder="Enter username for login purposes" class="form-control" name="userName" id="username-7" ng-model="userName"
 				 					 required ng-minlength="2" />
 				 					 	<div 
@@ -478,7 +483,7 @@ border:1px solid #00BCD4;}
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-                            <label>Password:</label>
+                            <label>Password</label><span class="error-star"></span>
 														<input autocomplete="off" type="password" placeholder="Enter password" class="form-control" id="password" name="password" required ng-model="password" ng-trim="true" />
 														<!-- <span class=" errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span> -->
                           	<div 
@@ -493,7 +498,7 @@ border:1px solid #00BCD4;}
 
 												<div class="col-md-6">
 													<div class="form-group">
-														<label>Password Confirmation:</label>
+														<label>Password Confirmation</label><span class="error-star"></span>
 														<input autocomplete="off" type="password" placeholder="Enter password confirmation" class="form-control" id="cnfpassword" name="passwordConfirmation" 
 														 ng-model="passwordConfirmation" ng-trim="true" required password-match="password" />
 														<!--  <span class="help-block ng-hide errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span> -->
@@ -532,7 +537,7 @@ border:1px solid #00BCD4;}
 												<div class="col-md-6" style="padding-right: 0px ! important;">
 													<div class="form-group">
 														<div class="col-md-6">
-														<label>Customer:</label>
+														<label>Customer</label><span class="error-star"></span>
 														</div>
 														<div class="col-md-6">
 															<div ng-show="{{role == 'ROLE_OTADMIN'}}">
@@ -583,7 +588,7 @@ border:1px solid #00BCD4;}
 													</div>
 												</div>
 												
-											</div>
+									
 									
 								
 											<div class="row" ng-show="{{role == 'ROLE_OTADMIN'}}">
@@ -636,7 +641,7 @@ border:1px solid #00BCD4;}
 												<input type="submit"  class="btn btn-primary"  ng-click="CreateUser()" value="Submit" />
 											</div>
 											 <div  class="row pull-right"  ng-show="updateButton"> 
-										  <button type="submit" class="btn btn-info ot-btn"  ng-click="UpdateUser()">Update</button>
+										  <input type="submit" class="btn btn-info ot-btn"  ng-click="UpdateUser()" value="Update">
 										<!--   <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button> -->
 										  </div>
 										 
