@@ -329,8 +329,8 @@ select.ui-grid-filter-select:hover {
 .ui-grid-viewport {
 	min-height: 20px;
 	position: relative;
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch
+	/*overflow-y: scroll;
+	-webkit-overflow-scrolling: touch*/
 }
 
 .ui-grid-viewport:focus {
@@ -726,7 +726,9 @@ a.ui-grid-menu .ui-grid-menu-inner .ui-grid-menu-close-button.disabled,
 .ui-grid-menu .ui-grid-menu-inner ul {
 	margin: 0;
 	padding: 0;
-	list-style-type: none
+	list-style-type: none;
+	border: 1px solid #d4d4d4;
+	
 }
 
 .ui-grid-menu .ui-grid-menu-inner ul li {
