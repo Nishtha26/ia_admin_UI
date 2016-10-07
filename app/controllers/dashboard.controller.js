@@ -348,7 +348,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		    cancelClass: 'btn-default'
 		});
 		
-		var endDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd HH:mm");
+		var endDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd 23:59");
 			var startDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd 00:00");
 		//$("#testRunDate").val(jQuery.format.date(startDateTime, "yyyy-MM-dd"))
 			

@@ -1,5 +1,5 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore,$filter) {
+    function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore,$filter,$templateCache) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
@@ -9,7 +9,9 @@ oTech.controller('testPlanTestRunAdministration',
         var sendCreateData = {};
         
         var TestPlanId ="";
-        
+        $templateCache.put('ui-grid/uiGridViewport',
+                "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+              );
         var Devices = [];
         var createTestRunDevices = [];
         var realDevices = [];
@@ -70,6 +72,8 @@ oTech.controller('testPlanTestRunAdministration',
                 $("#Run").addClass("in active");
             }
         }
+        
+       
 
 		$scope.TestPlanOptions = {
 				enableSorting: true,
@@ -95,8 +99,8 @@ oTech.controller('testPlanTestRunAdministration',
                              return '' + row.entity.useCaseName + '';
                            }},
                      	{name:'Created Date',field: 'createdDate', width: '20%'},
-         				{name:'Created By',field: 'createdByName', width: '15%'},
-         				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
+         				{name:'Created By',field: 'createdByName', width: '10%'},
+         				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',cellClass: 'ui-grid-cell-button',
          					enableColumnMenu: false, enableSorting: false,cellTemplate:
          	         '<ul class="icons-list">'+
          				'<li class="dropdown">'+
@@ -218,13 +222,23 @@ oTech.controller('testPlanTestRunAdministration',
             }
         );
         
-        $scope.getTableHeight = function() {
-		       var rowHeight = 40; // your row height
-		       var headerHeight = 58; // your header height
-		       return {
-		          height: ($scope.TestPlanOptions.data.length * rowHeight + headerHeight) + "px"
-		       };
-		    };
+       
+		    
+		    $scope.getTableHeight = function() {
+		           var rowHeight = 40; // your row height
+		           var headerHeight = 44; // your header height
+		           var footerPage=15;
+		           var gridHeight=0;
+		           var dataCount=$scope.TestPlanOptions.data.length;
+		           gridHeight=($scope.TestPlanOptions.data.length * rowHeight + headerHeight+footerPage);
+		           $(".ui-grid-viewport").css("height",gridHeight-headerHeight);
+		           //$(".")
+		           return {
+		              height:  gridHeight + "px"
+		           };
+		        };
+		    
+		   
 		
 		 $scope.createNewDatasource = function() {
 						$scope.TestPlanOptions.data = allOfTheData.slice( startLimit, $scope.endLimit);
@@ -432,8 +446,8 @@ oTech.controller('testPlanTestRunAdministration',
 				enableVerticalScrollbar :3,
 			    enableHorizontalScrollbar:0,
 	            columnDefs: [
-	                {field: 'testrunId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader/*,width: '10%'*/},
-	                {field: 'testrunName', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader, cellTooltip: 
+	                {field: 'testrunId', name: 'Test Run Id', headerCellClass: $scope.highlightFilteredHeader, width: '15%'},
+	                {field: 'testrunName', name: 'Test Run Name', headerCellClass: $scope.highlightFilteredHeader, width: '20%', cellTooltip: 
                         function( row, col ) {
                         return '' + row.entity.testrunName + '';
                       }},
@@ -441,12 +455,12 @@ oTech.controller('testPlanTestRunAdministration',
 	                    field: 'testPlanId',
 	                    name: 'Test Plan Id',
 	                    headerCellClass: $scope.highlightFilteredHeader
-	                   /* width: '10%'*/
+	                    ,width: '15%'
 	                },
 	                {
 	                    field: 'testPlanName',
 	                    name: 'Test Plan Name',
-	                    headerCellClass: $scope.highlightFilteredHeader
+	                    headerCellClass: $scope.highlightFilteredHeader,width: '15%'
 	                    , cellTooltip: 
 	                        function( row, col ) {
 	                        return '' + row.entity.testPlanName + '';
@@ -454,13 +468,13 @@ oTech.controller('testPlanTestRunAdministration',
 					{
 	                    field: 'testrunUserName',
 	                    name: 'User',
-	                    headerCellClass: $scope.highlightFilteredHeader
-	                    /*width: '10%'*/
+	                    headerCellClass: $scope.highlightFilteredHeader,
+	                    width: '15%'
 	                },
 					{
-	                    field: 'testrunCreatedDate',
+	                    field: 'testrunCreatedDate', width: '15%',
 	                    name: 'Created On',
-	                    headerCellClass: $scope.highlightFilteredHeader,
+	                    headerCellClass: $scope.highlightFilteredHeader
 	                },
 	            ]
 	        };
@@ -1284,7 +1298,7 @@ oTech.controller('testPlanTestRunAdministration',
 					//{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
 					//{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
 					//{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
-					{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"30%", cellTooltip: 
+					{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"25%", cellTooltip: 
 		 	               function( row, col ) {
 		 	               return '' + row.entity.manufacturer + '';
 		 	             }},

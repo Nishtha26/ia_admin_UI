@@ -48,7 +48,7 @@ oApp.config = {
 			label: "",
 			fillColor: "rgba(92, 107, 192,0.5)",
             strokeColor: "rgba(92, 107, 192,1)",
-            pointColor: "rgba(92, 107, 192,1)",
+            pointColor: "rgba(135, 182, 161,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
