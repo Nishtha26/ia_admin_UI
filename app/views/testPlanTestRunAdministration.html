@@ -228,6 +228,11 @@ display:block;
 .progress{
 margin-top : 7px;
 }
+
+#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport
+{overflow-y: auto;
+	-webkit-overflow-scrolling: touch
+	}
 </style>
 <!-- 
 <script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
@@ -374,7 +379,7 @@ margin-top : 7px;
 										  </div>
 										  -->
 						 			 </div>
-						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid" style="overflow:hidden;" >
+						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid">
 						 			 <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingTestPlan"></img>
 						 			 </div>
 						 			 <div class="row">
@@ -581,7 +586,7 @@ margin-top : 7px;
 									 			</div>
 								 			 </div> 		
 													<div class="panel-body" style='min-height: 490px; max-height: 490px; overflow: auto; '>
-														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden;height: 450px;" >
+														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow: hidden;height: 450px;" >
 								 							<img class="loading loading-imgac" src="images/loading_new.gif"  ng-show="dataLoading"></img>
 								 						 </div>
 								 			 </div>
