@@ -111,7 +111,7 @@ margin-bottom:5px !important;
 								<h6 class="panel-title">Test Plan Details</h6>
 								<div class="heading-elements">
 									<ul class="icons-list">
-										<li><span style="font-weight:normal; margin-right:5px;">Loop:</span> <input type='text' class='form-control' ng-model="node.loop" style='width: 40px; display:inline-block !important; text-align:center;' maxlength='4' /></li>
+										<li><span style="font-weight:normal; margin-right:5px;">Loop:</span> <input type='text' class='form-control' ng-model="node.loop" style='width: 40px; display:inline-block !important; text-align:center;' maxlength='4' numbers-only /></li>
 										<!--<li><span class="label label-primary">Re map</span></li>-->
 										<li><a><span class="label label-success add_new_test_case_label addButtonTestPlan" ng-click="newSubItem(this)">Add New Test Case</span></a></li>
 									</ul>
@@ -136,9 +136,9 @@ margin-bottom:5px !important;
 											<ul class="icons-list">
 		                		<li><input type='text' class='form-control' placeholder='test case name' ng-model="node.title" style='width: 150px; padding: 7px 12px;' maxlength='50' /></li>
 								<li><span style="font-weight:normal; margin-right:5px; margin-left:7px;">Loop:</span> 
-									<input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' /></li>
+									<input type='text' class='form-control command-group-loop' ng-model="node.loop" style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' numbers-only/></li>
 		                		<li><span style="font-weight:normal; margin-right:5px; margin-left:7px;">Sequence:</span> 
-									<input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' /></li>
+									<input type='text' class='form-control command-group-sequnce' ng-model="node.sequenceNo"  style='width: 40px; text-align: center; display: inline-block !important;' maxlength='4' numbers-only/></li>
 		                		<li><a><span class="label label-success add_command_group_label addButtonTestPlan" ng-click="newSubItem(this)">Add new command group</span></a></li>
 		                		<li><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></li>
 								<li><a data-action='collapse' ng-click='toggle(this)';></a></li>
@@ -157,8 +157,8 @@ margin-bottom:5px !important;
 <script type="text/ng-template" id="nodrop_nodes_renderer2.html">
 	<div ui-tree-handle  >										
 <div class='col-lg-7 col-sm-7' style="color:#7c9eb2;">{{node.title}}</div>
-<div class='col-lg-2 col-sm-2'><input class='form-control command-group-loop  textboxcommand'  ng-model="node.loop" style='width: 40px; text-align:center;' maxlength='4' type='text' /></div> 
-<div class='col-lg-2 col-sm-2'><input class='form-control command-group-sequnce textboxcommand' style='width: 40px; text-align:center;' ng-model="node.sequenceNo" maxlength='4' type='text' /></div> 
+<div class='col-lg-2 col-sm-2'><input class='form-control command-group-loop  textboxcommand'  ng-model="node.loop" style='width: 40px; text-align:center;' maxlength='4' type='text' numbers-only/></div> 
+<div class='col-lg-2 col-sm-2'><input class='form-control command-group-sequnce textboxcommand' style='width: 40px; text-align:center;' ng-model="node.sequenceNo" maxlength='4' type='text' numbers-only/></div> 
 <div class='col-lg-1 col-sm-1 remove_command_icon text-center' ><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></div>
 				</div>								
 
@@ -185,13 +185,13 @@ margin-bottom:5px !important;
 														<div class="col-md-5">
 															<div class="form-group">
 																<label class="text-semibold">Loop:</label>
-																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
+																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4" numbers-only>
 															</div>
 														</div>
 														<div class="col-md-7">
 															<div class="form-group pull-right">
 																<label class="text-semibold">Sequence:</label>
-																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
+																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2" numbers-only>
 															</div>
 														</div>
 													</div>
@@ -228,13 +228,13 @@ margin-bottom:5px !important;
 														<div class="col-md-5">
 															<div class="form-group">
 																<label class="text-semibold">Loop:</label>
-																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4">
+																<input type="text" class="form-control command-group-loop coustom-form-control" placeholder="Loop" ng-model="node.loop" value='1' maxlength="4" numbers-only>
 															</div>
 														</div>
 														<div class="col-md-7">
 															<div class="form-group pull-right">
 																<label class="text-semibold">Sequence:</label>
-																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2">
+																<input type="text" class="form-control command-group-sequnce coustom-form-control" placeholder="Sequence" ng-model="node.sequenceNo" value='1' maxlength="2" numbers-only>
 															</div>
 														</div>
 													</div>
