@@ -1148,13 +1148,13 @@ oTech.controller('testPlanTestRunAdministration',
 	                                 if(node.sequenceNo != '0'){
 	                                	if ('nodes' in node) { // command level
 		        	                            angular.forEach(node.nodes, function (node, index) {
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'MakeVoiceCall'){
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'MakeVoiceCall'){
 		        	        							 $scope.makeVioceCallPhoneNo = true;
 		        	        						 }
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
 		        	        							 $scope.answerVioceCallPhoneNo = true;
 		        	        						 }
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS'){
+		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS'){
 		        	        							 $scope.sendSms = true;
 		        	        						 }
 		        	                            });
@@ -2004,6 +2004,7 @@ oTech.controller('testPlanTestRunAdministration',
     	                       $timeout(function () {
     	                    	   $scope.successMessageEditTestPlanId = false;
     	                    	   $scope.editTestPlanTab = false;
+    	                    	   $(".editTestPlan").removeClass("disabled");
    	                        }, 3000);
     	                      
     	                      
@@ -2101,10 +2102,11 @@ oTech.controller('testPlanTestRunAdministration',
 	        /* popover for the edit the test plan */
 	        
 	        $scope.createFrom = function (scope,e) {
+	        	overrideNode = "";
 				$scope.showPopover = true;
 					overrideNode= scope;
 					commandIndex=0;
-					var updateCommandParameters = scope.$modelValue.commandParams;
+					var updateCommandParameters = scope.commandParams;
 					$(".editable-input").empty();
 					//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
 					updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
@@ -2146,8 +2148,8 @@ oTech.controller('testPlanTestRunAdministration',
 					updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
 				}
 			//	console.log("updatedParametrs"+updatedParametrs);
-			if(overrideNode.$modelValue.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
-				 overrideNode.$modelValue.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
+			if(overrideNode.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
+				 overrideNode.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
 				 $scope.isUpdatable =true;
 				 
 			}
