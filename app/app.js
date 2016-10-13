@@ -506,6 +506,33 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     }
 
     /*
+    Function to show reports page
+    */
+   $rootScope.actionCalledURL = function (key,menuUrl, screenName) {
+       console.log();
+       var name = screenName.replace(/ /g, "");
+     var  keyVal=key.replace(/ /g, "");
+     if(keyVal=="Reports"){
+    	 sessionStorage.setItem('tableauURL',menuUrl); 
+    	 $location.path("/dashboard/reportsTableau");
+     }
+     else{
+    	  if(name == 'Logout') 
+    	  {
+    		  $rootScope.signOut();
+
+    	  }
+    	  else if (menuUrl != null && menuUrl !="" ){
+    	
+    	
+    		  $location.path(menuUrl);
+    	  }	  
+    	   
+       }
+     
+       
+   }
+    /*
      function for signout
      */
 
@@ -598,7 +625,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         promise = AppServices.GetDashboardMenu(sessionStorage.userId, sessionStorage.token);
         promise.then(
                 function (data) {
-
+console.log("Menu:"+data);
                     $rootScope.menuData = data;
 
                 },
@@ -746,6 +773,31 @@ oTech.filter('capitalizeFirstWord', function () {
 oTech.filter('footerYear', function () {
     return function (input) {
         return new Date().getFullYear();
+    }
+});
+oTech.filter('headerIcon', function () {
+    return function (headerNameStr) {
+    	 var headerName = headerNameStr.replace(/ /g, "");
+    	var iconName="";
+    	if(headerName=="Dashboard"){
+    		iconName="icon-home2 position-left text-slate-600";
+    			
+    	}
+    	else if(headerName=="Reports"){
+    		iconName="icon-pie-chart3 position-left text-orange-800";
+    			
+    	}
+    	else if(headerName=="MySettings"){
+    		iconName="icon-equalizer3 position-left text-teal-300";
+    			
+    	}
+    	else if(headerName=="Admin"){
+    		iconName="icon-pie-chart3 position-left text-brown-300";
+    			
+    	}
+    	
+    
+        return iconName;
     }
 });
 

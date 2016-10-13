@@ -38,7 +38,7 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                     				}
                                     			}
                                     			$scope.getDashBoardMenu();
-                                    			$scope.getFavouriteReports();
+//                                    			$scope.getFavouriteReports();
                                     		
                                     		/*repaly from to date for date picker */
                                     	   
