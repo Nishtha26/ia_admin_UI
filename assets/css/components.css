@@ -18288,7 +18288,18 @@ select * {
     padding: 5px 15px;
     font-weight: 450;
 }
- .error-star:after{
+
+.error-star:after {
     color: red;
     content:"*";
-    }
+}
+    
+.navbar-default .navbar-nav > li > span > a{
+	
+	color: #333333;
+	padding-top: 12px;
+    padding-bottom: 12px;
+    position: relative;
+    display: block;
+    padding: 9px 15px;
+}

@@ -2,13 +2,16 @@ oTech
 		.controller(
 				'deviceMeasurementsController',
 				function($scope, $rootScope, $location, AppServices,
-						$stateParams,$filter) {
+						$stateParams,$filter,$templateCache) {
 					$scope.dataLoading = true;
 					$scope.err = false;
 					$scope.dataLoadingImage=oApp.config.loadingImageName;
 					$scope.listItem = 'Location';
 					
 					var link = "Location";
+					 $templateCache.put('ui-grid/uiGridViewport',
+							    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+							  );
 					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
 					var userId = sessionStorage.getItem("userId");

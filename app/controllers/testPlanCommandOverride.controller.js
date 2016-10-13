@@ -280,6 +280,7 @@ oTech.controller('testPlanCommandOverride',
 		promise2 = testScriptService.fetchVirtualDevices(token, userId);
             promise2.then(
                 function (data) {
+                	$(".btn").addClass("disabled");
 					$scope.inputcommand=true;
                     VirtualDevice = data;
 					for(var i=0; i< data.length ; i++){
@@ -379,7 +380,7 @@ oTech.controller('testPlanCommandOverride',
 			};
            
 		$scope.addTab = function(){
-			$scope.collapsed = false;
+			$(".btn").removeClass("disabled");
 			if($scope.deviceProfileName == undefined || $scope.deviceProfileName == ""){
 				$scope.addProfileErrorMsg = "Blank not allowed.."
 					$scope.err = true;

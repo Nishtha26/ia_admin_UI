@@ -11,6 +11,7 @@ oTech.controller('userAdminstrationController',
 				$scope.error=false;
 				$scope.errormsg="";
 				$scope.selectedUserGroup=[];
+				$scope.emailPattern="";
 				
 			//	$scope.role ="ROLE_IAADMIN"
 			$scope.addCustomer = true;		
@@ -40,6 +41,7 @@ oTech.controller('userAdminstrationController',
 		 $scope.accountEnableStatus;
 		$scope.selectedUsers;
 		$scope.currentRow;
+		var lusername="";
 		window.onresize = function(event) {
 			$rootScope.slideContent();
 		}
