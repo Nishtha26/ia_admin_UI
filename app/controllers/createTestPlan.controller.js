@@ -13,30 +13,20 @@ oTech
 					$scope.commandError = false;
 					$scope.createTestPlan = {};
 					var sendCreateData = {};
-					if(messages.length==1){
+					if(messages.length==1 &&  $rootScope.isTestPlanToEdit){
 						for(var i=0; i < messages[0].length; i++){
 						      if(messages[0][i].key == "testPlanName")
 						    	  $scope.testPlanName = messages[0][i].value;
 						      if(messages[0][i].key == "testPlanDescription")
 						    	  $scope.testPlanDescription = messages[0][i].value;
 						      if(messages[0][i].key == "treeJson")
-						    	  $scope.uiTreeJSON = messages[0][i].value;
+						    	  $scope.tree2 = messages[0][i].value;
 						      if(messages[0][i].key == "usecase")
 						    	  $scope.usecaseVal = messages[0][i].value;
 						      
 						   }
-					}else if(messages.length > 1){
-						angular.forEach(messages[0], function(value, key){
-						      if(value.key == "testPlanName")
-						    	  $scope.testPlanName = value.value;
-						      if(value.key == "testPlanDescription")
-						    	  $scope.testPlanDescription = value.value;
-						      if(value.key == "treeJson")
-						    	  $scope.tree2 = value.value;
-						      if(value.key == "usecase")
-						    	  $scope.usecaseVal = value.value;
-						      
-						   });
+					}else{
+						messages.splice(0,1);
 					}
 					
 					$scope.setErrorMessage = function(errorMessage){
@@ -180,7 +170,7 @@ oTech
 
 					}
 if($scope.tree2 == "" || $scope.tree2 == undefined){
-					$rootScope.tree2 = [ {
+					$scope.tree2 = [ {
 						"id" : 1,
 						"title" : 'Test Plan name',
 						"nodrop" : true,
@@ -383,6 +373,7 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						if(messages.length == 1){
 							messages.splice(0,1);
 						}
+						
 						messages.add($scope.shareData);
 						$(".btn").addClass("disabled");
 						sendCreateData.jobName = $scope.testPlanName;
