@@ -1715,12 +1715,12 @@ quickrunGridOptions : {
 		multiSelect:false,
 		enableVerticalScrollbar :0,
 		columnDefs: [
-			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true, allowCellFocus : false},
-			{displayName: 'Name', field: 'deviceName',width:"15%" },
-			{ name: 'model' ,width:"20%"},
-			{ name: 'manufacturer' ,width:"10%"},
+			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true,enableCellEdit: false , allowCellFocus : false},
+			{displayName: 'Name', field: 'deviceName',width:"15%"},
+			{ name: 'model' ,width:"20%",enableCellEdit: false },
+			{ name: 'manufacturer' ,width:"10%",enableCellEdit: false},
 		
-			{ displayName: 'Job Status', field: 'statusFlag' ,width:"18%",
+			{ displayName: 'Job Status', field: 'statusFlag' ,width:"18%",enableCellEdit: false,
 				  cellTemplate: '<div class="ui-grid-cell-contents">'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -1"><span class="label label-success">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -2"><span class="label label-default">{{row.entity.statusFlag}}</span></span>'+
@@ -1730,8 +1730,8 @@ quickrunGridOptions : {
 					  '<span ng-if="row.entity.jobStatusCode ==  -6"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
 					 ' </span></div>'},
-						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
-			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',
+						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
+			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
 							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
 					'<span class="pointer-link"  '+
@@ -1748,22 +1748,25 @@ quickrunGridOptions : {
 		'</ul>'+
 	'</li>'+
 '</ul>'},*/
-			{ name: 'deviceType' ,width:150},
-			{ headerName: 'Carrier' ,width:150,field:'carrier'},
+			{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false},
+			{displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
+			{displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
+			{ name: 'deviceType' ,width:150,enableCellEdit: false},
+			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false},
 			
 			
-			{displayName:'IMSI', field: 'imsi' ,width:150},
-			{displayName:'IMEI', field: 'imei' ,width:150},
-			{displayName:'MSISDN', field: 'msisdn' ,width:"15%"},
-			{ name: 'networkType' ,width:"15%"},
+			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false},
+			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false},
+			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false},
+			{ name: 'networkType' ,width:"15%",enableCellEdit: false},
 			{ name: 'region' ,width:"15%"},
 			
 			
-			{ name: 'jobId' ,width:100},
-			{ name: 'jobName' ,width:150},
-			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
-			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
-			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" },
+			{ name: 'jobId' ,width:100,enableCellEdit: false},
+			{ name: 'jobName' ,width:150,enableCellEdit: false},
+			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false },
+			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
+			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false},
 			
 			
 		]
