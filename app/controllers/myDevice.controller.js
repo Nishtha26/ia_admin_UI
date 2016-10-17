@@ -207,18 +207,18 @@ oTech.controller('MyDevicesController',
 	 
 	 
 		$scope.deviceAvailabilityBody = function(row) {
-		/*	$("#create_new_device_label").hide();
+			/*$("#create_new_device_label").hide();
 		 	$("#device_list_label").hide();
 		 	$("#device_edit_label").show();
 		 	$("#create_device_body_div").hide();*/
 		 	$("#device_facets_container").show();
 		 	$("#live_device_map_container").hide();
-		 //	$(".tab-pane").hide();
-		 	//$("#availability").show();
+		 	$(".tab-pane").hide();
+		 	$("#availability").show();
 		 	
-		 //	$(".d_tab").removeClass("active");
+		 $(".d_tab").removeClass("active");
 		 	$("#availability_tab").addClass("active");/* for showing default active tab*/
-		 	$scope.populateAdminCommand();
+		// 	$scope.populateAdminCommand();
 		 	$scope.gridApi.selection.clearSelectedRows();
 		 	row.isSelected=!row.isSelected;
 	 	  $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
@@ -246,7 +246,7 @@ oTech.controller('MyDevicesController',
 						$scope.endDate=toDate;	
 				 
 			 	//$scope.startDate=("")
-				//  $scope.showAvailabilityChart($scope.deviceId,$scope.startDate, $scope.endDate);
+				  $scope.showAvailabilityChart($scope.deviceId,$scope.startDate, $scope.endDate);
 			 	
 		     //    }
 		 /*	$("#device_table_list_div").hide();*/
@@ -463,7 +463,7 @@ oTech.controller('MyDevicesController',
 					promise.then(
 					function(data){
 						
-						$scope.deviceAdminData();
+				//		$scope.deviceAdminData();
 					},
 					function(err){
 						alert("error");
@@ -476,7 +476,7 @@ oTech.controller('MyDevicesController',
 				promise.then(
 				function(data){
 					
-					$scope.deviceAdminData();
+				//	$scope.deviceAdminData();
 				},
 					function(err){
 						alert("error");

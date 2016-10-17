@@ -262,7 +262,7 @@
 
 										<div class="tab-pane" id="admin_operation_body">
 										   
-											<div class="panel-group panel-group-control panel-group-control-right content-group-lg">
+											<div class="panel-group  "> <!-- panel-group-control panel-group-control-right -->
 												<div class="panel panel-white">
 								<div class="panel-heading">
 									<h6 class="panel-title">
@@ -281,7 +281,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-3 control-label">Assign user:</label>
+										<label class="col-lg-3 control-label">Assign User</label>
 										<div class="col-lg-9">
 											{{userFullName}}
 										</div>
@@ -293,12 +293,27 @@
 							<div class="panel panel-white">
 								<div class="panel-heading">
 									<h6 class="panel-title">
-										<a class="collapsed" data-toggle="collapse" href="#collapsible-control-right-group2">Collapsible Item #2</a>
+										<a class="collapsed" data-toggle="collapse" href="#collapsible-control-right-group2">Admin Command</a>
 									</h6>
 								</div>
 								<div id="collapsible-control-right-group2" class="panel-collapse collapse in">
 									<div class="panel-body">
-										tab2
+										<div class="form-group">
+										<label class="col-lg-3 control-label">Restart IAC</label>
+										<div class="col-lg-9 checkbox checkbox-switchery">
+											<input  type="checkbox" class="switchery"  >
+										</div>
+									
+									</div>
+									<br/><br/>
+											<div class="form-group">
+										<label class="col-lg-3 control-label">Register/Unregister IAS</label>
+										<div class="col-lg-9 ">
+											<input  type="checkbox" data-on-color="primary" data-off-color="danger" data-on-text="Register"
+											 data-off-text="Unregister" class="switch" checked="checked"  >
+										</div>
+									
+									</div>
 									</div>
 								</div>
 							</div>
@@ -419,7 +434,15 @@
 	});
 
 	$(function() {
+	    // Initialize multiple switches
+	
 
+	    // Colored switches
+	    var primary = document.querySelector('.switchery');
+	    var switchery = new Switchery(primary, { color: '#2196F3' });
+
+	   
+	    
 		   $(".switch").bootstrapSwitch();
 
 	});

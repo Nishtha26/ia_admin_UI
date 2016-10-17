@@ -1369,6 +1369,8 @@ oApp.config = {
 		'<ul class="dropdown-menu dropdown-menu-right">'+
 			'<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserBtn()"><i class="icon-backspace2 text-warning-800"></i> Activate/Deactivate</a></li>'+
 			'<li class="edit_user"><a ng-click="grid.appScope.UpdateUserBtn();"><i class="icon-pencil5 text-primary user_editor_link"></i> Edit User</a></li>'+
+			'<li class="assign_devices"><a ng-click="grid.appScope.assignDeviceToUser();"><i class=" icon-cart-add2 text-green-800"></i> Assign Devices</a></li>'+
+			
 		/*	'<li class="show_user"><a "><i class="icon-user text-muted"></i> Show Detail</a></li>'+*/
 		'</ul>'+
 	'</li>'+
@@ -1748,7 +1750,10 @@ quickrunGridOptions : {
 		'</ul>'+
 	'</li>'+
 '</ul>'},*/
-			{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false},
+			{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false,
+						cellTemplate: '<div id="deviceStatus_{{row.entity.deviceId}}" class="ui-grid-cell-contents">'+
+						'{{row.entity.firstName}} {{row.entity.deviceStatus}}</div>}}'			
+			},
 			{displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
 			{displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
 			{ name: 'deviceType' ,width:150,enableCellEdit: false},
