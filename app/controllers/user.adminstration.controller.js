@@ -8,6 +8,7 @@ oTech.controller('userAdminstrationController',
 				var userGroupList=[];
 				var clickedItem;
 				var row,customerName;
+				  var deviceId,selectedUserId;
 				$scope.error=false;
 				$scope.errormsg="";
 				$scope.selectedUserGroup=[];
@@ -248,11 +249,13 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		$scope.currentRow=row;
 		$scope.selectedUsers=$scope.gridApi.selection.getSelectedRows();
 		var numRows=$scope.gridApi.selection.getSelectedRows().length;
+		selectedUserId=row.entity.userId;
 		 var msg = 'rows changed ' + $scope.gridApi.selection.getSelectedRows().length;
 		 $scope.accountDiv =false;
 		 if(numRows==1){
 			 console.log("row"+ $scope.gridApi.selection.getSelectedRows()+"::"+$scope.gridApi.selection.getSelectedRows().username);
 			 $scope.currentRow=$scope.gridApi.selection.getSelectedRows()
+			 
 			 $scope.isUpdateDisabled = false;
 //			 $scope.isDeleteDisabled = false;
 				$scope.DeleteBtnLabel();
@@ -856,6 +859,129 @@ $scope.DeleteBtnLabel=function(){
 }
 
 $scope.pageReset();
+/* assign devices to user starting */
+$scope.assignDeviceToUser=function(){
+	  $scope.allDeviceData();
+      $scope.selectedDeviceData();
+	 $("#user_list_div").hide();
+	 	$("#user_create_div").hide();
+	 	$("#user_edit_div").hide();
+	 	$("#user_list_label").hide();
+	 	$("#show_user_details_div").hide();
+	 	$("#create_new_user_label").hide();
+	 	$("#cancel_user_edit_label").hide();
+	 	$("#cancel_user_create_label").hide();
+	 	$("#cancel_assign_device_label").show();
+		$("#assign_device_div").show();
+	
+}
+$scope.cancelAssignDeviceToUser=function(){
+	
+}
+
+
+$scope.allDeviceGridOptions = oApp.config.allDeviceGridOptions;
+      /*on grid row clicked*/
+      $scope.allDeviceGridOptions.onRegisterApi = function( gridApi ) { //extra code
+          // console.log(gridApi);
+          $scope.gridApi = gridApi;
+          $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+              
+              console.log('allDeviceGridOptions ',row.entity);
+              deviceId=row.entity.deviceId;
+
+          });
+      };
+
+$scope.allDeviceData = function(){
+          promise = AppServices.getDevicesNotAvailableForUser(token,selectedUserId);
+          promise.then(
+              function(data){
+            	  $scope.allDeviceGrid=data;
+                  $scope.allDeviceGridOptions.data = data;
+                  //console.log($scope.serverSettingsGridOptions.data[0]);
+                  $scope.gridApi.selection.selectRow($scope.allDeviceGridOptions.data[0]); //extra code
+              },
+              function(err){
+
+              }
+          );
+      }
+
+      $scope.selectedDeviceGridOptions = oApp.config.selectedDeviceGridOptions;
+      /*on grid row clicked*/
+      $scope.selectedDeviceGridOptions.onRegisterApi = function( gridApi ) { //extra code
+          // console.log(gridApi);
+          $scope.gridApi = gridApi;
+          $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+              
+              console.log('selectedDeviceGridOptions ',row.entity);
+              deviceId=row.entity.deviceId;
+            
+
+          });
+      };
+
+
+       $scope.selectedDeviceData = function(){
+          promise = AppServices.getDevicesAvailableForUser(token,selectedUserId);
+          promise.then(
+              function(data){
+            	  $scope.selectedDeviceGrid= data;
+                  $scope.selectedDeviceGridOptions.data = data;
+                  //console.log($scope.serverSettingsGridOptions.data[0]);
+                  $scope.gridApi.selection.selectRow($scope.selectedDeviceGridOptions.data[0]); //extra code
+              },
+              function(err){
+
+              }
+          );
+      }
+
+      $scope.addDevice = function(){
+          promise = AppServices.assignDeviceToUser(token,selectedUserId,deviceId);
+          promise.then(
+              function(data){
+                  if(data.status =="success"){
+
+                  $scope.allDeviceData();
+                  $scope.selectedDeviceData();
+                  }else{
+                      console.log("error occured");
+                  }
+
+                 
+              },
+              function(err){
+
+              }
+          );
+
+      }
+
+      $scope.removeDevice = function(){
+          promise = AppServices.assignDeviceToUser(token,userId,deviceId);
+          promise.then(
+              function(data){
+                  if(data.status =="success"){
+                      
+                      $scope.allDeviceData();
+                  $scope.selectedDeviceData();
+                  }else{
+                      console.log("error occured");
+                  }
+
+                  
+              },
+              function(err){
+
+              }
+          );
+
+      }
+
+
+/*Assign devices to user end*/
 /*$('#myForm input ' ).blur(function() {
 	if($scope.myForm.$invalid){
 		$(this).parent().parent().find(".errors").show();
@@ -1032,6 +1158,14 @@ $scope.rangeUG = function() {
 		  $scope.singleFilterForExistUser = function() {
 			  $scope.existingusersGridOptions.data = $filter('filter')($scope.existingusersGridData, $scope.searchTextForExistuser, undefined);
 			    $scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice( 0, $scope.endLimit);
+			}
+		  $scope.singleFilterForAllDevice = function() {
+			  $scope.allDeviceGridOptions.data = $filter('filter')($scope.allDeviceGrid, $scope.searchTextForAllDevice, undefined);
+			    $scope.allDeviceGridOptions.data = $scope.allDeviceGridOptions.data.slice( 0, $scope.endLimit);
+			}
+		  $scope.singleFilterForSelectedDevice = function() {
+			  $scope.selectedDeviceGridOptions.data = $filter('filter')($scope.selectedDeviceGrid, $scope.searchTextForSelectedDevice, undefined);
+			    $scope.selectedDeviceGridOptions.data = $scope.selectedDeviceGridOptions.data.slice( 0, $scope.endLimit);
 			}
 
 		  $scope.createNewDatasourceUG = function() {

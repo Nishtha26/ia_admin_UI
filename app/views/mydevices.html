@@ -75,7 +75,7 @@
 						  -->
 						  </div>
 									<div class="table table-hover grid datatable-basic grid"
-										id="myDevicesGridOptions" ui-grid="myDevicesGridOptions"
+										id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit
 										ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
 										ui-grid-move-columns ui-grid-pinning ng-style="getTableHeight()" >
 
@@ -168,8 +168,8 @@
 										<ul class="nav nav-tabs">
 										<!-- href="#availability" */ -->
 											<li id="availability_tab" href="availability" class="d_tab active"><a data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a></li>
-											<li ng-click="deviceMapDefault()" class="d_tab"><!-- href="#device_maps" --><a  data-toggle="tab">Replay View</a></li>
-										<!-- 	<li><a href="#drive_routes" data-toggle="tab">Drive Routes</a></li> -->
+											<li ng-click="deviceMapDefault()" class="d_tab"><a  data-toggle="tab">Replay View</a></li>
+										 	<li id="admin_operation" ng-click="populateAdminCommand()" class="d_tab" ><a  data-toggle="tab">Admin Operation</a></li> 
 										</ul>
 
 										<div class="tab-content">
@@ -260,7 +260,65 @@
 								 <div id="DefaultReplayMap" class="map-container"  style="position:relative;height: 480px;"></div>
 											</div></div>
 
-											
+										<div class="tab-pane" id="admin_operation_body">
+										   
+											<div class="panel-group  "> <!-- panel-group-control panel-group-control-right -->
+												<div class="panel panel-white">
+								<div class="panel-heading">
+									<h6 class="panel-title">
+										<a data-toggle="collapse" href="#collapsible-control-right-group1">Device Management</a>
+									</h6>
+								</div>
+								<div id="collapsible-control-right-group1" class="panel-collapse collapse in">
+									<div class="panel-body">
+											<div class="form-group">
+										<label class="col-lg-3 control-label">Approved</label>
+										<div class="col-lg-9 checkbox checkbox-switch">
+											<input id="deviceStatusFlag" type="checkbox" data-on-color="success" data-off-color="danger" data-on-text="Yes"
+											 data-off-text="No" class="switch" checked="checked" name="deviceStatusFlag"  ng-model="deviceStatusFlag">
+										</div>
+									
+									</div>
+
+									<div class="form-group">
+										<label class="col-lg-3 control-label">Assign User</label>
+										<div class="col-lg-9">
+											{{userFullName}}
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="panel panel-white">
+								<div class="panel-heading">
+									<h6 class="panel-title">
+										<a class="collapsed" data-toggle="collapse" href="#collapsible-control-right-group2">Admin Command</a>
+									</h6>
+								</div>
+								<div id="collapsible-control-right-group2" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<div class="form-group">
+										<label class="col-lg-3 control-label">Restart IAC</label>
+										<div class="col-lg-9 checkbox checkbox-switchery">
+											<input  type="checkbox" class="switchery"  >
+										</div>
+									
+									</div>
+									<br/><br/>
+											<div class="form-group">
+										<label class="col-lg-3 control-label">Register/Unregister IAS</label>
+										<div class="col-lg-9 ">
+											<input  type="checkbox" data-on-color="primary" data-off-color="danger" data-on-text="Register"
+											 data-off-text="Unregister" class="switch" checked="checked"  >
+										</div>
+									
+									</div>
+									</div>
+								</div>
+							</div>
+											</div>
+										</div>	
 
 										</div>
 									</div>
@@ -373,6 +431,20 @@
 		            format: 'MM/DD/YYYY h:mm a'
 		        }
 		    });
+	});
+
+	$(function() {
+	    // Initialize multiple switches
+	
+
+	    // Colored switches
+	    var primary = document.querySelector('.switchery');
+	    var switchery = new Switchery(primary, { color: '#2196F3' });
+
+	   
+	    
+		   $(".switch").bootstrapSwitch();
+
 	});
 
 

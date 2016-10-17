@@ -207,17 +207,18 @@ oTech.controller('MyDevicesController',
 	 
 	 
 		$scope.deviceAvailabilityBody = function(row) {
-		/*	$("#create_new_device_label").hide();
+			/*$("#create_new_device_label").hide();
 		 	$("#device_list_label").hide();
 		 	$("#device_edit_label").show();
 		 	$("#create_device_body_div").hide();*/
 		 	$("#device_facets_container").show();
 		 	$("#live_device_map_container").hide();
+		 	$(".tab-pane").hide();
 		 	$("#availability").show();
-		 	$("#device_maps").hide();
-		 	$(".d_tab").removeClass("active");
-		 	$("#availability_tab").addClass("active");
-		
+		 	
+		 $(".d_tab").removeClass("active");
+		 	$("#availability_tab").addClass("active");/* for showing default active tab*/
+		// 	$scope.populateAdminCommand();
 		 	$scope.gridApi.selection.clearSelectedRows();
 		 	row.isSelected=!row.isSelected;
 	 	  $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
@@ -231,6 +232,10 @@ oTech.controller('MyDevicesController',
 			 		$("#device_facets_container").fadeIn('slow');
 			 	});
 			 	 $scope.deviceId=row.entity.deviceId;
+			 	 $scope.deviceStatusFlag=row.entity.deviceStatusFlag;
+			 	 $scope.userFullName=row.entity.fullName+" ( "+row.entity.userName+" ) ";
+			 	$('#deviceStatusFlag').bootstrapSwitch('state', row.entity.deviceStatusFlag, row.entity.deviceStatusFlag);
+			 	 
 			 	var dateNow=new Date();
 			 	var backDate = new Date();
 				var backDate =backDate.setDate(backDate.getDate() - 1);
@@ -334,9 +339,20 @@ oTech.controller('MyDevicesController',
 
 					           }
 					    });*/
+				 
+				 $('#deviceStatusFlag').on('switchChange.bootstrapSwitch', function(event, state) {
+					 // console.log(this); // DOM element
+					//  console.log(event); // jQuery event
+					  console.log("status Value :" +state); // true | false
+					  if(state){
+						  $scope.approve($scope.deviceId);
+					  }else{
+						  $scope.reject($scope.deviceId);
+					  }
+					});
 				});
 			 $scope.deviceMapDefault=function(){
-					$("#availability").hide();
+				    $(".tab-pane").hide();
 				 	$("#device_maps").show();
 				 	$("#rePlayMap").hide();
 				 	$("#DefaultReplayMap").show();
@@ -437,6 +453,35 @@ oTech.controller('MyDevicesController',
 			 			}
 			 		);
 			 }
+			 $scope.populateAdminCommand=function(){
+				 $(".tab-pane").hide();
+				 $("#admin_operation_body").show();
+			 }
 		 	
+				$scope.approve = function(selectDeviceId){
+					promise = AppServices.GetapproveData(userId, token ,selectDeviceId);
+					promise.then(
+					function(data){
+						
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						alert("error");
+					}
+					);
+				}
+			
+			$scope.reject = function(selectDeviceId){
+				promise = AppServices.GetrejectData(userId, token ,selectDeviceId);
+				promise.then(
+				function(data){
+					
+				//	$scope.deviceAdminData();
+				},
+					function(err){
+						alert("error");
+					}
+					);
+				} 
 
 	});

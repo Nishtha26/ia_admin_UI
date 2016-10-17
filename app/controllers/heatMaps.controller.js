@@ -225,8 +225,9 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 		//	    var technology=$('#technology').val();
                                 			    var technology=getCheckBoxValue('technology');
                                 			    
-                                				   $scope.mapDataLoading = true;
+                                				   
                                 					if(!$scope.heatmap_form.$invalid){
+                                						$scope.mapDataLoading = true;
                                 			     var data = {"marketName" : marketName, "deviceId":deviceId ,"fromDate" : fromDate,"toDate" : toDate,"category":category, "location":location,"technology":technology}; 
                                 			     var heatMapInput=data;
                                 			

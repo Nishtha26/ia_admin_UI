@@ -18,7 +18,7 @@ padding-left:5px;
 .dropdown-menu{
 /*border:1px solid #00BCD4;*/}
 
-#allusersgroupGridOptions .ui-grid-viewport,#existingusersGridOptions .ui-grid-viewport {
+#allusersgroupGridOptions .ui-grid-viewport,#existingusersGridOptions .ui-grid-viewport,#allDeviceGridOptions .ui-grid-viewport,#selectedDeviceGridOptions .ui-grid-viewport{
 overflow-y: auto;
 	-webkit-overflow-scrolling: touch
 }
@@ -277,6 +277,7 @@ overflow-y: auto;
                 		<li id='cancel_user_edit_label' ng-click="cancelUserEdit();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
                 		<li id='cancel_user_create_label' ng-click="cancelUserCreate();"  style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='cancel_user_detail_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Detail</span></li>
+                		<li id='cancel_assign_device_label' ng-click="cancelAssignDeviceToUser()" style="display: none;"><span class='label label-warning pointer-link'>Cancel Assign Devices</span></li>
                 	</ul>
               	</div>
               	<div id="input_user_error_message" style='display: none; margin-top: 15px;'></div>
@@ -656,6 +657,91 @@ overflow-y: auto;
 
 							</div>
 							<!-- /create group div -->
+							
+									<!-- user device mapping  -->
+							<div class="panel-body" id='assign_device_div' style='display: none;'>
+								 
+								 		<div class="panel-heading">
+								<h5 class="panel-title" style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i class="icon-user-check position-left"></i> Associate Device to user</h5>
+							</div>
+								<!-- create group div -->
+							<div class="panel-body"  style="padding-top:0px; padding-bottom:0px;">
+								
+
+								<!-- User creation form -->
+								<div class="row">
+									<div class="col-md-12">
+											
+										<fieldset>
+							        
+											<div class="row">
+												<div class="col-md-12 form-horizontal" style="padding:10px 0;">
+													
+													<!-- Switchery toggles -->
+													<!-- Multiple selection -->
+													<div class="panel panel-flat" style="border:0; margin-bottom:0px;">
+														
+												<div class="panel panel-white" style="border:0; -webkit-box-shadow: 0 0px 0px rgba(255, 255, 255, 0); box-shadow: 0 0px 0px rgba(255, 255, 255, 0); margin-bottom:0px;">
+												
+												
+								 				
+													<div class="panel-body" style="padding:0px 0px 20px 0px;">
+													<div class="col-sm-5">
+													<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
+									 			<input type="type" class="filter-width" ng-change="singleFilterForAllDevice()" ng-model="searchTextForAllDevice" placeholder="Filter in All Devices..." ></label>
+									 			</div>
+													 <div  id="allDeviceGridOptions" ui-grid="allDeviceGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 415px; border:2px solid #1f8ee7;" >
+								 			
+								 			 </div>
+								 			 </div>
+								 			 <div class="col-sm-2" style="padding:0; margin-top:20%;">
+										<div class="ot-toggle toggle-margin">
+												<div class="assign-button">
+													<button type="button" class=""
+														ng-click="addDevice();">
+														<i class="icon-forward3"></i></button><br/>
+														<button type="button" class="" ng-click="removeDevice();">
+														<i class="icon-backward2"></i></button>
+													
+												</div>
+
+											</div>
+										</div>
+										<div class="col-sm-5">
+										<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
+									 			<input type="type" class="filter-width" ng-change="singleFilterForSelectedDevice()" ng-model="searchTextForSelectedDevice" placeholder="Filter in Assign Devices..." ></label>
+									 			</div>
+										<div  id="selectedDeviceGridOptions" ui-grid="selectedDeviceGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 415px; border:2px solid #1f8ee7;" >
+														 
+										</div>
+										</div>
+								 			 
+								 			 </div>
+												
+											</div>
+												
+										
+														
+
+												
+													</div>
+
+												</div>
+											</div>
+
+											
+										</fieldset>
+
+									</div>
+								</div>
+							</div>
+						
+
+								 
+
+							</div>
+							<!-- /assign device to user -->
+							
 							<div class="panel-body" id='show_user_details_div' style="display:none;">
 								
 								<div class="row">
@@ -907,7 +993,8 @@ overflow-y: auto;
 			 	$("#create_new_user_label").hide();
 			 	$("#cancel_user_edit_label").hide();
 			 	$("#cancel_user_create_label").show();
-		 
+			 	$("#cancel_assign_device_label").hide();
+				$("#assign_device_div").hide();
 		// 	$("#group_cancel_edit_label").hide();
 
 		 });
@@ -919,6 +1006,8 @@ overflow-y: auto;
 		 	$("#user_list_label").hide();
 		 	$("#create_new_user_label").show();
 		 	$("#cancel_user_edit_label").hide();
+			$("#cancel_assign_device_label").hide();
+			$("#assign_device_div").hide();
 		// 	$("#group_cancel_edit_label").hide();
 		 });
 		 // Show the edit user div when the user's edit function is called
@@ -931,6 +1020,8 @@ overflow-y: auto;
 		 	$("#create_new_user_label").show();
 		 	$("#cancel_user_edit_label").hide();
 		 	$("#cancel_user_create_label").hide();
+			$("#cancel_assign_device_label").hide();
+			$("#assign_device_div").hide();
 		 });
 
 		 $("#show_all_users_label").click(function() {
@@ -942,6 +1033,8 @@ overflow-y: auto;
 		 	$("#create_new_user_label").show();
 		 	$("#cancel_user_edit_label").hide();
 		 	$("#cancel_user_create_label").hide();
+			$("#cancel_assign_device_label").hide();
+			$("#assign_device_div").hide();
 		 });
 
 		 $(".show_user").click(function() {
@@ -953,8 +1046,29 @@ overflow-y: auto;
 		 	$("#create_new_user_label").hide();
 		 	$("#cancel_user_edit_label").hide();
 		 	$("#cancel_user_create_label").hide();
+			$("#cancel_assign_device_label").hide();
+			$("#assign_device_div").hide();
 		 });
-
+		 $("#cancel_assign_device_label").click(function() {
+			 $("#user_list_div").show();
+			 	$("#user_create_div").hide();
+			 	$("#user_edit_div").hide();
+			 	$("#user_list_label").hide();
+			 	$("#show_user_details_div").hide();
+			 	$("#create_new_user_label").show();
+			 	$("#cancel_user_edit_label").hide();
+			 	$("#cancel_user_create_label").hide();
+			 	$("#cancel_assign_device_label").hide();
+				$("#cancel_assign_device_label").hide();
+				$("#assign_device_div").hide();
+			 	
+			 });
+		 $(".assign_devices").click(function() {
+			
+			
+			 	
+			 	
+			 });
 		 /* 
 		 $(".user_editor_link").click(function() {
 			 	$("#create_new_user_label").hide();
