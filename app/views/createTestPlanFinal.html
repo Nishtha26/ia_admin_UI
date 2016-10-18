@@ -113,9 +113,9 @@ display:block;
 	
 <script type="text/ng-template" id="nodrop_nodes_renderer2.html">
 
-<!--<div class="col-lg-1">	</div>-->	
+<!--<div class="col-lg-1 ">	</div>-->	
 <span ui-tree-handle  >											
-<div class="col-lg-3">
+<div class="col-lg-3 col-sm-3 col-xs-3">
 <a data-nodrag ng-click="toggle(this)">
 		<span ng-class="{
 		'icon-folder-plus': collapsed,
@@ -124,11 +124,11 @@ display:block;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-5 col-sm-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
-<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%; padding-left:0px;" /></span>
+<div class="col-lg-5 col-sm-5 col-xs-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /></span>
 </div>
-<div class="col-lg-2 col-sm-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" numbers-only/></div> 
-<div class="col-lg-2 col-sm-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
+<div class="col-lg-2 col-sm-2 col-xs-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" numbers-only/></div> 
+<div class="col-lg-2 col-sm-2 col-xs-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
 </span>
 
 <ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -221,7 +221,7 @@ display:block;
 												</table>
 											</div>
 										</div>
-										<div class="col-lg-9" style="border-left: 5px double #ccc;" id="params_template_div" >
+										<div class="col-lg-9 borderLeft"  id="params_template_div" >
 											
 											
 											
