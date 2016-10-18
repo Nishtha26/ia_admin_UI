@@ -15,6 +15,7 @@ oTech.controller('testPlanTestRunAdministration',
         var Devices = [];
         var createTestRunDevices = [];
         var realDevices = [];
+        var quickRunRealDevices = [];
         var VirtualDevicelist = [];
 		var notificationTypes = [];
         $scope.dataProcessing = false;
@@ -119,80 +120,63 @@ oTech.controller('testPlanTestRunAdministration',
          			
                      ]
         };
+		
+		
+		
+		$scope.TestPlanQuickRun = {
+				enableSorting: true,
+			    enableFilter: true,
+			    enableColResize: true,
+				enableRowSelection: true,  // for selection
+				enableColumnMenus: false, //to hide ascending and descending column menu names
+				enableRowHeaderSelection: false, // this is for check box to appear on grid options
+				enableFiltering: false,
+				enableGridMenu: false,		// for searching
+				multiSelect:true,
+				enableScrollbars : true,
+				enableVerticalScrollbar :3,
+			    enableHorizontalScrollbar:0,
+          columnDefs: [
+                         {name:'Id',field: 'testplanId', width: '10%'},
+                         {name:'Name',field: 'testplanName',width: '40%', cellTooltip: 
+                             function( row, col ) {
+                             return '' + row.entity.testplanName + '';
+                           }},
+                         {name:'Use Case',field: 'useCaseName', width: '27%', cellTooltip: 
+                             function( row, col ) {
+                             return '' + row.entity.useCaseName + '';
+                           }},
+                     	/*{name:'Created Date',field: 'createdDate', width: '20%'},*/
+         				{name:'Created By',field: 'createdByName', width: '20%'},
+         				
+         			
+                     ]
+        };
 
         //Row selection
-        $scope.TestPlanOptions.onRegisterApi = function (gridApi) {
+        $scope.TestPlanQuickRun.onRegisterApi = function (gridApi) {
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				if($scope.isAction){
-					$scope.dataLoading = true;
-					row.isSelected = false;
-					$scope.isAction = false;
-					$cookieStore.put('TestPLANId', row.entity.testplanId);
-			promise = testScriptService.getTestRuns(token, row.entity.testplanId, userId);
-			promise.then(
-				function (data) {
-					if(data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0){
-					$rootScope.Message = "No Test Run Exists";
-					$('#MessageColor').css("color", "red");
-					$('#MessagePopUp').modal('show');
-					$timeout(function () {
-                    $('#MessagePopUp').modal('hide');
-                }, 3000);
-				$scope.dataLoading = false;
-					}else{
-						$rootScope.getTestRuns = data.testRunsForTestPlan;
-						$location.path('/Schedule');
-					}
-					
-				},
-				function (err) {
-					console.log(err);
-				}
-			);
-					
-				}else{
-				$scope.dataProcessing = true;
-				$(".btn").addClass("disabled");
-                $rootScope.RowCreateTestrun = row.entity;
-                var TestPlanId = row.entity.testplanId;
-
-                $cookieStore.put('TestPLANId', TestPlanId);
-                $rootScope.TestplanId = row.entity.testplanId;
-                $cookieStore.put('TestPLANId', row.entity.testplanId);
-
-                $scope.testplan_name = row.entity.testplanName;
-				$scope.testplan_name1 = row.entity.testplanName;
-                $cookieStore.put('TestplanName', row.entity.testplanName);
-
-
-//                    var TestPlanId = $cookieStore.get('selected_testplanid');
-                $cookieStore.put('TestPlan_Name', $scope.testplan_name);
-//                    $cookieStore.remove('selected_testplanid');
-				$rootScope.Row = row.entity;
-
-                $scope.testplanId_selected = $cookieStore.get('selected_testplanid');
-                var msg = 'row selected ' + row.isSelected;
-                //Calling getTestplan service and looping data as tree structure
+            	List = [];
+				
+                //Get devices service
 				if(row.isSelected){
-                promise = testScriptService.getTestplan(token, userId, TestPlanId);
-                promise.then(
-                    function (data) {
-                        $scope.treedata = data.jobVO;
-						$rootScope.uiTreeJSON = data.jobVO;
-						if(data.isMappedTestPlanTestRun.length > 0){
-						$rootScope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
-						}
-                        $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
-						$scope.dataProcessing = false;
-						$(".btn").removeClass("disabled");
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-				}
+					// load test plan
+		        	promise = testScriptService.getTestplanForQuickRun(token, userId, row.entity.testplanId);
+		            promise.then(
+		                function (data) {
+		                	quickRunRealDevices = [];
+		                	$scope.quickTestPlanId = data.jobVO[0].jobId;
+		                	$scope.quickDeviceProfileId = data.jobVO[0].jobDeviceId;
+		                	$scope.quickRunDeviceId = data.jobVO[0].deviceId;
+		                },
+		                function (err) {
+		                	$scope.dataProcessingForEditTestPlan = false;
+		                    console.log(err);
+		                }
+		            );
+		            // loaded test plan
 				}
 
 
@@ -215,7 +199,18 @@ oTech.controller('testPlanTestRunAdministration',
 				allOfTheData = data;
 				$scope.TestPlanOptions.data = data.slice( 0, $scope.itemsPerPage);
 				
-
+            },
+            function (err) {
+                console.log(err);
+            }
+        );
+        
+      //Test plan table Service
+        promise = testScriptService.FetchingTestPlanTemplateService(userId, token);
+        promise.then(
+            function (data) {
+				$scope.allOfTheDataForQuickRun  = data;
+				$scope.TestPlanQuickRun.data = data;
             },
             function (err) {
                 console.log(err);
@@ -247,6 +242,12 @@ oTech.controller('testPlanTestRunAdministration',
 		 $scope.singleFilter = function() {
 			    $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
 			    $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice( 0, $scope.endLimit);
+			   
+			};
+			
+			$scope.singleFilterQuickRun = function() {
+			    $scope.TestPlanQuickRun.data = $filter('filter')($scope.allOfTheDataForQuickRun, $scope.searchTextQuick, undefined);
+			    //$scope.TestPlanQuickRun.data = $scope.TestPlanQuickRun.data.slice( 0, $scope.endLimit);
 			   
 			};
 			
@@ -1218,23 +1219,23 @@ oTech.controller('testPlanTestRunAdministration',
                 	if(node.loop != '0'){
                     html += '<tr class="border-double" style="background-color: #CCD0DA;">'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
-					        	'<td class="text-right"><input type="text"  style="width: 40px;" maxlength="4" value="'+node.sequenceNo+'" readonly/></td>'+
 					        	'<td class="text-right"><input type="text" style="width: 40px;" maxlength="4" value="'+node.loop+'" readonly/></td>'+
+					        	'<td class="text-right"><input type="text"  style="width: 40px;" maxlength="4" value="'+node.sequenceNo+'" readonly/></td>'+
 					        '</tr>';
                     if ('nodes' in node) {
                         angular.forEach(node.nodes, function (node, index) {
                         	if(node.sequenceNo != '0'){
 					         html += '<tr class="border-double" >'+
 					        	'<td class="text-semibold text-italic">'+node.title+'</td>'+
-					        	'<td class="text-right"><input type="text" value="'+node.sequenceNo+'"  style="width: 40px;" maxlength="4"  readonly/></td>'+
 					        	'<td class="text-right"><input type="text" value="'+node.loop+'" style="width: 40px;" maxlength="4"  readonly/></td>'+
+					        	'<td class="text-right"><input type="text" value="'+node.sequenceNo+'"  style="width: 40px;" maxlength="4"  readonly/></td>'+
 					        '</tr>';
 	        			if ('nodes' in node) {
 	                            angular.forEach(node.nodes, function (node, index) {
 	        						 html += '<tr>'+
 							        	'<td class="text-left">'+node.title+'</td>'+
-							        	'<td class="text-right"><input type="text" value="'+node.sequenceNo+'"  style="width: 40px;" maxlength="4"  readonly/></td>'+
 							        	'<td class="text-right"><input type="text" value="'+node.loop+'" style="width: 40px;" maxlength="4"  readonly/></td>'+
+							        	'<td class="text-right"><input type="text" value="'+node.sequenceNo+'"  style="width: 40px;" maxlength="4"  readonly/></td>'+
 							        '</tr>'+
 							        '<tr style="background-color: #F9FCF1;">'+
 							        	'<td colspan="3"><span class="text-italic" style="word-wrap: break-word;">'+node.commandParams+'</span></td>'+
@@ -2160,6 +2161,150 @@ oTech.controller('testPlanTestRunAdministration',
 				$scope.showPopover = false;
 			}
 			/* end popover */
+			
+			
+			
+			//Real Devices
+	        $scope.RealDevicesOptionsForQuickRun = {
+	        		enableSorting: true,
+				    enableFilter: true,
+				    enableColResize: true,
+					enableRowSelection: true,  // for selection
+					enableColumnMenus: false, //to hide ascending and descending column menu names
+					enableRowHeaderSelection: false, // this is for check box to appear on grid options
+					enableFiltering: false,
+					enableGridMenu: false,		// for searching
+					multiSelect:true,
+					enableScrollbars : false,
+					enableVerticalScrollbar :3,
+					enableHorizontalScrollbar:0,
+	            columnDefs: [
+	                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader,width:"20%"},
+	                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader,width:"20%", cellTooltip: 
+	 	               function( row, col ) {
+	 	               return '' + row.entity.deviceName + '';
+	 	             }},
+	                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader,width:"30%", cellTooltip: 
+		 	               function( row, col ) {
+		 	               return '' + row.entity.msisdn + '';
+		 	             }},
+					//{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
+					//{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
+					//{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
+					{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"25%", cellTooltip: 
+		 	               function( row, col ) {
+		 	               return '' + row.entity.manufacturer + '';
+		 	             }},
+	            ]
+	        };
+	        
+	        
+	        
+	        $scope.singleFilterForQuickRunRealDevices = function() {
+			    $scope.RealDevicesOptionsForQuickRun.data = $filter('filter')($scope.tempRealDeviceListForQuickRun, $scope.searchTextForQuickRunRealDevices, undefined);
+			   
+			};
+			
+			promise = testScriptService.getRealDevices(token, userId);
+	        promise.then(
+	            function (data) {
+					
+	                $scope.RealDevicesOptionsForQuickRun.data = data.devicesList;
+	                $scope.tempRealDeviceListForQuickRun = data.devicesList;
+	            },
+	            function (err) {
+	                console.log(err);
+	            }
+	        );
+	        
+	        
+	        $scope.CreateQuickTestrun = function () {
+	        	
+	        	if(quickRunRealDevices.length <  1){
+	        		$scope.errorMsgForDevice = true;
+					$rootScope.msg = "Please select device.. ";
+					 $timeout(function () {
+						 $scope.errorMsgForDevice = false;
+	                    }, 3000);
+					$(".btn").removeClass("disabled");
+								return false;
+	        	}
+	        	
+	        	$scope.CreateTestRun_Data = JSON.stringify({
+	                "testplanVo": {"testplanId": $scope.quickTestPlanId},
+	                "jobVo": {},
+	                "virtualRealDeviceList": quickRunRealDevices
+	            });
+	        	
+	            
+	                var TestRunData = $scope.CreateTestRun_Data;
+	                promise = testScriptService.CreateTestRun(TestRunData, token, userId);
+	                promise.then(
+	                    function (data) {
+	                        var DependantTestRunName = data.NewTestRun.jobName;
+	                        Devices = [];
+	                        notificationTypes = [];
+							//Get devices service
+							$scope.testRunIdShcedule = data.NewTestRun.jobId;
+							$scope.TestRunName = data.NewTestRun.jobName;
+							$scope.jobTemplateDescription = data.NewTestRun.jobDescription;
+							
+							
+							$rootScope.jobId = data.NewTestRun.jobId;
+							for(var i=0; i < quickRunRealDevices.length; i++){
+							Devices.push(quickRunRealDevices[i].realDeviceId);
+							notificationTypes.push("PACKET");
+							}
+							// call re-start API
+							$scope.reStartJob();
+			                        
+			                        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+			                		promise.then(
+			                			function (data) {
+			                				$scope.loadAllTestRuns = false;
+			                				$scope.hideFilter = true;
+			                				$scope.allTestRuns.data = [];
+			                				$scope.allTestRunsTemp = data.testRunsForTestPlan
+			                				$scope.allTestRuns.data = $scope.allTestRunsTemp;
+			                				$scope.searchTestRuns = $scope.allTestRunsTemp;
+			                			},
+			                			function (err) {
+			                				console.log(err);
+			                			}
+			                		);
+			                   
+
+	                    },
+	                    function (err) {
+	                        console.log(err);
+	                    }
+	                );
+	            
+	        }
+
+	        $scope.RealDevicesOptionsForQuickRun.onRegisterApi = function (gridApi) {
+	            $scope.gridApi1 = gridApi;
+	            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+	            	if(row.isSelected && $scope.quickTestPlanId != undefined && $scope.quickRunDeviceId != undefined){
+						quickRunRealDevices.push({
+										'testplanId': $scope.quickTestPlanId,
+										'testrunId': 0,
+										'virtualDeviceId': $scope.quickRunDeviceId,
+										'realDeviceId': row.entity.deviceId,
+		                            });
+							
+						}else{
+							for (var i = 0; i < quickRunRealDevices.length; i++){
+								if(quickRunRealDevices[i].realDeviceId == row.entity.deviceId){
+									quickRunRealDevices.splice(i, 1);
+								}
+							}
+							
+						}
+	            });
+	            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+	            });
+	        };
 		
       
       
