@@ -1718,9 +1718,18 @@ quickrunGridOptions : {
 		enableVerticalScrollbar :0,
 		columnDefs: [
 			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true,enableCellEdit: false , allowCellFocus : false},
-			{displayName: 'Name', field: 'deviceName',width:"15%"},
-			{ name: 'model' ,width:"20%",enableCellEdit: false },
-			{ name: 'manufacturer' ,width:"10%",enableCellEdit: false},
+			{displayName: 'Name', field: 'deviceName',width:"15%", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.deviceName + '';
+              }},
+			{ name: 'model' ,width:"20%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.model + '';
+               }},
+			{ name: 'manufacturer' ,width:"10%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.manufacturer + '';
+               }},
 		
 			{ displayName: 'Job Status', field: 'statusFlag' ,width:"18%",enableCellEdit: false,
 				  cellTemplate: '<div class="ui-grid-cell-contents">'+
@@ -1731,8 +1740,14 @@ quickrunGridOptions : {
 					  '<span ng-if="row.entity.jobStatusCode ==  -5"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -6"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
-					 ' </span></div>'},
-						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
+					 ' </span></div>', cellTooltip: 
+			                function( row, col ) {
+			                return '' + row.entity.statusFlag + '';
+			               }},
+						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false, cellTooltip: 
+			                function( row, col ) {
+			                return '' + row.entity.lastPingDateTime + '';
+			               } },
 			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
 							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -1750,28 +1765,55 @@ quickrunGridOptions : {
 		'</ul>'+
 	'</li>'+
 '</ul>'},*/
-			{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false,
+			/*{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false,
 						cellTemplate: '<div id="deviceStatus_{{row.entity.deviceId}}" class="ui-grid-cell-contents">'+
 						'{{row.entity.firstName}} {{row.entity.deviceStatus}}</div>}}'			
-			},
+			},*/
 			{displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
 			{displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
 			{ name: 'deviceType' ,width:150,enableCellEdit: false},
-			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false},
+			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.carrier + '';
+               }},
 			
 			
-			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false},
-			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false},
-			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false},
+			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.imsi + '';
+               }},
+			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.imei + '';
+               }},
+			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.msisdn + '';
+               }},
 			{ name: 'networkType' ,width:"15%",enableCellEdit: false},
-			{ name: 'region' ,width:"15%"},
+			{ name: 'region' ,width:"15%", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.region + '';
+               }},
 			
 			
 			{ name: 'jobId' ,width:100,enableCellEdit: false},
-			{ name: 'jobName' ,width:150,enableCellEdit: false},
-			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false },
-			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
-			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false},
+			{ name: 'jobName' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobName + '';
+               }},
+			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobStatusDateTime + '';
+               } },
+			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobStartDate + '';
+               } },
+			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobEndDate + '';
+               }},
 			
 			
 		]

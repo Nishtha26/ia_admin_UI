@@ -254,7 +254,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		 $scope.accountDiv =false;
 		 if(numRows==1){
 			 console.log("row"+ $scope.gridApi.selection.getSelectedRows()+"::"+$scope.gridApi.selection.getSelectedRows().username);
-			 $scope.currentRow=$scope.gridApi.selection.getSelectedRows()
+			// $scope.currentRow=$scope.gridApi.selection.getSelectedRows()
 			 
 			 $scope.isUpdateDisabled = false;
 //			 $scope.isDeleteDisabled = false;
@@ -284,7 +284,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		 $scope.updateButton =true;
 		 $scope.createButton =false;
 		 console.log(row);
-         console.log(row[0].companyName);
+//         console.log(row.entity.companyName);
 				$scope.accountDiv =true;
             $scope.addCustomer = false; 
 			$scope.role1 = false; 
@@ -294,31 +294,31 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			$scope.status =false;
 			/* To Display Values in Form Elements  When Table Row is Clicked*/
 			$scope.activeUserGroups=	userGroupList;
-			$("#firstname").val(row[0].firstName) ;
-			$scope.firstname=row[0].firstName;
-//			$scope.firstname=row[0].firstName;
-			$("#lastname").val(row[0].lastName) ;
-//			$scope.lastname=row[0].lastName;
-//			$("#password").val(row[0].password) ;
-			$scope.password=row[0].password;
-//			$("#cnfpassword").val(row[0].password) ;
-			$scope.passwordConfirmation=row[0].password;
-			$("#orgPassword").val(row[0].password) ;// for check password is change for not
+			$("#firstname").val(row.entity.firstName) ;
+			$scope.firstname=row.entity.firstName;
+//			$scope.firstname=row.entity.firstName;
+			$("#lastname").val(row.entity.lastName) ;
+//			$scope.lastname=row.entity.lastName;
+//			$("#password").val(row.entity.password) ;
+			$scope.password=row.entity.password;
+//			$("#cnfpassword").val(row.entity.password) ;
+			$scope.passwordConfirmation=row.entity.password;
+			$("#orgPassword").val(row.entity.password) ;// for check password is change for not
 			
-//			$("#email-8").val(row[0].email) ;
-			$scope.mail=row[0].email;
+//			$("#email-8").val(row.entity.email) ;
+			$scope.mail=row.entity.email;
 			$('#email-8').attr('readonly', true);
-//			$("#username-7").val(row[0].username) ;
-			$scope.userName=row[0].username;
+//			$("#username-7").val(row.entity.username) ;
+			$scope.userName=row.entity.username;
 			$("#username-7").attr('readonly', true) ;
 //			$("#customer-8").val(row.entity.companyName);
 			
-			$scope.tablerole =row[0].roleName;
+			$scope.tablerole =row.entity.roleName;
 			
 		
 		//	$('#customer-8').attr('readonly', true);
-			$("#role-8").val(row[0].status);
-			$scope.selectedUserGroup=row[0].userGroupName;
+			$("#role-8").val(row.entity.status);
+			$scope.selectedUserGroup=row.entity.userGroupName;
 //			$(".errors").hide();
 			if($scope.myForm.$invalid){
 		//		$(this).parent().parent().find(".errors").show();
@@ -327,18 +327,19 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 
 			
 			updatePage();
-			//$("#edit_role").select2()[0].value=row[0].roleName;
-			$scope.tablerole=row[0].roleName;
+			//$("#edit_role").select2()[0].value=row.entity.roleName;
+			$scope.tablerole=row.entity.roleName;
 //			$("#customer-8").select2().select2('val',row.entity.companyName);
 			if($rootScope.role=="ROLE_OTADMIN"){
-			//	$("#customer-8").select2().select('val',row[0].companyName);
-//				$("#customer-8").select2()[0].value=row[0].companyName;
-				$("#customer-8").val(row[0].companyName);
-				$scope.customer=row[0].companyName;
+			//	$("#customer-8").select2().select('val',row.entity.companyName);
+//				$("#customer-8").select2()[0].value=row.entity.companyName;
+				
+				$("#customer-8").val(row.entity.companyName);
+				$scope.customer=row.entity.companyName;
 				
 			}
 			else{
-				$("#customer-8").val(row[0].companyName);
+				$("#customer-8").val(row.entity.companyName);
 			}
 			
 	}
@@ -1013,7 +1014,7 @@ $scope.allDeviceData = function(){
 		$scope.password=row[0].password;
 //		$("#cnfpassword").val(row[0].password) ;
 		$scope.passwordConfirmation=row[0].password;
-		$("#orgPassword").val(row[0].password) ;// for check password is change for not
+		$("#orgPassword").varow.entity0].password) ;// for check password is change for not
 		
 //		$("#email-8").val(row[0].email) ;
 		$scope.mail=row[0].email;
@@ -1037,7 +1038,7 @@ $scope.allDeviceData = function(){
 		}
 	//	$('#customer-8').attr('readonly', true);
 		$("#role-8").val(row[0].status);
-		$scope.selectedUserGroup=row[0].userGroupName;
+		$scope.selectedUserGroup=row.entity.userGroupName;
 //		$(".errors").hide();
 		if($scope.myForm.$invalid){
 	//		$(this).parent().parent().find(".errors").show();

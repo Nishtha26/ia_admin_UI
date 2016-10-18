@@ -487,6 +487,8 @@ overflow-y: auto;
 												<div class="col-md-6">
 													<div class="form-group">
                             <label>Password</label><span class="error-star"></span>
+                            dbPassword
+                            <input autocomplete="off" type="hidden" placeholder="Enter password" class="form-control" id="orgPassword" name="orgPassword"  ng-model="orgPassword" />
 														<input autocomplete="off" type="password" placeholder="Enter password" class="form-control" id="password" name="password" required ng-model="password" ng-trim="true" />
 														<!-- <span class=" errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span> -->
                           	<div 

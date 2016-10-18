@@ -23,6 +23,14 @@ oTech.controller('MyDevicesController',
 				$rootScope.getMenuData();
 			}
 		}
+		$scope.showErrorMessage = function(divId,msg){
+			
+			$rootScope.showErrorMessage(divId,msg);
+		
+	}
+	$scope.showSuccessMessage = function (divId,msg) {
+		$rootScope.showSuccessMessage(divId,msg);
+}
 		/*
 			To get favourite reports
 		*/
@@ -232,6 +240,9 @@ oTech.controller('MyDevicesController',
 			 		$("#device_facets_container").fadeIn('slow');
 			 	});
 			 	 $scope.deviceId=row.entity.deviceId;
+			 	 $scope.adminMessageToDevice=row.entity.adminMessageToDevice;
+			 	 $scope.newWorkUrl=row.entity.workUrl;
+			 	
 			 	 $scope.deviceStatusFlag=row.entity.deviceStatusFlag;
 			 	 $scope.userFullName=row.entity.fullName+" ( "+row.entity.userName+" ) ";
 			 	$('#deviceStatusFlag').bootstrapSwitch('state', row.entity.deviceStatusFlag, row.entity.deviceStatusFlag);
@@ -456,6 +467,34 @@ oTech.controller('MyDevicesController',
 			 $scope.populateAdminCommand=function(){
 				 $(".tab-pane").hide();
 				 $("#admin_operation_body").show();
+				 $("#commandId").val( $scope.adminMessageToDevice);
+				 if($scope.adminMessageToDevice==8){
+					 
+					 $("#update_url").show();
+			
+				 }
+			 }
+			 $scope.adminCommandOperation=function(commandId){
+				
+				 $("#dataLoadingAC").show();
+					promise = AppServices.adminCommandOperation( token ,$scope.deviceId,commandId);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							 $("#dataLoadingAC").hide();
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						alert("error");
+						 $("#dataLoadingAC").hide();
+					}
+					);
+				 
+				 
 			 }
 		 	
 				$scope.approve = function(selectDeviceId){
@@ -483,5 +522,60 @@ oTech.controller('MyDevicesController',
 					}
 					);
 				} 
+			
+			 $scope.populateAdminCommandList=function(){
+				promise = AppServices.populateAdminCommands( token );
+				promise.then(
+						function(data){
+						$scope.adminCommands=data;
+						$("#commandId").val("0");
+					
+				},
+				function(err){
+					alert("error");
+				}
+				);
+			 
+		 }
+			 $scope.populateAdminCommandList();
+			 $('#commandId').change(function() {
+						var commandId = $(this).val();
+						if (commandId == 8) {
 
+							$("#update_url").show();
+
+						} else {
+							$("#update_url").hide();
+							$scope.adminCommandOperation(commandId);
+						}
+					});
+			 
+			 $scope.populateAdminCommandList();
+			 
+			 $scope.adminCommandUpdateUrl=function(){
+				 var workUrl=$("#newWorkUrl").val();
+				 var commandID=$("#commandId").val();
+				 $("#dataLoadingAC").show();
+				 //if(workUrl!=""){
+					promise = AppServices.adminCommandUpdateUrl( token ,$scope.deviceId,commandID, workUrl);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							$("#dataLoadingAC").hide();
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						alert("error");
+					}
+					); 
+				 //}
+				// else{
+					 
+			//	 }
+				 }
+			
 	});
