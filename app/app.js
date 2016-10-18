@@ -186,6 +186,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                         label: 'Test Plan'
                     }
                 })
+                .state("createTestPlanTemplate", {
+                    url: "/dashboard/createTestPlanTemplate",
+                    templateUrl: "app/views/createTestPlanTemplate.html",
+                    controller: 'createTestPlanTemplate',
+					ncyBreadcrumb: {
+                        label: 'Test Plan'
+                    }
+                })
                 .state("createTestPlanFinal", {
                 	url: '/dashboard/createTestPlanFinal',
                     views: {
@@ -197,7 +205,19 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 					ncyBreadcrumb: {
                         label: 'Test Plan final'
                     }
-                }) 
+                })
+                .state("createTestPlanTemplateFinal", {
+                	url: '/dashboard/createTestPlanTemplateFinal',
+                    views: {
+                        "@": {
+                            templateUrl: 'app/views/createTestPlanTemplateFinal.html',
+                            controller: 'testPlanTemplateCommandOverride'
+                        }
+                    },
+					ncyBreadcrumb: {
+                        label: 'Test Plan final'
+                    }
+                })
                 .state("testPlanTestRunAdministration", {
                 	url: '/dashboard/testPlanTestRunAdministration',
                    templateUrl: 'app/views/testPlanTestRunAdministration.html',

@@ -82,6 +82,30 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+        
+        service.FetchingTestPlanTemplateService = function (userId, token) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/fetchTestplanTemplates ",
+                type: "POST",
+                data: {token: token, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 		
 		service.createCloneTestplan = function (token,userId, TestPlanId) {
             var deferred = $q.defer();
@@ -881,6 +905,33 @@ oTech.service('testScriptService',
                 {
                     //alert("success");
                     deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		
+		//create test run table
+        service.getTestplanForQuickRun = function (token,userId, testplanId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/getTestplanForQuickRun",
+				type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'testplanId': testplanId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve($.parseJSON(data.items));
                 },
                 error: function (err)
                 {
