@@ -229,7 +229,7 @@ display:block;
 margin-top : 7px;
 }
 
-#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport
+#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport
 {overflow-y: auto;
 	-webkit-overflow-scrolling: touch
 	}
@@ -293,7 +293,7 @@ margin-top : 7px;
 
 <!--<div class="col-lg-1">	</div>-->	
 <span ui-tree-handle  >											
-<div class="col-lg-4">
+<div class="col-lg-4 col-sm-4 col-xs-4">
 <a data-nodrag ng-click="toggle(this)">
 		<span ng-class="{
 		'icon-folder-plus': collapsed,
@@ -302,10 +302,10 @@ margin-top : 7px;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
-<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 94%; padding-left:0px;" /></span></div>
-<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" numbers-only/></div> 
-<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
+<div class="col-lg-4 col-sm-4 col-xs-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /></span></div>
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" numbers-only/></div> 
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
 </span>
 
 <ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -811,7 +811,7 @@ margin-top : 7px;
 												</table>
 											</div>
 										</div>
-										<div class="col-lg-9" style="border-left: 5px double #ccc;" id="params_template_div" >
+										<div class="col-lg-9 borderLeft" id="params_template_div" >
 											
 											
 											
@@ -961,7 +961,7 @@ margin-top : 7px;
 											/devices and commands section
 										</div> -->
 										<!-- devices and commands section -->
-										<div class="col-md-6" style='border-left: 5px double #ccc; min-height:500px; max-height:500px;'>
+										<div class="col-md-6" style='border-left: 5px double #ccc; min-height:500px;'>
 											<!-- Devices Table -->
 											<div class="table-responsive">
 												<h6>
@@ -975,7 +975,7 @@ margin-top : 7px;
 										 			<span ng-show ="successMsg" class="success_msg">{{msg1}}</span>
 									 			</div>
 								 			 </div> 		
-													<div class="panel-body" style='min-height: 300px; max-height: 420px; overflow: auto; '>
+													<div class="panel-body" style='min-height: 300px; max-height: 420px; overflow: auto; padding-top:0px;'>
 														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptionsForQuickRun" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow: hidden;height: 380px;" >
 								 						 </div>
 								 			 </div>

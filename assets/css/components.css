@@ -3774,7 +3774,7 @@ select.selectpicker {
   margin-bottom: 0;
 }
 .editableform .form-control {
-  min-width: 150px;
+ /*  min-width: 150px; */
 }
 .editableform .checkbox,
 .editableform .radio {
@@ -18302,4 +18302,14 @@ select * {
     position: relative;
     display: block;
     padding: 9px 15px;
+}
+
+.borderLeft{
+	border-left: 5px double #ccc;
+}
+
+@media only screen and (max-width: 1199px) {
+    .borderLeft {
+        border-left: 5px double #fff;
+    }
 }
