@@ -45,7 +45,8 @@ oTech.controller('testPlanTestRunAdministration',
                 $rootScope.getFavouriteReports();
             }
         }
-		
+        $scope.getDashBoardMenu();
+		$scope.getFavouriteReports();
 
 		$scope.quickRun = function () {
                $location.path('/dashboard/quickRun');
@@ -1082,7 +1083,9 @@ oTech.controller('testPlanTestRunAdministration',
 	                enableRowHeaderSelection: false,
 	                enableRowSelection: true,
 	                multiSelect: false,
-	                enableHorizontalScrollbar:0,
+	                enableScrollbars : true,
+					enableVerticalScrollbar :3,
+				    enableHorizontalScrollbar:0,
 	                columnDefs: [
 	                    {field: 'scheduleDateAndTime', name: 'Schedule Date & Time', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
 	                        function( row, col ) {
