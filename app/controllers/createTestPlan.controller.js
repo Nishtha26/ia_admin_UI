@@ -305,14 +305,8 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.useCaseArray = [];
 						$.map(data, function(n,i){
 							var temp = {};
-							   if(i == "3"){
 								   temp['id'] = i; 
 								   temp['name'] = n; 
-								   temp['selected'] = true; 
-							   }else{
-								   temp['id'] = i; 
-								   temp['name'] = n; 
-							   }
 							   $scope.useCaseArray.push(temp);
 							});
 						$scope.usecases = $scope.useCaseArray;
