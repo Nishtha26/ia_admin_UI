@@ -159,9 +159,9 @@ oTech
 					
 					
 							$scope.getTableHeight = function() {
-							    var rowHeight = 40; // your row height
-							    var headerHeight = 44; // your header height
-							    var footerPage=15;
+							    var rowHeight = 41; // your row height
+							    var headerHeight = 45; // your header height
+							    var footerPage=10;
 							    var gridHeight=0;
 							    var dataCount=$scope.devicesMeasurementGridOptions.data.length;
 							    gridHeight=($scope.devicesMeasurementGridOptions.data.length * rowHeight + headerHeight+footerPage);
@@ -184,6 +184,7 @@ oTech
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
 						else if (link == 'Applications')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapplications;
+						
 						else if(link == 'IPAddress')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
 						else if(link == 'L1LOG')

@@ -169,7 +169,7 @@
 										<!-- href="#availability" */ -->
 											<li id="availability_tab" href="availability" class="d_tab active"><a data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a></li>
 											<li ng-click="deviceMapDefault()" class="d_tab"><a  data-toggle="tab">Replay View</a></li>
-										 	<li id="admin_operation" ng-click="populateAdminCommand()" class="d_tab" ><a  data-toggle="tab">Admin Operation</a></li> 
+										 	<li id="admin_operation" ng-click="populateAdminCommand()" class="d_tab" ><a  data-toggle="tab">Administration</a></li> 
 										</ul>
 
 										<div class="tab-content">
@@ -255,6 +255,7 @@
 											</div>
 												<!-- <div class="map-container map-click-event"></div> -->
 												<div id="device_map_body"   class="row" style="padding-top: 4px;">
+												<div id="replay_map_error" class="errors" style="display:none;text-align:center;"></div>
 												<img id="dataLoadingReplayMap" align="middle" ng-show="dataLoadingReplayMap" class="loading loading-imgac img-av" src="{{loadingImageName}}" ></img>
 												 <div id="rePlayMap" class="map-container"  style="position:relative;height:480px;"></div>
 								 <div id="DefaultReplayMap" class="map-container"  style="position:relative;height: 480px;"></div>
@@ -266,7 +267,7 @@
 												<div class="panel panel-white">
 								<div class="panel-heading">
 									<h6 class="panel-title">
-										<a data-toggle="collapse" href="#collapsible-control-right-group1">Device Management</a>
+										<a data-toggle="collapse" >Device Management</a>
 									</h6>
 								</div>
 								<div id="collapsible-control-right-group1" class="panel-collapse collapse in">
@@ -281,7 +282,7 @@
 									</div>
 
 									<div class="form-group">
-										<label class="col-lg-3 control-label">Assign User</label>
+										<label class="col-lg-3 control-label">Assigned User</label>
 										<div class="col-lg-9">
 											{{userFullName}}
 										</div>
@@ -293,24 +294,30 @@
 							<div class="panel panel-white">
 								<div class="panel-heading">
 									<h6 class="panel-title">
-										<a class="collapsed" data-toggle="collapse" href="#collapsible-control-right-group2">Admin Command</a>
+										<a class="collapsed" data-toggle="collapse" >Admin Command</a>
 									</h6>
 								</div>
 								<div id="collapsible-control-right-group2" class="panel-collapse collapse in">
 									<div class="panel-body">
 										<div class="form-group">
-										<label class="col-lg-3 control-label">Restart IAC</label>
-										<div class="col-lg-9 checkbox checkbox-switchery">
-											<input  type="checkbox" class="switchery"  >
+										<label class="col-lg-3 control-label">Command</label>
+										<div class="col-lg-9">
+											
+											<select id="commandId"  class="form-control select"  name="commandId" >
+											<option  ng-repeat ="(id,val) in adminCommands"   value="{{id}}">{{val}}</option>
+											</select>
+											<img id="dataLoadingAC" class="loading loading-imgac" src="images/loading_new.gif"
+										 style="width:30px;height:30px;display: none;position: absolute;top:12%"></img>
 										</div>
 									
 									</div>
-									<br/><br/>
-											<div class="form-group">
-										<label class="col-lg-3 control-label">Register/Unregister IAS</label>
-										<div class="col-lg-9 ">
-											<input  type="checkbox" data-on-color="primary" data-off-color="danger" data-on-text="Register"
-											 data-off-text="Unregister" class="switch" checked="checked"  >
+									<br/>
+								
+										<br/>
+										<div class="form-group " id="update_url" style="display: none;">
+										<label class="col-lg-3 control-label">Update URL</label>
+										<div class="col-lg-9 input-group" style="padding-left: 10px;padding-right: 10px;">
+											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link"><i class="icon-floppy-disk position-left text-green-800" ng-click="adminCommandUpdateUrl()"></i></span>
 										</div>
 									
 									</div>
@@ -438,8 +445,8 @@
 	
 
 	    // Colored switches
-	    var primary = document.querySelector('.switchery');
-	    var switchery = new Switchery(primary, { color: '#2196F3' });
+	   // var primary = document.querySelector('.switchery');
+	  //  var switchery = new Switchery(primary, { color: '#2196F3' });
 
 	   
 	    
