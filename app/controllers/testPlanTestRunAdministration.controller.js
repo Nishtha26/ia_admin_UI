@@ -1113,6 +1113,7 @@ oTech.controller('testPlanTestRunAdministration',
 	        $scope.deviceProfileList = [];
 	        var deepCopyObject = "";
 	        $scope.createTestRun = function(row) {
+	        	$scope.searchTextForRealDevices = "";
 	        	$scope.dataLoading = true;
 	        	$(".save").addClass("disabled");
 	        	$(".schedule").attr("disabled", "disabled");
@@ -1679,8 +1680,6 @@ oTech.controller('testPlanTestRunAdministration',
                             	$scope.successMsgForSchedule = false;
                             }, 3000);
 
-	                       
-	                        $(".schedule").removeAttr("disabled");
 	                    }
 
 	                },
@@ -1759,6 +1758,7 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.deviceProfileCounter = 0;
 			var cloneCopyOfJobDevice = "";
 	        $scope.editTestPlan = function(row){
+	        	$scope.deviceProfileName = "";
 	        	$scope.editTestPlanTab = true;
 	        	$scope.dataProcessingForEditTestPlan = true;
 	        	editVirtualDevice = [];
@@ -1835,6 +1835,7 @@ oTech.controller('testPlanTestRunAdministration',
 	        
 	        /** add device profile **/
 	        $scope.addDeviceProfileToTestPlan = function(row){
+	        	$scope.deviceProfileName = "";
 	        	$scope.editTestPlanTab = true;
 	        	$scope.dataProcessingForEditTestPlan = true;
 	        	editVirtualDevice = [];
