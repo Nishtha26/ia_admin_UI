@@ -526,47 +526,47 @@ oApp.config = {
 			// this row just shows the row index, doesn't use any data from the row
 			
 			{displayName: "MMS Id", field: "mmsId",pinnedLeft:true},
-			{headerName: "deviceId", field: "deviceId" },
-		   {headerName: "jobId", field: "jobId"},
-			{headerName: "callingPartyNumber", field: "callingPartyNumber", cellTooltip: 
+			{headerName: "deviceId", field: "deviceId" ,width:100},
+		   {headerName: "jobId", field: "jobId",width:100},
+			{headerName: "callingPartyNumber", field: "callingPartyNumber",width:100, cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.callingPartyNumber + '';
 	             }},
-			{headerName: "calledPartyNumber", field: "calledPartyNumber", cellTooltip: 
+			{headerName: "calledPartyNumber",width:100, field: "calledPartyNumber", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.calledPartyNumber + '';
 	             }},
-			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+			{headerName: "timeZone",width:100, field: "timeZone", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeZone + '';
 	             }},
-			{displayName: "MMS Time", field: "mmsTime", cellTooltip: 
+			{displayName: "MMS Time",width:100, field: "mmsTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsTime + '';
 	             }},
-			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time",width:100, field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+			{headerName: "deviceLocalTime",width:100, field: "deviceLocalTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.deviceLocalTime + '';
 	             }},
-			{displayName: "MMS Text", field: "mmsText", cellTooltip: 
+			{displayName: "MMS Text",width:150, field: "mmsText", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsText + '';
 	             }},
-			{displayName: "MMS File Size", field: "mmsFileSize"},
-			{displayName: "MMS File Name", field: "mmsFileName", cellTooltip: 
+			{displayName: "MMS File Size",width:50, field: "mmsFileSize"},
+			{displayName: "MMS File Name",width:100, field: "mmsFileName", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.mmsFileName + '';
 	             }},
-			{headerName: "sendStatus", field: "sendStatus"},
-			{headerName: "sessionId", field: "sessionId", cellTooltip: 
+			{headerName: "sendStatus",width:100, field: "sendStatus"},
+			{headerName: "sessionId",width:100, field: "sessionId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.sessionId + '';
 	             }},
-			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+			{headerName: "testcaseId",width:150, field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }}
@@ -1137,47 +1137,47 @@ oApp.config = {
 		columnDefsaudio : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true},
-			{headerName: "jobId", field: "jobId"},
-		   {headerName: "time", field: "time", cellTooltip: 
+			{headerName: "deviceId", field: "deviceId" ,pinnedLeft:true,width:100},
+			{headerName: "jobId", field: "jobId",width:100},
+		   {headerName: "time", field: "time",width:150, cellTooltip: 
                function( row, col ) {
                return '' + row.entity.time + '';
              }},
-			{headerName: "deviceLocalTime", field: "deviceLocalTime", cellTooltip: 
+			{headerName: "deviceLocalTime",width:150, field: "deviceLocalTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.deviceLocalTime + '';
 	             }},
-			{displayName: "UTC Time", field: "utcTime", cellTooltip: 
+			{displayName: "UTC Time",width:100, field: "utcTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.utcTime + '';
 	             }},
-			{headerName: "timeZone", field: "timeZone", cellTooltip: 
+			{headerName: "timeZone",width:100, field: "timeZone", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeZone + '';
 	             }},
-			{headerName: "localAudioFilePath", field: "localAudioFilePath", cellTooltip: 
+			{headerName: "localAudioFilePath",width:150, field: "localAudioFilePath", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.localAudioFilePath + '';
 	             }},
-			{headerName: "startTime", field: "startTime", cellTooltip: 
+			{headerName: "startTime",width:100, field: "startTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.startTime + '';
 	             }},
-			{headerName: "endTime", field: "endTime"},
-			{headerName: "ifPlayer", field: "ifPlayer", cellTooltip: 
+			{headerName: "endTime",width:100, field: "endTime"},
+			{headerName: "ifPlayer",width:100, field: "ifPlayer", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.ifPlayer + '';
 	             }},
-			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+			{headerName: "testcaseId",width:100, field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }},
-			{displayName: "FTP Server", field: "ftpServer"},
-			{displayName: "FTP Server Wave File Path", field: "ftpServerWaveFilePath", cellTooltip: 
+			{displayName: "FTP Server",width:100, field: "ftpServer"},
+			{displayName: "FTP Server Wave File Path",width:100, field: "ftpServerWaveFilePath", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.ftpServerWaveFilePath + '';
 	             }},
-			{headerName: "audioAnalyzed", field: "audioAnalyzed"}
+			{headerName: "audioAnalyzed",width:100, field: "audioAnalyzed"}
 			
 			
 		],
@@ -1351,13 +1351,19 @@ oApp.config = {
 		columnDefs: [
 			{ name: 'username' ,width:"14%"},
 			{ name: 'status',width:"14%" },
-			{ displayName:'Name', field: 'firstName' ,width:"14%"},
+			{ displayName:'Name', field: 'firstName' ,width:"14%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.firstName + '';
+	             }},
 			/*{ name: 'lastName' ,width:"14%"},	*/		
 			{ name: 'email' ,width:"15%", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.email + '';
 	             }},
-			{ name: 'roleName' ,width:"14%"},
+			{ name: 'roleName' ,width:"14%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.roleName + '';
+	             }},
 			{ name: 'companyName' ,width:"14.8%"},
 	 {name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '14%',cellClass: 'ui-grid-cell-button',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -1444,8 +1450,14 @@ addUsergroupsGridOptions :{
 		columnDefs: [
 			{ displayName:'Id', field: 'userGroupId' ,width:"10%"},
 			{ displayName:'Name',  field: 'userGroupName',width:"25%" },
-			{ displayName: 'Created By',field:"createdByName", width:"20%" },
-			{ displayName:'Created On', field: 'createdDate',width:"30%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'"  },
+			{ displayName: 'Created By',field:"createdByName", width:"20%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.createdByName + '';
+	             }  },
+			{ displayName:'Created On', field: 'createdDate',width:"30%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.createdDate + '';
+	             }  },
 			{name:'Actions', 
 				enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '15%',cellClass: 'ui-grid-cell-button',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -1718,9 +1730,18 @@ quickrunGridOptions : {
 		enableVerticalScrollbar :0,
 		columnDefs: [
 			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true,enableCellEdit: false , allowCellFocus : false},
-			{displayName: 'Name', field: 'deviceName',width:"15%"},
-			{ name: 'model' ,width:"20%",enableCellEdit: false },
-			{ name: 'manufacturer' ,width:"10%",enableCellEdit: false},
+			{displayName: 'Name', field: 'deviceName',width:"15%", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.deviceName + '';
+              }},
+			{ name: 'model' ,width:"20%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.model + '';
+               }},
+			{ name: 'manufacturer' ,width:"10%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.manufacturer + '';
+               }},
 		
 			{ displayName: 'Job Status', field: 'statusFlag' ,width:"18%",enableCellEdit: false,
 				  cellTemplate: '<div class="ui-grid-cell-contents">'+
@@ -1731,8 +1752,14 @@ quickrunGridOptions : {
 					  '<span ng-if="row.entity.jobStatusCode ==  -5"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -6"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
-					 ' </span></div>'},
-						{displayName: 'Last Ping', field: 'lastPingDateTime' ,width:"20%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
+					 ' </span></div>', cellTooltip: 
+			                function( row, col ) {
+			                return '' + row.entity.statusFlag + '';
+			               }},
+						{displayName: 'Last Ping', field: 'lastPing' ,width:"20%",enableCellEdit: false, cellTooltip: 
+			                function( row, col ) {
+			                return '' + row.entity.lastPingDateTime + '';
+			               } },
 			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
 							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
@@ -1750,28 +1777,55 @@ quickrunGridOptions : {
 		'</ul>'+
 	'</li>'+
 '</ul>'},*/
-			{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false,
+			/*{displayName:'Device Status', field: 'deviceStatus' ,width:150,enableCellEdit: false,
 						cellTemplate: '<div id="deviceStatus_{{row.entity.deviceId}}" class="ui-grid-cell-contents">'+
 						'{{row.entity.firstName}} {{row.entity.deviceStatus}}</div>}}'			
-			},
+			},*/
 			{displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
 			{displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
 			{ name: 'deviceType' ,width:150,enableCellEdit: false},
-			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false},
+			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.carrier + '';
+               }},
 			
 			
-			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false},
-			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false},
-			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false},
+			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.imsi + '';
+               }},
+			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.imei + '';
+               }},
+			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.msisdn + '';
+               }},
 			{ name: 'networkType' ,width:"15%",enableCellEdit: false},
-			{ name: 'region' ,width:"15%"},
+			{ name: 'region' ,width:"15%", cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.region + '';
+               }},
 			
 			
 			{ name: 'jobId' ,width:100,enableCellEdit: false},
-			{ name: 'jobName' ,width:150,enableCellEdit: false},
-			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false },
-			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'",enableCellEdit: false },
-			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"10%",cellFilter: "date:'"+oApp.constant.GRID_DATE_TIME_FORMAT+"'" ,enableCellEdit: false},
+			{ name: 'jobName' ,width:150,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobName + '';
+               }},
+			{ displayName:'Job Status Time', field: 'jobStatusDateTime' ,width:"20%" ,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobStatusDateTime + '';
+               } },
+			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"20%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobStartDate + '';
+               } },
+			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"20%" ,enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.jobEndDate + '';
+               }},
 			
 			
 		]

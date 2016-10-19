@@ -591,7 +591,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 						   MapServices.clearReplayMap();
 						     $scope.DefaultReplayMap = true ;
 		  	                $scope.rePlayMap =false ;
-						    alert('No Records Was Found')
+						 //   alert('No Records Was Found')
+						    $scope.showErrorMessage("replay_map_error","No Records Was Found");
 						 
 					    }
 				$scope.dataLoadingMap=false;

@@ -90,16 +90,16 @@ padding:25px 20px;
 		<div class="page-content">
 
 			<!-- Main content -->
-			<div class="content-wrapper">
+			<div class="content-wrapper" ng-show="{{role != 'ROLE_REPORTING'}}">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12" >
 						
 					<!-- Devices Div -->
 						
 
 							<!-- Device Synopsis Row -->
 							
-								<div class="col-lg-6">
+								<div class="col-lg-6" ng-show="{{role == 'ROLE_OTADMIN'}}">
 									<div class="panel panel-white">
 										<div class="panel-heading"><h6>Devices  &nbsp;  <span class="label label-primary">{{activeDeviceCountPer}}% Currently Active</span></h6> 
 											<div class="heading-elements">
@@ -245,7 +245,7 @@ padding:25px 20px;
 														</div> -->
 
 														<h3 class="no-margin">{{totalActiveTestRunCount}}</h3>
-														<div class="text-muted text-size-small">Test Run  Trigged</div>
+														<div class="text-muted text-size-small">Test Run  Triggered</div>
 													</div>
 
 													<div class="container-fluid">
@@ -473,7 +473,7 @@ padding:25px 20px;
 					</div>
 					
 					<div class="panel-body" ng-show="replaymap_container"  id="rePlayMap_container" >
-					
+						<div id="replay_map_error" class="errors" style="display:none;"></div>
 					<div class="map-container" id="rePlayMap"></div>
 						
 					</div>
@@ -481,6 +481,9 @@ padding:25px 20px;
 				</div>
 				</div>
 				</div>
+			</div>
+			<div class="content-wrapper" ng-show="{{role == 'ROLE_REPORTING'}}">
+			
 			</div>
 			<!-- /main content -->
 
