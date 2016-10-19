@@ -299,9 +299,9 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 //			$scope.firstname=row.entity.firstName;
 			$("#lastname").val(row.entity.lastName) ;
 //			$scope.lastname=row.entity.lastName;
-//			$("#password").val(row.entity.password) ;
+			$("#password").val(row.entity.password) ;
 			$scope.password=row.entity.password;
-//			$("#cnfpassword").val(row.entity.password) ;
+			$("#cnfpassword").val(row.entity.password) ;
 			$scope.passwordConfirmation=row.entity.password;
 			$("#orgPassword").val(row.entity.password) ;// for check password is change for not
 			

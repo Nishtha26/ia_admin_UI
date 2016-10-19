@@ -452,7 +452,9 @@ oTech.controller('MyDevicesController',
 			 				}
 			 				else{
 			 					  MapServices.clearReplayMap();
-			 					 alert('No Records Was Found')
+			 					// alert('No Records Was Found')
+			 					 
+			 					$scope.showErrorMessage("replay_map_error","No Records Was Found");
 			 					 //	$scope.one =true;
 			 		                $scope.two =true;
 			 		              
