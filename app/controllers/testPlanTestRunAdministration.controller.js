@@ -113,6 +113,7 @@ oTech.controller('testPlanTestRunAdministration',
          			'<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>'+
          				'<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>'+
          				'<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>'+
+         				'<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>'+
          				'<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>'+
          				'<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>'+
          			'</ul>'+
@@ -1152,13 +1153,13 @@ oTech.controller('testPlanTestRunAdministration',
 	                                 if(node.sequenceNo != '0'){
 	                                	if ('nodes' in node) { // command level
 		        	                            angular.forEach(node.nodes, function (node, index) {
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'MakeVoiceCall'){
+		        	        						 if(node.commandParams != undefined && node.commandParams !=null && node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'MakeVoiceCall'){
 		        	        							 $scope.makeVioceCallPhoneNo = true;
 		        	        						 }
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
+		        	        						 if(node.commandParams != undefined && node.commandParams !=null && node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall'){
 		        	        							 $scope.answerVioceCallPhoneNo = true;
 		        	        						 }
-		        	        						 if(node.commandParams.toLowerCase().indexOf("phoneno=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS'){
+		        	        						 if(node.commandParams != undefined && node.commandParams !=null && node.commandParams.toLowerCase().indexOf("phoneno=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS'){
 		        	        							 $scope.sendSms = true;
 		        	        						 }
 		        	                            });
@@ -1817,6 +1818,65 @@ oTech.controller('testPlanTestRunAdministration',
 		                        }, 3000);
 		                        return false;
 		                    }
+							}
+	                	
+	                	
+	                	
+						
+	                },
+	                function (err) {
+	                	$scope.dataProcessingForEditTestPlan = false;
+	                    console.log(err);
+	                }
+	            );
+	            // loaded test plan
+				
+			}
+	        
+	        /** add device profile **/
+	        $scope.addDeviceProfileToTestPlan = function(row){
+	        	$scope.editTestPlanTab = true;
+	        	$scope.dataProcessingForEditTestPlan = true;
+	        	editVirtualDevice = [];
+		        $scope.deviceProfileListForEdit = [];
+		        deepCopyObjectForEditTestPlan = "";
+		        $scope.deviceProfileCounter = 0;
+				cloneCopyOfJobDevice = "";
+				$scope.tree2 = 0;
+	        	//load all virtual device
+	        	
+	        	promise2 = testScriptService.fetchVirtualDevices(token, userId);
+	            promise2.then(
+	                function (data) {
+	                	editVirtualDevice = data;
+	                },
+	                function (err) {
+	                    console.log(err);
+	                }
+	            );
+	        	// virtual device loaded
+	            $scope.editTestPlanTab = true;
+	           // load test plan
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	
+	                	if(data.isMappedTestPlanTestRun.length > 0){
+							$scope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
+							
+							
+								$scope.scrollToTestRunDiv();
+								$scope.mainTab = 2;
+								cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray( data.jobVO[0]) );
+								cloneCopyOfJobDevice[0].jobDeviceId=0;
+								deepCopyObjectForEditTestPlan = jQuery.extend(true, new Object(), data);
+			                    for(var i=0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++){
+			                    	
+			                    	if(editVirtualDevice[i].id == deepCopyObjectForEditTestPlan.jobVO[i].deviceId){
+			                    		editVirtualDevice.splice(i,1);
+			                    	}
+			                    }
+								$scope.dataProcessingForEditTestPlan = false;
 							}
 	                	
 	                	
