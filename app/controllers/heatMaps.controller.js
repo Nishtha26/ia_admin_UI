@@ -247,8 +247,8 @@ oTech.controller('HeatMapsController', function($scope, $rootScope, $location, A
                                 							$(".mashupContainer2").css("display",'');
                                 							$("#kpiImage").attr("src",data.kpiImage);
                                 							$(".kpiTitle").text(data.kpiTitle);
-                                							$("#technology").val(data.technology);
-                                							$("#location").val(data.location);
+                                							//$("#technology").val(data.technology);
+                                						//	$("#location").val(data.location);
                                 							if(showTechnologyFilter){
                                 								$("#panel1").hide();
                                 								$("#panel").show();
