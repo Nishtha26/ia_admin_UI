@@ -10,8 +10,11 @@ $(function () {
 
 		    $(window).scroll(function (event) {
 		      var y = $(this).scrollTop();
-		    //  alert("y " + y+" top "+ top);
 		      if (y >= top) {
+		    	 var contentHeight =  $('.content-wrapper');
+		    	 var dynamicHeight = $('.sidebar').height()
+		    	 contentHeight.addClass('content-wrapper-height');
+		    	 $('.content-wrapper-height').css( "height", dynamicHeight );
 		        sidebar.addClass('fixed');
 		      } else {
 		        sidebar.removeClass('fixed');
@@ -28,7 +31,8 @@ $(function () {
 .fixed{
     position: fixed;
     top: 25px;
-    width:220px!important;
+    width:275px!important;
+    right:30px;
     }
     
 </style>
