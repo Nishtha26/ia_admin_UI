@@ -380,7 +380,9 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	$scope.testUsageLoad();
 //	$scope.findDeviceCount();
+	if($rootScope.role=="ROLE_OTADMIN"){
 	$scope.deviceCountInfo();
+	}
 	$scope.getDeviceUsageData();
 /*	$scope.findActiveDeviceCount();
 	$scope.findScheduledJobCount();

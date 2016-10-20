@@ -61,7 +61,7 @@
 
 								<div class="panel-body" id='device_table_list_div'>
 							<!-- 	<label>Device List</label> -->
-									<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
+									<div class="datatable-header" ><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
 						 <input type="type" class="" ng-change="singleFilter()" ng-model="searchText" placeholder="Type to filter..." ></label></div>
 						<!-- 
 						 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
@@ -86,7 +86,7 @@
 										Data Found</div>
 
 
-																		<div class="row">
+																		<div class="row" style="padding-top:5px;">
 							<div class="col-sm-5">
 									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
 									</div>
@@ -145,15 +145,15 @@
 						
 								</div>
 							<div class="panel-body" id="live_device_container" ng-show ="ShowLiveMap">
-							<div id="Map"  class="map-dim map-container" style="height: 582px;"></div>
+							<div id="Map"  class="map-dim map-container" style="height: 576px;"></div>
 							
 							 <img id="dataLoadingMap" align="middle" ng-show="dataLoadingMap" class="loading loading-imgac" src="{{loadingImageName}}"  style="position:absolute; margin-left: 45%; top: 35%;"></img>
 							</div>
 							</div>
 
-							<div class="panel panel-flat" id="device_facets_container" style="display: none;">
+							<div class="panel panel-white" id="device_facets_container" style="display: none;">
 								<div class="panel-heading">
-									<h6 class="panel-title">Device Feature</h6>
+									<h5 class="panel-title">Device Feature</h5>
 						<!-- 			<div class="heading-elements">
 										<ul class="icons-list">
 	                		<li><a data-action="collapse"></a></li>
@@ -165,7 +165,7 @@
 
 								<div class="panel-body" id="">
 									<div class="tabbable">
-										<ul class="nav nav-tabs">
+										<ul class="nav nav-tabs" style="margin-top:7px;">
 										<!-- href="#availability" */ -->
 											<li id="availability_tab" href="availability" class="d_tab active"><a data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a></li>
 											<li ng-click="deviceMapDefault()" class="d_tab"><a  data-toggle="tab">Replay View</a></li>
@@ -257,14 +257,14 @@
 												<div id="device_map_body"   class="row" style="padding-top: 4px;">
 												<div id="replay_map_error" class="errors" style="display:none;text-align:center;"></div>
 												<img id="dataLoadingReplayMap" align="middle" ng-show="dataLoadingReplayMap" class="loading loading-imgac img-av" src="{{loadingImageName}}" ></img>
-												 <div id="rePlayMap" class="map-container"  style="position:relative;height:480px;"></div>
-								 <div id="DefaultReplayMap" class="map-container"  style="position:relative;height: 480px;"></div>
+												 <div id="rePlayMap" class="map-container"  style="position:relative;height:446px;"></div>
+								 <div id="DefaultReplayMap" class="map-container"  style="position:relative;height:446px;"></div>
 											</div></div>
 
 										<div class="tab-pane" id="admin_operation_body">
 										   
 											<div class="panel-group  "> <!-- panel-group-control panel-group-control-right -->
-												<div class="panel panel-white">
+								<div class="panel panel-white" ng-show="{{role == 'ROLE_OTADMIN'}}" style="margin-bottom: 20px;">
 								<div class="panel-heading">
 									<h6 class="panel-title">
 										<a data-toggle="collapse" >Device Management</a>
@@ -317,7 +317,7 @@
 										<div class="form-group " id="update_url" style="display: none;">
 										<label class="col-lg-3 control-label">Update URL</label>
 										<div class="col-lg-9 input-group" style="padding-left: 10px;padding-right: 10px;">
-											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link"><i class="icon-floppy-disk position-left text-green-800" ng-click="adminCommandUpdateUrl()"></i></span>
+											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link"><i class="icon-floppy-disk position-left text-teal-300" ng-click="adminCommandUpdateUrl()"></i></span>
 										</div>
 									
 									</div>
