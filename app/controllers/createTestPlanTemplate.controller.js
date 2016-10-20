@@ -100,8 +100,20 @@ oTech
 					}
 
 					$scope.newSubItem = function(scope) {
+						var totalPixcelToScroll = "";
 						var nodeData = scope.$modelValue;
 						if (nodeData.id >= 1 && nodeData.id < 10) {
+							var totalNodes = nodeData.nodes.length;
+							angular.forEach(nodeData.nodes, function (node, index) {
+								totalNodes += node.nodes.length;
+								angular.forEach(node.nodes, function (node, index) {
+									totalNodes += node.nodes.length;
+									
+								});
+							});
+							totalPixcelToScroll = 267*totalNodes+"px";
+							$('html, body').animate({scrollTop: totalPixcelToScroll}, 800);
+							//$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 							var nodenamePostFix = nodeData.nodes.length + 1;
 							nodeData.nodes
 									.push({
@@ -131,6 +143,9 @@ oTech
 									});
 						}
 						if (nodeData.id >= 10 && nodeData.id < 100) {
+							totalPixcelToScroll = 267*nodeData.nodes.length+"px";
+							$('html, body').animate({scrollTop: totalPixcelToScroll}, 800);
+							//$("html, body").animate({ scrollTopscrollTop: '+=1080px'}, 1000);
 							nodeData.nodes.push({
 								"id" : (nodeData.nodes.length + 1) * 100,
 								"title" : "Command Group",
@@ -150,6 +165,8 @@ oTech
 						}
 
 						if (nodeData.id >= 100) {
+							totalPixcelToScroll = 267*nodeData.nodes.length+"px";;
+							$('html, body').animate({scrollTop:totalPixcelToScroll}, 800);
 							nodeData.nodes.push({
 								"id" : (nodeData.nodes.length + 1) * 1000,
 								"title" : "Add Command",

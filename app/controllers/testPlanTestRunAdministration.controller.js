@@ -161,7 +161,8 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             	List = [];
-				
+            	$scope.msg = "";
+            	$scope.errorMsgForDevice = false;
                 //Get devices service
 				if(row.isSelected){
 					// load test plan
@@ -179,6 +180,10 @@ oTech.controller('testPlanTestRunAdministration',
 		                }
 		            );
 		            // loaded test plan
+				}else{
+					$scope.quickTestPlanId = "";
+					$scope.quickDeviceProfileId = "";
+					$scope.quickRunDeviceId = "";
 				}
 
 
@@ -1678,6 +1683,8 @@ oTech.controller('testPlanTestRunAdministration',
 	                        $rootScope.successMsgForScheduleModel = "Test Run has been Scheduled Successfully";
 	                        $timeout(function () {
                             	$scope.successMsgForSchedule = false;
+                            	$scope.mainTab = 3;
+                            	 $('html, body').animate({scrollTop: '+=1080px'}, 800);
                             }, 3000);
 
 	                    }
@@ -2270,9 +2277,10 @@ oTech.controller('testPlanTestRunAdministration',
 			};
 			
 			promise = testScriptService.getRealDevices(token, userId);
+			$(".quickRun").addClass("disabled");
 	        promise.then(
 	            function (data) {
-					
+	            	$(".quickRun").removeClass("disabled");
 	                $scope.RealDevicesOptionsForQuickRun.data = data.devicesList;
 	                $scope.tempRealDeviceListForQuickRun = data.devicesList;
 	            },
@@ -2349,13 +2357,39 @@ oTech.controller('testPlanTestRunAdministration',
 	        $scope.RealDevicesOptionsForQuickRun.onRegisterApi = function (gridApi) {
 	            $scope.gridApi1 = gridApi;
 	            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+	            	$scope.isUniqueDevice = false;
+	            	if( $scope.quickTestPlanId == undefined || $scope.quickTestPlanId == ""){
+	            		$scope.errorMsgForDevice = true;
+	            		row.isSelected = false;
+	            		$scope.msg = "Please Select Test Plan!!"
+	            		return false;
+	            	}
 	            	if(row.isSelected && $scope.quickTestPlanId != undefined && $scope.quickRunDeviceId != undefined){
-						quickRunRealDevices.push({
-										'testplanId': $scope.quickTestPlanId,
-										'testrunId': 0,
-										'virtualDeviceId': $scope.quickRunDeviceId,
-										'realDeviceId': row.entity.deviceId,
-		                            });
+	            		if(quickRunRealDevices.length > 0){
+	            		for (var i = 0; i < quickRunRealDevices.length; i++){
+							if(quickRunRealDevices[i].realDeviceId == row.entity.deviceId){
+								$scope.isUniqueDevice = true; 
+								break;
+							}
+						}
+	            		if(!$scope.isUniqueDevice){
+		            		quickRunRealDevices.push({
+								'testplanId': $scope.quickTestPlanId,
+								'testrunId': 0,
+								'virtualDeviceId': $scope.quickRunDeviceId,
+								'realDeviceId': row.entity.deviceId,
+	                        });
+	            		}
+	            		
+	            		}else{
+	            			quickRunRealDevices.push({
+								'testplanId': $scope.quickTestPlanId,
+								'testrunId': 0,
+								'virtualDeviceId': $scope.quickRunDeviceId,
+								'realDeviceId': row.entity.deviceId,
+                            });
+	            		}
+						
 							
 						}else{
 							for (var i = 0; i < quickRunRealDevices.length; i++){
