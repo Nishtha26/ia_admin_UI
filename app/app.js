@@ -535,6 +535,8 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
      if(keyVal=="Reports"){
     	 sessionStorage.setItem('tableauURL',menuUrl); 
     	 $location.path("/dashboard/reportsTableau");
+    	 location.reload();
+ 
      }
      else{
     	  if(name == 'Logout') 

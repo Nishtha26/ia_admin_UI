@@ -438,9 +438,19 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
     $scope.gridApi.grid.refresh();
   };*/
 //var allFilterdata=allOfTheData;
+var filterType="";
 $scope.singleFilter = function() {
  // var allFilterdata=allOfTheData;
-    $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+	  filterType = function(item) {
+	        return item.companyName.toLowerCase().indexOf($scope.searchText || '') !== -1 
+	        || item.status.toLowerCase().indexOf($scope.searchText || '') !== -1
+	        || item.firstName.toLowerCase().indexOf($scope.searchText || '') !== -1
+	        || item.email.toLowerCase().indexOf($scope.searchText || '') !== -1
+	        || item.roleName.toLowerCase().indexOf($scope.searchText || '') !== -1
+	        || item.username.toLowerCase().indexOf($scope.searchText || '') !== -1;
+	        
+	 }
+    $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, filterType,$scope.searchText);
     $scope.userTableGridOptions.data = $scope.userTableGridOptions.data.slice( 0, $scope.endLimit);
    // allOfTheData=$scope.userTableGridOptions.data;
    // $scope.createNewDatasource();
@@ -772,6 +782,7 @@ $scope.getCheckedUserGroup =function(usergroup){
 $scope.deleteUser =function(userNames,accountEnableStatus){
 	$scope.dataLoading=true;
 //	var userNames=$(".d-username").val();
+	var oldStatus=accountEnableStatus;
 	promise = AppServices.deleteUserAdministration(token,userNames, accountEnableStatus);
 	promise.then(
 		function(data){
@@ -791,13 +802,20 @@ $scope.deleteUser =function(userNames,accountEnableStatus){
 			 $scope.cancel();
 			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
 		 $scope.showSuccessMessage('input_user_error_message',"User update successfully");
-			 $scope.userTableData();
+		 if(oldStatus==0){
+		 $scope.currentRow.entity.status="INACTIVE";// for show status text after update in db
+		 		}
+		 else if(oldStatus==1)
+		 {
+			 $scope.currentRow.entity.status="ACTIVE";;
+		   }
+			// $scope.userTableData();
 			 }
 			$scope.dataLoading=false;
 		},
 		function(err){
-			
-			  $scope.showErrorMessage('input_user_error_message',err.responseJSON.message);
+			console.log("Error"+err.statusText)
+			  $scope.showErrorMessage('input_user_error_message',"Unable to process");
 		/*	  $rootScope.Message = err.responseJSON.message;
 			
 				 $('#MessageColor').css("color", "red");
@@ -812,9 +830,9 @@ $scope.deleteUser =function(userNames,accountEnableStatus){
 $scope.DeleteUserBtn=function(){
 	 var userNames;
 	 var isComma=false;
-	 for(var uIndex in $scope.selectedUsers){
-//		 console.log(""+$scope.selectedUsers[uIndex].username);
-//	userNames.push($scope.selectedUsers[uIndex].username);	
+	 userNames="'"+$scope.currentRow.entity.username+"'";
+/*	 for(var uIndex in $scope.selectedUsers){
+
 		 if(isComma){
 			 userNames=	 userNames+","+ "'"+$scope.selectedUsers[uIndex].username+ "'";
 			
@@ -823,8 +841,9 @@ $scope.DeleteUserBtn=function(){
 			 userNames= "'"+$scope.selectedUsers[uIndex].username+"'";
 			 isComma=true;
 		 }
-	 }
+	 }*/
 	 console.log("userNames "+userNames);
+		$scope.DeleteBtnLabel();
 	 if ( window.confirm(deletePopupMsg) ) {
 		 $scope.deleteUser(userNames,$scope.accountEnableStatus);
      }
@@ -835,16 +854,24 @@ $scope.DeleteBtnLabel=function(){
 	 $scope.deleteLabel="Activate/Deactivate";
 	var isActiveCount=0;
 	var isDeactiveCount=0;
-	 for(var uIndex in $scope.selectedUsers){
-		 if($scope.selectedUsers[uIndex].status=='ACTIVE'){
+	// for(var uIndex in $scope.selectedUsers){
+		 if($scope.currentRow.entity.status=='ACTIVE'){
 //			 userNames=	 userNames+","+ "'"+$scope.selectedUsers[uIndex].username+ "'";
-			 isActiveCount++;
+		//	 isActiveCount++;
+			 $scope.deleteLabel="Deactivate";
+				deletePopupMsg="Do you want to deactivate this user(s)?"
+				 $scope.isDeleteDisabled = false;
+				 $scope.accountEnableStatus=0;
 		 }
 		 else{
-			 isDeactiveCount++;
+				$scope.deleteLabel="Activate";
+				deletePopupMsg="Do you want to activate this user(s)?"
+				 $scope.accountEnableStatus=1;
+				 $scope.isDeleteDisabled = false;
+		//	 isDeactiveCount++;
 		 }
-	 }
-	if($scope.selectedUsers.length==isActiveCount){
+	// }
+/*	if($scope.selectedUsers.length==isActiveCount){
 		$scope.deleteLabel="Deactivate";
 		deletePopupMsg="Do you want to deactivate this user(s)?"
 		 $scope.isDeleteDisabled = false;
@@ -855,7 +882,7 @@ $scope.DeleteBtnLabel=function(){
 		deletePopupMsg="Do you want to activate this user(s)?"
 		 $scope.accountEnableStatus=1;
 		 $scope.isDeleteDisabled = false;
-	}
+	}*/
 		 
 }
 
