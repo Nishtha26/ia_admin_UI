@@ -15100,7 +15100,8 @@ thead .htCollapseButton:after {
 }
 .datatable-header,
 .datatable-footer {
-  padding-top: 20px;
+  /* padding-top: 20px; */
+  padding-top: 0px;
 }
 .datatable-header:after,
 .datatable-footer:after {

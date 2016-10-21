@@ -22,6 +22,19 @@ z-index: 1002;
     top: 50%;
     left: 1.5%;
 }
+.testRun-vertical {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transform-origin: left top 0;
+    float: right;
+    position: absolute;
+    top: 35%;
+    right: -7%;
+    z-index:1;
+}
 .devices-graph{
 	margin-left:20px;
 }
@@ -355,6 +368,7 @@ padding:25px 20px;
 										</div> -->
 
 										<div class="content-group-sm" id="test_plans_lines"></div>
+										<div class="testRun-vertical">Color for Device(s) </div>
 										<div id="chart_div" style="height:314px;"></div>
 									</div>
 								

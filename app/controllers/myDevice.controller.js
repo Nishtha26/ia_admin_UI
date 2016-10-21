@@ -200,7 +200,7 @@ oTech.controller('MyDevicesController',
 	$scope.getTableHeight = function() {
 	    var rowHeight = 41; // your row height
 	    var headerHeight = 45; // your header height
-	    var footerPage=5;
+	    var footerPage=12;
 	    var gridHeight=0;
 	    var dataCount=$scope.myDevicesGridOptions.data.length;
 	    gridHeight=($scope.myDevicesGridOptions.data.length * rowHeight + headerHeight+footerPage);
@@ -311,7 +311,7 @@ oTech.controller('MyDevicesController',
 									GraphMaximizeServices.DahsboardDevicesAvailability(data,startDate,endDate);
 									 $scope.dataLoadingAvailability=false;
 									
-									$('.highcharts-container').css({"height":"475px"});
+									$('.highcharts-container').css({"height":"446px"});
 									
 								},
 								function(err){
