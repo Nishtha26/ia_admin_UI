@@ -688,11 +688,10 @@ bottom:50px;}
 												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
 													
 														<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
-														<div class="input-group">
+														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
 																<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
 														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
 														name="Datendtime" placeholder="start date" required> 
-																<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 															</div>
 															<!-- <div ng-show="form.$submitted || form.Datendtime.$touched">
 																<div ng-show="form.Datendtime.$error.required"
@@ -705,10 +704,10 @@ bottom:50px;}
 													
 														</div>
 											<div class="col-lg-4  col-md-4" style="padding-left: 0px;"><div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 												<input type="text" class="form-control daterange-left" ng-model="EndDate"
 														style="background-color: #FFFFFF" datetime-picker
 														date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
-												<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 											</div>
 													<!-- <div ng-show="form.$submitted || form.EndDate.$touched">
 														<div ng-show="form.EndDate.$error.required"
@@ -789,7 +788,8 @@ bottom:50px;}
 													<div class="col-lg-8">
 														<div class="input-group">
 															<input type="text" class="form-control" id="device_name_to_plan" ng-change="deviceProvileName()" ng-model="deviceProfileName" placeholder="Device Profile Name">
-															<span class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileEdit" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileAdd" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTabForDeviceProfile()" >Add</span>
 														</div>
 														<span  style="color:red" ng-show="err" class="help-block">{{addProfileErrorMsg}}</span>
 													</div>
