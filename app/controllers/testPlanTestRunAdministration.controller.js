@@ -134,7 +134,7 @@ oTech.controller('testPlanTestRunAdministration',
 				enableRowHeaderSelection: false, // this is for check box to appear on grid options
 				enableFiltering: false,
 				enableGridMenu: false,		// for searching
-				multiSelect:true,
+				multiSelect:false,
 				enableScrollbars : true,
 				enableVerticalScrollbar :3,
 			    enableHorizontalScrollbar:0,

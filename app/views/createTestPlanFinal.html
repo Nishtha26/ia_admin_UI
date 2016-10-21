@@ -124,8 +124,8 @@ display:block;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-5 col-sm-5 col-xs-5"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
-<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /></span>
+<div class="col-lg-5 col-sm-5 col-xs-5"><span ng-if="node.commandParams && node.isCommand"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length && node.isCommand"><input class="form-control"   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 92%; padding-left:0px;" /></span>
 </div>
 <div class="col-lg-2 col-sm-2 col-xs-2" style="text-align:right;"><input class="form-control command_loop_number" ng-model="node.loop" style="width: 50px; text-align:center; display: inline-block;" maxlength="4" type="text" numbers-only/></div> 
 <div class="col-lg-2 col-sm-2 col-xs-2" style="text-align:center;"><input class="form-control sequence_number"  style="width: 50px; text-align:center; display: inline-block;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
