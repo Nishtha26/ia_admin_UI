@@ -305,8 +305,8 @@ bottom:50px;}
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-4 col-sm-4 col-xs-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
-<span ng-if="!node.commandParams.length"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /></span></div>
+<div class="col-lg-4 col-sm-4 col-xs-4"><span ng-if="node.commandParams && node.isCommand"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length && node.isCommand"><input class="form-control "   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 92%; padding-left:0px;" /></span></div>
 <div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" numbers-only/></div> 
 <div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
 </span>
@@ -688,11 +688,10 @@ bottom:50px;}
 												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
 													
 														<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
-														<div class="input-group">
+														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
 																<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
 														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
 														name="Datendtime" placeholder="start date" required> 
-																<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 															</div>
 															<!-- <div ng-show="form.$submitted || form.Datendtime.$touched">
 																<div ng-show="form.Datendtime.$error.required"
@@ -705,10 +704,10 @@ bottom:50px;}
 													
 														</div>
 											<div class="col-lg-4  col-md-4" style="padding-left: 0px;"><div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 												<input type="text" class="form-control daterange-left" ng-model="EndDate"
 														style="background-color: #FFFFFF" datetime-picker
 														date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
-												<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 											</div>
 													<!-- <div ng-show="form.$submitted || form.EndDate.$touched">
 														<div ng-show="form.EndDate.$error.required"
@@ -789,7 +788,8 @@ bottom:50px;}
 													<div class="col-lg-8">
 														<div class="input-group">
 															<input type="text" class="form-control" id="device_name_to_plan" ng-change="deviceProvileName()" ng-model="deviceProfileName" placeholder="Device Profile Name">
-															<span class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileEdit" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileAdd" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTabForDeviceProfile()" >Add</span>
 														</div>
 														<span  style="color:red" ng-show="err" class="help-block">{{addProfileErrorMsg}}</span>
 													</div>

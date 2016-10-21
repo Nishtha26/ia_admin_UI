@@ -134,6 +134,7 @@ oTech
 												"id" : (nodeData.nodes.length + 1) * 1000,
 												"title" : "Add Command",
 												"sequenceNo" : 1,
+												"isCommand" : true,
 												"loop" : 1,
 												"commandParams" : "",
 												"commandId" : 100000,
@@ -156,6 +157,7 @@ oTech
 									"id" : (nodeData.nodes.length + 1) * 1000,
 									"title" : "Add Command",
 									"sequenceNo" : 1,
+									"isCommand" : true,
 									"loop" : 1,
 									"commandParams" : "",
 									"commandId" : 100000,
@@ -173,6 +175,7 @@ oTech
 								"sequenceNo" : 1,
 								"loop" : 1,
 								"commandParams" : "",
+								"isCommand" : true,
 								"commandId" : 100000,
 								"nodes" : []
 							});
@@ -210,6 +213,7 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 									"id" : 1000,
 									"title" : "Add Command",
 									"sequenceNo" : 1,
+									"isCommand" : true,
 									"loop" : 1,
 									"commandParams" : "",
 									"commandId" : 100000,

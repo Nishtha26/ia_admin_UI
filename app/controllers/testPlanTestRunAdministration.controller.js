@@ -134,7 +134,7 @@ oTech.controller('testPlanTestRunAdministration',
 				enableRowHeaderSelection: false, // this is for check box to appear on grid options
 				enableFiltering: false,
 				enableGridMenu: false,		// for searching
-				multiSelect:true,
+				multiSelect:false,
 				enableScrollbars : true,
 				enableVerticalScrollbar :3,
 			    enableHorizontalScrollbar:0,
@@ -1768,6 +1768,8 @@ oTech.controller('testPlanTestRunAdministration',
 	        	$scope.deviceProfileName = "";
 	        	$scope.editTestPlanTab = true;
 	        	$scope.dataProcessingForEditTestPlan = true;
+	        	$scope.isDeviceProfileEdit = true;
+	        	$scope.isDeviceProfileAdd = false;
 	        	editVirtualDevice = [];
 		        $scope.deviceProfileListForEdit = [];
 		        deepCopyObjectForEditTestPlan = "";
@@ -1845,8 +1847,11 @@ oTech.controller('testPlanTestRunAdministration',
 	        	$scope.deviceProfileName = "";
 	        	$scope.editTestPlanTab = true;
 	        	$scope.dataProcessingForEditTestPlan = true;
+	        	$scope.isDeviceProfileAdd = true;
+	        	$scope.isDeviceProfileEdit = false;
 	        	editVirtualDevice = [];
 		        $scope.deviceProfileListForEdit = [];
+		        $scope.deviceProfileListForAdd = [];
 		        deepCopyObjectForEditTestPlan = "";
 		        $scope.deviceProfileCounter = 0;
 				cloneCopyOfJobDevice = "";
@@ -1878,12 +1883,25 @@ oTech.controller('testPlanTestRunAdministration',
 								cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray( data.jobVO[0]) );
 								cloneCopyOfJobDevice[0].jobDeviceId=0;
 								deepCopyObjectForEditTestPlan = jQuery.extend(true, new Object(), data);
+								var cloneCopyOfeditVirtualDevice = [];
+								 for(var i=0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++){
+									 cloneCopyOfeditVirtualDevice.push(deepCopyObjectForEditTestPlan.jobVO[i].deviceId)
+				                    }
+								 for(var i=0; i < cloneCopyOfeditVirtualDevice.length; i++){
+									 for(var j=0; j < editVirtualDevice.length; j++){
+										 if(cloneCopyOfeditVirtualDevice[i] == editVirtualDevice[j].id){
+					                    		editVirtualDevice.splice(j,1);
+					                    		break;
+					                    	}
+									 }
+								 }
+ 
 			                    for(var i=0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++){
-			                    	
-			                    	if(editVirtualDevice[i].id == deepCopyObjectForEditTestPlan.jobVO[i].deviceId){
-			                    		editVirtualDevice.splice(i,1);
-			                    	}
+			                    				                    	
+			                    	var arr = jQuery.makeArray( deepCopyObjectForEditTestPlan.jobVO[i] );
+								$scope.deviceProfileListForAdd.push({'deviceProfileName':deepCopyObjectForEditTestPlan.jobVO[i].deviceProfileName});
 			                    }
+			                    
 								$scope.dataProcessingForEditTestPlan = false;
 							}
 	                	
@@ -1963,10 +1981,80 @@ oTech.controller('testPlanTestRunAdministration',
 				
 			}
 			
+			
+			$scope.addTabForDeviceProfile = function(){
+				
+				if($scope.deviceProfileListForAdd.length > 0){
+				for (var i = 0; i < $scope.deviceProfileListForAdd.length; i++){
+					if($scope.deviceProfileListForAdd[i].deviceProfileName == $scope.deviceProfileName){
+						
+						$scope.boolean = true;
+						$scope.addProfileErrorMsg = "Please provide unique profile.."
+						$scope.err = true;
+						$timeout(function () {
+							$scope.err = false;
+                        }, 3000);
+					}
+				}
+				
+				if($scope.deviceProfileName == undefined || $scope.deviceProfileName == ""){
+					$scope.addProfileErrorMsg = "Blank not allowed.."
+						$scope.err = true;
+					$timeout(function () {
+						$scope.err = false;
+                    }, 3000);
+					return false;
+				}
+				
+
+				if(!$scope.boolean){
+					$scope.deviceProfileListForAdd.push({'deviceProfileName':$scope.deviceProfileName});
+					var temp = {};
+					temp['deviceProfileName'] = $scope.deviceProfileName;
+					temp['id'] = editVirtualDevice[$scope.deviceProfileCounter].name;
+					temp['index'] = $scope.deviceProfileCounter;
+					temp['deviceId'] = editVirtualDevice[$scope.deviceProfileCounter].id;
+					temp['content'] =  jQuery.extend(true, new Object(), cloneCopyOfJobDevice);
+					$scope.deviceProfileListForEdit.push(temp);
+					$scope.tree2 =  $scope.deviceProfileListForEdit[$scope.deviceProfileCounter].content;
+					$scope.activeProfile = $scope.deviceProfileCounter;
+					$scope.deviceProfileCounter++;
+					}
+				
+				}else{
+					
+					var temp = {};
+					temp['deviceProfileName'] = $scope.deviceProfileName;
+					temp['id'] = editVirtualDevice[$scope.deviceProfileCounter].name;
+					temp['index'] = $scope.deviceProfileCounter;
+					temp['deviceId'] = editVirtualDevice[$scope.deviceProfileCounter].id;
+					temp['content'] =  jQuery.extend(true, new Object(), cloneCopyOfJobDevice);
+					$scope.deviceProfileListForEdit.push(temp);
+					$scope.tree2 =  $scope.deviceProfileListForEdit[$scope.deviceProfileCounter].content;
+					$scope.activeProfile = $scope.deviceProfileCounter;
+					$scope.deviceProfileListForAdd.push({'deviceProfileName':$scope.deviceProfileName});
+					$scope.deviceProfileCounter++;
+					
+					
+				}
+				
+				
+			}
+			
 			/** Function to delete a tab **/
 			$scope.removeFancyTree = function(mapping){
+				if($scope.deviceProfileListForAdd != undefined && $scope.deviceProfileListForAdd.length > 0){
+					for (var i = 0; i < $scope.deviceProfileListForAdd.length; i++){
+						if($scope.deviceProfileListForAdd[i].deviceProfileName == mapping.deviceProfileName){
+							var index=$scope.deviceProfileListForAdd.indexOf(mapping.deviceProfileName)
+						      $scope.deviceProfileListForAdd.splice(index,1);
+						}
+					}
+					
+				}
 				$scope.deviceProfileListForEdit.splice(mapping.index,1);
 				$scope.deviceProfileCounter--;
+				$scope.tree2 = "";
 			}
 			
 			$scope.selectedTab = 0; 
