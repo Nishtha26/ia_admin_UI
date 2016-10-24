@@ -969,6 +969,16 @@ angular.module('oTech').factory('messages', function(){
 
 });
 
+angular.module('oTech').factory('messagesTemplate', function(){
+	  var messages = [];
+	  
+	  messages.add = function(message){
+	     messages.push(message);
+	  };
+	  return messages;
+
+	});
+
 oTech.directive('selectBoxPreSelected', function($timeout) {
     return {
         restrict: 'AC',

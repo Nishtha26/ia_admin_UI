@@ -229,13 +229,12 @@ display:block;
 margin-top : 7px;
 }
 
-#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport
+#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport
 {overflow-y: auto;
 	-webkit-overflow-scrolling: touch
 	}
 	
-#jobStatusList .ui-grid-contents-wrapper{
-bottom:50px;}
+
 </style>
 <!-- 
 <script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
@@ -1076,7 +1075,7 @@ bottom:50px;}
 								<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
 				<p style="text-align:center" ng-show="deviceNotificationLogList.deviceNotificationLogList.length <= 0 && !dataLoadingPopup">No Data Found</p>
 								
-								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 450px;" >
+								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 450px;" >
 							</div>
 
 							<!-- <div class="modal-footer">
@@ -1144,32 +1143,24 @@ bottom:50px;}
                                                         </tbody>
                                                     </table>
                                                 </div>
-                       </div>
+                       </div> 
 					<div class="row">
 						<div class="col-md-12">
-							<img src="images/loading.gif"
-								style="position: relative; left: 42%;"
-								ng-show="dataLoadingPopup"></img>
-							<p style="text-align: center"
+							<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+				<p style="text-align: center"
 								ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No
 								Data Found</p>
-
-							<div id="jobStatusList" ui-grid="jobStatusList"
-								ui-grid-pagination ui-grid-cellNav ui-grid-auto-resize
-								ng-show="commandInfoList.length > 0 && !dataLoadingPopup"
-								class="table table-hover grid"
-								style="overflow: hidden; height: 450px;"></div>
+								<div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 450px;" >
+								</div>
 						</div>
 					</div>
 
-					<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div> -->
+					
 						</div>
 					</div>
 				</div>
 			</div>
+				
 		<!-- /DeviceNotification_List -->
 		
 	<div class="popover fade top in editable-container editable-popup"
