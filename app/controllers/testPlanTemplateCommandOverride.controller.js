@@ -1,6 +1,6 @@
 oTech.controller('testPlanTemplateCommandOverride',
     function ($scope,$compile, $rootScope, $location, AppServices, GraphServices, GraphMaximizeServices,
-              $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $log, $timeout,messages) {
+              $stateParams, testScriptService, uiGridConstants, $cookieStore, $uibModal, $log, $timeout,messagesTemplate) {
 		
 		var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
@@ -19,16 +19,16 @@ oTech.controller('testPlanTemplateCommandOverride',
 		
 		
 		
-		if(messages.length==1){
-			for(var i=0; i < messages[0].length; i++){
-			      if(messages[0][i].key == "testPlanName")
-			    	  $scope.testPlanName = messages[0][i].value;
-			      if(messages[0][i].key == "testPlanDescription")
-			    	  $scope.testPlanDescription = messages[0][i].value;
-			      if(messages[0][i].key == "treeJson")
-			    	  $scope.uiTreeJSON = messages[0][i].value;
-			      if(messages[0][i].key == "usecase")
-			    	  $scope.usecaseVal = messages[0][i].value.id;
+		if(messagesTemplate.length==1){
+			for(var i=0; i < messagesTemplate[0].length; i++){
+			      if(messagesTemplate[0][i].key == "testPlanName")
+			    	  $scope.testPlanName = messagesTemplate[0][i].value;
+			      if(messagesTemplate[0][i].key == "testPlanDescription")
+			    	  $scope.testPlanDescription = messagesTemplate[0][i].value;
+			      if(messagesTemplate[0][i].key == "treeJson")
+			    	  $scope.uiTreeJSON = messagesTemplate[0][i].value;
+			      if(messagesTemplate[0][i].key == "usecase")
+			    	  $scope.usecaseVal = messagesTemplate[0][i].value.id;
 			      
 			   }
 		}
