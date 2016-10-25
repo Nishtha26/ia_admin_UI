@@ -234,6 +234,10 @@ margin-top : 7px;
 	-webkit-overflow-scrolling: touch
 	}
 	
+#jobStatusList .ui-grid-pager-panel{
+top : 100%;
+}
+	
 
 </style>
 <!-- 
@@ -1043,7 +1047,7 @@ margin-top : 7px;
 								<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
 								<p style="text-align:center" ng-show="deviceLogList.deviceLogList.length <= 0 && !dataLoadingPopup">No Data Found</p>
 								
-								<div id="deviceLogListGridOptions" ui-grid="deviceLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceLogList.deviceLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 450px;" >
+								<div id="deviceLogListGridOptions" ui-grid="deviceLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceLogList.deviceLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 500px;" >
 							</div>
 
 							<!-- <div class="modal-footer">
@@ -1075,7 +1079,7 @@ margin-top : 7px;
 								<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
 				<p style="text-align:center" ng-show="deviceNotificationLogList.deviceNotificationLogList.length <= 0 && !dataLoadingPopup">No Data Found</p>
 								
-								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 450px;" >
+								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 500px;" >
 							</div>
 
 							<!-- <div class="modal-footer">
@@ -1150,13 +1154,14 @@ margin-top : 7px;
 				<p style="text-align: center"
 								ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No
 								Data Found</p>
-								<div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 450px;" >
+								<div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 500px;" >
 								</div>
 						</div>
 					</div>
 
 					
 						</div>
+						
 					</div>
 				</div>
 			</div>
