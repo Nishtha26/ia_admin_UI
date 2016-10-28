@@ -1,0 +1,460 @@
+<style>
+.angular-ui-tree-node, .angular-ui-tree-placeholder{
+	mrgin-top:20px !important;}
+/* .angular-ui-tree-nodes .angular-ui-tree-nodes {
+    padding-left: 10px;
+} */
+.angular-ui-tree-node{
+	min-height:36px;
+}
+.panel-body {
+    padding: 14px 14px 7px 14px;
+}
+.panel {
+    margin-bottom: 7px;
+    }
+.panel_mt{
+	margin-top: 15px;
+}
+.angular-ui-tree-handle{
+border:none;
+background:none;
+padding: 10px;
+}
+
+.textboxcommand{
+height: 25px;
+    margin-bottom: 5px!important;
+    padding: 2px 10px;
+    }
+
+#aab{
+border-bottom: 1px solid #dae2ea;}
+
+
+input {
+font-weight:normal;}
+
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #909;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #909;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #909;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #909;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #636363;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #636363;
+}
+.addButtonTestPlan{
+padding:4px;}
+
+.commandText div:first-child{
+padding:0;
+margin:0;}
+
+.dropCommands{
+	margin-top: -10px;
+    padding-bottom: 10px}
+												
+
+input{
+margin:0px 3px !important; }
+.panel-heading{
+    padding: 10px 20px;
+   }
+ .form-control{
+ 	height: 25px;
+    padding: 2px 10px;
+ }
+ .heading-elements{
+ top:40%;
+ }
+ .well{
+     padding: 20px 20px 0px 20px;
+ }
+ .command_group_container_div{
+ 	padding: 14px 14px 14px 14px;
+ }
+ div .command_group_container_div:not(:first-child) {
+    padding: 0px 14px 14px 14px;
+}
+.coustom-form-control{
+display:inline-block;
+width:40px;
+text-align:center;
+}
+hr{
+margin-bottom:5px !important;
+}
+</style>
+<script type="text/ng-template" id="nodes_renderer5.html">
+  <div ui-tree-handle class="tree-node tree-node-content">
+   	{{node.title}}
+  </div>
+</script>
+
+<script type="text/ng-template" id="attribute_header.html">
+<div ui-tree-handle  >
+<div class="panel-heading" style="padding: 0 12px;">
+								<h6 class="panel-title">Attributes Detail</h6>
+								<div class="heading-elements">
+									<ul class="icons-list">
+							
+				<li>
+<li><button type="button"  class="btn  btn-success btn-labeled btn-sm addButtonTestPlan" ng-click="newSubItem(this)"><b>
+<i class=" icon-plus22"></i>
+</b> Add New Rule</button>
+</li>
+</li>
+									
+									</ul>
+								</div>
+							</div>
+</div>
+
+<div class="panel-body test_case_container_div bg-slate-300" >
+								<div ui-tree-nodes="" ng-model="node.rules" ng-class="{hidden: collapsed}">
+								<div class="panel panel-white test_case_panel" ui-tree-node ng-repeat="node in node.rules" ng-include="'nodrop_nodes_renderer3.html'" >
+						</div>
+</div>
+				</div>
+
+
+</script>
+<script type="text/ng-template" id="nodrop_nodes_renderer3.html">	
+<div ui-tree-handle  id="aab">										
+<div class="panel-heading">
+										<h6 class="panel-title">Create Rule</h6>
+										<div class="heading-elements">
+											<ul class="icons-list">
+									<li>
+								<span style="font-weight:normal; margin-right:5px;">Rule Name:</span>
+ <input type='text' class='form-control' ng-model="node.ruleName" style='width: 240px; display:inline-block !important;'  />
+		</li>
+<li>
+															
+        														 <select  class='form-control' name="priorityId"
+													data-ng-model="node.priorityId">
+													<option value="">Select Priority</option>
+													<option value="H">High</option>
+													<option value="M">Medium</option>
+													</select>
+													
+</li>
+
+   
+		
+		
+<li><button class="btn btn-success" style="padding:1px 12px; margin-top:-4px;" ng-click="newSubItem(this,'&&')" ng-model="l_operator">&& </button></li>
+<li><button  class="btn btn-success	"  style="padding:1px 12px; margin-top:-4px;"  ng-click="newSubItem(this,'||')">||</button></li>
+
+		
+
+
+		                		<li><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></li>
+								<li><a data-action='collapse' ng-click='toggle(this)';></a></li>
+		                	</ul>
+	                	</div>
+									</div>
+</div>	
+		<div ui-tree-nodes="" ng-model="node.condition" ng-class="{hidden: collapsed}">
+	<div class="panel-body command_group_container_div" ui-tree-node ng-repeat="node in node.condition" ng-include="'nodrop_nodes_renderer1.html'">	
+	
+							
+</div>
+		</div>	
+		<div ui-tree-nodes="" ng-model="node.actions" ng-class="{hidden: collapsed}">
+		Actions: <br/> 
+<input type="checkbox" ng-model="isAllow" name="isAllow"><span ng-model="actionName">Send Email</span>     configure
+<input type="checkbox" ng-model="isAllow2" name="isAllow"><span ng-model="actionName">Certify Job Outcome</span>
+<input type="checkbox" ng-model="isAllow3" name="isAllow"> <span ng-model="actionName">Delete KPI Entry	<span>								
+</div>
+</script>
+<script type="text/ng-template" id="nodrop_nodes_renderer2.html">
+	<div ui-tree-handle  >			{{node.l_operator}}<br/>							
+<div class='col-lg-5 col-sm-5' style="color:#7c9eb2;">
+<select id="operatorId" class="form-control" data-ng-model="node.operator" >
+<option value="equals">equals</option>
+<option value="not equals">not equals</option>
+<option value="greater than">greater than</option>
+<option value="less than">less than</option>
+</select>
+ </div>
+<div class='col-lg-6 col-sm-6'><input class='form-control command-group-loop  textboxcommand' name="node.value"  ng-model="node.value"  maxlength='4' type='text'/></div> 
+
+<div class='col-lg-1 col-sm-1 remove_command_icon text-center' ><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></div>
+				</div>								
+
+</script>
+
+<script type="text/ng-template" id="nodrop_nodes_renderer1.html">											
+<!-- Command Groups Row -->
+							<span ng-if="node.isFirst">
+										<div class="col-lg-12">
+											<div class="col-md-4 well">
+												<form action="#">
+
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<label class="text-semibold">Attribute List:</label> 
+													<select  class='form-control' name="attributeId"
+										
+													data-ng-model="node.leftOperant">
+													<option value="">Select</option>
+													<option value="deviceId">deviceId</option>
+													<option value="deviceName">deviceName</option>
+
+													</select>
+															</div>
+														</div>
+														
+													</div>
+													
+												
+												</form>
+											</div>
+											<div class="col-md-8 droppable" style='z-index: 0'>
+												<ul class="command_lister_ul" style='list-style: none; padding: 10px;'>
+													<li class="commandText"><div class="col-md-5 col-sm-5">Operator</div><div class="col-lg-6 col-sm-6">Value  </div><div class="col-md-1 col-sm-1">Remove</div></li>
+													<li><hr /></li>
+<li>
+	<div ui-tree-handle  >			{{node.l_operator}}<br/>							
+<div class='col-lg-5 col-sm-5' style="color:#7c9eb2;">
+<select id="operatorId" class="form-control" data-ng-model="node.operator" >
+<option value="equals">equals</option>
+<option value="not equals">not equals</option>
+<option value="greater than">greater than</option>
+<option value="less than">less than</option>
+</select>
+ </div>
+<div class='col-lg-6 col-sm-6'><input class='form-control command-group-loop  textboxcommand' name="node.value"  ng-model="node.value"  maxlength='4' type='text'/></div> 
+
+<div class='col-lg-1 col-sm-1 remove_command_icon text-center' ><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></div>
+				</div>	
+</li>
+														<!--<ol ui-tree-nodes="" ng-model="node.sub_condition" ng-class="{hidden: collapsed}">
+														<li ng-repeat="node in node.sub_condition" ui-tree-node data-nodrag ng-include="'nodrop_nodes_renderer2.html'"></li> 
+
+														</ol>-->
+												</ul>
+											</div>
+										</div>
+									</span>
+							<span ng-if="!node.isFirst">
+										<div class="col-lg-12" style="border-top: 5px double #ccc; padding-top: 14px;">
+											<div class="col-md-4 well">
+												<form action="#">
+
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<label class="text-semibold">Attribute List: {{node.l_operator}}</label> <a><i style="margin-left: 150px;" class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a>
+																<select  class='form-control' name="attributeId"
+										
+													data-ng-model="node.leftOperant">
+													<option value="">Select</option>
+													<option value="deviceId">deviceId</option>
+													<option value="deviceName">deviceName</option>
+
+													</select>
+															</div>
+														</div>
+														
+													</div>
+													
+											
+												</form>
+											</div>
+											<div class="col-md-8 droppable" style='z-index: 0'>
+												<ul class="command_lister_ul" style='list-style: none; padding: 10px;'>
+													<li class="commandText"><div class="col-md-5 col-sm-5">Operator</div><div class="col-lg-6 col-sm-6">Value </div><div class="col-md-1 col-sm-1">Remove</div></li>
+													<li><hr /></li>
+<li>
+	<div ui-tree-handle  >			<br/>							
+<div class='col-lg-5 col-sm-5' style="color:#7c9eb2;">
+<select id="operatorId" class="form-control" data-ng-model="node.operator" >
+<option value="equals">equals</option>
+<option value="not equals">not equals</option>
+<option value="greater than">greater than</option>
+<option value="less than">less than</option>
+</select>
+ </div>
+<div class='col-lg-6 col-sm-6'><input class='form-control command-group-loop  textboxcommand' name="node.value"  ng-model="node.value"  maxlength='4' type='text'/></div> 
+
+<div class='col-lg-1 col-sm-1 remove_command_icon text-center' ><a><i class='icon-diff-removed text-orange-600' ng-click='removeNode(this);'></i></a></div>
+				</div>	
+</li>
+														<!--<ol ui-tree-nodes=""  ng-model="node.sub_condition" ng-class="{hidden: collapsed}">
+														<li ng-repeat="node in node.sub_condition" ui-tree-node  ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol> -->
+												</ul>
+											</div>
+										</div>
+									</span>
+										<!-- /Command Groups Row -->
+										
+</script>
+	<!-- header  -->
+	<div ng-include="'app/views/header/header.html'"></div>
+	<!-- /header  -->
+	<!-- menu -->
+	<div ng-include="'app/views/menus/menu.html'"></div>
+	<!-- /menu -->
+
+
+	<!-- Page container -->
+	<div data-spy="scroll" data-target=".sidebar-fixed" class="page-container sidebar-opposite-visible" >
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+
+				<!-- main  canvas -->
+				
+					
+					<!-- Area to create drool screen  -->
+					<div class="col-lg-12">
+						
+						<div class="panel panel-white">
+							<div class="panel-heading">
+								<h6 class="panel-title droppable">Create</h6>
+							</div>
+							<div class="panel-body">
+								
+								<!-- <form  name="form" role="form"> -->
+									<div class="panel panel-flat">
+										<div class="panel-body">
+
+											<div class="col-md-12"  style="padding:10px 10px 0px 10px;">
+													<div class="col-lg-6">
+													<div class="col-md-12" >
+														<div class="form-group">
+															<div class="col-lg-3" style="padding:0px;">
+																<label class="text-semibold">Story Name:</label>
+															</div>
+															<div class="col-lg-9">
+																<input type="text" class="form-control" id="storyName" name="storyName"  ng-model="storyName" placeholder="Story Name" >
+																<!-- <span style="color:red" ng-show="form.testPlanName.$dirty && form.testPlanName.$error.required" class="help-block">Test Plan Name is required*</span> -->
+															</div>
+														</div>
+														</div>
+													</div>
+
+														<div class="col-lg-6" >
+														<div class="col-md-12" >
+														<div class="form-group">
+															<div class="col-lg-3" style="padding:0px;">
+																<label class="text-semibold">Use Case:</label>
+															</div>
+															<div class="col-lg-9">
+        														 <select  class='form-control' name="usecaseName"
+													data-ng-model="tree2.usecaseName">
+													<option value="">Select</option>
+													<option value="Non_VolTe_Call">A voice call exists</option>
+													</select>
+													</div>
+														</div>
+														</div>
+													</div>
+
+											</div>
+									<!-- 				<div class="col-md-12"  style="padding:10px 10px 0px 10px;">
+													<div class="col-lg-6">
+													<div class="col-md-12" >
+														<div class="form-group">
+															<div class="col-lg-3" style="padding:0px;">
+																<label class="text-semibold">Priority :</label>
+															</div>
+															<div class="col-lg-9">
+        														 <select  class='form-control' name="priorityId"
+													data-ng-model="tree2.priorityId">
+													<option value="">Select</option>
+													<option value="H">High</option>
+													<option value="M">Medium</option>
+													</select>
+													</div>
+														</div>
+														</div>
+													</div>
+
+														<div class="col-lg-6" >
+														<div class="col-md-12" >
+											
+														</div>
+													</div>
+
+											</div> -->
+
+										</div>
+									</div>
+								<!-- </form> -->
+							</div>
+						</div>
+					</div>
+					<!-- /area to create drool screen -->
+
+					<!-- test case area -->
+					<div class="col-lg-12">
+						<div class="panel panel-white panel_mt" >
+						<div  ui-tree="optionsTree2"  id="tree2-root" data-clone-enabled="true" >		
+						<div ui-tree-nodes="" ng-model="tree2">
+						<div  ui-tree-node data-nodrag  ui-tree-node ng-repeat="node in tree2" ng-include="'attribute_header.html'">
+							
+							</div>
+								</div>
+							</div>
+							<!-- panel footer -->
+							<div class="panel-footer">
+								<!--  <ul><li><span  style="color:red" ng-show="err" class="help-block">Please Add Command !!</span>
+								 <span  style="color:red" ng-show="jobIsExitsError" class="help-block">Provide Unique Test Plan Name !!</span></li></ul> -->
+								<ul class="pull-right"><li><a ><button type="submit" ng-disabled="form.$invalid" class='btn btn-xs btn-primary' ng-click="createTestPlanService()" >Create</button></a></li></ul>
+							</div>
+							<!-- /panel footer -->
+						</div>
+					</div>
+					<!-- /test case area -->
+{{tree2 }}
+				<!-- /main  canvas -->
+
+					
+	
+				<!-- /Content Wrapper -->
+	</div>
+	</div>
+		<!-- /Page content -->
+			
+		<!-- footer  -->
+		<div ng-include="'app/views/footer/footer.html'"></div>
+		<!-- /footer  -->
+
+	</div>
+	<!-- /page container -->
+
+<li  ><a href="#/dashboard/droolruleTemplete"><img src="images/user_deviceMapping.png"  height="20px" width="20px"> <span>Drool Templete</span></a></li>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// required to set the select2 box default to placeholder value
+		
+		
+		 
+		
+
+	});
+
+</script>
