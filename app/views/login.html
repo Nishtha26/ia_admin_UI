@@ -24,14 +24,15 @@
 		}
 		.user-input {width: 100%; height: 20%;}
 		.user-input > div{ width: 20%; float: left; margin: 10px 0 ; padding: 5px;}
-		.user-input > input{ width: 80%;  float: left; margin: 10px auto; margin: 10px 0;}
+		.user-input > input{ width: 80%;  float: left; margin: 10px 0 0px 0;}
 
 		.pass-input {width: 100%; height: 20%;}
-		.pass-input > div{ width: 20%; float: left; margin: 10px 0; padding: 5px 0;}
-		.pass-input > input{ width: 80%;  float: left; margin: 10px auto;}
+		.pass-input > div{ width: 20%; float: left; margin: 15px 0; padding: 5px 0;}
+		.pass-input > input{ width: 80%;  float: left; margin: 15px 0 0px 0;}
 
 		.login-detail{
 		  border-radius: 10px;
+		  padding-top: 15%;
 		}
 		.login-btn{
 			color: #EEF4F9;
@@ -39,6 +40,28 @@
 			font-weight: bold;
 			margin-top: 10px;
 			padding-left: 40px;}
+			
+		.error-color{
+			color: #faffbd;
+		}
+		button[disabled="disabled"] { 
+		    cursor:not-allowed;
+		}
+		/* @media screen and (min-width: 480px) and (max-width: 1280px){
+		    .white{
+				  
+				  
+				  width: 100%;
+				 
+		
+				}
+				.blue{
+				 
+				 
+				  width: 100%;
+				 
+				}
+		} */
 	</style>
 
 	<!-- Main navbar -->
@@ -55,7 +78,7 @@
 	<!-- /main navbar -->
 
 	<!-- Page container -->
-	<div class="page-container login-container"  style="min-height:827px; background: rgba(0, 0, 0, 0) url('assets/images/loginbg.png') no-repeat; background-size:cover;">
+	<div class="page-container login-container"  >
 
 		<!-- Page content -->
 		<!-- <div class="page-content">
@@ -113,6 +136,7 @@
 				<div class="login-detail">
 					<div class="white text-center">
 						<img src="assets/images/logo-login.png">
+						<div id='login_error_message' class="error-color" style="color:#d84315;">{{error}}</div>
 					</div>
 					<div class="blue">
 						<div class="form-group user-input">
@@ -120,7 +144,7 @@
 								<img src="assets/images/user.png">
 							</div>
 							<input type="text" class="form-control" ng-model="username" name="username" placeholder="Username" id='username' required>
-							<span style="color:red" ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+							<span class="error-color" ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
 							
 						</div>
 
@@ -129,15 +153,15 @@
 								<img src="assets/images/lock.png">
 							</div>
 							<input type="password" class="form-control" name="password" ng-model="password" placeholder="Password" id='password' required>
-							<span  style="color:red" ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+							<span  class="error-color" ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
 							
 						</div>
 						<div class="form-group text-center">
-							<button type="submit" ng-disabled="form.$invalid || dataLoading" class="text-center login-btn" id='login_submit' style="background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: medium none; padding-left: 40px; margin-top: 10px;">
+							<button type="submit" ng-disabled="form.$invalid || dataLoading" class="text-center login-btn" id='login_submit' style="background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: medium none; margin-top: 10px;padding-left:0px;">
 							Login	<img src="assets/images/enter.png">
 							
 							</button>
-							<div id='login_error_message' style='color: red;'>{{error}}</div>
+							
 						</div>
 
 					</div>
@@ -157,7 +181,12 @@
 		<!-- /footer  -->
 	</div>
 	<!-- /page container -->
-
+	<script>
+	$(document).ready(function() {
+		$("body").css({'background': 'rgba(0, 0, 0, 0) url("assets/images/loginbg.png") no-repeat', 'background-size':'cover'});
+	
+	});
+	</script>
 
 
 
