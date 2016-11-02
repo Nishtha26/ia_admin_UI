@@ -169,6 +169,21 @@ oTech.controller('MyDevicesController',
 	  $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
 	    console.log(row);
 	    }); 
+	  gridApi.rowEdit.on.saveRow($scope, function (rowEntity) {
+          // create a fake promise - normally you'd use the promise returned by $http or $resource
+          //Get all selected rows
+          var selectedRows = $scope.text.selection.getSelectedRows();
+          //var rowCol = $scope.gridApi.cellNav.getFocusedCell().col.colDef.name;
+          var promise = $q.defer();
+          $scope.text.rowEdit.setSavePromise(rowEntity, promise.promise);
+       /*   $interval(function () {
+              if (rowEntity.gender === 'male') {
+                  promise.reject();
+              } else {
+                  promise.resolve();
+              }
+          }, 3000, 1);*/
+      })
     };
    
 		$scope.showDeviceList = function(){
@@ -200,7 +215,7 @@ oTech.controller('MyDevicesController',
 	$scope.getTableHeight = function() {
 	    var rowHeight = 41; // your row height
 	    var headerHeight = 45; // your header height
-	    var footerPage=12;
+	    var footerPage=13;
 	    var gridHeight=0;
 	    var dataCount=$scope.myDevicesGridOptions.data.length;
 	    gridHeight=($scope.myDevicesGridOptions.data.length * rowHeight + headerHeight+footerPage);
@@ -239,9 +254,11 @@ oTech.controller('MyDevicesController',
 			 	$.when($("#device_facets_container").slideUp('slow')).then(function() {
 			 		$("#device_facets_container").fadeIn('slow');
 			 	});
+			 	$scope.currentRow=row;
 			 	 $scope.deviceId=row.entity.deviceId;
 			 	 $scope.adminMessageToDevice=row.entity.adminMessageToDevice;
 			 	 $scope.newWorkUrl=row.entity.workUrl;
+			 	 $scope.defaultJobId=row.entity.defaultJobId;
 			 	
 			 	 $scope.deviceStatusFlag=row.entity.deviceStatusFlag;
 			 	 $scope.userFullName=row.entity.fullName+" ( "+row.entity.userName+" ) ";
@@ -484,6 +501,7 @@ oTech.controller('MyDevicesController',
 					function(data){
 						if(data.status=="success"){
 							 $("#dataLoadingAC").hide();
+							 $scope.currentRow.entity.adminMessageToDevice=commandId;
 						}
 						else{
 							
@@ -500,26 +518,30 @@ oTech.controller('MyDevicesController',
 			 }
 		 	
 				$scope.approve = function(selectDeviceId){
+					 $("#dataLoadingUpdate").show();
 					promise = AppServices.GetapproveData(userId, token ,selectDeviceId);
 					promise.then(
 					function(data){
-						
+						 $("#dataLoadingUpdate").hide();
 				//		$scope.deviceAdminData();
 					},
 					function(err){
+						 $("#dataLoadingUpdate").hide();
 						alert("error");
 					}
 					);
 				}
 			
 			$scope.reject = function(selectDeviceId){
+				 $("#dataLoadingUpdate").show();
 				promise = AppServices.GetrejectData(userId, token ,selectDeviceId);
 				promise.then(
 				function(data){
-					
+					 $("#dataLoadingUpdate").hide();
 				//	$scope.deviceAdminData();
 				},
 					function(err){
+					 $("#dataLoadingUpdate").hide();
 						alert("error");
 					}
 					);
@@ -563,14 +585,17 @@ oTech.controller('MyDevicesController',
 					promise.then(
 					function(data){
 						if(data.status=="success"){
-							$("#dataLoadingAC").hide();
+							$scope.currentRow.entity.workUrl=workUrl;
+							
 						}
 						else{
 							
 						}
 				//		$scope.deviceAdminData();
+						$("#dataLoadingAC").hide();
 					},
 					function(err){
+						$("#dataLoadingAC").hide();
 						alert("error");
 					}
 					); 
@@ -579,5 +604,32 @@ oTech.controller('MyDevicesController',
 					 
 			//	 }
 				 }
+			 $scope.updateDefaultJob=function(){
+				 var defaultJobId=$("#defaultJobId").val();
+				 $("#dataLoadingUpdate").show();
+				 //if(workUrl!=""){
+					promise = AppServices.updateDefaultJob( token ,$scope.deviceId,defaultJobId);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							$scope.currentRow.entity.defaultJobId=defaultJobId;
+							$("#dataLoadingUpdate").hide();
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						$("#dataLoadingUpdate").hide();
+						alert("error");
+					}
+					); 
+				 //}
+				// else{
+					 
+			//	 }
+				 }
+			 
 			
 	});

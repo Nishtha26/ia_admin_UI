@@ -442,12 +442,12 @@ var filterType="";
 $scope.singleFilter = function() {
  // var allFilterdata=allOfTheData;
 	  filterType = function(item) {
-	        return item.companyName.toLowerCase().indexOf($scope.searchText || '') !== -1 
-	        || item.status.toLowerCase().indexOf($scope.searchText || '') !== -1
-	        || item.firstName.toLowerCase().indexOf($scope.searchText || '') !== -1
-	        || item.email.toLowerCase().indexOf($scope.searchText || '') !== -1
-	        || item.roleName.toLowerCase().indexOf($scope.searchText || '') !== -1
-	        || item.username.toLowerCase().indexOf($scope.searchText || '') !== -1;
+	        return item.companyName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1 
+	        || item.status.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.firstName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.email.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.roleName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.username.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1;
 	        
 	 }
     $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, filterType,$scope.searchText);
@@ -1188,11 +1188,31 @@ $scope.rangeUG = function() {
 			    $scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice( 0, $scope.endLimit);
 			}
 		  $scope.singleFilterForAllDevice = function() {
-			  $scope.allDeviceGridOptions.data = $filter('filter')($scope.allDeviceGrid, $scope.searchTextForAllDevice, undefined);
+			  filterType="";
+			  var searchText=$scope.searchTextForAllDevice.toLowerCase();
+			  filterType = function(item) {
+			        return item.deviceId.toString().indexOf(searchText || '') !== -1 
+			        || item.userName.toLowerCase().indexOf(searchText || '') !== -1
+			        || (item.msisdn!=null?item.msisdn.toLowerCase():"").indexOf(searchText || '') !== -1
+			        || (item.imei!=null?item.imei.toLowerCase():"").indexOf(searchText || '') !== -1;
+			        
+			 }
+			  $scope.allDeviceGridOptions.data = $filter('filter')($scope.allDeviceGrid, filterType,searchText);
 			    $scope.allDeviceGridOptions.data = $scope.allDeviceGridOptions.data.slice( 0, $scope.endLimit);
 			}
 		  $scope.singleFilterForSelectedDevice = function() {
-			  $scope.selectedDeviceGridOptions.data = $filter('filter')($scope.selectedDeviceGrid, $scope.searchTextForSelectedDevice, undefined);
+			  
+			  filterType="";
+			  var searchText=$scope.searchTextForSelectedDevice.toLowerCase();
+			  filterType = function(item) {
+			        return item.deviceId.toString().indexOf(searchText || '') !== -1 
+			        || item.userName.toLowerCase().indexOf(searchText || '') !== -1
+			        || (item.msisdn!=null?item.msisdn.toLowerCase():"").indexOf(searchText || '') !== -1
+			        || (item.imei!=null?item.imei.toLowerCase():"").indexOf(searchText || '') !== -1;
+			        
+			 }
+			  
+			  $scope.selectedDeviceGridOptions.data = $filter('filter')($scope.selectedDeviceGrid,filterType, searchText);
 			    $scope.selectedDeviceGridOptions.data = $scope.selectedDeviceGridOptions.data.slice( 0, $scope.endLimit);
 			}
 

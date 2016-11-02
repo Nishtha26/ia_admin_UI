@@ -1730,5 +1730,26 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
+		service.updateDefaultJob = function( token ,selectDeviceId,defaultJobId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/updateDefaultJob",
+				    type: "POST",
+					data : {token:token , deviceId:selectDeviceId,defaultJobId:defaultJobId},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}	
+		
 	return service; 		
 }])

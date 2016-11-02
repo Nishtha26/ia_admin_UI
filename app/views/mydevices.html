@@ -75,7 +75,7 @@
 						  -->
 						  </div>
 									<div class="table table-hover grid datatable-basic grid"
-										id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit
+										id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit 
 										ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
 										ui-grid-move-columns ui-grid-pinning ng-style="getTableHeight()" >
 
@@ -264,7 +264,7 @@
 										<div class="tab-pane" id="admin_operation_body">
 										   
 											<div class="panel-group  "> <!-- panel-group-control panel-group-control-right -->
-								<div class="panel panel-white" ng-show="{{role == 'ROLE_OTADMIN'}}" style="margin-bottom: 20px;">
+								<div class="panel panel-white"  style="margin-bottom: 20px;">
 								<div class="panel-heading">
 									<h6 class="panel-title">
 										<a data-toggle="collapse" >Device Management</a>
@@ -272,7 +272,7 @@
 								</div>
 								<div id="collapsible-control-right-group1" class="panel-collapse collapse in">
 									<div class="panel-body">
-											<div class="form-group">
+											<div class="form-group" ng-show="{{role == 'ROLE_OTADMIN'}}">
 										<label class="col-lg-3 control-label">Approved</label>
 										<div class="col-lg-9 checkbox checkbox-switch">
 											<input id="deviceStatusFlag" type="checkbox" data-on-color="success" data-off-color="danger" data-on-text="Yes"
@@ -287,8 +287,17 @@
 											{{userFullName}}
 										</div>
 									</div>
+										<div class="form-group" style="clear: both;">
+										<label class="col-lg-3 control-label">Default Job</label>
+										<div class="col-lg-9 input-group" >
+											<input  type="text" id="defaultJobId" ng-model="defaultJobId" name="defaultJobId"  class="form-control"  />
+											<span  title="Click to update Default Job" class="input-group-addon pointer-link" ng-click="updateDefaultJob()"><i class="icon-floppy-disk position-left text-teal-300" ></i></span>
+										</div>
+									</div>
 									</div>
 								</div>
+								<img id="dataLoadingUpdate" class="loading loading-imgac" src="images/loading_new.gif"
+										 style="width:50px;height:50px;display: none;position: absolute;margin-left:48%;z-index: 1"></img>	
 							</div>
 
 							<div class="panel panel-white">
@@ -317,7 +326,7 @@
 										<div class="form-group " id="update_url" style="display: none;">
 										<label class="col-lg-3 control-label">Update URL</label>
 										<div class="col-lg-9 input-group" style="padding-left: 10px;padding-right: 10px;">
-											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link"><i class="icon-floppy-disk position-left text-teal-300" ng-click="adminCommandUpdateUrl()"></i></span>
+											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link" ng-click="adminCommandUpdateUrl()"><i class="icon-floppy-disk position-left text-teal-300" ></i></span>
 										</div>
 									
 									</div>
