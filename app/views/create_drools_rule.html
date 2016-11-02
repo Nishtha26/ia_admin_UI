@@ -19,7 +19,7 @@
 .angular-ui-tree-handle{
 border:none;
 background:none;
-padding: 10px;
+padding: 10px 10px 10px 10px;
 }
 
 .textboxcommand{
@@ -98,6 +98,9 @@ text-align:center;
 hr{
 margin-bottom:5px !important;
 }
+.btn-labeled.btn-sm > b{
+	padding:5px 9px;
+}
 </style>
 <script type="text/ng-template" id="nodes_renderer5.html">
   <div ui-tree-handle class="tree-node tree-node-content">
@@ -157,8 +160,8 @@ margin-bottom:5px !important;
    
 		
 		
-<li><button class="btn btn-success" style="padding:1px 12px; margin-top:-4px;" ng-click="newSubItem(this,'&&')" ng-model="l_operator">&& </button></li>
-<li><button  class="btn btn-success	"  style="padding:1px 12px; margin-top:-4px;"  ng-click="newSubItem(this,'||')">||</button></li>
+<li><button class="btn btn-success" style="padding:1px 8px; margin-top:-4px; margin-right:0px;" ng-click="newSubItem(this,'&&')" ng-model="l_operator">&& </button></li>
+<li><button  class="btn btn-success	"  style="padding:1px 12px; margin-top:-4px; margin-right:0px;"  ng-click="newSubItem(this,'||')">||</button></li>
 
 		
 
@@ -175,8 +178,8 @@ margin-bottom:5px !important;
 							
 </div>
 		</div>	
-		<div ui-tree-nodes="" ng-model="node.actions" ng-class="{hidden: collapsed}">
-		Actions: <br/> 
+		<div ui-tree-nodes="" ng-model="node.actions" ng-class="{hidden: collapsed}" style="padding:10px 25px; border-top:1px solid #ccc;">
+		<span style="font-weight:500;">Actions:</span>  
 <input type="checkbox" ng-model="isAllow" name="isAllow"><span ng-model="actionName">Send Email</span>     configure
 <input type="checkbox" ng-model="isAllow2" name="isAllow"><span ng-model="actionName">Certify Job Outcome</span>
 <input type="checkbox" ng-model="isAllow3" name="isAllow"> <span ng-model="actionName">Delete KPI Entry	<span>								
@@ -337,10 +340,8 @@ margin-bottom:5px !important;
 							<div class="panel-body">
 								
 								<!-- <form  name="form" role="form"> -->
-									<div class="panel panel-flat">
-										<div class="panel-body">
-
-											<div class="col-md-12"  style="padding:10px 10px 0px 10px;">
+									
+											<div class="col-md-12" style="padding-bottom:7px;">
 													<div class="col-lg-6">
 													<div class="col-md-12" >
 														<div class="form-group">
@@ -400,8 +401,7 @@ margin-bottom:5px !important;
 
 											</div> -->
 
-										</div>
-									</div>
+										
 								<!-- </form> -->
 							</div>
 						</div>
@@ -445,7 +445,7 @@ margin-bottom:5px !important;
 	</div>
 	<!-- /page container -->
 
-<li  ><a href="#/dashboard/droolruleTemplete"><img src="images/user_deviceMapping.png"  height="20px" width="20px"> <span>Drool Templete</span></a></li>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
