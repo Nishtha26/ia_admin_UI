@@ -1655,6 +1655,6 @@ div.ui-grid-cell-contents.invalid {
 	padding: .2em .6em .3em;
 }
 
-#allusersgroupGridOptions .ui-grid-cell, #existingusersGridOptions .ui-grid-cell{
+#allusersgroupGridOptions .ui-grid-cell, #existingusersGridOptions .ui-grid-cell,#allDeviceGridOptions .ui-grid-cell,#selectedDeviceGridOptions .ui-grid-cell{
 border-bottom: 0px solid #ccc;
 } 

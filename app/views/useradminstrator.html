@@ -20,7 +20,9 @@ padding-left:5px;
 
 #allusersgroupGridOptions .ui-grid-viewport,#existingusersGridOptions .ui-grid-viewport,#allDeviceGridOptions .ui-grid-viewport,#selectedDeviceGridOptions .ui-grid-viewport{
 overflow-y: auto;
-	-webkit-overflow-scrolling: touch
+height:372px;
+	-webkit-overflow-scrolling: touch;
+	
 }
 </style>
 
@@ -30,7 +32,7 @@ overflow-y: auto;
 
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
-	<div ng-include="'app/views/header/header.html'"></div>
+	<div  ng-include="'app/views/header/header.html'"></div>
 	<!-- Header End -->
 	<!-- Second navbar -->
 	<div ng-include="'app/views/menus/menu.html'"></div>
@@ -82,7 +84,7 @@ overflow-y: auto;
                 		<li id='create_new_group_label'><span class='label label-primary pointer-link' ng-click="showUsergroups()">Create Group</span></li>
                 		<li id='group_cancel_create_label' style="display: none;" ng-click="groupCancelCreateLabel()"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='group_cancel_edit_label' style="display: none;" ng-click="groupCancelEditLabel()"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
-                		<li id='assign_user_cancel_label' style="display: none;" ng-click="cancelAssignUserLabel()"><span class='label label-warning pointer-link'>Cancel Assign User</span></li>
+                		<li id='assign_user_cancel_label' style="display: none;" ng-click="cancelAssignUserLabel()"><span class='label label-warning pointer-link'>Exit Assign User</span></li>
                 	</ul>
               	</div>
               	
@@ -196,12 +198,12 @@ overflow-y: auto;
 												
 												
 								 				
-													<div class="panel-body" style="padding:0px 0px 20px 0px;">
+													<div class="panel-body" style="padding:0px 0px 0px 0px;">
 													<div class="col-sm-5">
 													<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
 									 			<input type="type" class="filter-width" ng-change="singleFilterForAllUser()" ng-model="searchTextForAlluser" placeholder="Filter in All users..." ></label>
 									 			</div>
-													 <div  id="allusersgroupGridOptions" ui-grid="allusersgroupGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:2px solid #1f8ee7;" >
+													 <div  id="allusersgroupGridOptions" ui-grid="allusersgroupGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
 								 			
 								 			 </div>
 								 			 </div>
@@ -222,7 +224,7 @@ overflow-y: auto;
 										<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
 									 			<input type="type" class="filter-width" ng-change="singleFilterForExistUser()" ng-model="searchTextForExistuser" placeholder="Filter in Selected user..." ></label>
 									 			</div>
-										<div  id="existingusersGridOptions" ui-grid="existingusersGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:2px solid #1f8ee7;" >
+										<div  id="existingusersGridOptions" ui-grid="existingusersGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
 														 
 										</div>
 										</div>
@@ -277,7 +279,7 @@ overflow-y: auto;
                 		<li id='cancel_user_edit_label' ng-click="cancelUserEdit();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
                 		<li id='cancel_user_create_label' ng-click="cancelUserCreate();"  style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
                 		<li id='cancel_user_detail_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Detail</span></li>
-                		<li id='cancel_assign_device_label' ng-click="cancelAssignDeviceToUser()" style="display: none;"><span class='label label-warning pointer-link'>Cancel Assign Devices</span></li>
+                		<li id='cancel_assign_device_label' ng-click="cancelAssignDeviceToUser()" style="display: none;"><span class='label label-warning pointer-link'>Exit Assign Devices</span></li>
                 	</ul>
               	</div>
               	<div id="input_user_error_message" style='display: none; margin-top: 15px;'></div>
@@ -661,7 +663,7 @@ overflow-y: auto;
 							<!-- /create group div -->
 							
 									<!-- user device mapping  -->
-							<div class="panel-body" id='assign_device_div' style='display: none;'>
+							<div class="panel panel-white" id='assign_device_div' style='display: none;  border: 0px; box-shadow: none;'>
 								 
 								 		<div class="panel-heading">
 								<h5 class="panel-title" style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i class="icon-user-check position-left"></i> Associate Device to user</h5>
@@ -687,16 +689,16 @@ overflow-y: auto;
 												
 												
 								 				
-													<div class="panel-body" style="padding:0px 0px 20px 0px;">
+													<div class="panel-body" style="padding:0px 0px 0px 0px;">
 													<div class="col-sm-5">
 													<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
 									 			<input type="type" class="filter-width" ng-change="singleFilterForAllDevice()" ng-model="searchTextForAllDevice" placeholder="Filter in All Devices..." ></label>
 									 			</div>
-													 <div  id="allDeviceGridOptions" ui-grid="allDeviceGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 415px; border:2px solid #1f8ee7;" >
+													 <div  id="allDeviceGridOptions" ui-grid="allDeviceGridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
 								 			
 								 			 </div>
 								 			 </div>
-								 			 <div class="col-sm-2" style="padding:0; margin-top:20%;">
+								 			 <div class="col-sm-2" style="padding:0; margin-top:15%;">
 										<div class="ot-toggle toggle-margin">
 												<div class="assign-button">
 													<button type="button" class=""
@@ -713,7 +715,7 @@ overflow-y: auto;
 										<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
 									 			<input type="type" class="filter-width" ng-change="singleFilterForSelectedDevice()" ng-model="searchTextForSelectedDevice" placeholder="Filter in Assign Devices..." ></label>
 									 			</div>
-										<div  id="selectedDeviceGridOptions" ui-grid="selectedDeviceGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 415px; border:2px solid #1f8ee7;" >
+										<div  id="selectedDeviceGridOptions" ui-grid="selectedDeviceGridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
 														 
 										</div>
 										</div>

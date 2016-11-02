@@ -660,35 +660,35 @@ oApp.config = {
 		columnDefstcpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
 		
-			{headerName: "autoId", field: "autoId",pinnedLeft:true},
-			{headerName: "deviceId", field: "deviceId"},
-		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+			{headerName: "autoId", field: "autoId",width:100,pinnedLeft:true},
+			{headerName: "deviceId", field: "deviceId",width:100},
+		   {headerName: "jobId", field: "jobId",width:100},
+			{headerName: "timeStamp",width:150, field: "timeStamp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeStamp + '';
 	             }},
-			{headerName: "deviceTime", field: "deviceTime", cellTooltip: 
+			{headerName: "deviceTime",width:150, field: "deviceTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.deviceTime + '';
 	             }},
-			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
-			{headerName: "nodeType", field: "nodeType"},
-			{displayName: "Server IP", field: "serverIp", cellTooltip: 
+			{headerName: "deviceTimeZone",width:100, field: "deviceTimeZone"},
+			{headerName: "nodeType",width:100, field: "nodeType"},
+			{displayName: "Server IP",width:150, field: "serverIp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.serverIp + '';
 	             }},
-			{headerName: "serverPort", field: "serverPort"},
-			{displayName: "Client IP", field: "clientIp", cellTooltip: 
+			{headerName: "serverPort",width:100, field: "serverPort"},
+			{displayName: "Client IP",width:100, field: "clientIp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.clientIp + '';
 	             }},
-			{headerName: "clientPort", field: "clientPort"},
-			{headerName: "timeDuration", field: "timeDuration"},
-			{headerName: "dataTransfered", field: "dataTransfered"},
-			{displayName: "Bandwidth", field: "bandWidth"},
-			{displayName: "TCP Window Size", field: "tcpWindowSize"},
-			{headerName: "networkType", field: "networkType"},
-			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+			{headerName: "clientPort",width:100, field: "clientPort"},
+			{headerName: "timeDuration",width:100, field: "timeDuration"},
+			{headerName: "dataTransfered",width:100, field: "dataTransfered"},
+			{displayName: "Bandwidth",width:100, field: "bandWidth"},
+			{displayName: "TCP Window Size",width:100, field: "tcpWindowSize"},
+			{headerName: "networkType",width:100, field: "networkType"},
+			{headerName: "testcaseId",width:250, field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }}
@@ -697,39 +697,39 @@ oApp.config = {
 		columnDefsudpperformance : [
 			// this row just shows the row index, doesn't use any data from the row
 			
-			{headerName: "autoId", field: "autoId",pinnedLeft:true},
-			{headerName: "deviceId", field: "deviceId"},
-		   {headerName: "jobId", field: "jobId"},
-			{headerName: "timeStamp", field: "timeStamp", cellTooltip: 
+			{headerName: "autoId",width:100, field: "autoId",pinnedLeft:true},
+			{headerName: "deviceId",width:100, field: "deviceId"},
+		   {headerName: "jobId",width:100, field: "jobId"},
+			{headerName: "timeStamp",width:100, field: "timeStamp", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.timeStamp + '';
 	             }},
-			{headerName: "deviceTime", field: "deviceTime", cellTooltip: 
+			{headerName: "deviceTime",width:100, field: "deviceTime", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.deviceTime + '';
 	             }},
-			{headerName: "deviceTimeZone", field: "deviceTimeZone"},
-			{headerName: "nodeType", field: "nodeType"},
-			{displayName: "Server IP", field: "serverIP", cellTooltip: 
+			{headerName: "deviceTimeZone",width:100, field: "deviceTimeZone"},
+			{headerName: "nodeType",width:100, field: "nodeType"},
+			{displayName: "Server IP",width:150, field: "serverIP", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.serverIP + '';
 	             }},
-			{headerName: "serverPort", field: "serverPort"},
-			{displayName: "Client IP", field: "clientIP", cellTooltip: 
+			{headerName: "serverPort",width:100, field: "serverPort"},
+			{displayName: "Client IP",width:150, field: "clientIP", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.clientIP + '';
 	             }},
-			{headerName: "clientPort", field: "clientPort"},
-			{headerName: "timeDuration", field: "timeDuration"},
-			{headerName: "dataTransfered", field: "dataTransfered"},
-			{displayName: "Bandwidth", field: "bandWidth"},
-			{displayName: "Datagram Size", field: "dataGramSize"},
-			{displayName: "UDP BufferSize", field: "udpBufferSize"},
-			{headerName: "jitter", field: "jitter"},
-			{displayName: "Datagram Lost", field: "dataGramLost"},
-			{displayName: "Datagram Total", field: "dataGramTotal"},
-			{headerName: "networkType", field: "networkType"},
-			{headerName: "testcaseId", field: "testcaseId", cellTooltip: 
+			{headerName: "clientPort",width:100, field: "clientPort"},
+			{headerName: "timeDuration",width:100, field: "timeDuration"},
+			{headerName: "dataTransfered",width:100, field: "dataTransfered"},
+			{displayName: "Bandwidth",width:100, field: "bandWidth"},
+			{displayName: "Datagram Size",width:100, field: "dataGramSize"},
+			{displayName: "UDP BufferSize",width:100, field: "udpBufferSize"},
+			{headerName: "jitter",width:100, field: "jitter"},
+			{displayName: "Datagram Lost",width:150, field: "dataGramLost"},
+			{displayName: "Datagram Total",width:100, field: "dataGramTotal"},
+			{headerName: "networkType",width:100, field: "networkType"},
+			{headerName: "testcaseId",width:250, field: "testcaseId", cellTooltip: 
 	               function( row, col ) {
 	               return '' + row.entity.testcaseId + '';
 	             }}
@@ -1625,10 +1625,22 @@ quickrunGridOptions : {
 		enableFiltering: false,  // for searching
 		multiSelect:false,
 		columnDefs: [
-			{ name: 'deviceId' ,width:100},
-			{ name: 'userName',width:100 },
-			{ name: 'msisdn' ,width:100},
-			{ name: 'imei' ,width:100}
+			{ name: 'deviceId' ,width:'20%', cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceId + '';
+	             }},
+			{ name: 'userName',width:'20%', cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.userName + '';
+	             }  },
+			{ displayName:'MSISDN', field: 'msisdn' ,width:'30%', cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.msisdn + '';
+	             }},
+			{displayName:'IMEI',field: 'imei' ,width:'30%', cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.imei + '';
+	             }}
 		]
 	},
 	selectedDeviceGridOptions : {
@@ -1640,10 +1652,22 @@ quickrunGridOptions : {
 		enableFiltering: false,  // for searching
 		multiSelect:false,
 		columnDefs: [
-			{ name: 'deviceId' ,width:100},
-			{ name: 'userName',width:100 },
-			{ name: 'msisdn' ,width:100},
-			{ name: 'imei' ,width:100}
+			{ name: 'deviceId' ,width:"20%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.deviceId + '';
+	             } },
+			{ name: 'userName',width:"20%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.userName + '';
+	             } },
+			{displayName:'MSISDN', field: 'msisdn' ,width:"30%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.msisdn + '';
+	             }},
+			{ displayName:'IMEI',field: 'imei' ,width:"30%", cellTooltip: 
+	               function( row, col ) {
+	               return '' + row.entity.imei + '';
+	             }}
 		]
 	},
 	deviceAdminGridOptions : {
@@ -1730,7 +1754,7 @@ quickrunGridOptions : {
 		enableVerticalScrollbar :0,
 		columnDefs: [
 			{displayName: 'ID', field: 'deviceId' ,width:"10%",pinnedLeft:true,enableCellEdit: false , allowCellFocus : false},
-			{displayName: 'Name', field: 'deviceName',width:"15%", cellTooltip: 
+			{displayName: 'Name', field: 'deviceName',enableCellEdit: false,width:"15%", cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.deviceName + '';
               }},
@@ -1758,13 +1782,12 @@ quickrunGridOptions : {
 			               }},
 						{displayName: 'Last Ping', field: 'lastPing' ,width:"20%",enableCellEdit: false, cellTooltip: 
 			                function( row, col ) {
-			                return '' + row.entity.lastPingDateTime + '';
+			                return '' + row.entity.lastPing + '';
 			               } },
 			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
 							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
-					'<span class="pointer-link"  '+
-					' ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
+					'<span class="pointer-link"   ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
         /* '<ul class="icons-list">'+
 			'<li class="dropdown">'+
 		'<a  class="dropdown-toggle" data-toggle="dropdown">'+
@@ -1807,7 +1830,10 @@ quickrunGridOptions : {
                 function( row, col ) {
                 return '' + row.entity.region + '';
                }},
-			
+           	{ displayName:'Work URL',field: 'workUrl' ,width:100, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.workUrl + '';
+               }},
 			
 			{ name: 'jobId' ,width:100,enableCellEdit: false},
 			{ name: 'jobName' ,width:150,enableCellEdit: false, cellTooltip: 
