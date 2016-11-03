@@ -1,32 +1,33 @@
 oTech
 		.controller(
-				'createTestPlan',
+				'DroolruleTempleteController',
 				function($scope, $rootScope, $timeout, $location, AppServices,
 						GraphServices, GraphMaximizeServices, $stateParams,
-						testScriptService, $cookieStore,messages) {
+						testScriptService, $cookieStore,messagesTemplate) {
 					var userId = sessionStorage.getItem("userId");
 					var token = sessionStorage.getItem("token");
 					$rootScope.role = sessionStorage.getItem("role");
 					$scope.name = sessionStorage.getItem("username");
+					var operator_div="";
 					var usecaselist = [];
 					$scope.isAction = false;
 					$scope.commandError = false;
 					$scope.createTestPlan = {};
 					var sendCreateData = {};
-					if(messages.length==1 &&  $rootScope.isTestPlanToEdit){
-						for(var i=0; i < messages[0].length; i++){
-						      if(messages[0][i].key == "testPlanName")
-						    	  $scope.testPlanName = messages[0][i].value;
-						      if(messages[0][i].key == "testPlanDescription")
-						    	  $scope.testPlanDescription = messages[0][i].value;
-						      if(messages[0][i].key == "treeJson")
-						    	  $scope.tree2 = messages[0][i].value;
-						      if(messages[0][i].key == "usecase")
-						    	  $scope.usecaseVal = messages[0][i].value;
+					if(messagesTemplate.length==1 &&  $rootScope.isTestPlanToEdit){
+						for(var i=0; i < messagesTemplate[0].length; i++){
+						      if(messagesTemplate[0][i].key == "testPlanName")
+						    	  $scope.testPlanName = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "testPlanDescription")
+						    	  $scope.testPlanDescription = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "treeJson")
+						    	  $scope.tree2 = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "usecase")
+						    	  $scope.usecaseVal = messagesTemplate[0][i].value;
 						      
 						   }
 					}else{
-						messages.splice(0,1);
+						messagesTemplate.splice(0,1);
 					}
 					
 					$scope.setErrorMessage = function(errorMessage){
@@ -99,38 +100,48 @@ oTech
 						});
 					}
 
-					$scope.newSubItem = function(scope) {
+					$scope.newSubItem = function(scope,op) {
+						
 						var totalPixcelToScroll = "";
 						var nodeData = scope.$modelValue;
+				
 						if (nodeData.id >= 1 && nodeData.id < 10) {
-							var totalNodes = nodeData.nodes.length;
-							angular.forEach(nodeData.nodes, function (node, index) {
-								totalNodes += node.nodes.length;
-								angular.forEach(node.nodes, function (node, index) {
-									totalNodes += node.nodes.length;
+							var totalNodes = nodeData.rules.length;
+						/*	angular.forEach(nodeData.rules, function (node, index) {
+								totalNodes += node.rules.length;
+								angular.forEach(node.rules, function (node, index) {
+									totalNodes += node.rules.length;
 									
 								});
-							});
+							});*/
+							//console.log("operator_div"+operator_div);
 							totalPixcelToScroll = 267*totalNodes+"px";
 							$('html, body').animate({scrollTop: totalPixcelToScroll}, 800);
 							//$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-							var nodenamePostFix = nodeData.nodes.length + 1;
-							nodeData.nodes
+							var nodenamePostFix = nodeData.rules.length + 1;
+							nodeData.rules
 									.push({
-										"id" : (nodeData.nodes.length + 1) * 10,
-										"title" : "Task Case #"
+										"id" : (nodeData.rules.length + 1) * 10,
+										"ruleName" : "Rule name"
 												+ nodenamePostFix,
-										"nodrop" : true,
+									/*	"nodrop" : true,
 										"sequenceNo" : 1,
-										"loop" : 1,
-										"nodes" : [ {
-											"id" : (nodeData.nodes.length + 1) * 100,
-											"title" : "Command Group",
+										"loop" : 1,*/
+										"condition" : [ {
+											"id" : (nodeData.rules.length + 1) * 100,
+											"leftOperant" : "Attribute",
+											"isFirst" : false,
+											"l_operator" : "",
+											
+											"operator" : "Operator Name",
+											"value":"",
+										/*	"title" : "Attribute",
 											"sequenceNo" : 1,
 											"isFirst" : true,
 											"loop" : 1,
-											"commandId" : -1,
-											"nodes" : [ {
+											"l_operator":op,
+											"commandId" : -1,*/
+										/*	"nodes" : [ {
 												"id" : (nodeData.nodes.length + 1) * 1000,
 												"title" : "Add Command",
 												"sequenceNo" : 1,
@@ -138,23 +149,39 @@ oTech
 												"loop" : 1,
 												"commandParams" : "",
 												"commandId" : 100000,
-												"nodes" : []
+												"nodes" : []*/
+											/*"sub_condition" : [ {
+												"id" :  (nodeData.rules.length + 1) * 1000,
+												"l_operator" : "",
+												"isFirst" : true,
+												"operator" : "Operator Name",
+												"value":"value",*/
+												/*"operator" : "Operator Name",
+												"sequenceNo" : 1,
+												"l_operator" : "",
+												"value":"value",
+												"isCommand" : true,
+												"loop" : 1,
+												"commandParams" : "",
+												"commandId" : 100000,*/
+											/*	"nodes" : []
+											} ]*/
 											} ]
-										} ]
 									});
 						}
 						if (nodeData.id >= 10 && nodeData.id < 100) {
-							totalPixcelToScroll = 267*nodeData.nodes.length+"px";
+							$scope.operator_name=op;
+							totalPixcelToScroll = 267*nodeData.condition.length+"px";
 							$('html, body').animate({scrollTop: totalPixcelToScroll}, 800);
 							//$("html, body").animate({ scrollTopscrollTop: '+=1080px'}, 1000);
-							nodeData.nodes.push({
-								"id" : (nodeData.nodes.length + 1) * 100,
+							nodeData.condition.push({
+								/*"id" : (nodeData.condition.length + 1) * 100,
 								"title" : "Command Group",
 								"sequenceNo" : 1,
 								"loop" : 1,
 								"commandId" : -1,
 								"nodes" : [ {
-									"id" : (nodeData.nodes.length + 1) * 1000,
+									"id" : (nodeData.condition.length + 1) * 1000,
 									"title" : "Add Command",
 									"sequenceNo" : 1,
 									"isCommand" : true,
@@ -162,7 +189,36 @@ oTech
 									"commandParams" : "",
 									"commandId" : 100000,
 									"nodes" : []
-								} ]
+								} ]*/
+								"id" : (nodeData.condition.length + 1) * 100,
+								"leftOperant" : "",
+								"isFirst" : false,
+								"l_operator" :op,
+								"operator" : "",
+								"value":"value",
+								/*"sequenceNo" : 1,
+								"loop" : 1,*/
+								/*"l_operator" : "",
+								"isFirst" : true,
+								"operator" : "Operator Name",
+								"value":"value",*/
+							/*	"commandId" : -1,*/
+							/*	"sub_condition" : [ {
+									"id" : (nodeData.condition.length + 1) * 1000,
+									"l_operator" : op,
+									"isFirst" : false,
+									"operator" : "",
+									"value":"",*/
+									/*"operator" : "Operator Name",
+									"sequenceNo" : 1,
+									"l_operator" : "",
+									"value":"value",
+									"isCommand" : true,
+									"loop" : 1,
+									"commandParams" : "",
+									"commandId" : 100000,*/
+								/*	"nodes" : []
+								} ]*/
 							});
 						}
 
@@ -173,14 +229,18 @@ oTech
 								"id" : (nodeData.nodes.length + 1) * 1000,
 								"title" : "Add Command",
 								"sequenceNo" : 1,
-								"isCommand" : true,
 								"loop" : 1,
 								"commandParams" : "",
+								"isCommand" : true,
 								"commandId" : 100000,
 								"nodes" : []
 							});
 						}
 					};
+					
+					
+				
+					
 					function getTreeDataForCommands1(data) {
 						$scope.commandCategoryList = data;
 					}
@@ -192,33 +252,55 @@ oTech
 if($scope.tree2 == "" || $scope.tree2 == undefined){
 					$scope.tree2 = [ {
 						"id" : 1,
-						"title" : 'Test Plan name',
-						"nodrop" : true,
-						"sequenceNo" : 1,
-						"loop" : 1,
-						"nodes" : [ {
+						"storyName" : 'Story name',
+						"usecaseName" : 'Use case name',
+						/*"nodrop" : true,*/
+						/*"sequenceNo" : 1,
+						"l_operator" : "",
+						"loop" : 1,*/
+						"rules" : [ {
 							"id" : 10,
-							"title" : "Task Case #1",
-							"nodrop" : true,
-							"sequenceNo" : 1,
-							"loop" : 1,
-							"nodes" : [ {
+							"ruleName" : "Rule name",
+							"priorityId" : 'H',
+							/*"nodrop" : true,*/
+						/*	"sequenceNo" : 1,*/
+						/*	"l_operator" : "",*/
+						/*	"loop" : 1,*/
+							"actions":[{
+								"id" : 1000,
+								"actionName":"",
+								"isAllow":false,
+								"configure":[]
+							}],
+							"condition" : [ {
 								"id" : 100,
-								"title" : "Command Group",
-								"sequenceNo" : 1,
-								"loop" : 1,
+								"leftOperant" : "",
 								"isFirst" : true,
-								"commandId" : -1,
-								"nodes" : [ {
+								"operator" : "Operator Name",
+								"value":"",
+								/*"sequenceNo" : 1,
+								"loop" : 1,*/
+								/*"l_operator" : "",
+								"isFirst" : true,
+								"operator" : "Operator Name",
+								"value":"value",*/
+							/*	"commandId" : -1,*/
+								/*"sub_condition" : [ {
 									"id" : 1000,
-									"title" : "Add Command",
+									"l_operator" : "",
+									"isFirst" : true,
+									"operator" : "Operator Name",
+									"value":"value",*/
+									/*"operator" : "Operator Name",
 									"sequenceNo" : 1,
+									"l_operator" : "",
+									"value":"value",
 									"isCommand" : true,
 									"loop" : 1,
 									"commandParams" : "",
-									"commandId" : 100000,
-									"nodes" : []
-								} ]
+									"commandId" : 100000,*/
+								//	"nodes" : []
+								/*} ]*/
 							} ]
 						} ]
 					} ];
@@ -326,8 +408,14 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.useCaseArray = [];
 						$.map(data, function(n,i){
 							var temp = {};
+							   if(i == "3"){
 								   temp['id'] = i; 
 								   temp['name'] = n; 
+								   temp['selected'] = true; 
+							   }else{
+								   temp['id'] = i; 
+								   temp['name'] = n; 
+							   }
 							   $scope.useCaseArray.push(temp);
 							});
 						$scope.usecases = $scope.useCaseArray;
@@ -385,11 +473,11 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.shareData.push({'key':'testPlanName','value':$scope.testPlanName});
 						$scope.shareData.push({'key':'testPlanDescription','value':$scope.testPlanDescription});
 						$scope.shareData.push({'key':'usecase','value':$scope.usecaseVal});
-						if(messages.length == 1){
-							messages.splice(0,1);
+						if(messagesTemplate.length == 1){
+							messagesTemplate.splice(0,1);
 						}
 						
-						messages.add($scope.shareData);
+						messagesTemplate.add($scope.shareData);
 						$(".btn").addClass("disabled");
 						sendCreateData.jobName = $scope.testPlanName;
 						var superParentObject, parentObject = {}, childObject = {};
@@ -430,7 +518,7 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 										function(data) {
 											if (data.status == "Success") {
 												$location
-														.path('/dashboard/createTestPlanFinal');
+														.path('/dashboard/createTestPlanTemplateFinal');
 											} else {
 												$scope.jobIsExitsError = true;
 												$(".btn").removeClass("disabled");
@@ -462,5 +550,7 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 							$location.path('/Schedule');
 						}
 					}
-
+				
+				
+					
 				});

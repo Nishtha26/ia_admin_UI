@@ -219,6 +219,26 @@ display:block;
 .nav-tabs.nav-tabs-bottom > li.active > a, .nav-tabs.nav-tabs-bottom > li.active > a:hover, .nav-tabs.nav-tabs-bottom > li.active > a:focus{
     border-bottom: none; 
 }
+
+.icons-list {
+    margin-top : 7px;
+    padding: 0 0 0 20px;
+    
+}
+.progress{
+margin-top : 7px;
+}
+
+#allTestRuns .ui-grid-viewport , #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport, #deviceNotificationLogListGridOptions .ui-grid-viewport
+{overflow-y: auto;
+	-webkit-overflow-scrolling: touch
+	}
+	
+#jobStatusList .ui-grid-pager-panel{
+top : 100%;
+}
+	
+
 </style>
 <!-- 
 <script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
@@ -279,7 +299,7 @@ display:block;
 
 <!--<div class="col-lg-1">	</div>-->	
 <span ui-tree-handle  >											
-<div class="col-lg-4">
+<div class="col-lg-4 col-sm-4 col-xs-4">
 <a data-nodrag ng-click="toggle(this)">
 		<span ng-class="{
 		'icon-folder-plus': collapsed,
@@ -288,9 +308,10 @@ display:block;
 		</span>
 		</a>
 {{node.title}}</div>
-<div class="col-lg-4 col-sm-4"><span ng-if="node.commandParams"><input class="form-control "   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 85%;"/><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(this,$event)"><i class="icon-pencil5 text-green-800 user_editor_link" style="padding-left:10px;"></i></a></span></div>
-<div class="col-lg-2 col-sm-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" /></div> 
-<div class="col-lg-2 col-sm-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" /></div> 
+<div class="col-lg-4 col-sm-4 col-xs-4"><span ng-if="node.commandParams && node.isCommand"><input class="form-control "   ng-model="node.commandParams"  type="text" style="border:none;  display: inline-block; width: 92%; padding-left:0px;" /><a href class="editable editable-click editable-open" aria-describedby="popovercommand" ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length && node.isCommand"><input class="form-control "   ng-model="node.commandParams"  type="text" style="display: inline-block; width: 92%; padding-left:0px;" /></span></div>
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control command_loop_number"   ng-model="node.loop" style="width: 50px; text-align:center;" maxlength="4" type="text" numbers-only/></div> 
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control sequence_number"  style="width: 50px; text-align:center;" ng-model="node.sequenceNo" maxlength="4" type="text" numbers-only/></div> 
 </span>
 
 <ol ui-tree-nodes=""  ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -365,7 +386,7 @@ display:block;
 										  </div>
 										  -->
 						 			 </div>
-						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid" style="overflow:hidden;" >
+						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid">
 						 			 <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingTestPlan"></img>
 						 			 </div>
 						 			 <div class="row">
@@ -517,7 +538,7 @@ display:block;
 						        <li ng-class="{'active': isSet(1)  }" ><a href ng-click="setTab(1)" data-toggle="tab">Create New Test Run</a></li>
 						        <li ng-show="editTestPlanTab" ng-class="{ active: isSet(2) }" ><a href ng-click="setTab(2)" data-toggle="tab">Edit Test Plan</a></li>
 						        <li ng-class="{ active: isSet(3) }"><a href ng-click="setTab(3)" data-toggle="tab">Existing Test Runs</a></li>
-						        <!-- <li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Flight History</a></li> -->
+						         <li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Quick Run</a></li> 
 						       </ul>
 
 							<div class="tab-content">
@@ -529,15 +550,33 @@ display:block;
 										<!-- Commands listing div -->
 										<div class="col-lg-4"  style='min-height: 700px; max-height: 700px; overflow: auto; margin-top: 10px;'>
 											<div class="row">
-												<div class="form-group">
+											<!-- if it is not VQT -->
+												<div class="form-group" ng-show="showOnlyDeviceProfile">
 												<div class="col-md-3" style="padding-top:6px;">Device Profiles: </div>
 													<div class="col-md-9">
 														<select class='form-control'
 															ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
 															ng-model="selectedOption" ng-change="changeDeviceProfile()"></select>
 													</div>
-													<span  class="error_msg"  ng-show ="deviceProfileListError">Please select create new Test Run from Test Plan List..</span>
+													<span  class="error_msg"  ng-show ="deviceProfileListError">Please select Device from devices List *</span>
 												</div>
+												<!--/ if it is not VQT -->
+												
+												<!-- if it is VQT -->
+												<div class="form-group" ng-show="showOnlyDeviceProfileAndPhoneNo">
+												<div class="col-md-3" style="padding-top:6px;">Device Profiles: </div>
+													<div class="col-md-6">
+														<select class='form-control'
+															ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
+															ng-model="selectedOption" ng-change="changeDeviceProfile()"></select>
+													</div>
+													
+													<div class="col-md-3">
+														<input type="text" class="form-control" id="phoneNo" name="phoneNo"  ng-model="phoneNo" placeholder="Phone no." >
+																<span class="error_msg"  ng-show="errorForPhoneNo" >Phone no is required*</span>
+													</div>
+												</div>
+												<!-- if it is VQT -->
 											</div>
 											
 											<!-- <div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
@@ -554,7 +593,7 @@ display:block;
 									 			</div>
 								 			 </div> 		
 													<div class="panel-body" style='min-height: 490px; max-height: 490px; overflow: auto; '>
-														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden;height: 450px;" >
+														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow: hidden;height: 450px;" >
 								 							<img class="loading loading-imgac" src="images/loading_new.gif"  ng-show="dataLoading"></img>
 								 						 </div>
 								 			 </div>
@@ -652,11 +691,10 @@ display:block;
 												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
 													
 														<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
-														<div class="input-group">
+														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
 																<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
 														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
 														name="Datendtime" placeholder="start date" required> 
-																<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 															</div>
 															<!-- <div ng-show="form.$submitted || form.Datendtime.$touched">
 																<div ng-show="form.Datendtime.$error.required"
@@ -669,10 +707,10 @@ display:block;
 													
 														</div>
 											<div class="col-lg-4  col-md-4" style="padding-left: 0px;"><div class="input-group">
+											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 												<input type="text" class="form-control daterange-left" ng-model="EndDate"
 														style="background-color: #FFFFFF" datetime-picker
 														date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
-												<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 											</div>
 													<!-- <div ng-show="form.$submitted || form.EndDate.$touched">
 														<div ng-show="form.EndDate.$error.required"
@@ -719,8 +757,8 @@ display:block;
 												<thead>
 													<tr>
 														<th width="45%"><h6>Command</h6></th>
-														<th width="25%"><h6>Sequence</h6></th>
 														<th width="20%"><h6>Loop</h6></th>
+														<th width="25%"><h6>Sequence</h6></th>
 													</tr>
 													<tr><th colspan="3"><h6>Params</h6></th></tr>
 												</thead>
@@ -753,7 +791,8 @@ display:block;
 													<div class="col-lg-8">
 														<div class="input-group">
 															<input type="text" class="form-control" id="device_name_to_plan" ng-change="deviceProvileName()" ng-model="deviceProfileName" placeholder="Device Profile Name">
-															<span class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileEdit" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTab()" >Add</span>
+															<span ng-if="isDeviceProfileAdd" class="input-group-addon" id="add_device_to_plan_button" style="cursor: pointer;" ng-click="addTabForDeviceProfile()" >Add</span>
 														</div>
 														<span  style="color:red" ng-show="err" class="help-block">{{addProfileErrorMsg}}</span>
 													</div>
@@ -778,7 +817,7 @@ display:block;
 												</table>
 											</div>
 										</div>
-										<div class="col-lg-9" style="border-left: 5px double #ccc;" id="params_template_div" >
+										<div class="col-lg-9 borderLeft" id="params_template_div" >
 											
 											
 											
@@ -886,284 +925,80 @@ display:block;
 
 									<div class="col-md-12">
 										
-										<!-- Flight history table -->
-										<div class="col-md-3" style="min-height: 600px; max-height: 600px; overflow: auto; ">
-											<div class="table-responsive">
-												<table class="table text-nowrap">
-													<tbody>
-														<tr class="active border-double">
-															<td>Series Run</td>
-															<td class="text-right">
-																<span class="badge bg-blue">Jun 16 - Jun 18</span>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 16, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 17, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 18, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-
-											<div class="table-responsive">
-												<table class="table text-nowrap">
-													<tbody>
-														<tr class="active border-double">
-															<td>Individual Runs</td>
-															<td class="text-right">
-																<span class="badge bg-blue">24</span>
-															</td>
-														</tr>
-
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 23, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 28, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(3h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jun 30, 10:00 am - 1:11 pm</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(1h 11m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jul 6, 0:00 am - 1:11 am</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(1h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jul 7, 0:00 am - 1:11 am</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-														<tr>
-															<td class="text-left">
-																<div class="media-left">
-																	<p class="text-semibold no-margin">Completed
-																		<small class="text-success text-size-base">(1h 21m)</small>
-																	</p>
-																	<span class="text-muted"><span class="status-mark border-success position-left"></span> Jul 8, 0:00 am - 1:11 am</span>
-																</div>
-															</td>
-															<td class="text-right col-md-2">
-																<i class="icon-circle-right2 text-orange-600 device_list_view_clicker"></i>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
+										
+										<div class="col-md-6" style="min-height: 600px; max-height: 600px; overflow: auto; ">
+										<div class="table-responsive">
+												<h6>Test Plan List </h6>
+												<hr />
+										<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
+								 			<input type="type" class="" ng-change="singleFilterQuickRun()" ng-model="searchTextQuick" placeholder="Type to filter..." ></label>
+								 			<span class="error_msg" ng-show ="errorMsg" >{{Message}}</span>
+								 			</div>
+							 			 </div>
+										<div id="TestPlanQuickRun" ui-grid="TestPlanQuickRun" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden;height: 450px;" ></div>
+										</div>
 										</div>
 										<!-- /Flight history table -->
+										<!-- <div class="col-md-2" style="min-height: 600px; border-left: 5px double #ccc; max-height: 600px; overflow: auto;">
+											Test run commands
+											<div class="table-responsive">
+											<h6>
+													Device Profile <span class="text-muted">({{deviceGroupLength}}
+														Device Profiles)</span>
+												</h6>
+												<hr />
+												<div>
+													<div class="hierarchy-wrap">
+														
+														<div ng-show="!emptyData" ui-tree="options"
+															data-drag-enabled="false">
+															<ol id="demoTree" ui-tree-nodes="" ng-model="quickTree">
+																<li ng-repeat="node in quickTree track by $index"
+																	ui-tree-node collapsed="false"
+																	ng-include="'nodrop_nodes_renderer2_Quick.html'"></li>
+															</ol>
+														</div>
+													</div>
+												</div>
+												/Test run commands
 
+												/Commands Div
+											</div>
+											/devices and commands section
+										</div> -->
 										<!-- devices and commands section -->
-										<div class="col-md-4" style="min-height: 600px; max-height: 600px; overflow: auto; ">
+										<div class="col-md-6" style='border-left: 5px double #ccc; min-height:500px;'>
 											<!-- Devices Table -->
 											<div class="table-responsive">
-												<h6>Device Group: Apple Run <span class="text-muted">(16 devices)</span></h6>
+												<h6>
+													Device List
+												</h6>
 												<hr />
-												<table class="table">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Model</th>
-															<th>Manufacturer</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>Anurag_iPhone</td>
-															<td>iPhone 6S</td>
-															<td>Apple</td>
-														</tr>
-														<tr>
-															<td>Anurag_iPhone</td>
-															<td>iPhone 6S</td>
-															<td>Apple</td>
-														</tr>
-														<tr>
-															<td>Anurag_iPhone</td>
-															<td>iPhone 6S</td>
-															<td>Apple</td>
-														</tr>
-														<tr>
-															<td>Anurag_iPhone</td>
-															<td>iPhone 6S</td>
-															<td>Apple</td>
-														</tr>
-													</tbody>
-												</table>
+												
+												<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
+									 			<input type="type" class="" ng-change="singleFilterForQuickRunRealDevices()" ng-model="searchTextForQuickRunRealDevices" placeholder="Type to filter..." ></label>
+									 			<span  class="error_msg"  ng-show ="errorMsgForDevice">{{msg}}</span>
+										 			<span ng-show ="successMsg" class="success_msg">{{msg1}}</span>
+									 			</div>
+								 			 </div> 		
+													<div class="panel-body" style='min-height: 300px; max-height: 420px; overflow: auto; padding-top:0px;'>
+														  <div id="RealDevicesOptions" ui-grid="RealDevicesOptionsForQuickRun" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow: hidden;height: 380px;" >
+								 						 </div>
+								 			 </div>
+											
+											<div class="col-md-12" style="margin-top: 5px; ">
+												<div class="row pull-right">
+													<ul class="icons-list">
+														<li><button class="btn btn-success btn-xs quickRun" type="button" ng-click="CreateQuickTestrun()">Quick Run</button></li>
+													</ul>
+												</div>
+											</div>
 											</div>
 											<!-- /Devices Table -->
-
-
-											<!-- Commands Div -->
-
-											<!-- Test run commands -->
-											<div class="table-responsive">
-												<table class="table">
-													<thead>
-														<tr>
-															<th><h6>Command</h6></th>
-															<th><h6>Loop</h6></th>
-															<th><h6>Sequence</h6></th>
-														</tr>
-														<tr>
-															<th colspan="3">Params</th>
-														</tr>
-													</thead>
-
-													<tbody>
-														<tr>
-															<td colspan='3' class="bg-violet-300">Test Case #1; Command Group #1</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-														<tr>
-															<td colspan='3' class="bg-violet-300">Test Case #1; Command Group #2</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-														<tr>
-															<td>CollectPingData</td>
-															<td>1</td>
-															<td>20</td>
-														</tr>
-														<tr>
-															<td colspan="3">c-30, s20, g90</td>
-														</tr>
-
-													</tbody>
-												</table>
-											</div>
-											<!-- /Test run commands -->
-
-											<!-- /Commands Div -->
-
-
-
-
 										</div>
-										<!-- /devices and commands section -->
-
+										
+										
 									</div>
-								</div>
 								<!-- /Flight history -->
 
 							</div>
@@ -1212,7 +1047,7 @@ display:block;
 								<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
 								<p style="text-align:center" ng-show="deviceLogList.deviceLogList.length <= 0 && !dataLoadingPopup">No Data Found</p>
 								
-								<div id="deviceLogListGridOptions" ui-grid="deviceLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceLogList.deviceLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 450px;" >
+								<div id="deviceLogListGridOptions" ui-grid="deviceLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceLogList.deviceLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 500px;" >
 							</div>
 
 							<!-- <div class="modal-footer">
@@ -1244,7 +1079,7 @@ display:block;
 								<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
 				<p style="text-align:center" ng-show="deviceNotificationLogList.deviceNotificationLogList.length <= 0 && !dataLoadingPopup">No Data Found</p>
 								
-								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 450px;" >
+								<div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 500px;" >
 							</div>
 
 							<!-- <div class="modal-footer">
@@ -1312,21 +1147,25 @@ display:block;
                                                         </tbody>
                                                     </table>
                                                 </div>
-                       </div>
-									<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
-				<p style="text-align:center" ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No Data Found</p>
-								
-								<div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="overflow:hidden;height: 450px;" >
-							</div>
-
-							<!-- <div class="modal-footer">
-								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div> -->
+                       </div> 
+					<div class="row">
+						<div class="col-md-12">
+							<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+				<p style="text-align: center"
+								ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No
+								Data Found</p>
+								<div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination  ui-grid-cellNav ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup" class="table table-hover grid" style="height: 500px;" >
+								</div>
 						</div>
+					</div>
+
+					
+						</div>
+						
 					</div>
 				</div>
 			</div>
+				
 		<!-- /DeviceNotification_List -->
 		
 	<div class="popover fade top in editable-container editable-popup"

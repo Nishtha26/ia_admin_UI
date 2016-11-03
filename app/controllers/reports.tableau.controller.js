@@ -4,8 +4,8 @@ oTech.controller('ReportsTableauController',
 		var userId = sessionStorage.userId;
 		$rootScope.role = sessionStorage.getItem("role");
 		$scope.name = sessionStorage.getItem("username");
-		
-		var tableauURL=oApp.config.REPORT_HOST_URL+"views/"+oApp.config.REPORT_NAME+"?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no";
+		//var tableauURL=oApp.config.REPORT_HOST_URL+"views/"+oApp.config.REPORT_NAME+"?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no";
+		var tableauURL=sessionStorage.getItem("tableauURL");
 		$rootScope.slideContent();
 		window.onresize = function(event) {
 			$rootScope.slideContent();
@@ -55,8 +55,12 @@ oTech.controller('ReportsTableauController',
 		);*/
 	}	
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+	//	$scope.getFavouriteReports();
 	
-		
+		  $(document).ready(function() {
+	        	 
+		 	   $("#i_report").attr("src", tableauURL);
+
+		 	}); 	
     	
 	});

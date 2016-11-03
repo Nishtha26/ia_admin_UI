@@ -4,104 +4,46 @@
 		<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
 	</ul>
 
+	<div class="navbar navbar-default" id="navbar-second">
+	<ul class="nav navbar-nav no-border visible-xs-block">
+		<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
+	</ul>
 	<div class="navbar-collapse collapse" id="navbar-second-toggle">
-		<ul class="nav navbar-nav">
+	<ul class="nav navbar-nav">
+			<li ng-repeat="(key, val) in menuData" class="dropdown">
+		
+				<a ng-if = "val.length == 1 && val[0].screenName==key" ng-repeat="x in menuData[key]" class="" ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"  >
+				  <i class="{{x.iconUrl}}"></i>	{{x.screenName}}
+				</a>
+	<span ng-if ="val.length == 1 && val[0].screenName!=key">
+				<a  class="dropdown-toggle" data-toggle="dropdown"><i class="{{key | headerIcon}}"></i> {{key}} <span class="caret"></span></a>
+				
+				<ul class="dropdown-menu width-250" >
+		
+				<li ng-repeat="x in val"><a  ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
+					<!-- <li ng-repeat="x in menuData[key]">
+						<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
+						<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
+					</li> -->
+				</ul>
 			
-
-			<li class="dropdown">
-				<a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-home2 position-left text-slate-600"></i> Dashboard <span class="caret"></span></a>
-
-				<ul class="dropdown-menu width-250">
-					<li><a  ng-click="ShowReports('','System')"><i class="icon-home9 text-slate-600"></i>System Dashboard</a></li>
-					<!-- <li><a href="wifi_dashboard.html"><i class="icon-connection text-slate-600"></i>WIFI Dashboard</a></li>
-					<li><a href="#"><i class="icon-bug2 text-slate-600"></i>Problem Dashboard</a></li>
-					<li><a href="#"><i class="icon-merge text-slate-600"></i>Device Performance</a></li>
-					<li><a href="networking_dashboard.html"><i class="icon-wave text-slate-600"></i>Network Performace</a></li>
-					<li><a href="#"><i class="icon-hammer text-slate-600"></i>Testing Reports</a></li> -->
+</span>			
+<span ng-if ="val.length > 1">
+				<a  class="dropdown-toggle" data-toggle="dropdown"><i class="{{key | headerIcon}}"></i> {{key}} <span class="caret"></span></a>
+				
+				<ul class="dropdown-menu width-250" >
+		
+				<li ng-repeat="x in val"><a  ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
+					<!-- <li ng-repeat="x in menuData[key]">
+						<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
+						<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
+					</li> -->
 				</ul>
-			</li>
-
-			<li class="dropdown">
-				<a href="#/dashboard/myDevices" class="dropdown-toggle"><i class="icon-mobile position-left text-indigo-800"></i> Devices </a>
-			</li>
-
-			<li class="dropdown">
-				<a href="#/dashboard/heatMaps"><i class="icon-fire position-left text-orange-600"></i> Heatmap</a>
-			</li>
-
-			<li class="dropdown">
-				<a  ng-click="ShowReports('','Measurements')"><i class="icon-rulers position-left text-blue-600"></i> Measurements</a>
-			</li>
-
-			<li class="dropdown">
-		<!--	 -->
-				<a  class="dropdown-toggle"  data-toggle="dropdown" ><i class="icon-pie-chart3 position-left text-orange-800"></i>Reports  <span class="caret"></span></a>
- 			 <ul class="dropdown-menu width-250">
-				 
-					 <li><a href="#/dashboard/reportsTableau"><i class="icon-phone-wave text-orange-800"></i>Call Performance</a></li>
-					<li><a href="#/dashboard/DataPerformance"><i class="icon-qrcode text-orange-800"></i>Data Performance</a></li>
-				     <li><a href="#/dashboard/MMS"><i class="icon-shutter text-orange-800"></i>MMS</a></li>
-     				<li><a href="#/dashboard/SMS"><i class="icon-mail5 text-orange-800"></i>SMS</a></li>
-					<li><a href="#/dashboard/Mobility"><i class="icon-map5 text-orange-800"></i>Mobility</a></li>
-					<li><a href="#/dashboard/VideoQuality"><i class="icon-shutter text-orange-800"></i>Video Quality</a></li>
-					<li><a href="#/dashboard/VoiceQuality"><i class="icon-music text-orange-800"></i>Voice Quality</a></li>
-					<li><a href="#/dashboard/WiFiPerformance"><i class="icon-satellite-dish2 text-orange-800"></i>WIFI Performance</a></li> 
-				<li><a href="#/dashboard/RadioPerformance"><i class=" icon-radio text-orange-800"></i>Radio Performance</a></li>
-				</ul>  
-	<!-- 			 <ul class="dropdown-menu width-250">
-				 
-					 <li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/CallPerformance?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')" ><i class="icon-phone-wave text-orange-800"></i>Call Performance</a></li>
-					<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/DataPerformance?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-qrcode text-orange-800"></i>Data Performance</a></li>
-					
-     <li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/MMS?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-shutter text-orange-800"></i>MMS</a></li>
-     <li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/SMS?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-mail5 text-orange-800"></i>SMS</a></li>
-					<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/Mobility?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-map5 text-orange-800"></i>Mobility</a></li>
-					<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/VideoQuality?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-shutter text-orange-800"></i>Video Quality</a></li>
-					<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/VoiceQuality?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-music text-orange-800"></i>Voice Quality</a></li>
-					<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/WiFiPerformance?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class="icon-satellite-dish2 text-orange-800"></i>WIFI Performance</a></li> 
-				<li><a ng-click="inNewWindowTableauURL('http://iareport.orchestratec.net/views/ConsolidatedKPI5_13/RadioPerformance?:embed=y&:showShareOptions=true&:display_count=no&:showVizHome=no')"><i class=" icon-radio text-orange-800"></i>Radio Performance</a></li>
-				</ul>  -->
-			</li>
-
-
-			<li class="dropdown">
-				<a ng-click ="useradminstration()"><i class="icon-users position-left text-green-800"></i> Users </a>
-			</li>
-
-
-
-
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-pie-chart3 position-left text-brown-300"></i> Admin <span class="caret"></span></a>
-
-				<ul class="dropdown-menu width-250">
-					<!-- <li><a href="#"><i class="icon-phone-wave text-brown-300"></i>Add Reports</a></li> -->
-					<li><a href="#/dashboard/testPlanTestRunAdministration" ><i class="icon-regexp text-brown-300"></i>Test Plan Administration</a></li>
-   					  <li><a href="#/dashboard/createTestPlan" ><i class="icon-strategy text-brown-300"></i>Create Test Plan</a></li>
-				<!-- 	<li><a ><i class="icon-station text-brown-300"></i>Device Administration</a></li> -->
-					<li class="dropdown-header">User</li>	
-					<!-- <li><a ><i class="icon-music text-brown-300"></i>User Device Mapping</a></li> -->
-					<li><a ng-click ="useradminstration()"><i class="icon-satellite-dish2 text-brown-300"></i>User Administration</a></li>
-				</ul>
-			</li>
-
-
-
-			<li class="dropdown">
-				<a  class="dropdown-toggle" data-toggle="dropdown"><i class="icon-equalizer3 position-left text-teal-300"></i> My Settings <span class="caret"></span></a>
-
-				<ul class="dropdown-menu width-250">
-					<!-- <li><a href="#"><i class="icon-spinner text-teal-300"></i>Landing Page</a></li>
-					<li><a href="#"><i class="icon-shutter text-teal-300"></i>Settings</a></li> -->
-					<!-- <li><a ><i class="icon-code text-teal-300"></i>Change Password</a></li> -->
-				<!-- 	<li><a href="#"><i class="icon-reading text-teal-300"></i>My Info</a></li> -->
-					<li><a  ng-click="signOut()" ><i class="icon-switch text-warning-300"></i>Logout</a></li>
-				</ul>
-			</li>
-
-		</ul>
-
-
-	</div>
+			
+</span>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <!-- /second navbar -->

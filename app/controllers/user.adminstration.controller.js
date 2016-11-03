@@ -1,5 +1,5 @@
 oTech.controller('userAdminstrationController',
-	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout ,$filter) {
+	function ($scope, $rootScope, $location, AppServices, $stateParams,$timeout ,$filter,$templateCache) {
 				var token = sessionStorage.getItem("token");
 				var userId = sessionStorage.getItem("userId");
 				$rootScope.role =sessionStorage.getItem("role");
@@ -8,9 +8,11 @@ oTech.controller('userAdminstrationController',
 				var userGroupList=[];
 				var clickedItem;
 				var row,customerName;
+				  var deviceId,selectedUserId;
 				$scope.error=false;
 				$scope.errormsg="";
 				$scope.selectedUserGroup=[];
+				$scope.emailPattern="";
 				
 			//	$scope.role ="ROLE_IAADMIN"
 			$scope.addCustomer = true;		
@@ -20,7 +22,11 @@ oTech.controller('userAdminstrationController',
 			ROLE_IAADMIN : ['ROLE_IAADMIN','ROLE_REPORTING'],
 			ROLE_REPORTING : ['ROLE_REPORTING']	
 		};
-		var deletePopupMsg="Are you want to delete this user(s)?"
+		  $templateCache.put('ui-grid/uiGridViewport',
+				    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+				  );
+
+		var deletePopupMsg="Do you want to delete this user(s)?"
 		$scope.accountDiv =false;
 		$scope.addCustomer = false; 
 		$scope.role1 = false; 
@@ -36,6 +42,7 @@ oTech.controller('userAdminstrationController',
 		 $scope.accountEnableStatus;
 		$scope.selectedUsers;
 		$scope.currentRow;
+		var lusername="";
 		window.onresize = function(event) {
 			$rootScope.slideContent();
 		}
@@ -57,7 +64,7 @@ oTech.controller('userAdminstrationController',
 			}
 		}
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+	//	$scope.getFavouriteReports();
 		
 		$scope.showErrorMessage = function(divId,msg){
 			
@@ -202,9 +209,11 @@ oTech.controller('userAdminstrationController',
 					$("#email-8").val("") ;
 					$("#role-8").val("");
 					$("#companyId").val("");
+					$scope.roleName=$rootScope.role;
 					if($rootScope.role=="ROLE_OTADMIN"){
-//					$("#customer-8").val("");
-					$("#customer-8").select2()[0].value='';
+					$("#customer-8").val("");
+//					$("#customer-8").select2()[0].value='';
+						 
 //					$('#customer-8').attr('readonly', false);
 					}
 					else{
@@ -212,6 +221,7 @@ oTech.controller('userAdminstrationController',
 					}
 					$scope.selectedUserGroup=[];
 				//	$(".errors").hide();
+					
 			 }
 			 $('.table-emailAdd').click(function(){
 				
@@ -239,11 +249,13 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		$scope.currentRow=row;
 		$scope.selectedUsers=$scope.gridApi.selection.getSelectedRows();
 		var numRows=$scope.gridApi.selection.getSelectedRows().length;
+		selectedUserId=row.entity.userId;
 		 var msg = 'rows changed ' + $scope.gridApi.selection.getSelectedRows().length;
 		 $scope.accountDiv =false;
 		 if(numRows==1){
 			 console.log("row"+ $scope.gridApi.selection.getSelectedRows()+"::"+$scope.gridApi.selection.getSelectedRows().username);
-			 $scope.currentRow=$scope.gridApi.selection.getSelectedRows()
+			// $scope.currentRow=$scope.gridApi.selection.getSelectedRows()
+			 
 			 $scope.isUpdateDisabled = false;
 //			 $scope.isDeleteDisabled = false;
 				$scope.DeleteBtnLabel();
@@ -272,7 +284,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		 $scope.updateButton =true;
 		 $scope.createButton =false;
 		 console.log(row);
-         console.log(row[0].companyName);
+//         console.log(row.entity.companyName);
 				$scope.accountDiv =true;
             $scope.addCustomer = false; 
 			$scope.role1 = false; 
@@ -282,31 +294,31 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 			$scope.status =false;
 			/* To Display Values in Form Elements  When Table Row is Clicked*/
 			$scope.activeUserGroups=	userGroupList;
-			$("#firstname").val(row[0].firstName) ;
-			$scope.firstname=row[0].firstName;
-//			$scope.firstname=row[0].firstName;
-			$("#lastname").val(row[0].lastName) ;
-//			$scope.lastname=row[0].lastName;
-//			$("#password").val(row[0].password) ;
-			$scope.password=row[0].password;
-//			$("#cnfpassword").val(row[0].password) ;
-			$scope.passwordConfirmation=row[0].password;
-			$("#orgPassword").val(row[0].password) ;// for check password is change for not
+			$("#firstname").val(row.entity.firstName) ;
+			$scope.firstname=row.entity.firstName;
+//			$scope.firstname=row.entity.firstName;
+			$("#lastname").val(row.entity.lastName) ;
+//			$scope.lastname=row.entity.lastName;
+			$("#password").val(row.entity.password) ;
+			$scope.password=row.entity.password;
+			$("#cnfpassword").val(row.entity.password) ;
+			$scope.passwordConfirmation=row.entity.password;
+			$("#orgPassword").val(row.entity.password) ;// for check password is change for not
 			
-//			$("#email-8").val(row[0].email) ;
-			$scope.mail=row[0].email;
+//			$("#email-8").val(row.entity.email) ;
+			$scope.mail=row.entity.email;
 			$('#email-8').attr('readonly', true);
-//			$("#username-7").val(row[0].username) ;
-			$scope.userName=row[0].username;
+//			$("#username-7").val(row.entity.username) ;
+			$scope.userName=row.entity.username;
 			$("#username-7").attr('readonly', true) ;
 //			$("#customer-8").val(row.entity.companyName);
 			
-			$scope.tablerole =row[0].roleName;
+			$scope.tablerole =row.entity.roleName;
 			
 		
 		//	$('#customer-8').attr('readonly', true);
-			$("#role-8").val(row[0].status);
-			$scope.selectedUserGroup=row[0].userGroupName;
+			$("#role-8").val(row.entity.status);
+			$scope.selectedUserGroup=row.entity.userGroupName;
 //			$(".errors").hide();
 			if($scope.myForm.$invalid){
 		//		$(this).parent().parent().find(".errors").show();
@@ -315,15 +327,19 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 
 			
 			updatePage();
-			$("#edit_role").select2()[0].value=row[0].roleName;
+			//$("#edit_role").select2()[0].value=row.entity.roleName;
+			$scope.tablerole=row.entity.roleName;
 //			$("#customer-8").select2().select2('val',row.entity.companyName);
 			if($rootScope.role=="ROLE_OTADMIN"){
-			//	$("#customer-8").select2().select('val',row[0].companyName);
-				$("#customer-8").select2()[0].value=row[0].companyName;
+			//	$("#customer-8").select2().select('val',row.entity.companyName);
+//				$("#customer-8").select2()[0].value=row.entity.companyName;
+				
+				$("#customer-8").val(row.entity.companyName);
+				$scope.customer=row.entity.companyName;
 				
 			}
 			else{
-				$("#customer-8").val(row[0].companyName);
+				$("#customer-8").val(row.entity.companyName);
 			}
 			
 	}
@@ -355,7 +371,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 //			 var companyName      = $("#customer-8").select2().select2('val');
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2()[0].value;
+					companyName = $("#customer-8").val();
 				}	
 				else{
 					companyName=	$("#customer-8").val();
@@ -408,7 +424,7 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
 		       );
 			}	
 				else{
-					 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+				//	 $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
 					$(this).parent().parent().find(".errors").show();
 					 $scope.dataLoading=false;
 				}
@@ -422,9 +438,19 @@ $scope.userTableGridOptions.onRegisterApi = function( gridApi ) { //extra code
     $scope.gridApi.grid.refresh();
   };*/
 //var allFilterdata=allOfTheData;
+var filterType="";
 $scope.singleFilter = function() {
  // var allFilterdata=allOfTheData;
-    $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+	  filterType = function(item) {
+	        return item.companyName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1 
+	        || item.status.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.firstName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.email.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.roleName.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1
+	        || item.username.toLowerCase().indexOf($scope.searchText.toLowerCase() || '') !== -1;
+	        
+	 }
+    $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, filterType,$scope.searchText);
     $scope.userTableGridOptions.data = $scope.userTableGridOptions.data.slice( 0, $scope.endLimit);
    // allOfTheData=$scope.userTableGridOptions.data;
    // $scope.createNewDatasource();
@@ -444,6 +470,10 @@ $scope.singleFilter = function() {
     return renderableRows;*/
    
 };
+$scope.cancelUserCreate=function(){
+	
+	$scope.myForm.$setPristine();
+	 }
 $scope.cancelUserEdit=function(){
 	 $("#cancel_user_edit_label").hide();
 	 	$("#create_new_user_label").show();
@@ -509,7 +539,7 @@ $scope.CreateUser =function(){
 			 var roleName         =	$("#role").val() ;
 			 var companyName ;
 				if($rootScope.role=="ROLE_OTADMIN"){
-					companyName = $("#customer-8").select2()[0].value;
+					companyName = $("#customer-8").val();
 				}
 				else{
 					companyName=	$("#customer-8").val();
@@ -565,6 +595,11 @@ $scope.CreateUser =function(){
 		       ); 
 
 		   }
+			else{
+				// $scope.showErrorMessage('input_user_error_message',"Error occured during updation");
+			//	$(this).parent().parent().find(".errors").show();
+			//	 $scope.dataLoading=false;
+			}
 			
 			}	
 	 
@@ -575,16 +610,19 @@ $scope.CreateUser =function(){
 		$scope.userTableData = function(){
 			$scope.dataLoading=true;
 			$scope.pageReset();
+			$scope.searchText="";
 		promise = AppServices.GetuserTableData(userId, token);
 		promise.then(
 			function(data){
 				$scope.totalRecords = data.length;
-				allOfTheData = data;
-//				$scope.userTableGridOptions.data = data;
+			//	allOfTheData = data;
+				$scope.userTableGridOptions.data = data;
+				allOfTheData=$scope.userTableGridOptions.data;
 				$scope.userTableGridOptions.data = data.slice( 0, $scope.itemsPerPage);
 				//console.log($scope.serverSettingsGridOptions.data[0]);
 				$scope.gridApi.selection.selectRow($scope.userTableGridOptions.data[0]); //extra code
 				$scope.dataLoading=false;
+			
 			},
 			function(err){
 				$scope.dataLoading=false;
@@ -654,7 +692,7 @@ $scope.createCustomer =function(){
 			return;
 		}
 		else{
-			$scope.dataLoading=true;
+			$scope.dataLoadingCustomer=true;
 		promise = AppServices.createCustomerUserAdministration(customerName, token);
 		promise.then(
 			function(data){
@@ -674,25 +712,28 @@ $scope.createCustomer =function(){
 //					$("#customer-8").select2().select2('val',customerName);
 						if($rootScope.role=="ROLE_OTADMIN"){
 						//	$("#customer-8").select2().select2('val',customerName);
-							$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
-							$("#customer-8").select2()[0].value =customerName;
-						//	$( "#customer-8" ).val(customerName);
+						//	$("#customer-8").append ('<option value="' + customerName+ '">' + customerName+ '</option>')
+							//$("#customer-8").select2()[0].value =customerName;
+							customerList.push(customerName);
+							$( "#customer-8" ).val(customerName);
+								$scope.customer=customerName;
 						}
 						else{
 							$("#customer-8").val(customerName);
 						}
 					
 				}
-				$scope.dataLoading=false;
+				$scope.dataLoadingCustomer=false;
+				$('.emailAdd').slideToggle();
 			},
 			function(err){
-				$scope.dataLoading=false;
+				$scope.dataLoadingCustomer=false;
 			}
 		);
 	   
 		}
 	
-	$('.emailAdd').slideToggle();
+	
 }	
 /*Close Create Customer popup*/
 $scope.closerCreatePop =function(){
@@ -705,7 +746,7 @@ $scope.userGroupList =function(){
 	
 	
 	
-	
+
 	promise = AppServices.GetActiveuserGroupsData(userId, token);
 	promise.then(
 		function(data){
@@ -741,6 +782,7 @@ $scope.getCheckedUserGroup =function(usergroup){
 $scope.deleteUser =function(userNames,accountEnableStatus){
 	$scope.dataLoading=true;
 //	var userNames=$(".d-username").val();
+	var oldStatus=accountEnableStatus;
 	promise = AppServices.deleteUserAdministration(token,userNames, accountEnableStatus);
 	promise.then(
 		function(data){
@@ -760,13 +802,20 @@ $scope.deleteUser =function(userNames,accountEnableStatus){
 			 $scope.cancel();
 			 $timeout(function(){ $('#MessagePopUp').modal('hide'); }, 2000);*/
 		 $scope.showSuccessMessage('input_user_error_message',"User update successfully");
-			 $scope.userTableData();
+		 if(oldStatus==0){
+		 $scope.currentRow.entity.status="INACTIVE";// for show status text after update in db
+		 		}
+		 else if(oldStatus==1)
+		 {
+			 $scope.currentRow.entity.status="ACTIVE";;
+		   }
+			// $scope.userTableData();
 			 }
 			$scope.dataLoading=false;
 		},
 		function(err){
-			
-			  $scope.showErrorMessage('input_user_error_message',err.responseJSON.message);
+			console.log("Error"+err.statusText)
+			  $scope.showErrorMessage('input_user_error_message',"Unable to process");
 		/*	  $rootScope.Message = err.responseJSON.message;
 			
 				 $('#MessageColor').css("color", "red");
@@ -781,9 +830,9 @@ $scope.deleteUser =function(userNames,accountEnableStatus){
 $scope.DeleteUserBtn=function(){
 	 var userNames;
 	 var isComma=false;
-	 for(var uIndex in $scope.selectedUsers){
-//		 console.log(""+$scope.selectedUsers[uIndex].username);
-//	userNames.push($scope.selectedUsers[uIndex].username);	
+	 userNames="'"+$scope.currentRow.entity.username+"'";
+/*	 for(var uIndex in $scope.selectedUsers){
+
 		 if(isComma){
 			 userNames=	 userNames+","+ "'"+$scope.selectedUsers[uIndex].username+ "'";
 			
@@ -792,8 +841,9 @@ $scope.DeleteUserBtn=function(){
 			 userNames= "'"+$scope.selectedUsers[uIndex].username+"'";
 			 isComma=true;
 		 }
-	 }
+	 }*/
 	 console.log("userNames "+userNames);
+		$scope.DeleteBtnLabel();
 	 if ( window.confirm(deletePopupMsg) ) {
 		 $scope.deleteUser(userNames,$scope.accountEnableStatus);
      }
@@ -804,31 +854,162 @@ $scope.DeleteBtnLabel=function(){
 	 $scope.deleteLabel="Activate/Deactivate";
 	var isActiveCount=0;
 	var isDeactiveCount=0;
-	 for(var uIndex in $scope.selectedUsers){
-		 if($scope.selectedUsers[uIndex].status=='ACTIVE'){
+	// for(var uIndex in $scope.selectedUsers){
+		 if($scope.currentRow.entity.status=='ACTIVE'){
 //			 userNames=	 userNames+","+ "'"+$scope.selectedUsers[uIndex].username+ "'";
-			 isActiveCount++;
+		//	 isActiveCount++;
+			 $scope.deleteLabel="Deactivate";
+				deletePopupMsg="Do you want to deactivate this user(s)?"
+				 $scope.isDeleteDisabled = false;
+				 $scope.accountEnableStatus=0;
 		 }
 		 else{
-			 isDeactiveCount++;
+				$scope.deleteLabel="Activate";
+				deletePopupMsg="Do you want to activate this user(s)?"
+				 $scope.accountEnableStatus=1;
+				 $scope.isDeleteDisabled = false;
+		//	 isDeactiveCount++;
 		 }
-	 }
-	if($scope.selectedUsers.length==isActiveCount){
+	// }
+/*	if($scope.selectedUsers.length==isActiveCount){
 		$scope.deleteLabel="Deactivate";
-		deletePopupMsg="Are you want to deactivate this user(s)?"
+		deletePopupMsg="Do you want to deactivate this user(s)?"
 		 $scope.isDeleteDisabled = false;
 		 $scope.accountEnableStatus=0;
 	}
 	if($scope.selectedUsers.length==isDeactiveCount){
 		$scope.deleteLabel="Activate";
-		deletePopupMsg="Are you want to activate this user(s)?"
+		deletePopupMsg="Do you want to activate this user(s)?"
 		 $scope.accountEnableStatus=1;
 		 $scope.isDeleteDisabled = false;
-	}
+	}*/
 		 
 }
 
 $scope.pageReset();
+/* assign devices to user starting */
+$scope.assignDeviceToUser=function(){
+	  $scope.allDeviceData();
+      $scope.selectedDeviceData();
+	 $("#user_list_div").hide();
+	 	$("#user_create_div").hide();
+	 	$("#user_edit_div").hide();
+	 	$("#user_list_label").hide();
+	 	$("#show_user_details_div").hide();
+	 	$("#create_new_user_label").hide();
+	 	$("#cancel_user_edit_label").hide();
+	 	$("#cancel_user_create_label").hide();
+	 	$("#cancel_assign_device_label").show();
+		$("#assign_device_div").show();
+	
+}
+$scope.cancelAssignDeviceToUser=function(){
+	
+}
+
+
+$scope.allDeviceGridOptions = oApp.config.allDeviceGridOptions;
+      /*on grid row clicked*/
+      $scope.allDeviceGridOptions.onRegisterApi = function( gridApi ) { //extra code
+          // console.log(gridApi);
+          $scope.gridApi = gridApi;
+          $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+              
+              console.log('allDeviceGridOptions ',row.entity);
+              deviceId=row.entity.deviceId;
+
+          });
+      };
+
+$scope.allDeviceData = function(){
+          promise = AppServices.getDevicesNotAvailableForUser(token,selectedUserId);
+          promise.then(
+              function(data){
+            	  $scope.allDeviceGrid=data;
+                  $scope.allDeviceGridOptions.data = data;
+                  //console.log($scope.serverSettingsGridOptions.data[0]);
+                  $scope.gridApi.selection.selectRow($scope.allDeviceGridOptions.data[0]); //extra code
+              },
+              function(err){
+
+              }
+          );
+      }
+
+      $scope.selectedDeviceGridOptions = oApp.config.selectedDeviceGridOptions;
+      /*on grid row clicked*/
+      $scope.selectedDeviceGridOptions.onRegisterApi = function( gridApi ) { //extra code
+          // console.log(gridApi);
+          $scope.gridApi = gridApi;
+          $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+              
+              console.log('selectedDeviceGridOptions ',row.entity);
+              deviceId=row.entity.deviceId;
+            
+
+          });
+      };
+
+
+       $scope.selectedDeviceData = function(){
+          promise = AppServices.getDevicesAvailableForUser(token,selectedUserId);
+          promise.then(
+              function(data){
+            	  $scope.selectedDeviceGrid= data;
+                  $scope.selectedDeviceGridOptions.data = data;
+                  //console.log($scope.serverSettingsGridOptions.data[0]);
+                  $scope.gridApi.selection.selectRow($scope.selectedDeviceGridOptions.data[0]); //extra code
+              },
+              function(err){
+
+              }
+          );
+      }
+
+      $scope.addDevice = function(){
+          promise = AppServices.assignDeviceToUser(token,selectedUserId,deviceId);
+          promise.then(
+              function(data){
+                  if(data.status =="success"){
+
+                  $scope.allDeviceData();
+                  $scope.selectedDeviceData();
+                  }else{
+                      console.log("error occured");
+                  }
+
+                 
+              },
+              function(err){
+
+              }
+          );
+
+      }
+
+      $scope.removeDevice = function(){
+          promise = AppServices.assignDeviceToUser(token,userId,deviceId);
+          promise.then(
+              function(data){
+                  if(data.status =="success"){
+                      
+                      $scope.allDeviceData();
+                  $scope.selectedDeviceData();
+                  }else{
+                      console.log("error occured");
+                  }
+
+                  
+              },
+              function(err){
+
+              }
+          );
+
+      }
+
+
+/*Assign devices to user end*/
 /*$('#myForm input ' ).blur(function() {
 	if($scope.myForm.$invalid){
 		$(this).parent().parent().find(".errors").show();
@@ -860,7 +1041,7 @@ $scope.pageReset();
 		$scope.password=row[0].password;
 //		$("#cnfpassword").val(row[0].password) ;
 		$scope.passwordConfirmation=row[0].password;
-		$("#orgPassword").val(row[0].password) ;// for check password is change for not
+		$("#orgPassword").varow.entity0].password) ;// for check password is change for not
 		
 //		$("#email-8").val(row[0].email) ;
 		$scope.mail=row[0].email;
@@ -884,7 +1065,7 @@ $scope.pageReset();
 		}
 	//	$('#customer-8').attr('readonly', true);
 		$("#role-8").val(row[0].status);
-		$scope.selectedUserGroup=row[0].userGroupName;
+		$scope.selectedUserGroup=row.entity.userGroupName;
 //		$(".errors").hide();
 		if($scope.myForm.$invalid){
 	//		$(this).parent().parent().find(".errors").show();
@@ -1006,6 +1187,34 @@ $scope.rangeUG = function() {
 			  $scope.existingusersGridOptions.data = $filter('filter')($scope.existingusersGridData, $scope.searchTextForExistuser, undefined);
 			    $scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice( 0, $scope.endLimit);
 			}
+		  $scope.singleFilterForAllDevice = function() {
+			  filterType="";
+			  var searchText=$scope.searchTextForAllDevice.toLowerCase();
+			  filterType = function(item) {
+			        return item.deviceId.toString().indexOf(searchText || '') !== -1 
+			        || item.userName.toLowerCase().indexOf(searchText || '') !== -1
+			        || (item.msisdn!=null?item.msisdn.toLowerCase():"").indexOf(searchText || '') !== -1
+			        || (item.imei!=null?item.imei.toLowerCase():"").indexOf(searchText || '') !== -1;
+			        
+			 }
+			  $scope.allDeviceGridOptions.data = $filter('filter')($scope.allDeviceGrid, filterType,searchText);
+			    $scope.allDeviceGridOptions.data = $scope.allDeviceGridOptions.data.slice( 0, $scope.endLimit);
+			}
+		  $scope.singleFilterForSelectedDevice = function() {
+			  
+			  filterType="";
+			  var searchText=$scope.searchTextForSelectedDevice.toLowerCase();
+			  filterType = function(item) {
+			        return item.deviceId.toString().indexOf(searchText || '') !== -1 
+			        || item.userName.toLowerCase().indexOf(searchText || '') !== -1
+			        || (item.msisdn!=null?item.msisdn.toLowerCase():"").indexOf(searchText || '') !== -1
+			        || (item.imei!=null?item.imei.toLowerCase():"").indexOf(searchText || '') !== -1;
+			        
+			 }
+			  
+			  $scope.selectedDeviceGridOptions.data = $filter('filter')($scope.selectedDeviceGrid,filterType, searchText);
+			    $scope.selectedDeviceGridOptions.data = $scope.selectedDeviceGridOptions.data.slice( 0, $scope.endLimit);
+			}
 
 		  $scope.createNewDatasourceUG = function() {
 				$scope.dataLoading = true;
@@ -1051,6 +1260,7 @@ $scope.isAssignDisabled = true;
 }
 $scope.pageReset();
 $scope.availableUsergroupsGrid = function(){
+  $scope.searchTextUserGroup = "";
   $scope.userDataLoading = true;
 promise = AppServices.getAvailableUsergroupsData(userId, token);
 promise.then(
@@ -1507,6 +1717,8 @@ $scope.getTableHeightUserGroup = function() {
 		 	$("#assign_user_cancel_label").hide();
 			$("#input_group_error_message").text('');
 			$("#group_cancel_create_label").hide();
+			$scope.usergroupform.$setPristine();
+			
 		}
 	$scope.DetailUserBtn=function(){
 		$("#user_list_div").hide();

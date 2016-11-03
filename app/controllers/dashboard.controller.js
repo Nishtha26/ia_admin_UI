@@ -348,7 +348,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		    cancelClass: 'btn-default'
 		});
 		
-		var endDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd HH:mm");
+		var endDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd 23:59");
 			var startDateTimeStr =jQuery.format.date(start, "yyyy-MM-dd 00:00");
 		//$("#testRunDate").val(jQuery.format.date(startDateTime, "yyyy-MM-dd"))
 			
@@ -380,15 +380,18 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	
 	$scope.testUsageLoad();
 //	$scope.findDeviceCount();
+	if($rootScope.role=="ROLE_OTADMIN"){
 	$scope.deviceCountInfo();
+	}
 	$scope.getDeviceUsageData();
 /*	$scope.findActiveDeviceCount();
 	$scope.findScheduledJobCount();
 	$scope.findActiveJobCount();
-	$scope.getDashBoardMenu();
+	
 	$scope.getFavouriteReports();
 	
 	$scope.getDeviceAvailabilityData();*/
+	$scope.getDashBoardMenu();
 	var date = $rootScope.getTodayDate();
 	$scope.getExecutiveStatusData(date);
 	$scope.getMapData();
@@ -590,7 +593,8 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 						   MapServices.clearReplayMap();
 						     $scope.DefaultReplayMap = true ;
 		  	                $scope.rePlayMap =false ;
-						    alert('No Records Was Found')
+						 //   alert('No Records Was Found')
+						    $scope.showErrorMessage("replay_map_error","No Records Was Found");
 						 
 					    }
 				$scope.dataLoadingMap=false;

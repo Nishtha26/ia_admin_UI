@@ -13,6 +13,8 @@ oTech.controller('testPlanCommandOverride',
 		 $scope.isUpdatable = false;
 		 
 		 $rootScope.my_tree = {};
+		 
+		 $rootScope.isTestPlanToEdit = true;
 		
 		
 		
@@ -29,18 +31,6 @@ oTech.controller('testPlanCommandOverride',
 			    	  $scope.usecaseVal = messages[0][i].value.id;
 			      
 			   }
-		}else if(messages.length > 1){
-			angular.forEach(messages[0], function(value, key){
-			      if(value.key == "testPlanName")
-			    	  $scope.testPlanName = value.value;
-			      if(value.key == "testPlanDescription")
-			    	  $scope.testPlanDescription = value.value;
-			      if(value.key == "treeJson")
-			    	  $scope.uiTreeJSON = value.value;
-			      if(value.key == "usecase")
-			    	  $scope.usecaseVal = value.value.id;
-			      
-			   });
 		}
 		
 		$rootScope.slideContent();
@@ -206,12 +196,17 @@ oTech.controller('testPlanCommandOverride',
 			
 		}
 		
+		$scope.toggle = function (scope) {
+	        scope.toggle();
+	      };
+		
 		
 		$scope.createFrom = function (scope,e) {
+			overrideNode = "";
 			$scope.showPopover = true;
 				overrideNode= scope;
 				commandIndex=0;
-				var updateCommandParameters = scope.$modelValue.commandParams;
+				var updateCommandParameters = scope.commandParams;
 				$(".editable-input").empty();
 				//$("#updateCommandParametersForm").append('<input type="hidden" value="'+inputFiledId+'" id="test"/>');
 				updateCommandParameters.split(",").forEach(function(updateCommandParameters,i){
@@ -253,8 +248,8 @@ oTech.controller('testPlanCommandOverride',
 				updatedParametrs+=$("input[name='commandLabel["+ index +"].Name']").val()+"="+$("input[name='command[" + index +"].Name']").val()+",";
 			}
 		//	console.log("updatedParametrs"+updatedParametrs);
-		if(overrideNode.$modelValue.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
-			 overrideNode.$modelValue.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
+		if(overrideNode.commandParams != updatedParametrs.substring(0,updatedParametrs.length-1)){
+			 overrideNode.commandParams = updatedParametrs.substring(0,updatedParametrs.length-1);
 			 $scope.isUpdatable =true;
 			 
 		}
@@ -285,6 +280,7 @@ oTech.controller('testPlanCommandOverride',
 		promise2 = testScriptService.fetchVirtualDevices(token, userId);
             promise2.then(
                 function (data) {
+                	$(".btn").addClass("disabled");
 					$scope.inputcommand=true;
                     VirtualDevice = data;
 					for(var i=0; i< data.length ; i++){
@@ -341,8 +337,8 @@ oTech.controller('testPlanCommandOverride',
                             $scope.tree2.push(testPlan);
 	                        
 	                    });*/
-						
-							jsonArray.push({id:VirtualDevice[i].name,deviceId:VirtualDevice[i].id,content:$scope.uiTreeJSON});
+							;
+							jsonArray.push({id:VirtualDevice[i].name,deviceId:VirtualDevice[i].id,content:jQuery.extend(true, new Object(), $scope.uiTreeJSON)});
 					}
 					deepCopyObject = jQuery.extend(true, {}, jsonArray);
 					
@@ -384,7 +380,7 @@ oTech.controller('testPlanCommandOverride',
 			};
            
 		$scope.addTab = function(){
-			
+			$(".btn").removeClass("disabled");
 			if($scope.deviceProfileName == undefined || $scope.deviceProfileName == ""){
 				$scope.addProfileErrorMsg = "Blank not allowed.."
 					$scope.err = true;
@@ -444,6 +440,7 @@ oTech.controller('testPlanCommandOverride',
 		
 		/** Function to set selectedTab **/
 		$scope.veiwFancyTree = function(mapping){
+			$scope.tree2 = "";
 			$scope.tree2 =  $scope.tabs[mapping.index].content;
 			
 			$scope.activeProfile = mapping.index;
@@ -627,7 +624,7 @@ oTech.controller('testPlanCommandOverride',
             promise.then(
                 function (data) {
                     if (data.status == "Success") {
-
+                    	 $rootScope.isTestPlanToEdit = false;
                     	$scope.successMessageTestPlanFinalId = true;
                         $scope.successMessageTestPlanFinal = "Test plan has been created with Id : "+data.NewTestPlan.jobId
                         $timeout(function () {

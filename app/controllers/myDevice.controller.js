@@ -1,6 +1,6 @@
 
 oTech.controller('MyDevicesController',
-	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants) {
+	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants,$templateCache) {
 		$scope.loading = true;
 		var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
@@ -12,6 +12,9 @@ oTech.controller('MyDevicesController',
 		}
 		$scope.loadingImageName= oApp.config.loadingImageName;
 		$scope.name = sessionStorage.getItem("username");
+		 $templateCache.put('ui-grid/uiGridViewport',
+				    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+				  );
 		/*
 			To get dashboard menu data
 		*/
@@ -20,6 +23,14 @@ oTech.controller('MyDevicesController',
 				$rootScope.getMenuData();
 			}
 		}
+		$scope.showErrorMessage = function(divId,msg){
+			
+			$rootScope.showErrorMessage(divId,msg);
+		
+	}
+	$scope.showSuccessMessage = function (divId,msg) {
+		$rootScope.showSuccessMessage(divId,msg);
+}
 		/*
 			To get favourite reports
 		*/
@@ -158,6 +169,21 @@ oTech.controller('MyDevicesController',
 	  $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
 	    console.log(row);
 	    }); 
+	  gridApi.rowEdit.on.saveRow($scope, function (rowEntity) {
+          // create a fake promise - normally you'd use the promise returned by $http or $resource
+          //Get all selected rows
+          var selectedRows = $scope.text.selection.getSelectedRows();
+          //var rowCol = $scope.gridApi.cellNav.getFocusedCell().col.colDef.name;
+          var promise = $q.defer();
+          $scope.text.rowEdit.setSavePromise(rowEntity, promise.promise);
+       /*   $interval(function () {
+              if (rowEntity.gender === 'male') {
+                  promise.reject();
+              } else {
+                  promise.resolve();
+              }
+          }, 3000, 1);*/
+      })
     };
    
 		$scope.showDeviceList = function(){
@@ -189,7 +215,7 @@ oTech.controller('MyDevicesController',
 	$scope.getTableHeight = function() {
 	    var rowHeight = 41; // your row height
 	    var headerHeight = 45; // your header height
-	    var footerPage=5;
+	    var footerPage=13;
 	    var gridHeight=0;
 	    var dataCount=$scope.myDevicesGridOptions.data.length;
 	    gridHeight=($scope.myDevicesGridOptions.data.length * rowHeight + headerHeight+footerPage);
@@ -204,17 +230,18 @@ oTech.controller('MyDevicesController',
 	 
 	 
 		$scope.deviceAvailabilityBody = function(row) {
-		/*	$("#create_new_device_label").hide();
+			/*$("#create_new_device_label").hide();
 		 	$("#device_list_label").hide();
 		 	$("#device_edit_label").show();
 		 	$("#create_device_body_div").hide();*/
 		 	$("#device_facets_container").show();
 		 	$("#live_device_map_container").hide();
+		 	$(".tab-pane").hide();
 		 	$("#availability").show();
-		 	$("#device_maps").hide();
-		 	$(".d_tab").removeClass("active");
-		 	$("#availability_tab").addClass("active");
-		
+		 	
+		 $(".d_tab").removeClass("active");
+		 	$("#availability_tab").addClass("active");/* for showing default active tab*/
+		// 	$scope.populateAdminCommand();
 		 	$scope.gridApi.selection.clearSelectedRows();
 		 	row.isSelected=!row.isSelected;
 	 	  $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
@@ -227,7 +254,16 @@ oTech.controller('MyDevicesController',
 			 	$.when($("#device_facets_container").slideUp('slow')).then(function() {
 			 		$("#device_facets_container").fadeIn('slow');
 			 	});
+			 	$scope.currentRow=row;
 			 	 $scope.deviceId=row.entity.deviceId;
+			 	 $scope.adminMessageToDevice=row.entity.adminMessageToDevice;
+			 	 $scope.newWorkUrl=row.entity.workUrl;
+			 	 $scope.defaultJobId=row.entity.defaultJobId;
+			 	
+			 	 $scope.deviceStatusFlag=row.entity.deviceStatusFlag;
+			 	 $scope.userFullName=row.entity.fullName+" ( "+row.entity.userName+" ) ";
+			 	$('#deviceStatusFlag').bootstrapSwitch('state', row.entity.deviceStatusFlag, row.entity.deviceStatusFlag);
+			 	 
 			 	var dateNow=new Date();
 			 	var backDate = new Date();
 				var backDate =backDate.setDate(backDate.getDate() - 1);
@@ -292,7 +328,7 @@ oTech.controller('MyDevicesController',
 									GraphMaximizeServices.DahsboardDevicesAvailability(data,startDate,endDate);
 									 $scope.dataLoadingAvailability=false;
 									
-									$('.highcharts-container').css({"height":"475px"});
+									$('.highcharts-container').css({"height":"446px"});
 									
 								},
 								function(err){
@@ -331,9 +367,20 @@ oTech.controller('MyDevicesController',
 
 					           }
 					    });*/
+				 
+				 $('#deviceStatusFlag').on('switchChange.bootstrapSwitch', function(event, state) {
+					 // console.log(this); // DOM element
+					//  console.log(event); // jQuery event
+					  console.log("status Value :" +state); // true | false
+					  if(state){
+						  $scope.approve($scope.deviceId);
+					  }else{
+						  $scope.reject($scope.deviceId);
+					  }
+					});
 				});
 			 $scope.deviceMapDefault=function(){
-					$("#availability").hide();
+				    $(".tab-pane").hide();
 				 	$("#device_maps").show();
 				 	$("#rePlayMap").hide();
 				 	$("#DefaultReplayMap").show();
@@ -422,7 +469,9 @@ oTech.controller('MyDevicesController',
 			 				}
 			 				else{
 			 					  MapServices.clearReplayMap();
-			 					 alert('No Records Was Found')
+			 					// alert('No Records Was Found')
+			 					 
+			 					$scope.showErrorMessage("replay_map_error","No Records Was Found");
 			 					 //	$scope.one =true;
 			 		                $scope.two =true;
 			 		              
@@ -434,6 +483,153 @@ oTech.controller('MyDevicesController',
 			 			}
 			 		);
 			 }
+			 $scope.populateAdminCommand=function(){
+				 $(".tab-pane").hide();
+				 $("#admin_operation_body").show();
+				 $("#commandId").val( $scope.adminMessageToDevice);
+				 if($scope.adminMessageToDevice==8){
+					 
+					 $("#update_url").show();
+			
+				 }
+			 }
+			 $scope.adminCommandOperation=function(commandId){
+				
+				 $("#dataLoadingAC").show();
+					promise = AppServices.adminCommandOperation( token ,$scope.deviceId,commandId);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							 $("#dataLoadingAC").hide();
+							 $scope.currentRow.entity.adminMessageToDevice=commandId;
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						alert("error");
+						 $("#dataLoadingAC").hide();
+					}
+					);
+				 
+				 
+			 }
 		 	
+				$scope.approve = function(selectDeviceId){
+					 $("#dataLoadingUpdate").show();
+					promise = AppServices.GetapproveData(userId, token ,selectDeviceId);
+					promise.then(
+					function(data){
+						 $("#dataLoadingUpdate").hide();
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						 $("#dataLoadingUpdate").hide();
+						alert("error");
+					}
+					);
+				}
+			
+			$scope.reject = function(selectDeviceId){
+				 $("#dataLoadingUpdate").show();
+				promise = AppServices.GetrejectData(userId, token ,selectDeviceId);
+				promise.then(
+				function(data){
+					 $("#dataLoadingUpdate").hide();
+				//	$scope.deviceAdminData();
+				},
+					function(err){
+					 $("#dataLoadingUpdate").hide();
+						alert("error");
+					}
+					);
+				} 
+			
+			 $scope.populateAdminCommandList=function(){
+				promise = AppServices.populateAdminCommands( token );
+				promise.then(
+						function(data){
+						$scope.adminCommands=data;
+						$("#commandId").val("0");
+					
+				},
+				function(err){
+					alert("error");
+				}
+				);
+			 
+		 }
+			 $scope.populateAdminCommandList();
+			 $('#commandId').change(function() {
+						var commandId = $(this).val();
+						if (commandId == 8) {
 
+							$("#update_url").show();
+
+						} else {
+							$("#update_url").hide();
+							$scope.adminCommandOperation(commandId);
+						}
+					});
+			 
+			 $scope.populateAdminCommandList();
+			 
+			 $scope.adminCommandUpdateUrl=function(){
+				 var workUrl=$("#newWorkUrl").val();
+				 var commandID=$("#commandId").val();
+				 $("#dataLoadingAC").show();
+				 //if(workUrl!=""){
+					promise = AppServices.adminCommandUpdateUrl( token ,$scope.deviceId,commandID, workUrl);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							$scope.currentRow.entity.workUrl=workUrl;
+							
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+						$("#dataLoadingAC").hide();
+					},
+					function(err){
+						$("#dataLoadingAC").hide();
+						alert("error");
+					}
+					); 
+				 //}
+				// else{
+					 
+			//	 }
+				 }
+			 $scope.updateDefaultJob=function(){
+				 var defaultJobId=$("#defaultJobId").val();
+				 $("#dataLoadingUpdate").show();
+				 //if(workUrl!=""){
+					promise = AppServices.updateDefaultJob( token ,$scope.deviceId,defaultJobId);
+					promise.then(
+					function(data){
+						if(data.status=="success"){
+							$scope.currentRow.entity.defaultJobId=defaultJobId;
+							$("#dataLoadingUpdate").hide();
+						}
+						else{
+							
+						}
+				//		$scope.deviceAdminData();
+					},
+					function(err){
+						$("#dataLoadingUpdate").hide();
+						alert("error");
+					}
+					); 
+				 //}
+				// else{
+					 
+			//	 }
+				 }
+			 
+			
 	});

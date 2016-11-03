@@ -171,7 +171,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
   	 url: "/dashboard/RadioPerformance",
      templateUrl: "app/views/RadioPerformanceReport.html",
      controller: 'ReportsTableauController'
-}) 
+}).state("droolRuleTemplete", {
+    url: "/dashboard/droolruleTemplete",
+    templateUrl: "app/views/create_drools_rule.html",
+    controller: 'DroolruleTempleteController',
+	ncyBreadcrumb: {
+        label: 'Test Plan'
+    }
+})
                 
                 .state("myDevices", {
                     url: "/dashboard/myDevices",
@@ -182,6 +189,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     url: "/dashboard/createTestPlan",
                     templateUrl: "app/views/createTestPlan.html",
                     controller: 'createTestPlan',
+					ncyBreadcrumb: {
+                        label: 'Test Plan'
+                    }
+                })
+                .state("createTestPlanTemplate", {
+                    url: "/dashboard/createTestPlanTemplate",
+                    templateUrl: "app/views/createTestPlanTemplate.html",
+                    controller: 'createTestPlanTemplate',
 					ncyBreadcrumb: {
                         label: 'Test Plan'
                     }
@@ -197,7 +212,19 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 					ncyBreadcrumb: {
                         label: 'Test Plan final'
                     }
-                }) 
+                })
+                .state("createTestPlanTemplateFinal", {
+                	url: '/dashboard/createTestPlanTemplateFinal',
+                    views: {
+                        "@": {
+                            templateUrl: 'app/views/createTestPlanTemplateFinal.html',
+                            controller: 'testPlanTemplateCommandOverride'
+                        }
+                    },
+					ncyBreadcrumb: {
+                        label: 'Test Plan final'
+                    }
+                })
                 .state("testPlanTestRunAdministration", {
                 	url: '/dashboard/testPlanTestRunAdministration',
                    templateUrl: 'app/views/testPlanTestRunAdministration.html',
@@ -506,6 +533,35 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     }
 
     /*
+    Function to show reports page
+    */
+   $rootScope.actionCalledURL = function (key,menuUrl, screenName) {
+       console.log();
+       var name = screenName.replace(/ /g, "");
+     var  keyVal=key.replace(/ /g, "");
+     if(keyVal=="Reports"){
+    	 sessionStorage.setItem('tableauURL',menuUrl); 
+    	 $location.path("/dashboard/reportsTableau");
+    	 location.reload();
+ 
+     }
+     else{
+    	  if(name == 'Logout') 
+    	  {
+    		  $rootScope.signOut();
+
+    	  }
+    	  else if (menuUrl != null && menuUrl !="" ){
+    	
+    	
+    		  $location.path(menuUrl);
+    	  }	  
+    	   
+       }
+     
+       
+   }
+    /*
      function for signout
      */
 
@@ -598,7 +654,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         promise = AppServices.GetDashboardMenu(sessionStorage.userId, sessionStorage.token);
         promise.then(
                 function (data) {
-
+console.log("Menu:"+data);
                     $rootScope.menuData = data;
 
                 },
@@ -748,6 +804,31 @@ oTech.filter('footerYear', function () {
         return new Date().getFullYear();
     }
 });
+oTech.filter('headerIcon', function () {
+    return function (headerNameStr) {
+    	 var headerName = headerNameStr.replace(/ /g, "");
+    	var iconName="";
+    	if(headerName=="Dashboard"){
+    		iconName="icon-home2 position-left text-slate-600";
+    			
+    	}
+    	else if(headerName=="Reports"){
+    		iconName="icon-pie-chart3 position-left text-orange-800";
+    			
+    	}
+    	else if(headerName=="MySettings"){
+    		iconName="icon-equalizer3 position-left text-teal-300";
+    			
+    	}
+    	else if(headerName=="Admin"){
+    		iconName="icon-pie-chart3 position-left text-brown-300";
+    			
+    	}
+    	
+    
+        return iconName;
+    }
+});
 
 oTech.directive('passwordMatch', [function () {
     return {
@@ -895,6 +976,16 @@ angular.module('oTech').factory('messages', function(){
 
 });
 
+angular.module('oTech').factory('messagesTemplate', function(){
+	  var messages = [];
+	  
+	  messages.add = function(message){
+	     messages.push(message);
+	  };
+	  return messages;
+
+	});
+
 oTech.directive('selectBoxPreSelected', function($timeout) {
     return {
         restrict: 'AC',
@@ -905,6 +996,101 @@ oTech.directive('selectBoxPreSelected', function($timeout) {
             }); 
         }
     };
-})
+});
+
+oTech.directive('numbersOnly', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModelCtrl) {
+                function fromUser(text) {
+                    if (text) {
+                        var transformedInput = text.replace(/[^0-9-]/g, '');
+                        if (transformedInput !== text) {
+                            ngModelCtrl.$setViewValue(transformedInput);
+                            ngModelCtrl.$render();
+                        }
+                        return transformedInput;
+                    }
+                    return undefined;
+                }
+                ngModelCtrl.$parsers.push(fromUser);
+            }
+        };
+    });
+
+angular.module('ui.grid').factory('InlineEdit', ['$interval', '$rootScope', 'uiGridRowEditService',
+                                                 function ($interval, $rootScope, uiGridRowEditService) {
+                                                     function inlineEdit(entity, index, grid) {
+                                                         this.grid = grid;
+                                                         this.index = index;
+                                                         this.entity = {};
+                                                         this.isEditModeOn = false;
+                                                         this.init(entity);
+                                                     }
+
+                                                     inlineEdit.prototype = {
+                                                         init: function (rawEntity) {
+                                                             var self = this;
+
+                                                             for (var prop in rawEntity) {
+                                                                 self.entity[prop] = {
+                                                                     value: rawEntity[prop],
+                                                                     isValueChanged: false,
+                                                                     isSave: false,
+                                                                     isCancel: false,
+                                                                     isEdit: false
+                                                                 }
+                                                             }
+                                                         },
+
+                                                         enterEditMode: function (event) {
+                                                             event && event.stopPropagation();
+                                                             var self = this;
+                                                             self.isEditModeOn = true;
+
+                                                             // cancel all rows which are in edit mode
+                                                             self.grid.rows.forEach(function (row) {
+                                                                 if (row.inlineEdit && row.inlineEdit.isEditModeOn && row.uid !== self.grid.rows[self.index].uid) {
+                                                                     row.inlineEdit.cancelEdit();
+                                                                 }
+                                                             });
+
+                                                             // Reset all the values
+                                                             for (var prop in self.entity) {
+                                                                 self.entity[prop].isSave = false;
+                                                                 self.entity[prop].isCancel = false;
+                                                                 self.entity[prop].isEdit = true;
+                                                             }
+                                                         },
+
+                                                         saveEdit: function (event) {
+                                                             event && event.stopPropagation();
+                                                             var self = this;
+
+                                                             self.isEditModeOn = false;
+
+                                                             for (var prop in self.entity) {
+                                                                 self.entity[prop].isSave = true;
+                                                                 self.entity[prop].isEdit = false;
+                                                             }
+
+                                                             uiGridRowEditService.saveRow(self.grid, self.grid.rows[self.index])();
+                                                         },
+
+                                                         cancelEdit: function (event) {
+                                                             event && event.stopPropagation();
+                                                             var self = this;
+
+                                                             self.isEditModeOn = false;
+                                                             for (var prop in self.entity) {
+                                                                 self.entity[prop].isCancel = true;
+                                                                 self.entity[prop].isEdit = false;
+                                                             }
+                                                         }
+                                                     }
+
+                                                     return inlineEdit;
+                                                 }]);
+
 
 

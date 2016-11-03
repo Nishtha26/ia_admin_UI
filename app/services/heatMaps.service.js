@@ -481,7 +481,7 @@ var technology=heatMapInput.technology;
 		}
 		function deviceDetailBox(deviceDetail,device,kpi,startDate,endDate){
 			var boxText = document.createElement("div");
-			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3); ";
+			boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);width:100%;border-bottom:1px solid #26ADE4; ";
 			deviceDataHTML=deviceDetailContent(kpi,device,startDate,endDate,deviceDetail);
 			
 			
@@ -496,7 +496,7 @@ var technology=heatMapInput.technology;
 		
 		var start_time=""; var end_time="";
 		var r = 0.0001;
-		if(kpi=="RSSI" /*&& device!=null && (str_devices_3g.contains(device)*/ || (!"LTE"==deviceInfo.networkType &&  deviceInfo.lacId!=0)) {     //RSSI, 3G, LAC ID not 0
+		if(kpi=="RSSI" /*&& device!=null && (str_devices_3g.contains(device)*/ && (!("LTE"==deviceInfo.networkType) &&  deviceInfo.lacId!=0)) {     //RSSI, 3G, LAC ID not 0
 			var cellLabel = "";
 			var cellValue = "";
 			if(("WCDMA"==deviceInfo.networkType || "HSPA"== deviceInfo.networkType)
@@ -527,7 +527,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";;
 				 }
-				 str = str + "    <td class='tg-5hgy' colspan='1'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + "    <td class='tg-5hgy' colspan='1'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				
 			if(deviceInfo.cellId==0)
 				str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
@@ -564,7 +564,7 @@ var technology=heatMapInput.technology;
 			str += "<td class='tg-5hgy'>"+(deviceInfo.lacId == 0 ? "" : deviceInfo.lacId)+"</td>  ";
 			str += "  </tr>   ";
 			str += "  </table>   ";
-		} else if((kpi=="RSSI" && device!=null) /*&& (str_devices_3g.contains(device)*/ || (!"LTE"== deviceInfo.networkType)) {     //RSSI, 3G, LAC ID is 0
+		} else if((kpi=="RSSI" && device!=null) /*&& (str_devices_3g.contains(device)*/ && (!("LTE"== deviceInfo.networkType))) {     //RSSI, 3G, LAC ID is 0
 
 			var cellLabel = "";
 			var cellValue = "";
@@ -596,7 +596,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + "    <td class='tg-5hgy' colspan='2'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + "    <td class='tg-5hgy' colspan='2'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				if(deviceInfo.cellId==0)
 					str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
 				else
@@ -650,7 +650,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + "    <td class='tg-5hgy' colspan='3'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + "    <td class='tg-5hgy' colspan='3'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				if(deviceInfo.cellId==0)
 					str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
 				else
@@ -724,7 +724,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + "  <td class='tg-5hgy' colspan='3'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + "  <td class='tg-5hgy' colspan='3'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				if(deviceInfo.cellId==0)
 					str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
 				else
@@ -793,7 +793,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           "+
+				 str = str + " <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 				 "    <td class='tg-5hgy' colspan='2'>"+ (deviceInfo.mcc == 0 ? "" : deviceInfo.mcc) +"</td>    "+
 				 "  </tr>                                                  "+
 				 "  <tr>                                                   "+
@@ -836,7 +836,7 @@ var technology=heatMapInput.technology;
 					 }else{
 						 str = str + device+"</td>";
 					 }
-					 str = str + "  <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           "+
+					 str = str + "  <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 					 "    <td class='tg-5hgy' colspan='2'>"+(deviceInfo.mcc == 0 ? "" : deviceInfo.mcc)+"</td>    "+
 					 "  </tr>                                                  "+
 					 "  <tr>                                                   "+
@@ -891,7 +891,7 @@ var technology=heatMapInput.technology;
 						 }else{
 							 str = str + device+"</td>";
 						 }
-						 str = str + "  <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           "+
+						 str = str + "  <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 						 "    <td class='tg-5hgy' colspan='2'>"+(deviceInfo.mcc == 0 ? "" : deviceInfo.mcc)+"</td>    "+
 						 "  </tr>                                                  "+
 						 "  <tr>                                                   "+
@@ -956,7 +956,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           "+
+				 str = str + " <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 				 "    <td class='tg-5hgy' colspan='2'>"+(deviceInfo.mcc == 0 ? "" : deviceInfo.mcc)+"</td>    "+
 				 "  </tr>                                                  "+
 				 "  <tr>                                                   "+
@@ -977,7 +977,7 @@ var technology=heatMapInput.technology;
 			str += "<td class='tg-5hgy'>"+(deviceInfo.lacId == 0 ? "" : deviceInfo.lacId)+"</td>  ";
 			str += "  </tr>   ";
 			str += "  </table>   ";
-		}  else if(kpi=="PING" /*&& ((device!=null && str_devices_3g.contains(device))*/ || !"LTE"== deviceInfo.networkType) {  // Latency, 3G
+		}  else if(kpi=="PING" /*&& ((device!=null && str_devices_3g.contains(device))*/ && (!("LTE"== deviceInfo.networkType))) {  // Latency, 3G
 			
 			str = "<table class='tg'>                                       "+
 				"  <tr>                                                   "+
@@ -995,7 +995,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           "+
+				 str = str + " <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 				 "    <td class='tg-5hgy' colspan='2'>"+(deviceInfo.mcc == 0 ? "" : deviceInfo.mcc)+"</td>    "+
 					"  </tr>                                                  "+
 				"  <tr>                                                   "+
@@ -1038,7 +1038,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy' colspan='2'>"+deviceInfo.timestamp+"</td>           "+
+				 str = str + " <td class='tg-5hgy' colspan='2'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           "+
 				 "    <td class='tg-5hgy' >"+(deviceInfo.mcc == 0 ? "" : deviceInfo.mcc)+"</td>    "+
 					"  </tr>                                                  "+
 				"  <tr>                                                   "+
@@ -1093,7 +1093,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy' colspan='1'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + " <td class='tg-5hgy' colspan='1'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				
 			if(deviceInfo.cellId==0)
 				str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
@@ -1144,7 +1144,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + " <td class='tg-5hgy' colspan='1'>"+deviceInfo.timestamp+"</td>           ";
+				 str = str + " <td class='tg-5hgy' colspan='1'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				
 			if(deviceInfo.cellId==0)
 				str = str + "    <td class='tg-5hgy' colspan='2'>  </td>    ";
@@ -1214,7 +1214,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str = str + "    <td class='tg-5hgy' colspan='2'>"+deviceInfo.timestamp+"</td>"+
+				 str = str + "    <td class='tg-5hgy' colspan='2'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>"+
 				 " <td class='tg-5hgy' colspan='1'>"+deviceInfo.mcc+"</td>";
 			str = str +	
 				 "  </tr>                                                  "+
@@ -1270,7 +1270,7 @@ var technology=heatMapInput.technology;
 				 }else{
 					 str = str + device+"</td>";
 				 }
-				 str += "    <td class='tg-5hgy'>"+deviceInfo.timestamp+"</td>           ";
+				 str += "    <td class='tg-5hgy'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				 
 			if(kpi=="HTTPDL")
 				str +=	"    <td class='tg-5hgy' colspan='2'>"+(deviceInfo.httpdl==0.0?"":(deviceInfo.httpdl+" Mbps"))+ "</td>   ";

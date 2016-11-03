@@ -10,11 +10,16 @@ $(function () {
 
 		    $(window).scroll(function (event) {
 		      var y = $(this).scrollTop();
-		    //  alert("y " + y+" top "+ top);
 		      if (y >= top) {
+		    	 var contentHeight =  $('.content-wrapper');
+		    	 var dynamicHeight = $('.sidebar').height()
+		    	 contentHeight.addClass('content-wrapper-height');
+		    	 $('.content-wrapper-height').css( "height", dynamicHeight );
+		    	 $('.tenDiv').css( "width", "83.33% !important" );
 		        sidebar.addClass('fixed');
 		      } else {
 		        sidebar.removeClass('fixed');
+		        
 		      }
 		    });
 		}); 
@@ -28,7 +33,8 @@ $(function () {
 .fixed{
     position: fixed;
     top: 25px;
-    width:220px!important;
+    width:16%!important;
+    right:20px;
     }
     
 </style>
@@ -39,7 +45,7 @@ $(function () {
 							<!-- Navigation -->
 							<div class="sidebar-category">
 								<div class="category-title h6">
-									<span>Commands Pallette</span>
+									<span>Commands Palette</span>
 									<hr />
 									<div class="form-group">
 

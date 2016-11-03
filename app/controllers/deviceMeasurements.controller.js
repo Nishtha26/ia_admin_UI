@@ -2,13 +2,16 @@ oTech
 		.controller(
 				'deviceMeasurementsController',
 				function($scope, $rootScope, $location, AppServices,
-						$stateParams,$filter) {
+						$stateParams,$filter,$templateCache) {
 					$scope.dataLoading = true;
 					$scope.err = false;
 					$scope.dataLoadingImage=oApp.config.loadingImageName;
 					$scope.listItem = 'Location';
 					
 					var link = "Location";
+					 $templateCache.put('ui-grid/uiGridViewport',
+							    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+							  );
 					var startLimit = 1;
 					var token = sessionStorage.getItem("token");
 					var userId = sessionStorage.getItem("userId");
@@ -156,9 +159,9 @@ oTech
 					
 					
 							$scope.getTableHeight = function() {
-							    var rowHeight = 40; // your row height
-							    var headerHeight = 44; // your header height
-							    var footerPage=15;
+							    var rowHeight = 41; // your row height
+							    var headerHeight = 45; // your header height
+							    var footerPage=10;
 							    var gridHeight=0;
 							    var dataCount=$scope.devicesMeasurementGridOptions.data.length;
 							    gridHeight=($scope.devicesMeasurementGridOptions.data.length * rowHeight + headerHeight+footerPage);
@@ -181,6 +184,7 @@ oTech
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
 						else if (link == 'Applications')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapplications;
+						
 						else if(link == 'IPAddress')
 							$scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
 						else if(link == 'L1LOG')
@@ -271,7 +275,7 @@ oTech
 					}
 
 					$scope.getDashBoardMenu();
-					$scope.getFavouriteReports();
+//					$scope.getFavouriteReports();
 					// A $( document ).ready() block.
 					$( document ).ready(function() {
 						

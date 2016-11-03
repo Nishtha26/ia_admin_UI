@@ -110,7 +110,7 @@ z-index:99
 								</div>
 									<div class="form-group">
 										<label>KPI</label>
-										<select id="category" name="category" class="select" ng-Model="category" >
+										<select id="category" name="category" class="select" ng-model="category" required>
 										<option value="">Select </option>
 											 <option ng-repeat="(id, val) in heatMapCateogoryList" ng-selected="id.selected" value="{{id}}">{{val}}</option>
 											 </select> 
@@ -130,10 +130,10 @@ z-index:99
 										
 											<div class="clear"></div>
 									<div
-										ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted"
-										ng-messages="heatmap_form.deviceId.$error"
+										ng-show="heatmap_form.category.$touched || heatmap_form.$submitted"
+										ng-messages="heatmap_form.category.$error"
 										class="errors ">
-										<div ng-message="required">**Device is required</div>
+										<div ng-message="required">**KPI is required</div>
 
 
 									</div>
@@ -141,7 +141,7 @@ z-index:99
 									</div>
 
 									<div class="form-group">
-										<label>From : </label>
+										<label>From  </label>
 											<div class="input-group">
 											<span class="input-group-addon">
 															<i class="icon-calendar22"></i></span>
@@ -163,7 +163,7 @@ z-index:99
 										
 									</div>
 									<div class="form-group">
-										<label>To: </label>
+										<label>To </label>
 									<!-- 	<div class="input-group">
 											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
 											<input type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
@@ -261,6 +261,7 @@ z-index:99
 					</div>
 
 					<div class="panel-body">
+					<div id="heat_map_error" class="errors" style="text-align:center;margin-bottom:11px;display:none;"></div>
 					<div id="panel1" align="center" style="display:none;">
 			<label   class="kpiTitle"> 	&nbsp;&nbsp;</label>	
     
@@ -289,12 +290,13 @@ z-index:99
 		<!-- /page content -->
 
 
-		<!-- Footer -->
-			<div ng-include="'app/views/footer/footer.html'"></div>
-		<!-- /footer -->
+		
 
 	</div>
 	<!-- /page container -->
+	<!-- Footer -->
+			<div ng-include="'app/views/footer/footer.html'"></div>
+		<!-- /footer -->
 
 <script type="text/javascript">
 

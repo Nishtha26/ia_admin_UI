@@ -1669,6 +1669,87 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
+		service.adminCommandOperation = function( token ,selectDeviceId,commandId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/updateAdminCommand",
+				    type: "POST",
+					data : {token:token , deviceId:selectDeviceId,commandId:commandId},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
+		service.populateAdminCommands = function( token ){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/populateAdminCommands",
+				    type: "POST",
+					data : {token:token },
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.adminCommandUpdateUrl = function( token ,selectDeviceId,commandId,workUrl){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/updateURLAdminCommand",
+				    type: "POST",
+					data : {token:token , deviceId:selectDeviceId,commandId:commandId,workURL:workUrl},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		service.updateDefaultJob = function( token ,selectDeviceId,defaultJobId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/updateDefaultJob",
+				    type: "POST",
+					data : {token:token , deviceId:selectDeviceId,defaultJobId:defaultJobId},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}	
 		
 	return service; 		
 }])

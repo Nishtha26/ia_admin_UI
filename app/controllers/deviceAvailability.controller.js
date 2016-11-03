@@ -1,13 +1,15 @@
 
 oTech.controller('deviceAvailabilityController',
-	function ($scope, $rootScope, $location, AppServices,GraphServices,GraphMaximizeServices, $stateParams) {
+	function ($scope, $rootScope, $location, AppServices,GraphServices,GraphMaximizeServices, $stateParams,$templateCache) {
 		
 			var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
 		$rootScope.role = sessionStorage.getItem("role");
 		$scope.loading = true;
 		$scope.dataLoading=false;
-		
+		 $templateCache.put('ui-grid/uiGridViewport',
+				    "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ng-style=\"colContainer.getViewportStyle()\"><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+				  );
 		$rootScope.slideContent();
 		window.onresize = function(event) {
 			$rootScope.slideContent();
@@ -30,7 +32,7 @@ oTech.controller('deviceAvailabilityController',
 			}
 		}
 		$scope.getDashBoardMenu();
-		$scope.getFavouriteReports();
+//		$scope.getFavouriteReports();
 		$('#parent-list').on('click', 'li', function (e) {
 			$("#parent-list li").removeClass('active');
 			$(e.currentTarget).addClass('active');

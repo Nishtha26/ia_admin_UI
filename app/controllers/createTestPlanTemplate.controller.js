@@ -1,9 +1,9 @@
 oTech
 		.controller(
-				'createTestPlan',
+				'createTestPlanTemplate',
 				function($scope, $rootScope, $timeout, $location, AppServices,
 						GraphServices, GraphMaximizeServices, $stateParams,
-						testScriptService, $cookieStore,messages) {
+						testScriptService, $cookieStore,messagesTemplate) {
 					var userId = sessionStorage.getItem("userId");
 					var token = sessionStorage.getItem("token");
 					$rootScope.role = sessionStorage.getItem("role");
@@ -13,20 +13,20 @@ oTech
 					$scope.commandError = false;
 					$scope.createTestPlan = {};
 					var sendCreateData = {};
-					if(messages.length==1 &&  $rootScope.isTestPlanToEdit){
-						for(var i=0; i < messages[0].length; i++){
-						      if(messages[0][i].key == "testPlanName")
-						    	  $scope.testPlanName = messages[0][i].value;
-						      if(messages[0][i].key == "testPlanDescription")
-						    	  $scope.testPlanDescription = messages[0][i].value;
-						      if(messages[0][i].key == "treeJson")
-						    	  $scope.tree2 = messages[0][i].value;
-						      if(messages[0][i].key == "usecase")
-						    	  $scope.usecaseVal = messages[0][i].value;
+					if(messagesTemplate.length==1 &&  $rootScope.isTestPlanToEdit){
+						for(var i=0; i < messagesTemplate[0].length; i++){
+						      if(messagesTemplate[0][i].key == "testPlanName")
+						    	  $scope.testPlanName = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "testPlanDescription")
+						    	  $scope.testPlanDescription = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "treeJson")
+						    	  $scope.tree2 = messagesTemplate[0][i].value;
+						      if(messagesTemplate[0][i].key == "usecase")
+						    	  $scope.usecaseVal = messagesTemplate[0][i].value;
 						      
 						   }
 					}else{
-						messages.splice(0,1);
+						messagesTemplate.splice(0,1);
 					}
 					
 					$scope.setErrorMessage = function(errorMessage){
@@ -173,9 +173,9 @@ oTech
 								"id" : (nodeData.nodes.length + 1) * 1000,
 								"title" : "Add Command",
 								"sequenceNo" : 1,
-								"isCommand" : true,
 								"loop" : 1,
 								"commandParams" : "",
+								"isCommand" : true,
 								"commandId" : 100000,
 								"nodes" : []
 							});
@@ -326,8 +326,14 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.useCaseArray = [];
 						$.map(data, function(n,i){
 							var temp = {};
+							   if(i == "3"){
 								   temp['id'] = i; 
 								   temp['name'] = n; 
+								   temp['selected'] = true; 
+							   }else{
+								   temp['id'] = i; 
+								   temp['name'] = n; 
+							   }
 							   $scope.useCaseArray.push(temp);
 							});
 						$scope.usecases = $scope.useCaseArray;
@@ -385,11 +391,11 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 						$scope.shareData.push({'key':'testPlanName','value':$scope.testPlanName});
 						$scope.shareData.push({'key':'testPlanDescription','value':$scope.testPlanDescription});
 						$scope.shareData.push({'key':'usecase','value':$scope.usecaseVal});
-						if(messages.length == 1){
-							messages.splice(0,1);
+						if(messagesTemplate.length == 1){
+							messagesTemplate.splice(0,1);
 						}
 						
-						messages.add($scope.shareData);
+						messagesTemplate.add($scope.shareData);
 						$(".btn").addClass("disabled");
 						sendCreateData.jobName = $scope.testPlanName;
 						var superParentObject, parentObject = {}, childObject = {};
@@ -430,7 +436,7 @@ if($scope.tree2 == "" || $scope.tree2 == undefined){
 										function(data) {
 											if (data.status == "Success") {
 												$location
-														.path('/dashboard/createTestPlanFinal');
+														.path('/dashboard/createTestPlanTemplateFinal');
 											} else {
 												$scope.jobIsExitsError = true;
 												$(".btn").removeClass("disabled");

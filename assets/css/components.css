@@ -953,7 +953,10 @@
 * ---------------------------------------------------------------------------- */
 .footer {
   position: absolute;
-  bottom: 20px;
+    bottom: 0;
+    padding-left: 29px;
+    padding-bottom:10px;
+    left:0;
 }
 .footer-fixed {
   position: fixed;
@@ -3772,7 +3775,7 @@ select.selectpicker {
   margin-bottom: 0;
 }
 .editableform .form-control {
-  min-width: 150px;
+ /*  min-width: 150px; */
 }
 .editableform .checkbox,
 .editableform .radio {
@@ -15098,7 +15101,8 @@ thead .htCollapseButton:after {
 }
 .datatable-header,
 .datatable-footer {
-  padding-top: 20px;
+  /* padding-top: 20px; */
+  padding-top: 0px;
 }
 .datatable-header:after,
 .datatable-footer:after {
@@ -18271,4 +18275,43 @@ label.display-block {
 }
 .ot-btn{
 	margin:10px;
+}
+/* heat map start*/
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;text-align:center}
+		.tg td{font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#999;color:#444;text-align:center}
+		.tg th{font-size:14px;font-weight:450;padding:10px 5px;border-style:solid;border-width:1px 0px;overflow:hidden;word-break:normal;border-color:#26ADE4;color:#000;background-color:none;text-align:center}
+		.tg .tg-s6z2{text-align:center}
+		.tg .tg-vn4c{background-color:#fff;text-align:center}
+		.tg .tg-xkia{color:#666699;text-align:center}
+		.tg .tg-5hgy{background-color:#fff;text-align:center}	
+		/* heat map end*/
+		
+select * {
+    padding: 5px 15px;
+    font-weight: 450;
+}
+
+.error-star:after {
+    color: red;
+    content:"*";
+}
+    
+.navbar-default .navbar-nav > li > span > a{
+	
+	color: #333333;
+	padding-top: 12px;
+    padding-bottom: 12px;
+    position: relative;
+    display: block;
+    padding: 9px 15px;
+}
+
+.borderLeft{
+	border-left: 5px double #ccc;
+}
+
+@media only screen and (max-width: 1199px) {
+    .borderLeft {
+        border-left: 5px double #fff;
+    }
 }
