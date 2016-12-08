@@ -680,6 +680,7 @@ top : 100%;
 											<div class="col-lg-12  col-md-12" style="padding-left: 0px;">
 												<div  class="col-lg-12  col-md-12"  style="padding-left: 0px;">
 													<ul class="icons-list">
+														<li ng-show ="checkBoxMonitor"><input type="checkbox"  ng-model="isEnableMonitor">Enable Monitoring</input></li>
 														<li><button class="btn btn-success btn-xs save" type="button" ng-click="CreateTestrun()">Save Test Run</button></li>
 														<li><button class="btn btn-success btn-xs schedule" type="button" ng-click="startnow();" disabled>Run it now</button></li>
 													</ul>

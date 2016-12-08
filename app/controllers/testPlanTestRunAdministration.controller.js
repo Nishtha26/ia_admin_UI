@@ -1124,6 +1124,8 @@ oTech.controller('testPlanTestRunAdministration',
 	        	$scope.searchTextForRealDevices = "";
 	        	$scope.dataLoading = true;
 	        	$(".save").addClass("disabled");
+	        	$scope.checkBoxMonitor = true;
+	        	$scope.isEnableMonitor = false;
 	        	$(".schedule").attr("disabled", "disabled");
 	        	$scope.scrollToTestRunDiv();
 	        	$scope.createNewTestRunTab = true;
@@ -1525,9 +1527,14 @@ oTech.controller('testPlanTestRunAdministration',
 							'phoneNumber': $scope.DeviceMapping.data[i].phoneNumber
 			        	});
 	        	}
+	        	if($scope.isEnableMonitor){
+	        		$scope.isEnableMonitorTemp = "Y";
+	        	}else{
+	        		$scope.isEnableMonitorTemp = "N";
+	        	}
 	        	$rootScope.CreateTestRun_Data = JSON.stringify({
 	                "testplanVo": {"testplanId": TestPlanId},
-	                "jobVo": {},
+	                "jobVo": {"isEnableMonitor" : $scope.isEnableMonitorTemp},
 	                "virtualRealDeviceList": VirtualDevicelist
 	            });
 	        	
@@ -1542,6 +1549,7 @@ oTech.controller('testPlanTestRunAdministration',
 	                        var DependantTestRunName = data.NewTestRun.jobName;
 							$(".schedule").removeAttr("disabled")
 							$(".save").addClass("disabled");
+							$scope.checkBoxMonitor = false;
 							//Get devices service
 							$scope.testRunIdShcedule = data.NewTestRun.jobId;
 							$scope.TestRunName = data.NewTestRun.jobName;
