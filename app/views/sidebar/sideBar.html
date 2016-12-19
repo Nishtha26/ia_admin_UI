@@ -65,7 +65,7 @@ $(function () {
 
 									<ul class="nav navigation" ui-tree="optionsTree1"
 										id="tree1-root" data-clone-enabled="true"
-										data-nodrop-enabled="true">
+										data-nodrop-enabled="true" style="overflow-y: auto;min-height: 100px;max-height: 600px;">
 										<ol ui-tree-nodes="" ng-model="commands">
 											<li ng-repeat="node in commands"
 												data-collapsed="!commands.expanded" ui-tree-node
