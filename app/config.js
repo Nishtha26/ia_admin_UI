@@ -1772,19 +1772,19 @@ quickrunGridOptions : {
 					  '<span ng-if="row.entity.jobStatusCode ==  -1"><span class="label label-success">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -2"><span class="label label-default">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -3"><span class="label label-success ">{{row.entity.statusFlag}}</span></span>'+
-					  '<span ng-if="row.entity.jobStatusCode ==  -4"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
+					  '<span ng-if="row.entity.jobStatusCode ==  -4"><span class="label  label-warning ">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -5"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode ==  -6"><span class="label  label-warning">{{row.entity.statusFlag}}</span></span>'+
 					  '<span ng-if="row.entity.jobStatusCode >=  0"><span class="label  label-primary">{{row.entity.statusFlag}}</span>'+
 					 ' </span></div>', cellTooltip: 
 			                function( row, col ) {
 			                return '' + row.entity.statusFlag + '';
-			               }},
-						{displayName: 'Last Ping', field: 'lastPing' ,width:"20%",enableCellEdit: false, cellTooltip: 
-			                function( row, col ) {
-			                return '' + row.entity.lastPing + '';
-			               } },
-			 {name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
+					 }},
+			{ displayName: 'Last Ping', field: 'lastPing' ,width:"20%",enableCellEdit: false, cellTooltip: 
+                function( row, col ) {
+                return '' + row.entity.lastPing + '';
+               } },
+			{ name:'Actions', pinnedRight:true,multiSelect:false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',enableCellEdit: false,
 							cellClass: 'ui-grid-cell-button task_detailed_viewer',
 				enableColumnMenu: false, enableSorting: false,cellTemplate:
 					'<span class="pointer-link"   ng-click="grid.appScope.deviceAvailabilityBody(row);"><i class="pt icon-circle-right2 text-orange-600"></i></span>'},
@@ -1804,24 +1804,22 @@ quickrunGridOptions : {
 						cellTemplate: '<div id="deviceStatus_{{row.entity.deviceId}}" class="ui-grid-cell-contents">'+
 						'{{row.entity.firstName}} {{row.entity.deviceStatus}}</div>}}'			
 			},*/
-			{displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
-			{displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
+			{ displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
+			{ displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
 			{ name: 'deviceType' ,width:150,enableCellEdit: false},
 			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.carrier + '';
                }},
-			
-			
-			{displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false, cellTooltip: 
+			{ displayName:'IMSI', field: 'imsi' ,width:150,enableCellEdit: false, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.imsi + '';
                }},
-			{displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false, cellTooltip: 
+			{ displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.imei + '';
                }},
-			{displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false, cellTooltip: 
+			{ displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.msisdn + '';
                }},
@@ -1844,16 +1842,33 @@ quickrunGridOptions : {
                 function( row, col ) {
                 return '' + row.entity.jobStatusDateTime + '';
                } },
-			{  displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"20%",enableCellEdit: false, cellTooltip: 
+			{ displayName: 'Job Start Date Time' ,field: 'jobStartDate' ,width:"20%",enableCellEdit: false, cellTooltip: 
                 function( row, col ) {
                 return '' + row.entity.jobStartDate + '';
                } },
-			{displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"20%" ,enableCellEdit: false, cellTooltip: 
-                function( row, col ) {
-                return '' + row.entity.jobEndDate + '';
-               }},
-			
-			
+               { displayName: 'Job End Date Time' , field: 'jobEndDate' ,width:"20%" ,enableCellEdit: false, cellTooltip: 
+                   function( row, col ) {
+                   return '' + row.entity.jobEndDate + '';
+                  }},
+           { displayName: 'Device HeartBeat Status' , field: 'heartBeatStatus' ,width:"20%" ,enableCellEdit: false,  cellTemplate: '<div class="ui-grid-cell-contents">'+
+					  '<span ng-if="row.entity.heartBeatStatus ==  -1"><span class="label label-default">Device not monitored</span></span>'+
+					  '<span ng-if="row.entity.heartBeatStatus ==  0"><span class="label label-success">Heart Beat received</span></span>'+
+					  '<span ng-if="row.entity.heartBeatStatus ==  1"><span class="label label-warning">Heart Beat not received</span></span>'+
+					  '</span></div>', cellTooltip: 
+			                function( row, col ) {
+						 var stat = row.entity.heartBeatStatus;
+						 if(stat == 0)
+							 return 'Heart Beat received';
+						 if(stat == -1)
+							 return 'Device not monitored for Heart Beat';
+						 if(stat == 1)
+							 return 'Heart Beat not received';
+						 /*
+						  	 * HeartBeatStatus = -1 device not monitored for heart beat
+							 * HeartBeatStatus = 0 heart beat received in configured time
+							 * HeartBeatStatus = 1 heart beat not received in configured time
+							 */
+					 }}
 		]
 	},
 	loadingImageName : 'images/loading_new.gif',
