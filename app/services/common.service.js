@@ -1123,7 +1123,6 @@ oTech.service('AppServices',
 					},
 				    success: function(data)
 				    {
-						
 						deferred.resolve(data);
 				    },
 				    error: function (err)
@@ -1161,26 +1160,25 @@ oTech.service('AppServices',
 			approve
 		*/
 				service.GetapproveData = function(userId, token ,deviceId){
-			var deferred = $q.defer();
-			$.ajax({
-				    url : oApp.config.BASE_URL + "rest/devices/approveOrReject",
-				    type: "POST",
-					data : {token:token,userId:userId,deviceId:deviceId,deviceStatus : "APPROVE"},
-					headers :{
-					'Content-Type': 'application/x-www-form-urlencoded'
-					},
-				    success: function(data)
-				    {
-						
-						deferred.resolve(data);
-				    },
-				    error: function (err)
-				    {
-						deferred.reject(err);
-				    }
-			    });	
-			return deferred.promise; 
-		}
+					var deferred = $q.defer();
+					$.ajax({
+						    url : oApp.config.BASE_URL + "rest/devices/approveOrReject",
+						    type: "POST",
+							data : {token:token,userId:userId,deviceId:deviceId,deviceStatus : "APPROVE"},
+							headers :{
+							'Content-Type': 'application/x-www-form-urlencoded'
+							},
+						    success: function(data)
+						    {
+								deferred.resolve(data);
+						    },
+						    error: function (err)
+						    {
+								deferred.reject(err);
+						    }
+					    });	
+					return deferred.promise; 
+				}
 		
 		
 		/*
@@ -1207,6 +1205,27 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
+				//for fcm push
+				service.MonitorDeviceForHeartBeat = function(userId, token ,deviceId, state){
+					var deferred = $q.defer();
+					$.ajax({
+						    url : oApp.config.BASE_URL + "rest/devices/monitorDeviceForHeartBeat",
+						    type: "POST",
+							data : {token:token,userId:userId,deviceId:deviceId,monitorDeviceFlag : state},
+							headers :{
+							'Content-Type': 'application/x-www-form-urlencoded'
+							},
+						    success: function(data)
+						    {
+								deferred.resolve(data);
+						    },
+						    error: function (err)
+						    {
+								deferred.reject(err);
+						    }
+					    });	
+					return deferred.promise; 
+				}
 		/*
 			adding users to user group
 		
@@ -1680,6 +1699,10 @@ oTech.service('AppServices',
 						},
 				    success: function(data)
 				    {
+				    	if(data.status == "Device not registered")
+				    		alert(data.status);
+				    	if(data.status == "Successfully Restarted")
+				    		alert(data.status);
 						deferred.resolve(data);
 				    },
 				    error: function (err)

@@ -263,6 +263,7 @@ oTech.controller('MyDevicesController',
 			 	 $scope.deviceStatusFlag=row.entity.deviceStatusFlag;
 			 	 $scope.userFullName=row.entity.fullName+" ( "+row.entity.userName+" ) ";
 			 	$('#deviceStatusFlag').bootstrapSwitch('state', row.entity.deviceStatusFlag, row.entity.deviceStatusFlag);
+			 	$('#monitorDeviceFlag').bootstrapSwitch('state', row.entity.heartBeatMonitorFlag, row.entity.heartBeatMonitorFlag);
 			 	 
 			 	var dateNow=new Date();
 			 	var backDate = new Date();
@@ -377,6 +378,13 @@ oTech.controller('MyDevicesController',
 					  }else{
 						  $scope.reject($scope.deviceId);
 					  }
+					});
+				 $('#monitorDeviceFlag').on('switchChange.bootstrapSwitch', function(event, state) {
+					 //console.log(this); // DOM element
+					 //console.log(event); // jQuery event
+					 //console.log("status Value :" +state); // true | false
+					 $scope.monitordeviceApproval($scope.deviceId, state);
+					  
 					});
 				});
 			 $scope.deviceMapDefault=function(){
@@ -545,7 +553,22 @@ oTech.controller('MyDevicesController',
 						alert("error");
 					}
 					);
-				} 
+				}
+			$scope.monitordeviceApproval = function(selectDeviceId, state){
+				 $("#dataLoadingUpdate").show();
+				promise = AppServices.MonitorDeviceForHeartBeat(userId, token ,selectDeviceId, state);
+				promise.then(
+				function(data){
+					 $("#dataLoadingUpdate").hide();
+			//		$scope.deviceAdminData();
+				},
+				function(err){
+					 $("#dataLoadingUpdate").hide();
+					alert("error");
+				}
+				);
+			}
+
 			
 			 $scope.populateAdminCommandList=function(){
 				promise = AppServices.populateAdminCommands( token );
