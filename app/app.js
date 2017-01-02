@@ -241,6 +241,10 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                     ncyBreadcrumb: {
                         label: '{{TestplanName}}'
                     }
+                }).state("etlPerformance", {
+                    url: "/dashboard/etlPerformance",
+                    templateUrl: "app/views/etlPerfomance.html",
+                    controller: 'TestController'
                 })
                 .state('CreateTestRun.MappingTestRun', {
                     url: '/MappingTestRun',
