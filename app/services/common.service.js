@@ -1772,7 +1772,51 @@ oTech.service('AppServices',
 				    }
 			    });	
 			return deferred.promise; 
-		}	
+		}
+		
+		service.getWebETLSchedulerData = function(){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "/rest/etl/webETLScheduler",
+				    type: "GET",
+					data : {},
+					headers : {
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
+		service.postWebETLSchedulerData = function(webETLSchedulerMapping, token, userId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/etl/postWebETLSchedulerMapping",
+		            type: "POST",
+	                data: webETLSchedulerMapping,
+	                headers: {
+	                    'Content-Type': 'application/json',
+	                    'X-Auth-Token': token,
+	                    'userId': userId
+	                },
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
 		
 	return service; 		
 }])
