@@ -507,8 +507,9 @@ oTech.controller('MyDevicesController',
 					promise = AppServices.adminCommandOperation( token ,$scope.deviceId,commandId);
 					promise.then(
 					function(data){
+						$("#dataLoadingAC").hide();
 						if(data.status=="success"){
-							 $("#dataLoadingAC").hide();
+							 
 							 $scope.currentRow.entity.adminMessageToDevice=commandId;
 						}
 						else{
