@@ -917,7 +917,7 @@ oTech.service('testScriptService',
 		
 		
 		//create test run table
-        service.getTestplanForQuickRun = function (token,userId, testplanId) {
+		service.getTestplanForQuickRun = function (token,userId, testplanId) {
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/testPlan/getTestplanForQuickRun",
@@ -931,6 +931,31 @@ oTech.service('testScriptService',
                 success: function (data)
                 {
                     //alert("success");
+                    deferred.resolve($.parseJSON(data.items));
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+		service.scheduleTestplan = function (token,userId, testplanId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/getTestplanForQuickRun",
+				type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+					'testplanId': testplanId
+                },
+                success: function (data)
+                {
+                    alert("success");
                     deferred.resolve($.parseJSON(data.items));
                 },
                 error: function (err)
