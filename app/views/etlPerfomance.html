@@ -5,6 +5,9 @@
 select {
 	    border: 1px solid #ddd;
 }
+#headd {
+	text-align: center;
+}
 
 
 
@@ -16,27 +19,28 @@ select {
 	<!-- /menu -->
 <div class="maincontainer main-cont-height" style="font-family: Source Sans Pro, sans-serif !important; background-color: #f5f7fa; overflow: hidden;">
 	<div class="maincontent">
+	<h1 id="headd">Select ETL Parameters</h1>
 		<div class="container-fluid col-md-12" style="margin:1% 15%;">
 			<div ng-repeat="obj in etlParameterList track by $index" class="col-md-6">
 				<div ng-if="obj.paramType == 'drop_down'" >
 					<div class="col-md-2 pd" style="padding-left:5%;" ><span>{{obj.paramName}}</span></div>
 					<div class="col-md-10 pd">
-						<select name="{{obj.paramName}}" id="{{$index}}" style="width:172px; height: 25px;"><option ng-repeat="option in obj.paramValues" value="{{option}}">{{option}}</option></select>
+						<select name="{{obj.paramName}}" id="{{$index}}" style="width:172px; height: 27px;"><option ng-repeat="option in obj.paramValues" value="{{option}}">{{option}}</option></select>
 					</div>
 				</div>
 				<div ng-if="obj.paramType == 'date'" >
 		        	<div class="col-md-2 pd" style="padding-left:5%;"><span>{{obj.paramName}}</span></div>
-		        	<div class="col-md-10 date pd"><input style="width:172px; height: 25px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
-						datetime-picker date-format="MM-dd-yyyy HH:mm" required></div>
+		        	<div class="col-md-10 date pd"><input style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+						datetime-picker date-format="yyyy-MM-dd HH:mm" required></div>
 				 </div>
 			</div>
 			
 		</div>
 			<div class="input-group date col-md-12 text-center">
 				<div style="display: inline-block; border: 1px solid #ccc; padding: 10px; margin-bottom:10px;width:371px"><span style="padding-right: 10%;">Schedule Date and Time </span>
-				<input id="scheduleDate" style="width:172px; height: 25px;" name="scheduleDate"
+				<input id="scheduleDate" style="width:172px; height: 27px;" name="scheduleDate"
 				 ng-model="scheduleDate" max-date="dtmax" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched pull-right"
-					datetime-picker date-format="MM-dd-yyyy HH:mm" required>
+					datetime-picker date-format="yyyy-MM-dd HH:mm" required>
 				</div>
 			</div>
 		<img id="dataLoadingUpdate" class="loading loading-imgac" src="images/loading_new.gif"
@@ -45,6 +49,7 @@ select {
 		
 	</div>
 </div>
+<div ng-include="'app/views/footer/footer.html'"></div>
 
 <!-- {{obj.paramAbbreviation}}
 				{{obj.paramValues}}

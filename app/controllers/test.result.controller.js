@@ -53,15 +53,30 @@ oTech.controller('TestController',
     	 for (var i = 0; i < $scope.paramlength; i++) {
     		 data.commandParamString[i] = {};
     		 data.commandParamString[i].param_index = m[$("#" + i).attr("name")].paramIndex;
+    		 if("beginDate" === $("#" + i).attr("name"))
+    			 beginDate = new Date($("#" + i).val());
+    		 if("endDate" === $("#" + i).attr("name"))
+    			 endDate = new Date($("#" + i).val());
+    			 
     		 data.commandParamString[i].param_name = $("#" + i).attr("name");
     		 data.commandParamString[i].param_abbreviation = m[$("#" + i).attr("name")].paramAbbreviation;
     		 data.commandParamString[i].param_values = $("#" + i).val();
     	}
-    	 data.scheduledTime = $("#scheduleDate").val();
-    	 data.isExecuted = 0;   	 
-         var json = JSON.stringify(data);
-    	 promise = AppServices.postWebETLSchedulerData(json, token, userId);
-         promise.then(
+    	data.scheduledTime = $("#scheduleDate").val();
+    	data.isExecuted = 0;
+    	if(beginDate > endDate ){
+    		alert("Select Correct beginDate and endDate");
+    		$("#dataLoadingUpdate").hide();
+    		return false;
+    	}
+    	if(new Date(data.scheduledTime) < new Date()) {
+    		alert("Select Correct Schedule Date and Time");
+    		$("#dataLoadingUpdate").hide();
+    		return false;
+    	}
+        var json = JSON.stringify(data);
+        promise = AppServices.postWebETLSchedulerData(json, token, userId);
+        promise.then(
         	function(data) {
         		$("#dataLoadingUpdate").hide();
         		alert("Successfully scheduled");
