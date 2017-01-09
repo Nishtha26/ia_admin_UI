@@ -1594,9 +1594,6 @@ oTech.controller('testPlanTestRunAdministration',
 				$scope.dataProcessing = false;
 	        };
 	        
-	        
-	      
-//yoyo
 	        $scope.schedule = function ($event) {
 	        	var v = $event.currentTarget.id;
 	        	var devs;
