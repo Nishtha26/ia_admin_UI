@@ -691,56 +691,35 @@ top : 100%;
 													<hr />
 												</div>
 												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
-													
-														<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
 														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
-																<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
-														datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
-														name="Datendtime" placeholder="start date" required> 
-															</div>
-															<!-- <div ng-show="form.$submitted || form.Datendtime.$touched">
-																<div ng-show="form.Datendtime.$error.required"
-																style="color: red">*Please Select Start Date and
-																Time</div>
-															</div> -->
+															<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
+																	datetime-picker date-format="yyyy-MM-dd HH:mm:ss" name="Datendtime" placeholder="start date" required> 
+														</div>
+														<span  style="color:red" ng-show="form.Datendtime.$dirty && form.Datendtime.$error.required" class="help-block">*Please Select Start Date and Time</span>
+													</div>
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+															<input type="text" class="form-control daterange-left" ng-model="EndDate" style="background-color: #FFFFFF" datetime-picker
+																date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
+														</div>												
+														<span  style="color:red" ng-show="form.EndDate.$dirty && form.EndDate.$error.required" class="help-block">*Please Select End Time</span>
 															
-															<span  style="color:red" ng-show="form.Datendtime.$dirty && form.Datendtime.$error.required" class="help-block">*Please Select Start Date and
-																Time</span>
-													
-														</div>
-											<div class="col-lg-4  col-md-4" style="padding-left: 0px;"><div class="input-group">
-											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-												<input type="text" class="form-control daterange-left" ng-model="EndDate"
-														style="background-color: #FFFFFF" datetime-picker
-														date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
-											</div>
-													<!-- <div ng-show="form.$submitted || form.EndDate.$touched">
-														<div ng-show="form.EndDate.$error.required"
-															style="color: red">*Please Select End Time</div>
-													</div> -->
-													
-													<span  style="color:red" ng-show="form.EndDate.$dirty && form.EndDate.$error.required" class="help-block">*Please Select End Time</span>
-													
 													</div>
-														<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
-													 <select class="form-control input_width" id="sel2"
-														style="background-color: #FFFFFF;" ng-model="recurrence"
-														ng-change="change()" name="recurrence" required>
-														<option value="None">None</option>
-														<option value="Daily">Daily</option>
-
-													</select> 
-													
-													
-													<div ng-show="form.$submitted || form.recurrence.$touched">
-														<div ng-show="form.recurrence.$dirty && form.recurrence.$error.required"
-															style="color: red">**Please Select Recurrence</div>
-													</div>
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+														<select class="form-control input_width" id="sel2" style="background-color: #FFFFFF;" ng-model="recurrence" ng-change="change()" name="recurrence" required>
+															<option value="None">None</option>
+															<option value="Daily">Daily</option>
+														</select> 
+														<div ng-show="form.$submitted || form.recurrence.$touched">
+															<div ng-show="form.recurrence.$dirty && form.recurrence.$error.required"
+																style="color: red">**Please Select Recurrence</div>
 														</div>
+													</div>
 													<div class="col-lg-12 col-md-12"  style="padding-left: 0px; margin-top:10px;"><button class="btn btn-success btn-xs schedule pull-left" type="submit" disabled ng-click="schedule();">Schedule it</button>
 													<span ng-show ="waitMsgForSchedule1" class="error_msg">Please wait a while...</span>
 													</div>
-													
 												</div>
 												
 											</div>
@@ -903,8 +882,33 @@ top : 100%;
 
 
 									<div class="col-md-12" style="margin-top: 20px; ">
-										<div class="row pull-right">
+									<div id="scheduleparam"  class="row pull-left" style="display: none; width:60%;">
+												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
+															<input type="text" class="form-control daterange-left" ng-model="Datendtime" style="background-color: #FFFFFF"
+																	datetime-picker date-format="yyyy-MM-dd HH:mm:ss" name="Datendtime" placeholder="start date" required> 
+														</div>
+													</div>
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon"><i class="icon-calendar22"></i></span>
+															<input type="text" class="form-control daterange-left" ng-model="EndDate" style="background-color: #FFFFFF" datetime-picker
+																date-format="yyyy-MM-dd" name="EndDate" placeholder="end date" required> 
+														</div>															
+													</div>
+													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+														<select class="form-control input_width" id="sel2" style="background-color: #FFFFFF; " ng-model="recurrence" ng-change="change()" name="recurrence" required>
+															<option value="None">None</option>
+															<option value="Daily">Daily</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										<div class="row pull-right" style="margin-top: -5px;">
+											<span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span>
 											<ul class="icons-list">
+												<li><button id="Scheduleone" class="btn btn-success btn-xs" type="button" ng-click="schedule($event)">Schedule</button></li>
 												<li><button class="btn btn-success btn-xs" type="button" ng-click="startJob()">Run it now</button></li>
 												<li><button class="btn btn-success btn-xs" type="button" ng-click="stopJob()">Stop</button></li>
 												<li><button class="btn btn-success btn-xs" type="button" ng-click="reStartJob()">Re-Start</button></li>
@@ -1205,6 +1209,4 @@ top : 100%;
 			</form>
 		</div>
 	</div>
-</div>	
-
-	
+</div>
