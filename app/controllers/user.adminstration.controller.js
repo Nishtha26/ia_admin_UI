@@ -471,16 +471,18 @@ $scope.singleFilter = function() {
    
 };
 $scope.cancelUserCreate=function(){
-	
 	$scope.myForm.$setPristine();
+	$scope.myForm.$setUntouched();
 	 }
 $scope.cancelUserEdit=function(){
-	 $("#cancel_user_edit_label").hide();
-	 	$("#create_new_user_label").show();
-	 	$("#user_create_div").hide();
-	 	$("#user_edit_div").hide();
-	 	$("#edit_device_body_div").hide();
-	 	$("#user_list_div").show();
+	$("#cancel_user_edit_label").hide();
+ 	$("#create_new_user_label").show();
+ 	$("#user_create_div").hide();
+ 	$("#user_edit_div").hide();
+ 	$("#edit_device_body_div").hide();
+ 	$("#user_list_div").show();
+ 	$scope.myForm.$setPristine();
+	$scope.myForm.$setUntouched();
 	 }
 $scope.showAllUsersLabel=function(){
 	$("#user_list_div").show();
