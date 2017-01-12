@@ -1595,7 +1595,10 @@ oTech.controller('testPlanTestRunAdministration',
 	        };
 	        
 	        $scope.schedule = function ($event) {
-	        	var v = $event.currentTarget.id;
+	        	var v;
+	        	if($event != undefined){
+	        	 v = $event.currentTarget.id;
+	        	}
 	        	var devs;
 	        	
 	        	$scope.setErrorMessage = function(errorMessage){
