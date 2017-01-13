@@ -100,7 +100,18 @@ oTech.controller('TestController',
         	function(data) {
         		$("#dataLoadingUpdate").hide();
         		alert("Successfully scheduled");
-
+        		$scope.webETLSchedulerMappingGrid.data = [];
+        		promise = AppServices.getWebETLSchedulerMapping();
+        	     promise.then(
+        	     	function(data) {
+        	     		$("#dataLoadingUpdate").hide();
+        	     		$scope.webETLSchedulerMappingGrid.data = data;
+        	     	},
+        	 		function(err){
+        	 			$("#dataLoadingUpdate").hide();
+        	 			alert("error " + err.status);
+        	 		});
+        	     $('.blankclass input[type="text"]').val('');
         	},
     		function(err){
     			$("#dataLoadingUpdate").hide();
@@ -118,6 +129,7 @@ oTech.controller('TestController',
      
      
      $("#dataLoadingUpdate").show();
+     
      promise = AppServices.getWebETLSchedulerMapping();
      promise.then(
      	function(data) {
