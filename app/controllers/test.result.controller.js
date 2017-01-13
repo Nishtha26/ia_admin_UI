@@ -49,20 +49,40 @@ oTech.controller('TestController',
     	 jsonArray = [];
     	 var m = $scope.map;
     	 var data = {};
+    	 var scDTime = $("#scheduleDate").val();
+    	 if(typeof scDTime === "undefined" || scDTime == ''){
+				alert("Select Correct Scheduled Date Time");
+		    	$("#dataLoadingUpdate").hide();
+		    	return false;
+		 }
+    	 data.scheduledTime = scDTime;
     	 data.commandParamString = [];
     	 for (var i = 0; i < $scope.paramlength; i++) {
     		 data.commandParamString[i] = {};
     		 data.commandParamString[i].param_index = m[$("#" + i).attr("name")].paramIndex;
-    		 if("beginDate" === $("#" + i).attr("name"))
+    		 if("beginDate" === $("#" + i).attr("name")){
+    			 var v = $("#" + i).val();
+    			 if(typeof v === "undefined" || v == ''){
+    				alert("Select Correct beginDate");
+    		    	$("#dataLoadingUpdate").hide();
+    		    	return false;
+    			 }
     			 beginDate = new Date($("#" + i).val());
-    		 if("endDate" === $("#" + i).attr("name"))
+    		 }
+    		 if("endDate" === $("#" + i).attr("name")){
+    			 var v = $("#" + i).val();
+    			 if(typeof v === "undefined" || v == ''){
+    				alert("Select Correct endDate");
+    		    	$("#dataLoadingUpdate").hide();
+    		    	return false;
+    			 }
     			 endDate = new Date($("#" + i).val());
-    			 
+    		 }
     		 data.commandParamString[i].param_name = $("#" + i).attr("name");
     		 data.commandParamString[i].param_abbreviation = m[$("#" + i).attr("name")].paramAbbreviation;
     		 data.commandParamString[i].param_values = $("#" + i).val();
     	}
-    	data.scheduledTime = $("#scheduleDate").val();
+    	
     	data.isExecuted = 0;
     	if(beginDate > endDate ){
     		alert("Select Correct beginDate and endDate");
@@ -80,12 +100,48 @@ oTech.controller('TestController',
         	function(data) {
         		$("#dataLoadingUpdate").hide();
         		alert("Successfully scheduled");
-        		$location.path('/dashboard/etlPerformance');
+
         	},
     		function(err){
     			$("#dataLoadingUpdate").hide();
     			alert("error " + err.status);
     		});
-         
-     });     
+     });
+     
+     $scope.webETLSchedulerMappingGrid = oApp.config.webETLSchedulerMappingGrid;
+     $scope.webETLSchedulerMappingGrid.onRegisterApi = function( gridApi ) {
+    	 $scope.gridApi = gridApi;
+    	 $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+    		 console.log(row);
+ 		});
+     };
+     
+     
+     $("#dataLoadingUpdate").show();
+     promise = AppServices.getWebETLSchedulerMapping();
+     promise.then(
+     	function(data) {
+     		$("#dataLoadingUpdate").hide();
+     		$scope.webETLSchedulerMappingGrid.data = data;
+     	},
+ 		function(err){
+ 			$("#dataLoadingUpdate").hide();
+ 			alert("error " + err.status);
+ 		});
+
+     $scope.stopETL=function() {
+    	 $("#dataLoadingUpdate").show();
+    	 promise = AppServices.stopRunningETL();
+         promise.then(
+         	function(data) {
+         		$("#dataLoadingUpdate").hide();
+         		if(data.status != 'success')
+         			alert("Some error occured");
+         		
+         	},
+     		function(err){
+     			$("#dataLoadingUpdate").hide();
+     			alert("error " + err.status);
+     		});
+     };
 });
