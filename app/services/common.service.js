@@ -1818,5 +1818,47 @@ oTech.service('AppServices',
 			return deferred.promise; 
 		}
 		
+		service.getWebETLSchedulerMapping = function(){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/etl/getWebETLSchedulerMapping",
+		            type: "GET",
+	                data: {},
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
+		service.stopRunningETL = function(){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/etl/stopCurrentRunningETL",
+		            type: "GET",
+	                data: {},
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
 	return service; 		
 }])
