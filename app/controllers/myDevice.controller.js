@@ -1,6 +1,6 @@
 
 oTech.controller('MyDevicesController',
-	function ($scope, $rootScope, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants,$templateCache) {
+	function ($scope, $rootScope,$timeout, $location, AppServices,GraphMaximizeServices,MapServices, $stateParams,$filter,uiGridConstants,$templateCache) {
 		$scope.loading = true;
 		var userId = sessionStorage.userId;
 		var token = sessionStorage.token;
@@ -507,8 +507,9 @@ oTech.controller('MyDevicesController',
 					promise = AppServices.adminCommandOperation( token ,$scope.deviceId,commandId);
 					promise.then(
 					function(data){
+						$("#dataLoadingAC").hide();
 						if(data.status=="success"){
-							 $("#dataLoadingAC").hide();
+							 
 							 $scope.currentRow.entity.adminMessageToDevice=commandId;
 						}
 						else{
@@ -635,11 +636,17 @@ oTech.controller('MyDevicesController',
 					promise.then(
 					function(data){
 						if(data.status=="success"){
-							$scope.currentRow.entity.defaultJobId=defaultJobId;
+							$scope.defaultJobId=defaultJobId;
 							$("#dataLoadingUpdate").hide();
+							$scope.successMsgDefaultJob = true;
+	                        $rootScope.successMsgDefaultJob1 = "Successfully updated!!!";
+	                        $timeout(function () {
+                            	$scope.successMsgDefaultJob = false;
+                            }, 3000);
 						}
 						else{
-							
+							$("#dataLoadingUpdate").hide();
+							alert("Error occuring during the update!!!");
 						}
 				//		$scope.deviceAdminData();
 					},

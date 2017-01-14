@@ -1,3 +1,12 @@
+<style>
+.success_msg{
+	float: right;
+    color: #48A64C;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 27px;
+}
+</style>
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
 	<div ng-include="'app/views/header/header.html'"></div>
@@ -300,6 +309,7 @@
 										<div class="col-lg-9 input-group" >
 											<input  type="text" id="defaultJobId" ng-model="defaultJobId" name="defaultJobId"  class="form-control"  />
 											<span  title="Click to update Default Job" class="input-group-addon pointer-link" ng-click="updateDefaultJob()"><i class="icon-floppy-disk position-left text-teal-300" ></i></span>
+											<span ng-show ="successMsgDefaultJob" class="success_msg">{{successMsgDefaultJob1}}</span>
 										</div>
 									</div>
 									</div>

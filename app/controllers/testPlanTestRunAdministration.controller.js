@@ -511,24 +511,21 @@ oTech.controller('testPlanTestRunAdministration',
 			$scope.allTestRuns.data = $scope.allTestRunsTemp;
 			$scope.searchTestRuns = $scope.allTestRunsTemp;
 		}
-		
-		
+
 		$scope.singleFilterForTestRuns = function() {
 		    $scope.allTestRuns.data = $filter('filter')($scope.searchTestRuns, $scope.searchTextForTestRuns, undefined);
-		   
 		};
-		
-		
+
 		 $scope.allTestRuns.onRegisterApi = function (gridApi) {
 
-			
-	            
 	            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 	    				Devices = [];
 	    				notificationTypes = [];
-	    				
+	    				$scope.jobName = row.entity.testrunName;
 	                    //Get devices service
 	    				if(row.isSelected){
+	    					if($('#scheduleparam').css('display') != 'none')
+								$('#scheduleparam').toggle();
 	    					$scope.dataProcessingOfAllTestRuns = true;
 	    					$rootScope.jobId = row.entity.testrunId;
 	    					promise = testScriptService.ViewTestRunDeviceService(userId, token, row.entity.testrunId);
@@ -545,59 +542,42 @@ oTech.controller('testPlanTestRunAdministration',
 		                            console.log(err);
 		                        }
 		                    );
-					}else{
-						$rootScope.jobId = "";
-						$scope.testRunMappedDevices.data = [];
-						 $scope.searchTestRunMappedDevices = [];
-					}
-	                    
-	                  
-
+						}else{
+							$rootScope.jobId = "";
+							$scope.testRunMappedDevices.data = [];
+							 $scope.searchTestRunMappedDevices = [];
+						}
 	                });
 	            
-	           
 	            $scope.testRunMappedDevices.onRegisterApi = function (gridApi) {
-
-	             
-	               
 	                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 	                    $rootScope.jobId = row.entity.jobId;
+	                    $scope.testRunIdShcedule = row.entity.jobId;
 						if(row.isSelected){
 							Devices.push(row.entity.deviceId);
 							notificationTypes.push(row.entity.notificationType);
-					}else{
-						for (var i = 0; i < Devices.length; i++){
-							if(Devices[i] == row.entity.deviceId){
-								Devices.splice(i, 1);
-								notificationTypes.splice(i, 1);
+						}else{
+							for (var i = 0; i < Devices.length; i++){
+								if(Devices[i] == row.entity.deviceId){
+									Devices.splice(i, 1);
+									notificationTypes.splice(i, 1);
+								}
 							}
 						}
-					}
-
+						if(Devices.length > 0  && ($('#scheduleparam').css('display') === 'none')){
+							$('#scheduleparam').toggle();
+							return;
+						}
+						if(Devices.length == 0)
+							$('#scheduleparam').toggle();
 	                });
 	                
 	                gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-
-
 	                });
-
 	            };
-
 	            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-
-
 	            });
-	              
-	           
 	        };
-	        
-	       
-	        
-            
-	    
-	    
-	    
-	    
 	    
 	    $scope.testRunMappedDevices = {
 	    		enableSorting: true,
@@ -1614,10 +1594,12 @@ oTech.controller('testPlanTestRunAdministration',
 				$scope.dataProcessing = false;
 	        };
 	        
-	        
-	      
-
-	        $scope.schedule = function () {
+	        $scope.schedule = function ($event) {
+	        	var v;
+	        	if($event != undefined){
+	        	 v = $event.currentTarget.id;
+	        	}
+	        	var devs;
 	        	
 	        	$scope.setErrorMessage = function(errorMessage){
 	        		$scope.error=errorMessage;
@@ -1644,8 +1626,17 @@ oTech.controller('testPlanTestRunAdministration',
 	    		if($scope.testRunIdShcedule == undefined || $scope.testRunIdShcedule == ""){
 	                           
 	    		}
-	    		
-	    		if(createTestRunDevices.length <= 0){
+	    		var jName;
+	    		if(v === "Scheduleone"){
+	    			$scope.dataProcessingOfAllTestRuns = true;
+	        		devs = Devices;
+	        		jName = $scope.jobName;
+	    		}
+	    		else{
+	    			devs = createTestRunDevices;
+	    			jName = $scope.TestRunName;
+	    		}
+	    		if(devs.length <= 0){
 	    			$scope.errorMsgForSchedule = true;
 	    			$scope.errorMsgForScheduleModel = "Please select devices..";
 	                            $timeout(function () {
@@ -1656,7 +1647,7 @@ oTech.controller('testPlanTestRunAdministration',
 	    		}
 	            var ScheduleData = JSON.stringify({
 	                "jobId": $scope.testRunIdShcedule,
-	                "jobName": $scope.TestRunName,
+	                "jobName": jName,
 	                "jobDescription": $scope.jobTemplateDescription,
 	                "jobCreatedBy": userId,
 	                "jobStartDate": "2016-02-08",
@@ -1664,7 +1655,7 @@ oTech.controller('testPlanTestRunAdministration',
 //	                    "jobStartDate": $scope.StartDate,
 	                "jobEndDate": $scope.EndDate,
 	                "recurrence": $scope.recurrence,
-	                "deviceList": createTestRunDevices,
+	                "deviceList": devs,
 	                "operation": "schedule",
 	            })
 	            $scope.waitMsgForSchedule1 = true;
@@ -1676,19 +1667,40 @@ oTech.controller('testPlanTestRunAdministration',
 	                function (data) {
 	                    console.log(JSON.stringify(data));
 
-	                    if (data.status == "error") {
-	                    	$scope.waitMsgForSchedule1 = false;
-	                        $rootScope.errorMsgForScheduleModel = data.errorDescription;
-	                        $scope.errorMsgForSchedule = true;
-	                       
-	                        $timeout(function () {
-	                        	$scope.errorMsgForSchedule = false;
-	                        }, 3000);
-	                        $scope.dataProcessing = false;
+	                    if (data.status == "error") {	                    	
+	                    	if(v === "Scheduleone"){
+	                    		$scope.dataProcessingOfAllTestRuns = false;
+								$scope.scheduleError_msg = true;
+								$rootScope.msg3 = "";
+		                        $rootScope.msg3 = "Some error occured";
+		                        $timeout(function () {
+		                        	$scope.scheduleError_msg = false;
+		                        }, 3000);
+	                    	}
+	                    	else {
+		                    	$scope.waitMsgForSchedule1 = false;
+		                        $rootScope.errorMsgForScheduleModel = data.errorDescription;
+		                        $scope.errorMsgForSchedule = true;
+		                        $timeout(function () {
+		                        	$scope.errorMsgForSchedule = false;
+		                        }, 3000);
+		                        $scope.dataProcessing = false;
+	                    	}
 	                        $(".schedule").removeAttr("disabled");
 	                    }
 
 	                    if (data.status == "success") {
+	                    	if(v === "Scheduleone"){
+	                    		$scope.dataProcessingOfAllTestRuns = false;
+								$scope.scheduleMsg1 = true;
+								$rootScope.msg2 = "";
+		                        $rootScope.msg2 = "Test Run has been Scheduled Successfully";
+		                        $timeout(function () {
+		                        	$scope.scheduleMsg1 = false;
+		                        }, 3000);
+	                    	}
+	                    	else
+	                    		{
 	                    	$scope.waitMsgForSchedule1 = false;
 	                    	$scope.successMsgForSchedule = true;
 	                        $rootScope.successMsgForScheduleModel = "Test Run has been Scheduled Successfully";
@@ -1697,7 +1709,7 @@ oTech.controller('testPlanTestRunAdministration',
                             	$scope.mainTab = 3;
                             	 $('html, body').animate({scrollTop: '+=1080px'}, 800);
                             }, 3000);
-
+	                    		}
 	                    }
 
 	                },
