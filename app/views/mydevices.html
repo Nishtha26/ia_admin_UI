@@ -1,22 +1,22 @@
 <style>
-.success_msg{
-	float: right;
-    color: #48A64C;
-    font-size: 14px;
-    padding-top: 7px;
-    padding-right: 27px;
-}
+    .success_msg {
+        float: right;
+        color: #48A64C;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
 </style>
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
-	<div ng-include="'app/views/header/header.html'"></div>
-	<!-- Header End -->
-	<!-- Second navbar -->
-	<div ng-include="'app/views/menus/menu.html'"></div>
-	<!-- /second navbar -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- Header End -->
+<!-- Second navbar -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /second navbar -->
 
 
-	<!-- Page header -->
+<!-- Page header -->
 <!-- 	<div class="page-header">
 		<div class="page-header-content">
 			<div class="page-title">
@@ -32,454 +32,508 @@
 			</div> 
 		</div>
 	</div> -->
-	<!-- /page header -->
+<!-- /page header -->
+
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Devices list panel -->
+                    <div class="col-lg-6">
+                        <!-- Basic datatable -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Device List</h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li ng-click="getMapData()"><span class='label label-primary pointer-link'>Live Map</span>
+                                        </li>
+                                        <li id='device_list_label' style="display: none;"><span
+                                                class='label label-default'>Device List</span></li>
+                                        <li id='device_edit_label' style="display: none;"><span
+                                                class='label label-warning'>Cancel Edit</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body" id='device_table_list_div'>
+                                <!-- 	<label>Device List</label> -->
+                                <div class="datatable-header">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                        <label><span>Filter:</span>
+                                            <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
+                                                   placeholder="Type to filter..."></label></div>
+                                    <!--
+                                     <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
+                                      <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                      <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+                                      <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
+                                      <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
+                                      <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
+                                      <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
+                                      </div>
+                                      -->
+                                </div>
+                                <div class="table table-hover grid datatable-basic grid"
+                                     id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit
+                                     ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
+                                     ui-grid-move-columns ui-grid-pinning ng-style="getTableHeight()">
+
+                                </div>
+                                <img class="loading loading-imgac" src="images/loading_new.gif"
+                                     ng-show="dataLoading"/>
+                                <div class="loadingErr loadingErrMsg" ng-show="err">No
+                                    Data Found
+                                </div>
 
 
-	<!-- Page container -->
-	<div class="page-container">
+                                <div class="row" style="padding-top:5px;">
+                                    <div class="col-sm-5">
+                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
+                                             role="alert" aria-live="polite" aria-relevant="all">Showing
+                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="dataTables_paginate paging_simple_numbers">
 
-		<!-- Page content -->
-		<div class="page-content">
-
-			<!-- Main content -->
-			<div class="content-wrapper">
-				
-
-				<div class="row">
-					
-					<div class="col-lg-12">
-
-						<!-- Devices list panel -->
-						<div class="col-lg-6">
-							
-
-
-							<!-- Basic datatable -->
-							<div class="panel panel-white">
-								<div class="panel-heading">
-									<h5 class="panel-title">Device List</h5>
-									
-									<div class="heading-elements">
-										<ul class="icons-list">
-	                		<li  ng-click="getMapData()"><span class='label label-primary pointer-link'>Live Map</span></li>
-	                		<li id='device_list_label' style="display: none;"><span class='label label-default'>Device List</span></li>
-	                		<li id='device_edit_label' style="display: none;"><span class='label label-warning'>Cancel Edit</span></li>
-	                	</ul>
-                	</div>
-								</div>
-
-								<div class="panel-body" id='device_table_list_div'>
-							<!-- 	<label>Device List</label> -->
-									<div class="datatable-header" ><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
-						 <input type="type" class="" ng-change="singleFilter()" ng-model="searchText" placeholder="Type to filter..." ></label></div>
-						<!-- 
-						 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
-						  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-						  <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
-						  <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
-						  <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
-						  <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
-						  <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
-						  </div>
-						  -->
-						  </div>
-									<div class="table table-hover grid datatable-basic grid"
-										id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit 
-										ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
-										ui-grid-move-columns ui-grid-pinning ng-style="getTableHeight()" >
-
-									</div>
-									<img class="loading loading-imgac" src="images/loading_new.gif"
-										ng-show="dataLoading"></img>
-									<div class="loadingErr loadingErrMsg" ng-show="err">No
-										Data Found</div>
-
-
-																		<div class="row" style="padding-top:5px;">
-							<div class="col-sm-5">
-									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
-									</div>
-<div class="col-sm-7">
-										<div   class="dataTables_paginate paging_simple_numbers">
-																			
-											  <a ng-class="DisablePrevPage()" class="paginate_button previous" ng-click="prevPage()" >&larr;</a>
+                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                               ng-click="prevPage()">&larr;</a>
 											
 											<span>
-											  <a  ng-repeat="n in range()" ng-class="{current: n == currentPage}" ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
 											</span>
-										
-											  <a ng-class="DisableNextPage()" class="paginate_button next" ng-click="nextPage()">&rarr;</a>
-											
-										 
-										</div>
-									</div>	
-				
-	</div>
-							</div>
 
-								
-
-								<!-- Create a device form -->
-								<div class="panel-body " id='create_device_body_div' style="display: none;">
-									
-								
-								</div>
+                                            <a ng-class="DisableNextPage()" class="paginate_button next"
+                                               ng-click="nextPage()">&rarr;</a>
 
 
-								<!-- Create a device form -->
-								<div class="panel-body" id='availability_device_body_div' style="display: none;">
-									
-	
-	<div class=" "></div>
-											
-											</div>
+                                        </div>
+                                    </div>
 
-								</div>
-
-								<!-- /create a device form -->
+                                </div>
+                            </div>
 
 
-
-							</div>
-							<!-- /basic datatable -->
-						
-						<!-- /Devices list panel -->
+                            <!-- Create a device form -->
+                            <div class="panel-body " id='create_device_body_div' style="display: none;">
 
 
-						<!-- device maps panel -->
-						<div class="col-lg-6" >
-							<div class="panel panel-flat" id="live_device_map_container" >
-								<div class="panel-heading device-live-map-heading">
-									<h6 class="panel-title">Live Devices</h6>
-						
-								</div>
-							<div class="panel-body" id="live_device_container" ng-show ="ShowLiveMap">
-							<div id="Map"  class="map-dim map-container" style="height: 576px;"></div>
-							
-							 <img id="dataLoadingMap" align="middle" ng-show="dataLoadingMap" class="loading loading-imgac" src="{{loadingImageName}}"  style="position:absolute; margin-left: 45%; top: 35%;"></img>
-							</div>
-							</div>
+                            </div>
 
-							<div class="panel panel-white" id="device_facets_container" style="display: none;">
-								<div class="panel-heading">
-									<h5 class="panel-title">Device Feature</h5>
-						<!-- 			<div class="heading-elements">
-										<ul class="icons-list">
-	                		<li><a data-action="collapse"></a></li>
-	                		<li><a data-action="reload"></a></li>
-	                		<li><a data-action="close"></a></li>
-	                	</ul>
-                	</div> -->
-								</div>
 
-								<div class="panel-body" id="">
-									<div class="tabbable">
-										<ul class="nav nav-tabs" style="margin-top:7px;">
-										<!-- href="#availability" */ -->
-											<li id="availability_tab" href="availability" class="d_tab active"><a data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a></li>
-											<li ng-click="deviceMapDefault()" class="d_tab"><a  data-toggle="tab">Replay View</a></li>
-										 	<li id="admin_operation" ng-click="populateAdminCommand()" class="d_tab" ><a  data-toggle="tab">Administration</a></li> 
-										</ul>
+                            <!-- Create a device form -->
+                            <div class="panel-body" id='availability_device_body_div' style="display: none;">
 
-										<div class="tab-content">
-											<div class="tab-pane active" id="availability">
 
-											<div class="row" style="padding-top: 4px 10px; border-bottom:1px solid #ddd;">
-											<!-- <div class="form-group" style="margin-left: 16px; margin-right: 10px;">
-												<label class="col-sm-2" style="padding-top:6px;">Select Range: </label>
-												<div class="input-group">
-													<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-													<input id="daterange-timeAV" type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013"> 
-												</div>
-											</div>-->
-												 <div class="col-sm-5 form-group">
-													<label class="col-sm-3" >Start Date: </label>
-													<div class="col-sm-9 input-group date " >
+                                <div class=" "></div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- /create a device form -->
+
+
+                    </div>
+                    <!-- /basic datatable -->
+
+                    <!-- /Devices list panel -->
+
+
+                    <!-- device maps panel -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-flat" id="live_device_map_container">
+                            <div class="panel-heading device-live-map-heading">
+                                <h6 class="panel-title">Live Devices</h6>
+
+                            </div>
+                            <div class="panel-body" id="live_device_container" ng-show="ShowLiveMap">
+                                <div id="Map" class="map-dim map-container" style="height: 576px;"></div>
+
+                                <img id="dataLoadingMap" align="middle" ng-show="dataLoadingMap"
+                                     class="loading loading-imgac" src="{{loadingImageName}}"
+                                     style="position:absolute; margin-left: 45%; top: 35%;">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-white" id="device_facets_container" style="display: none;">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Device Feature</h5>
+                                <!-- 			<div class="heading-elements">
+                                                <ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>
+                                </ul>
+                            </div> -->
+                            </div>
+
+                            <div class="panel-body" id="">
+                                <div class="tabbable">
+                                    <ul class="nav nav-tabs" style="margin-top:7px;">
+                                        <!-- href="#availability" */ -->
+                                        <li id="availability_tab" href="availability" class="d_tab active"><a
+                                                data-toggle="tab" ng-click="availabilityProcessByTab()">Availability</a>
+                                        </li>
+                                        <li ng-click="deviceMapDefault()" class="d_tab"><a data-toggle="tab">Replay
+                                            View</a></li>
+                                        <li id="admin_operation" ng-click="populateAdminCommand()" class="d_tab"><a
+                                                data-toggle="tab">Administration</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="availability">
+
+                                            <div class="row"
+                                                 style="padding-top: 4px; border-bottom:1px solid #ddd;">
+                                                <!-- <div class="form-group" style="margin-left: 16px; margin-right: 10px;">
+                                                    <label class="col-sm-2" style="padding-top:6px;">Select Range: </label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                        <input id="daterange-timeAV" type="text" class="form-control daterange-time" value="03/18/2013 - 03/23/2013">
+                                                    </div>
+                                                </div>-->
+                                                <div class="col-sm-5 form-group">
+                                                    <label class="col-sm-3">Start Date: </label>
+                                                    <div class="col-sm-9 input-group date ">
 														 <span class="input-group-addon">
 															<span class="icon-calendar22"></span>
 														</span>
-														<input id="startDate" name="startDate" ng-model="startDate"
-															class="form-control" style="height: 37px;" 
-															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> 
-														
-													</div>
-												</div>
-												<div class="col-sm-5 form-group">
-													<label class="col-sm-3">End Date: </label>
-													<div class="col-sm-9 input-group date " >
+                                                        <input id="startDate" name="startDate" ng-model="startDate"
+                                                               class="form-control" style="height: 37px;"
+                                                               datetime-picker date-format="MM/dd/yyyy HH:mm"/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 form-group">
+                                                    <label class="col-sm-3">End Date: </label>
+                                                    <div class="col-sm-9 input-group date ">
 													 <span class="input-group-addon">
 															<span class="icon-calendar22"></span>
 														</span>
-														<input id="endDate" name="endDate" ng-model="endDate" class="form-control"
-															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > 
-														
-													</div>
-												</div>
+                                                        <input id="endDate" name="endDate" ng-model="endDate"
+                                                               class="form-control"
+                                                               style="height: 37px;" datetime-picker
+                                                               date-format="MM/dd/yyyy HH:mm">
 
-												<div class="col-sm-2 form-group">
-													
-														<input id="device_av_btn" class="btn btn-success btn-sm"
-															type="submit" ng-click="availabilityProcessByTab();" value="Show">
-													
-												</div> 
-											</div>
-											<img id="dataLoadingAvailability" align="middle" ng-show="dataLoadingAvailability" class="loading loading-imgac img-av" src="{{loadingImageName}}" ></img>
-											<div id="device_availability_device"   class="row chart" style="padding-top: 4px;">
-											
-											
-											</div>
-										</div>
+                                                    </div>
+                                                </div>
 
-										<div class="tab-pane" id="device_maps">
-										<div class="row" style="padding-top: 4px 10px; border-bottom:1px solid #ddd;">
-												 <div class="col-sm-5 form-group">
-													<label class="col-sm-3" >From: </label>
-													<div class="col-sm-9 input-group date " >
+                                                <div class="col-sm-2 form-group">
+
+                                                    <input id="device_av_btn" class="btn btn-success btn-sm"
+                                                           type="submit" ng-click="availabilityProcessByTab();"
+                                                           value="Show">
+
+                                                </div>
+                                            </div>
+                                            <img id="dataLoadingAvailability" align="middle"
+                                                 ng-show="dataLoadingAvailability" class="loading loading-imgac img-av"
+                                                 src="{{loadingImageName}}">
+                                            <div id="device_availability_device" class="row chart"
+                                                 style="padding-top: 4px;">
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane" id="device_maps">
+                                            <div class="row"
+                                                 style="padding-top: 4px 10px; border-bottom:1px solid #ddd;">
+                                                <div class="col-sm-5 form-group">
+                                                    <label class="col-sm-3">From: </label>
+                                                    <div class="col-sm-9 input-group date ">
 													 <span class="input-group-addon">
 															<span class="icon-calendar22"></span>
 														</span>
-														<input id="fromDateMap" name="fromDateMap" ng-model="fromDateMap"
-															class="form-control" style="height: 37px;" 
-															 datetime-picker date-format="MM/dd/yyyy HH:mm" /> 
-													</div>
-												</div>
-												<div class="col-sm-5 form-group">
-													<label class="col-sm-3">To: </label>
-													<div class="col-sm-9 input-group date " >
+                                                        <input id="fromDateMap" name="fromDateMap"
+                                                               ng-model="fromDateMap"
+                                                               class="form-control" style="height: 37px;"
+                                                               datetime-picker date-format="MM/dd/yyyy HH:mm"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 form-group">
+                                                    <label class="col-sm-3">To: </label>
+                                                    <div class="col-sm-9 input-group date ">
 													 <span class="input-group-addon">
 															<span class="icon-calendar22"></span>
 														</span>
-														<input id="toDateMap" name="toDateMap" ng-model="toDateMap" class="form-control"
-															style="height: 37px;"   datetime-picker date-format="MM/dd/yyyy HH:mm"   > 
-													
-													</div>
-												</div>
+                                                        <input id="toDateMap" name="toDateMap" ng-model="toDateMap"
+                                                               class="form-control"
+                                                               style="height: 37px;" datetime-picker
+                                                               date-format="MM/dd/yyyy HH:mm">
 
-												<div class="col-sm-2 form-group">
-													
-														<input id="device_av_btn" class="btn btn-success btn-sm"
-															type="button" ng-click="checkAjaxCall()" value="Show">
-													
-												</div> 
-											</div>
-												<!-- <div class="map-container map-click-event"></div> -->
-												<div id="device_map_body"   class="row" style="padding-top: 4px;">
-												<div id="replay_map_error" class="errors" style="display:none;text-align:center;"></div>
-												<img id="dataLoadingReplayMap" align="middle" ng-show="dataLoadingReplayMap" class="loading loading-imgac img-av" src="{{loadingImageName}}" ></img>
-												 <div id="rePlayMap" class="map-container"  style="position:relative;height:446px;"></div>
-								 <div id="DefaultReplayMap" class="map-container"  style="position:relative;height:446px;"></div>
-											</div></div>
+                                                    </div>
+                                                </div>
 
-										<div class="tab-pane" id="admin_operation_body">
-										   
-											<div class="panel-group  "> <!-- panel-group-control panel-group-control-right -->
-								<div class="panel panel-white"  style="margin-bottom: 20px;">
-								<div class="panel-heading">
-									<h6 class="panel-title">
-										<a data-toggle="collapse" >Device Management</a>
-									</h6>
-								</div>
-								<div id="collapsible-control-right-group1" class="panel-collapse collapse in">
-									<div class="panel-body">
-											<div class="form-group" ng-show="{{role == 'ROLE_OTADMIN'}}">
-										<label class="col-lg-3 control-label">Approved</label>
-										<div class="col-lg-9 checkbox checkbox-switch">
-											<input id="deviceStatusFlag" type="checkbox" data-on-color="success" data-off-color="danger" data-on-text="Yes"
-											 data-off-text="No" class="switch" checked="checked" name="deviceStatusFlag"  ng-model="deviceStatusFlag">
-										</div>
-										
-										<!-- FCM changes -->
-										
-										<label class="col-lg-3 control-label">Monitor Device for HeartBeat</label>
-										<div class="col-lg-9 checkbox checkbox-switch">
-											<input id="monitorDeviceFlag" type="checkbox" data-on-color="success" data-off-color="danger" data-on-text="Yes"
-											 data-off-text="No" class="switch" checked="checked" name="monitorDevice"  ng-model="monitorDeviceFlag">
-										</div>
-									
-									</div>
+                                                <div class="col-sm-2 form-group">
 
-									<div class="form-group">
-										<label class="col-lg-3 control-label">Assigned User</label>
-										<div class="col-lg-9">
-											{{userFullName}}
-										</div>
-									</div>
-										<div class="form-group" style="clear: both;">
-										<label class="col-lg-3 control-label">Default Job</label>
-										<div class="col-lg-9 input-group" >
-											<input  type="text" id="defaultJobId" ng-model="defaultJobId" name="defaultJobId"  class="form-control"  />
-											<span  title="Click to update Default Job" class="input-group-addon pointer-link" ng-click="updateDefaultJob()"><i class="icon-floppy-disk position-left text-teal-300" ></i></span>
-											<span ng-show ="successMsgDefaultJob" class="success_msg">{{successMsgDefaultJob1}}</span>
-										</div>
-									</div>
-									</div>
-								</div>
-								<img id="dataLoadingUpdate" class="loading loading-imgac" src="images/loading_new.gif"
-										 style="width:50px;height:50px;display: none;position: absolute;margin-left:48%;z-index: 1"></img>	
-							</div>
+                                                    <input id="device_av_btn" class="btn btn-success btn-sm"
+                                                           type="button" ng-click="checkAjaxCall()" value="Show">
 
-							<div class="panel panel-white">
-								<div class="panel-heading">
-									<h6 class="panel-title">
-										<a class="collapsed" data-toggle="collapse" >Admin Command</a>
-									</h6>
-								</div>
-								<div id="collapsible-control-right-group2" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<div class="form-group">
-										<label class="col-lg-3 control-label">Command</label>
-										<div class="col-lg-9">
-											
-											<select id="commandId"  class="form-control select"  name="commandId" >
-											<option  ng-repeat ="(id,val) in adminCommands"   value="{{id}}">{{val}}</option>
-											</select>
-											<img id="dataLoadingAC" class="loading loading-imgac" src="images/loading_new.gif"
-										 style="width:30px;height:30px;display: none;position: absolute;top:12%"></img>
-										</div>
-									
-									</div>
-									<br/>
-								
-										<br/>
-										<div class="form-group " id="update_url" style="display: none;">
-										<label class="col-lg-3 control-label">Update URL</label>
-										<div class="col-lg-9 input-group" style="padding-left: 10px;padding-right: 10px;">
-											<input  type="text" id="newWorkUrl" ng-model="newWorkUrl" name="newWorkUrl" class="form-control"  ><span  title="Click to update Url" class="input-group-addon pointer-link" ng-click="adminCommandUpdateUrl()"><i class="icon-floppy-disk position-left text-teal-300" ></i></span>
-										</div>
-									
-									</div>
-									</div>
-								</div>
-							</div>
-											</div>
-										</div>	
+                                                </div>
+                                            </div>
+                                            <!-- <div class="map-container map-click-event"></div> -->
+                                            <div id="device_map_body" class="row" style="padding-top: 4px;">
+                                                <div id="replay_map_error" class="errors"
+                                                     style="display:none;text-align:center;"></div>
+                                                <img id="dataLoadingReplayMap" align="middle"
+                                                     ng-show="dataLoadingReplayMap" class="loading loading-imgac img-av"
+                                                     src="{{loadingImageName}}">
+                                                <div id="rePlayMap" class="map-container"
+                                                     style="position:relative;height:446px;"></div>
+                                                <div id="DefaultReplayMap" class="map-container"
+                                                     style="position:relative;height:446px;"></div>
+                                            </div>
+                                        </div>
 
-										</div>
-									</div>
-								</div>
-							</div>
+                                        <div class="tab-pane" id="admin_operation_body">
+
+                                            <div class="panel-group  ">
+                                                <!-- panel-group-control panel-group-control-right -->
+                                                <div class="panel panel-white" style="margin-bottom: 20px;">
+                                                    <div class="panel-heading">
+                                                        <h6 class="panel-title">
+                                                            <a data-toggle="collapse">Device Management</a>
+                                                        </h6>
+                                                    </div>
+                                                    <div id="collapsible-control-right-group1"
+                                                         class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="form-group"
+                                                                 ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                                <label class="col-lg-3 control-label">Approved</label>
+                                                                <div class="col-lg-9 checkbox checkbox-switch">
+                                                                    <input id="deviceStatusFlag" type="checkbox"
+                                                                           data-on-color="success"
+                                                                           data-off-color="danger" data-on-text="Yes"
+                                                                           data-off-text="No" class="switch"
+                                                                           checked="checked" name="deviceStatusFlag"
+                                                                           ng-model="deviceStatusFlag">
+                                                                </div>
+
+                                                                <!-- FCM changes -->
+
+                                                                <label class="col-lg-3 control-label">Monitor Device for
+                                                                    HeartBeat</label>
+                                                                <div class="col-lg-9 checkbox checkbox-switch">
+                                                                    <input id="monitorDeviceFlag" type="checkbox"
+                                                                           data-on-color="success"
+                                                                           data-off-color="danger" data-on-text="Yes"
+                                                                           data-off-text="No" class="switch"
+                                                                           checked="checked" name="monitorDevice"
+                                                                           ng-model="monitorDeviceFlag">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label">Assigned
+                                                                    User</label>
+                                                                <div class="col-lg-9">
+                                                                    {{userFullName}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="clear: both;">
+                                                                <label class="col-lg-3 control-label">Default
+                                                                    Job</label>
+                                                                <div class="col-lg-9 input-group">
+                                                                    <input type="text" id="defaultJobId"
+                                                                           ng-model="defaultJobId" name="defaultJobId"
+                                                                           class="form-control"/>
+                                                                    <span title="Click to update Default Job"
+                                                                          class="input-group-addon pointer-link"
+                                                                          ng-click="updateDefaultJob()"><i
+                                                                            class="icon-floppy-disk position-left text-teal-300"></i></span>
+                                                                    <span ng-show="successMsgDefaultJob"
+                                                                          class="success_msg">{{successMsgDefaultJob1}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <img id="dataLoadingUpdate" class="loading loading-imgac"
+                                                         src="images/loading_new.gif"
+                                                         style="width:50px;height:50px;display: none;position: absolute;margin-left:48%;z-index: 1">
+                                                </div>
+
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h6 class="panel-title">
+                                                            <a class="collapsed" data-toggle="collapse">Admin
+                                                                Command</a>
+                                                        </h6>
+                                                    </div>
+                                                    <div id="collapsible-control-right-group2"
+                                                         class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <label class="col-lg-3 control-label">Command</label>
+                                                                <div class="col-lg-9">
+
+                                                                    <select id="commandId" class="form-control select"
+                                                                            name="commandId">
+                                                                        <option ng-repeat="(id,val) in adminCommands"
+                                                                                value="{{id}}">{{val}}
+                                                                        </option>
+                                                                    </select>
+                                                                    <img id="dataLoadingAC"
+                                                                         class="loading loading-imgac"
+                                                                         src="images/loading_new.gif"
+                                                                         style="width:30px;height:30px;display: none;position: absolute;top:12%">
+                                                                </div>
+
+                                                            </div>
+                                                            <br/>
+
+                                                            <br/>
+                                                            <div class="form-group " id="update_url"
+                                                                 style="display: none;">
+                                                                <label class="col-lg-3 control-label">Update URL</label>
+                                                                <div class="col-lg-9 input-group"
+                                                                     style="padding-left: 10px;padding-right: 10px;">
+                                                                    <input type="text" id="newWorkUrl"
+                                                                           ng-model="newWorkUrl" name="newWorkUrl"
+                                                                           class="form-control"><span
+                                                                        title="Click to update Url"
+                                                                        class="input-group-addon pointer-link"
+                                                                        ng-click="adminCommandUpdateUrl()"><i
+                                                                        class="icon-floppy-disk position-left text-teal-300"></i></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /device maps panel -->
 
 
-						</div>
-						</div></div>
-						</div>
-						<!-- /device maps panel -->
+    </div>
+
+</div>
+<!-- /main content -->
+
+<!-- /page content -->
 
 
+<!-- Footer -->
+<div ng-include="'app/views/footer/footer.html'"></div>
+<!-- /footer -->
 
+<!-- /footer -->
 
-
-					</div>
-
-				</div>
-			<!-- /main content -->
-
-		<!-- /page content -->
-
-
-		<!-- Footer -->
-		<div ng-include="'app/views/footer/footer.html'"></div>
-		<!-- /footer -->
-
-		<!-- /footer -->
-
-	<!-- /page container -->
+<!-- /page container -->
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		// w3IncludeHTML();		
+    $(document).ready(function () {
+        // w3IncludeHTML();
 
 
-		 $("#create_new_device_label").click(function() {
-		 	$(this).hide();
-		 	$("#device_list_label").show();
-		 	$("#device_edit_label").hide();
-		 	$("#create_device_body_div").show();
-		 	$("#edit_device_body_div").hide();
-		 	$("#device_table_list_div").hide();
-		 });
+        $("#create_new_device_label").click(function () {
+            $(this).hide();
+            $("#device_list_label").show();
+            $("#device_edit_label").hide();
+            $("#create_device_body_div").show();
+            $("#edit_device_body_div").hide();
+            $("#device_table_list_div").hide();
+        });
 
 
-		 $("#device_list_label").click(function() {
-		 	$(this).hide();
-		 	$("#create_new_device_label").show();
-		 	$("#device_edit_label").hide();
-		 	$("#create_device_body_div").hide();
-		 	$("#edit_device_body_div").hide();
-		 	$("#device_table_list_div").show();
-		 });
+        $("#device_list_label").click(function () {
+            $(this).hide();
+            $("#create_new_device_label").show();
+            $("#device_edit_label").hide();
+            $("#create_device_body_div").hide();
+            $("#edit_device_body_div").hide();
+            $("#device_table_list_div").show();
+        });
 
-		 $(".device_editor_link").click(function() {
-		 	$("#create_new_device_label").hide();
-		 	$("#device_list_label").hide();
-		 	$("#device_edit_label").show();
-		 	$("#create_device_body_div").hide();
-		 	$("#edit_device_body_div").show();
-		 	$("#device_table_list_div").hide();
-		 });
-		 
-		 
-		 $(".device_availability_link").click(function() {
-			 
-			 	$("#create_new_device_label").hide();
-			 	$("#device_list_label").hide();
-			 	$("#device_edit_label").show();
-			 	$("#create_device_body_div").hide();
-			 	$("#availability_device_body_div").show();
-			 	$("#device_table_list_div").hide();
-			 
-		 });
-		 
-		 $("#device_edit_label").click(function() {
-		 	$("#create_new_device_label").show();
-		 	$("#device_list_label").hide();
-		 	$("#device_edit_label").hide();
-		 	$("#create_device_body_div").hide();
-		 	$("#edit_device_body_div").hide();
-		 	$("#device_table_list_div").show();
-		 });
+        $(".device_editor_link").click(function () {
+            $("#create_new_device_label").hide();
+            $("#device_list_label").hide();
+            $("#device_edit_label").show();
+            $("#create_device_body_div").hide();
+            $("#edit_device_body_div").show();
+            $("#device_table_list_div").hide();
+        });
 
-		 $(".task_detailed_viewer").click(function() {
-			 	$("#test_plan_list_table tr").removeClass('bg-green-300');
-			 	$(this).closest('tr').addClass('bg-green-300');
 
-			 	// hide show the divs for schedule and reports on test plans
-			 	$(".display_test_plan_reports").fadeOut('slow');
-			 	$('.devices_and_scheduling_div').fadeOut('slow');
-			 	$(".display_test_plan_reports").fadeIn('slow');
-			 	$('.devices_and_scheduling_div').show('slow');
+        $(".device_availability_link").click(function () {
 
-			 });
+            $("#create_new_device_label").hide();
+            $("#device_list_label").hide();
+            $("#device_edit_label").show();
+            $("#create_device_body_div").hide();
+            $("#availability_device_body_div").show();
+            $("#device_table_list_div").hide();
 
-		  $('#daterange-timeAV').daterangepicker({
-			  startDate: moment().subtract('days', 1),
-	            endDate: moment(),
-		        timePicker: true,
-		        applyClass: 'bg-slate-600',
-		        cancelClass: 'btn-default',
-		        locale: {
-		        	 applyLabel: 'Show',
-		            format: 'MM/DD/YYYY h:mm a'
-		        }
-		    });
-	});
+        });
 
-	$(function() {
-	    // Initialize multiple switches
-	
+        $("#device_edit_label").click(function () {
+            $("#create_new_device_label").show();
+            $("#device_list_label").hide();
+            $("#device_edit_label").hide();
+            $("#create_device_body_div").hide();
+            $("#edit_device_body_div").hide();
+            $("#device_table_list_div").show();
+        });
 
-	    // Colored switches
-	   // var primary = document.querySelector('.switchery');
-	  //  var switchery = new Switchery(primary, { color: '#2196F3' });
+        $(".task_detailed_viewer").click(function () {
+            $("#test_plan_list_table tr").removeClass('bg-green-300');
+            $(this).closest('tr').addClass('bg-green-300');
 
-	   
-	    
-		   $(".switch").bootstrapSwitch();
+            // hide show the divs for schedule and reports on test plans
+            $(".display_test_plan_reports").fadeOut('slow');
+            $('.devices_and_scheduling_div').fadeOut('slow');
+            $(".display_test_plan_reports").fadeIn('slow');
+            $('.devices_and_scheduling_div').show('slow');
 
-	});
+        });
+
+        $('#daterange-timeAV').daterangepicker({
+            startDate: moment().subtract('days', 1),
+            endDate: moment(),
+            timePicker: true,
+            applyClass: 'bg-slate-600',
+            cancelClass: 'btn-default',
+            locale: {
+                applyLabel: 'Show',
+                format: 'MM/DD/YYYY h:mm a'
+            }
+        });
+    });
+
+    $(function () {
+        // Initialize multiple switches
+
+
+        // Colored switches
+        // var primary = document.querySelector('.switchery');
+        //  var switchery = new Switchery(primary, { color: '#2196F3' });
+
+
+        $(".switch").bootstrapSwitch();
+
+    });
 
 
 </script>
