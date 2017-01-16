@@ -8,14 +8,17 @@ select {
 #headd {
 	text-align: center;
 }
-.grid1484207901843 .ui-grid-render-container-body .ui-grid-viewport{
-width:100% !important;}
+.grid1484207901843 .ui-grid-render-container-body .ui-grid-viewport {
+	width:100% !important;
+}
 
 #webETLSchedulerMappingGrid {
 	overflow-y: scroll;
     overflow-x: hidden;
 }
-.mrg > div:nth-child(even){ position:relative; left:25%;}
+.mrg > div:nth-child(even) {
+	position:relative; left:25%;
+}
 @media screen and (max-width: 1300px) {
 	.mrg > div:nth-child(even){ position:relative; left:15%;}
 	.mrg > div:nth-child(odd){ position:relative; left:15%;}
@@ -29,19 +32,35 @@ width:100% !important;}
 	.mrg > div:nth-child(odd){ position:relative; left:0%;}
 	
 }
-.col-md-3 {width:15%;}
-.ui-grid-cell-contents{
-text-align:center;}
-@media screen and (max-width: 500px) {
-	
-/* 	.col-xs-6{width:100%; margin:0 auto;} */
+.col-md-3 {
+	width:15%;
+	}
+.ui-grid-cell-contents {
+	text-align:center;
 }
-/* .mrg > div:nth-child(even) .mrg1 > div:nth-child(odd) {padding-right:5%; color:gray;} */
+
+#blankclassBeginDiv  {
+	position: absolute;
+	z-index:1 ;
+	/* display:none; */
+}
+#blankclassEndDiv  {
+	position: absolute;
+	z-index:1 ;
+	/* display:none; */
+}
+#blankclassscheduleDateDiv  {
+	position: absolute;
+	z-index:1 ;
+	/* display:none; */
+}
+
+
+
+
 </style>
 <script>
-	$('#demo').datetimepicker({
-	
-	});
+
 </script>
 <div ng-include="'app/views/header/header.html'"></div>
 <div ng-include="'app/views/menus/menu.html'"></div>
@@ -62,26 +81,29 @@ text-align:center;}
 				<div ng-if="obj.paramType == 'date'" >
 		        	<div class="col-md-3 col-sm-3 col-xs-3 pd"><span>{{obj.paramName}}</span></div>
 		        	<div class="col-md-9 col-sm-9 col-xs-9 date pd">
-		        	<!--
-		        	<span id="demo"></span>
-		        	 <div id="demo1-1"></div>
-		        	
-		        	<input style="width:172px; height: 27px; border-radius:0px;" id="{{$index}}" name="{{obj.paramName}}" >
-		        	 -->
-		        	<input type="text" style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}"
-		        		class="blankclass form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
-						datetime-picker date-format="yyyy-MM-dd HH:mm" required></div>
-				 </div>
+			        	<div ng-if="obj.paramName == 'beginDate'" >
+			        		<input type="text" style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}"
+			        			class="blankclassBegin" ng-click="callBeginCalender()" >
+			        			<div id="blankclassBeginDiv" ></div>
+			        	</div>
+			        	<div ng-if="obj.paramName == 'endDate'" >
+							<input type="text" style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}"
+			        			class="blankclassend" ng-click="callEndCalender()" >
+			        		<div id="blankclassEndDiv" ></div>
+			        	</div>
+					</div>
+						
+				</div>
 			</div>
-			
+			</div>
+
 		</div>
 		<center>
 		<div class="input-group date col-md-12 text-center">
 			
 				<div style="display: inline-block; border: 1px solid #ccc; padding: 10px; margin:30px 0 10px 0;width:371px"><span style="padding-right: 10%;">Schedule Date and Time </span>
-				<input id="scheduleDate" style="width:172px; height: 27px;" name="scheduleDate"
-				 ng-model="scheduleDate" max-date="dtmax" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched pull-right"
-					datetime-picker date-format="yyyy-MM-dd HH:mm" required>
+				<input id="scheduleDate" style="width:172px; height: 27px;" name="scheduleDate" ng-model="scheduleDate" class="sche" ng-click="callscheduleDateCalender()">
+					<div id="blankclassscheduleDateDiv"></div>
 				</div>
 		</div>
 		</center>

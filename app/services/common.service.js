@@ -1790,6 +1790,7 @@ oTech.service('AppServices',
 				    error: function (err)
 				    {
 						deferred.reject(err);
+						console.log(err);
 				    }
 			    });	
 			return deferred.promise; 
@@ -1813,6 +1814,7 @@ oTech.service('AppServices',
 				    error: function (err)
 				    {
 						deferred.reject(err);
+						console.log(err);
 				    }
 			    });	
 			return deferred.promise; 
@@ -1834,6 +1836,7 @@ oTech.service('AppServices',
 				    error: function (err)
 				    {
 						deferred.reject(err);
+						console.log(err);
 				    }
 			    });	
 			return deferred.promise; 
@@ -1855,6 +1858,7 @@ oTech.service('AppServices',
 				    error: function (err)
 				    {
 						deferred.reject(err);
+						console.log(err);
 				    }
 			    });	
 			return deferred.promise; 

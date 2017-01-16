@@ -43,6 +43,73 @@ oTech.controller('TestController',
 			alert("error");
 		}
 	);
+     
+     $scope.callBeginCalender = function(){
+    	 $('#blankclassBeginDiv').fadeToggle();
+    	 $('#blankclassBeginDiv').datetimepicker({
+    		 date: new Date(),
+    		 viewMode: 'YMDHMS',
+    		 onDateUpdate: function(){
+    			 console.log("yoyo"  + this);
+    			 ($('.blankclassBegin')[0]).value = this.getText();
+    		 },
+    		 onOk: function() {
+    			 $('#blankclassBeginDiv').fadeToggle();
+    		 },
+    		 onToday: function() {
+    			 $('#blankclassBeginDiv').fadeToggle();
+    		 }
+    		 
+		});
+     }
+     $scope.callEndCalender = function(){
+    	 $('#blankclassEndDiv').fadeToggle();
+    	 $('#blankclassEndDiv').datetimepicker({
+    		 date: new Date(),
+    		 viewMode: 'YMDHMS',
+    		 onDateUpdate: function(){
+    			 console.log("yoyo"  + this);
+    			 ($('.blankclassend')[0]).value = this.getText();
+    		 },
+    		 onOk: function() {
+    			 $('#blankclassEndDiv').fadeToggle();
+    		 },
+    		 onToday: function() {
+    			 $('#blankclassEndDiv').fadeToggle();
+    		 }
+		});
+     }
+     
+     $scope.callscheduleDateCalender = function(){
+    	 $('#blankclassscheduleDateDiv').fadeToggle();
+    	 $('#blankclassscheduleDateDiv').datetimepicker({
+			date: new Date(),
+			viewMode: 'YMDHMS',
+			onDateUpdate: function(){
+            console.log("yoyo"  + this);
+            ($('#scheduleDate')[0]).value = this.getText();
+			},
+			onOk: function() {
+				$('#blankclassscheduleDateDiv').fadeToggle();
+			},
+	   		 onToday: function() {
+				 $('#blankclassscheduleDateDiv').fadeToggle();
+			 }
+		});
+     }
+    /*$(document).on("click",function(event){
+    	 if( $(event.target).closest("#blankclassBeginDiv").length != 1) {
+ 	    	$('#blankclassBeginDiv').fadeToggle();
+ 	    }
+    	if( $(event.target).closest("#blankclassEndDiv").length != 1){
+ 	    	$('#blankclassEndDiv').fadeToggle();
+ 	    }
+    	if( $(event.target).closest("#blankclassscheduleDateDiv").length != 1){
+    		$('#blankclassscheduleDateDiv').fadeToggle();
+ 	    }
+    });*/
+     
+     
      $("#submitbtn").on('click', function(){
     	 $("#dataLoadingUpdate").show();
     	 jsonObj = {};
@@ -80,6 +147,11 @@ oTech.controller('TestController',
     		 }
     		 data.commandParamString[i].param_name = $("#" + i).attr("name");
     		 data.commandParamString[i].param_abbreviation = m[$("#" + i).attr("name")].paramAbbreviation;
+    		 
+    		 if(("beginDate" === $("#" + i).attr("name")) ||  ("endDate" === $("#" + i).attr("name"))){
+    			 data.commandParamString[i].param_values = $("#" + i).val().replace("/", "-").replace("/", "-");
+    			 continue;
+    		 }
     		 data.commandParamString[i].param_values = $("#" + i).val();
     	}
     	
@@ -94,12 +166,16 @@ oTech.controller('TestController',
     		$("#dataLoadingUpdate").hide();
     		return false;
     	}
+    	data.scheduledTime = data.scheduledTime.replace("/", "-").replace("/", "-");
         var json = JSON.stringify(data);
         promise = AppServices.postWebETLSchedulerData(json, token, userId);
         promise.then(
         	function(data) {
         		$("#dataLoadingUpdate").hide();
-        		alert("Successfully scheduled");
+        		if(data.status != 'success')
+         			alert("Some error occured");
+        		else
+        			alert("Successfully scheduled");
         		$scope.webETLSchedulerMappingGrid.data = [];
         		promise = AppServices.getWebETLSchedulerMapping();
         	     promise.then(
