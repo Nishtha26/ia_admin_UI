@@ -1865,6 +1865,35 @@ quickrunGridOptions : {
 					 }}
 		]
 	},
+	webETLSchedulerMappingGrid : {
+		enableSorting: false,
+	    enableFilter: false,
+	    enableColResize: false,
+		enableRowSelection: false,  // for selection
+		enableColumnMenus: false, //to hide ascending and descending colomn menu names
+		enableRowHeaderSelection: false, // this is for check box to appear on grid options
+		enableFiltering: false,			// for searching
+		enableGridMenu: false,		
+		multiSelect:false,
+		enableVerticalScrollbar :0,
+		
+		columnDefs: [
+			{displayName: 'Begin-Date', field: 'beginDate' },
+			{displayName: 'End-Date', field: 'endDate' },
+			{displayName: 'Schedule Date Time', field: 'scheduleDateTime'},
+			{displayName: 'Current Status', field: 'currentStatus', enableCellEdit: false,  cellTemplate: '<div class="ui-grid-cell-contents">'+
+				  '<span ng-if="row.entity.currentStatus ==  \'OPEN\'"><span class="label label-default">OPEN</span></span>'+
+				  '<span ng-if="row.entity.currentStatus ==  \'RUNNING\'"><span class="label label-primary">RUNNING</span></span>'+
+				  '<span ng-if="row.entity.currentStatus ==  \'FINISHED\'"><span class="label label-success">FINISHED</span></span>'+
+				  '<span ng-if="row.entity.currentStatus ==  \'FORCEFULLY STOPPED\'"><span class="label label-warning">FORCEFULLY STOPPED</span></span>'+
+				  '<span ng-if="row.entity.currentStatus ==  \'ABRUPTLY STOPPED\'"><span class="label label-danger">ABRUPTLY STOPPED</span></span>'+
+				  '</span></div>'}
+			,{displayName: 'Action', field: 'stat', cellTemplate: '<div class="ui-grid-cell-contents">'+
+				  '<div ng-if="row.entity.currentStatus == \'RUNNING\'"><button type="button" style="padding:1px 12px" class="stopbtn btn btn-danger" ng-click="grid.appScope.stopETL()">Stop ETL</button></div>' + 
+				  '<div ng-if="row.entity.currentStatus != \'RUNNING\'">----</div></div>'
+			},
+		]
+	},
 	loadingImageName : 'images/loading_new.gif',
 	menuData : null
 }
