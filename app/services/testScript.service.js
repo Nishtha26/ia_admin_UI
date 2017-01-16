@@ -966,6 +966,29 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+		
+ // edit test plan name 
+        
+        service.updateTestPlanTestRunName = function( token ,selectedTestPlanId, testPlanName){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/testPlan/updateTestPlanTestRunName",
+				    type: "POST",
+					data : {token:token , testPlanId:selectedTestPlanId,testPlanName:testPlanName},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
 
         return service;
     }])
