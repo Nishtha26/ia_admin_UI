@@ -1628,6 +1628,7 @@ oTech.controller('testPlanTestRunAdministration',
 	    		}
 	    		var jName;
 	    		if(v === "Scheduleone"){
+	    			$scope.dataProcessingOfAllTestRuns = true;
 	        		devs = Devices;
 	        		jName = $scope.jobName;
 	    		}
@@ -1666,19 +1667,40 @@ oTech.controller('testPlanTestRunAdministration',
 	                function (data) {
 	                    console.log(JSON.stringify(data));
 
-	                    if (data.status == "error") {
-	                    	$scope.waitMsgForSchedule1 = false;
-	                        $rootScope.errorMsgForScheduleModel = data.errorDescription;
-	                        $scope.errorMsgForSchedule = true;
-	                       
-	                        $timeout(function () {
-	                        	$scope.errorMsgForSchedule = false;
-	                        }, 3000);
-	                        $scope.dataProcessing = false;
+	                    if (data.status == "error") {	                    	
+	                    	if(v === "Scheduleone"){
+	                    		$scope.dataProcessingOfAllTestRuns = false;
+								$scope.scheduleError_msg = true;
+								$rootScope.msg3 = "";
+		                        $rootScope.msg3 = "Some error occured";
+		                        $timeout(function () {
+		                        	$scope.scheduleError_msg = false;
+		                        }, 3000);
+	                    	}
+	                    	else {
+		                    	$scope.waitMsgForSchedule1 = false;
+		                        $rootScope.errorMsgForScheduleModel = data.errorDescription;
+		                        $scope.errorMsgForSchedule = true;
+		                        $timeout(function () {
+		                        	$scope.errorMsgForSchedule = false;
+		                        }, 3000);
+		                        $scope.dataProcessing = false;
+	                    	}
 	                        $(".schedule").removeAttr("disabled");
 	                    }
 
 	                    if (data.status == "success") {
+	                    	if(v === "Scheduleone"){
+	                    		$scope.dataProcessingOfAllTestRuns = false;
+								$scope.scheduleMsg1 = true;
+								$rootScope.msg2 = "";
+		                        $rootScope.msg2 = "Test Run has been Scheduled Successfully";
+		                        $timeout(function () {
+		                        	$scope.scheduleMsg1 = false;
+		                        }, 3000);
+	                    	}
+	                    	else
+	                    		{
 	                    	$scope.waitMsgForSchedule1 = false;
 	                    	$scope.successMsgForSchedule = true;
 	                        $rootScope.successMsgForScheduleModel = "Test Run has been Scheduled Successfully";
@@ -1687,7 +1709,7 @@ oTech.controller('testPlanTestRunAdministration',
                             	$scope.mainTab = 3;
                             	 $('html, body').animate({scrollTop: '+=1080px'}, 800);
                             }, 3000);
-
+	                    		}
 	                    }
 
 	                },

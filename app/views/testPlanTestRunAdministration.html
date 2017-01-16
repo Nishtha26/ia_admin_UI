@@ -238,6 +238,9 @@ margin-top : 7px;
 #jobStatusList .ui-grid-pager-panel{
 top : 100%;
 }
+.runbtn {
+padding: 2px 6px;
+}
 	
 
 </style>
@@ -869,8 +872,10 @@ top : 100%;
 												<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
 										 			<input type="type" class="" ng-change="singleFilterForTestRunMappedDevice()" ng-model="searchTextForTestRunMappedDevice" placeholder="Type to filter..." ></label>
 										 			<span  class="error_msg"  ng-show ="errorMsgForDevice">{{msg}}</span>
+										 			<span  class="scheduleError_msg"  ng-show ="errorMsgForDevice">{{msg3}}</span>
 										 			<span ng-show ="successMsg" class="success_msg">{{msg1}}</span>
-										 			
+										 			<span ng-show ="scheduleMsg1" class="success_msg">{{msg2}}</span>
+
 										 			</div>
 									 			</div>
 						 			 <div id="testRunMappedDevices" ui-grid="testRunMappedDevices" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid"  >
@@ -882,7 +887,7 @@ top : 100%;
 
 
 									<div class="col-md-12" style="margin-top: 20px; ">
-									<div id="scheduleparam"  class="row pull-left" style="display: none; width:60%;">
+									<div id="scheduleparam"  class="row pull-left" style="display: none; width:50%;">
 												<div class="col-lg-12  col-md-12"  style="padding-left: 0px;">
 													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
 														<div class="input-group"><span class="input-group-addon"><i class="icon-calendar22"></i></span>
@@ -898,20 +903,20 @@ top : 100%;
 														</div>															
 													</div>
 													<div class="col-lg-4  col-md-4" style="padding-left: 0px;">
-														<select class="form-control input_width" id="sel2" style="background-color: #FFFFFF; " ng-model="recurrence" ng-change="change()" name="recurrence" required>
+														<select class="form-control input_width" id="sel2" style="background-color: #FFFFFF;width: 80px; " ng-model="recurrence" ng-change="change()" name="recurrence" required>
 															<option value="None">None</option>
 															<option value="Daily">Daily</option>
 														</select>
 													</div>
 												</div>
 											</div>
-										<div class="row pull-right" style="margin-top: -5px;">
-											<span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span>
+										<div class="row pull-right" style="margin-top: -2px;">
+											<!-- <span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span> -->
 											<ul class="icons-list">
-												<li><button id="Scheduleone" class="btn btn-success btn-xs" type="button" ng-click="schedule($event)">Schedule</button></li>
-												<li><button class="btn btn-success btn-xs" type="button" ng-click="startJob()">Run it now</button></li>
-												<li><button class="btn btn-success btn-xs" type="button" ng-click="stopJob()">Stop</button></li>
-												<li><button class="btn btn-success btn-xs" type="button" ng-click="reStartJob()">Re-Start</button></li>
+												<li><button id="Scheduleone" class="btn btn-success btn-xs runbtn" type="button" ng-click="schedule($event)">Schedule</button></li>
+												<li><button class="btn btn-success btn-xs runbtn" type="button" ng-click="startJob()">Run it now</button></li>
+												<li><button class="btn btn-success btn-xs runbtn" type="button" ng-click="stopJob()">Stop</button></li>
+												<li><button class="btn btn-success btn-xs runbtn" type="button" ng-click="reStartJob()">Re-Start</button></li>
 											</ul>
 										</div>
 										

@@ -8,50 +8,96 @@ select {
 #headd {
 	text-align: center;
 }
+.grid1484207901843 .ui-grid-render-container-body .ui-grid-viewport{
+width:100% !important;}
 
-
-
+#webETLSchedulerMappingGrid {
+	overflow-y: scroll;
+    overflow-x: hidden;
+}
+.mrg > div:nth-child(even){ position:relative; left:25%;}
+@media screen and (max-width: 1300px) {
+	.mrg > div:nth-child(even){ position:relative; left:15%;}
+	.mrg > div:nth-child(odd){ position:relative; left:15%;}
+}
+@media screen and (max-width: 1030px) {
+	.mrg > div:nth-child(even){ position:relative; left:2%;}
+	.mrg > div:nth-child(odd){ position:relative; left:2%;}
+}
+@media screen and (max-width: 1030px) {
+	.mrg > div:nth-child(even){ position:relative; left:0%;}
+	.mrg > div:nth-child(odd){ position:relative; left:0%;}
+	
+}
+.col-md-3 {width:15%;}
+.ui-grid-cell-contents{
+text-align:center;}
+@media screen and (max-width: 500px) {
+	
+/* 	.col-xs-6{width:100%; margin:0 auto;} */
+}
+/* .mrg > div:nth-child(even) .mrg1 > div:nth-child(odd) {padding-right:5%; color:gray;} */
 </style>
+<script>
+	$('#demo').datetimepicker({
+	
+	});
+</script>
 <div ng-include="'app/views/header/header.html'"></div>
-	<!-- /header  -->
-	<!-- menu -->
-	<div ng-include="'app/views/menus/menu.html'"></div>
-	<!-- /menu -->
-<div class="maincontainer main-cont-height" style="font-family: Source Sans Pro, sans-serif !important; background-color: #f5f7fa; overflow: hidden;">
-	<div class="maincontent">
-	<h1 id="headd">Select ETL Parameters</h1>
-		<div class="container-fluid col-md-12" style="margin:1% 15%;">
-			<div ng-repeat="obj in etlParameterList track by $index" class="col-md-6">
-				<div ng-if="obj.paramType == 'drop_down'" >
-					<div class="col-md-2 pd" style="padding-left:5%;" ><span>{{obj.paramName}}</span></div>
-					<div class="col-md-10 pd">
+<div ng-include="'app/views/menus/menu.html'"></div>
+<div class="page-container ng-scope">
+<div class="page-content">
+<div class="content-wrapper">
+<div class="row">
+		
+<div class=" col-md-12 mrg" >
+		<h1 id="headd">Select ETL Parameters</h1>
+			<div ng-repeat="obj in etlParameterList track by $index" class="col-md-6 col-sm-6 col-xs-12">
+				<div ng-if="obj.paramType == 'drop_down'">
+					<div class="col-md-3 col-sm-3 col-xs-3 pd" ><span>{{obj.paramName}}</span></div>
+					<div class="col-md-9 col-sm-9 col-xs-9 pd">
 						<select name="{{obj.paramName}}" id="{{$index}}" style="width:172px; height: 27px;"><option ng-repeat="option in obj.paramValues" value="{{option}}">{{option}}</option></select>
 					</div>
 				</div>
 				<div ng-if="obj.paramType == 'date'" >
-		        	<div class="col-md-2 pd" style="padding-left:5%;"><span>{{obj.paramName}}</span></div>
-		        	<div class="col-md-10 date pd"><input style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+		        	<div class="col-md-3 col-sm-3 col-xs-3 pd"><span>{{obj.paramName}}</span></div>
+		        	<div class="col-md-9 col-sm-9 col-xs-9 date pd">
+		        	<!--
+		        	<span id="demo"></span>
+		        	 <div id="demo1-1"></div>
+		        	
+		        	<input style="width:172px; height: 27px; border-radius:0px;" id="{{$index}}" name="{{obj.paramName}}" >
+		        	 -->
+		        	<input type="text" style="width:172px; height: 27px; border-radius:0px;" ng-model="cmks" id="{{$index}}" name="{{obj.paramName}}"
+		        		class="blankclass form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
 						datetime-picker date-format="yyyy-MM-dd HH:mm" required></div>
 				 </div>
 			</div>
 			
 		</div>
-			<div class="input-group date col-md-12 text-center">
-				<div style="display: inline-block; border: 1px solid #ccc; padding: 10px; margin-bottom:10px;width:371px"><span style="padding-right: 10%;">Schedule Date and Time </span>
+		<center>
+		<div class="input-group date col-md-12 text-center">
+			
+				<div style="display: inline-block; border: 1px solid #ccc; padding: 10px; margin:30px 0 10px 0;width:371px"><span style="padding-right: 10%;">Schedule Date and Time </span>
 				<input id="scheduleDate" style="width:172px; height: 27px;" name="scheduleDate"
 				 ng-model="scheduleDate" max-date="dtmax" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched pull-right"
 					datetime-picker date-format="yyyy-MM-dd HH:mm" required>
 				</div>
-			</div>
+		</div>
+		</center>
 		<img id="dataLoadingUpdate" class="loading loading-imgac" src="images/loading_new.gif"
 				style = "width:50px;height:50px;display:none;position: absolute;margin-left:48%;z-index: 1"></img>
-		<div class="col-md-12 text-center" ><button id="submitbtn" class="btn btn-primary">Submit</button></div>
-		
+		<div class="col-md-12 text-center" style="margin-bottom:20px;"><button id="submitbtn" class="btn btn-primary">Submit</button></div>
+		<br><br>
+		<center>
+			<div id="webETLSchedulerMappingGrid" ui-grid="webETLSchedulerMappingGrid" 
+					 style="width:80%;text-align: center;" class="table table-hover grid"  >
+			</div>
+		</center>
 	</div>
 </div>
-<div ng-include="'app/views/footer/footer.html'"></div>
+</div>
 
-<!-- {{obj.paramAbbreviation}}
-				{{obj.paramValues}}
-				{{obj.paramDataType}}
-				{{obj.paramType}} -->
+</div>
+
+<div ng-include="'app/views/footer/footer.html'"></div>
