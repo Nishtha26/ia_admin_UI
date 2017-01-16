@@ -1,5 +1,5 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, uiGridConstants, $cookieStore,$filter,$templateCache) {
+    function ($scope, $rootScope,$timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore,$filter,$templateCache) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
@@ -81,7 +81,8 @@ oTech.controller('testPlanTestRunAdministration',
 				enableSorting: true,
 			    enableFilter: true,
 			    enableColResize: true,
-				enableRowSelection: false,  // for selection
+				enableRowSelection: false,
+				enableCellEdit: false,// for selection
 				enableColumnMenus: false, //to hide ascending and descending column menu names
 				enableRowHeaderSelection: false, // this is for check box to appear on grid options
 				enableFiltering: false,
@@ -91,18 +92,18 @@ oTech.controller('testPlanTestRunAdministration',
 				enableHorizontalScrollbar : 0,
 				enableVerticalScrollbar : 0,
           columnDefs: [
-                         {name:'Id',field: 'testplanId', width: '10%'},
-                         {name:'Name',field: 'testplanName',width: '25%', cellTooltip: 
+                         {name:'Id',field: 'testplanId', enableCellEdit: false , width: '10%'},
+                         {name:'Name',field: 'testplanName',width: '25%', enableCellEdit: true ,enableCellEditOnFocus: true, cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.testplanName + '';
                            }},
-                         {name:'Use Case',field: 'useCaseName', width: '20%', cellTooltip: 
+                         {name:'Use Case',field: 'useCaseName', enableCellEdit: false , width: '20%', cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.useCaseName + '';
                            }},
-                     	{name:'Created Date',field: 'createdDate', width: '20%'},
-         				{name:'Created By',field: 'createdByName', width: '10%'},
-         				{name:'Actions', enableRowSelection: false,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',cellClass: 'ui-grid-cell-button',
+                     	{name:'Created Date',field: 'createdDate', enableCellEdit: false , width: '20%'},
+         				{name:'Created By',field: 'createdByName', enableCellEdit: false , width: '10%'},
+         				{name:'Actions', enableRowSelection: false, enableCellEdit: false ,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '10%',cellClass: 'ui-grid-cell-button',
          					enableColumnMenu: false, enableSorting: false,cellTemplate:
          	         '<ul class="icons-list">'+
          				'<li class="dropdown">'+
@@ -120,8 +121,50 @@ oTech.controller('testPlanTestRunAdministration',
          		'</li>'+
          	'</ul>'},
          			
-                     ]
+                     ],
+                     
         };
+		
+		 $scope.TestPlanOptions.onRegisterApi = function(gridApi){
+	            //set gridApi on scope
+	            $scope.gridApi = gridApi;
+	            gridApi.edit.on.afterCellEdit($scope, $scope.saveRow,this);
+	        };
+	        $scope.saveRow = function( rowEntity ) {
+	        	$scope.dataProcessingTestPlan = true;
+	        	promise = testScriptService.updateTestPlanTestRunName(token, rowEntity.testplanId, rowEntity.testplanName);
+	            promise.then(
+	                function (data) {
+						if(data.status=="success"){
+							$scope.dataProcessingTestPlan = false;
+							$scope.testPlanName = true;
+	                        $rootScope.testPlanNameMsg = "Successfully updated!!!";
+	                        $timeout(function () {
+                            	$scope.testPlanName = false;
+                            }, 3000);
+						}
+						else{
+							$scope.dataProcessingTestPlan = false;
+							$scope.errorMsg = true;
+	                        $rootScope.Message = "Error Occured!!!";
+	                        $timeout(function () {
+                            	$scope.errorMsg = false;
+                            }, 3000);
+						}
+				//		$scope.deviceAdminData();
+					},
+	                function (err) {
+						$scope.dataProcessingTestPlan = false;
+						$scope.errorMsg = true;
+                        $rootScope.Message = "Error Occured!!!";
+                        $timeout(function () {
+                        	$scope.errorMsg = false;
+                        }, 3000);
+	                }
+	            );
+	          }; 
+		
+		
 		
 		
 		
