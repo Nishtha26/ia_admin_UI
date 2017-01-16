@@ -233,7 +233,7 @@ oTech.controller('testPlanTestRunAdministration',
 		           var gridHeight=0;
 		           var dataCount=$scope.TestPlanOptions.data.length;
 		           gridHeight=($scope.TestPlanOptions.data.length * rowHeight + headerHeight+footerPage);
-		           $(".ui-grid-viewport").css("height",gridHeight-headerHeight);
+		           //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
 		           //$(".")
 		           return {
 		              height:  gridHeight + "px"
