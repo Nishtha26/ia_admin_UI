@@ -378,6 +378,7 @@ padding: 2px 6px;
 									<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
 							 			<input type="type" class="" ng-change="singleFilter()" ng-model="searchText" placeholder="Type to filter..." ></label>
 							 			<span class="error_msg" ng-show ="errorMsg" >{{Message}}</span>
+							 			<span ng-show ="testPlanName" class="success_msg">{{testPlanNameMsg}}</span>
 							 			</div>
 							 			<!-- 
 										 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
@@ -390,7 +391,7 @@ padding: 2px 6px;
 										  </div>
 										  -->
 						 			 </div>
-						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid">
+						 			 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()" class="table table-hover grid">
 						 			 <img class="loading loaderandwait" src="images/please_wait.gif"  ng-show="dataProcessingTestPlan"></img>
 						 			 </div>
 						 			 <div class="row">
