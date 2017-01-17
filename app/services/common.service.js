@@ -1774,6 +1774,27 @@ oTech.service('AppServices',
 			return deferred.promise; 
 		}
 		
+		service.deviceInfo = function( token ,selectDeviceId, deviceName, deviceIMIE, deviceMSISDN){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/devices/deviceInfo",
+				    type: "POST",
+					data : {token:token , deviceId:selectDeviceId, deviceName:deviceName, deviceIMIE:deviceIMIE, deviceMSISDN:deviceMSISDN},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
+		
 		service.getWebETLSchedulerData = function(){
 			var deferred = $q.defer();
 			$.ajax({
