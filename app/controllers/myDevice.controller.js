@@ -162,29 +162,45 @@ oTech.controller('MyDevicesController',
 							  $scope.dataLoadingAvailability=false;
 							  $scope.dataLoadingReplayMap=false;
    $scope.myDevicesGridOptions = oApp.config.myDevicesGridOptions;
-	$scope.myDevicesGridOptions.onRegisterApi = function( gridApi ) { //extra code
-	 $scope.gridApi = gridApi;
-	 //$scope.gridApi.noUnselect = true;
-	//   $scope.gridApi.selection.clearSelectedRows();
-	  $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
-	    console.log(row);
-	    }); 
-	  gridApi.rowEdit.on.saveRow($scope, function (rowEntity) {
-          // create a fake promise - normally you'd use the promise returned by $http or $resource
-          //Get all selected rows
-          var selectedRows = $scope.text.selection.getSelectedRows();
-          //var rowCol = $scope.gridApi.cellNav.getFocusedCell().col.colDef.name;
-          var promise = $q.defer();
-          $scope.text.rowEdit.setSavePromise(rowEntity, promise.promise);
-       /*   $interval(function () {
-              if (rowEntity.gender === 'male') {
-                  promise.reject();
-              } else {
-                  promise.resolve();
-              }
-          }, 3000, 1);*/
-      })
+    $scope.myDevicesGridOptions.onRegisterApi = function(gridApi){
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.edit.on.afterCellEdit($scope, $scope.saveRow,this);
     };
+    $scope.saveRow = function( rowEntity ) {
+    	$scope.dataLoading = true;
+    	
+    	promise = AppServices.deviceInfo(token, rowEntity.deviceId, rowEntity.deviceName, rowEntity.imei, rowEntity.msisdn);
+        promise.then(
+            function (data) {
+				if(data.status=="success"){
+					$scope.dataLoading = false;
+					$scope.deviceInfo = true;
+                    $rootScope.deviceInfoMsg = "Successfully updated!!!";
+                    $timeout(function () {
+                    	$scope.deviceInfo = false;
+                    }, 3000);
+				}
+				else{
+					$scope.dataLoading = false;
+					$scope.errorMsg = true;
+                    $rootScope.Message = "Error Occured!!!";
+                    $timeout(function () {
+                    	$scope.errorMsg = false;
+                    }, 3000);
+				}
+		//		$scope.deviceAdminData();
+			},
+            function (err) {
+				$scope.dataLoading = false;
+				$scope.errorMsg = true;
+                $rootScope.Message = "Error Occured!!!";
+                $timeout(function () {
+                	$scope.errorMsg = false;
+                }, 3000);
+            }
+        );
+      }; 
    
 		$scope.showDeviceList = function(){
 			$scope.dataLoading = true;
