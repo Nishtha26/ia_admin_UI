@@ -848,6 +848,8 @@ padding: 2px 6px;
 										<div class="datatable-header" ng-show ="hideFilter"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
 							 			<input type="type" class="" ng-change="singleFilterForTestRuns()" ng-model="searchTextForTestRuns" placeholder="Type to filter..." ></label>
 							 			<span class="error_msg" ng-show ="errorMsg" >Please Select Test Run.. </span>
+							 			<span ng-show ="deleteMsg" class="success_msg">{{testPlanDeleteMsgSucc}}</span>
+							 			<span class="error_msg" ng-show ="deleteMsgerr" >{{testPlanDeleteMsgFel}}</span>
 							 			</div>
 						 			 </div>
 						 			 
@@ -860,6 +862,15 @@ padding: 2px 6px;
 						 			 <div id="allTestRuns" ui-grid="allTestRuns" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden;height: 450px;" >
 						 			 </div>
 						 			  
+						 			  <div class="col-md-12" style="margin-top: 20px; ">
+						 			  <div class="row pull-right" style="margin-top: -2px;">
+											<!-- <span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span> -->
+											<ul class="icons-list">
+												<li><button class="btn btn-success btn-xs runbtn" ng-show ="deleteTestRun" type="button" ng-click="deActivateTestRun()">Delete Test Run</button></li>
+											</ul>
+										</div>
+										
+									</div>
 									<!-- /test runs ui grid -->
 										</div>
 										<!-- /Test runs list -->
