@@ -1,430 +1,431 @@
-var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView',	'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree','ngMessages']).filter('oTech', function () {});
+var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
+});
 
 
 oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $q, $location) {
 
-        $urlRouterProvider
+    $urlRouterProvider
 
-        $stateProvider
-                .state("login", {
-                    url: "/login",
-                    templateUrl: "app/views/login.html",
-                    controller: 'LoginController'
-                })
-                .state("dashboard", {
-                    url: "/dashboard",
-                    templateUrl: "app/views/dashboard.html",
-                    controller: 'DashBoardController'
-                })
-                .state("changePassword", {
-                    url: "/dashboard/changePassword",
-                    templateUrl: "app/views/changePassword.html",
-                    controller: 'changePasswordController'
-                })
-                .state("deviceAvailability", {
-                    url: "/dashboard/deviceAvailability",
-                    templateUrl: "app/views/deviceAvailability.html",
-                    controller: 'deviceAvailabilityController'
-                })
+    $stateProvider
+        .state("login", {
+            url: "/login",
+            templateUrl: "app/views/login.html",
+            controller: 'LoginController'
+        })
+        .state("dashboard", {
+            url: "/dashboard",
+            templateUrl: "app/views/dashboard.html",
+            controller: 'DashBoardController'
+        })
+        .state("changePassword", {
+            url: "/dashboard/changePassword",
+            templateUrl: "app/views/changePassword.html",
+            controller: 'changePasswordController'
+        })
+        .state("deviceAvailability", {
+            url: "/dashboard/deviceAvailability",
+            templateUrl: "app/views/deviceAvailability.html",
+            controller: 'deviceAvailabilityController'
+        })
 
-                .state("deviceMaps", {
-                    url: "/dashboard/deviceMaps",
-                    templateUrl: "app/views/deviceMaps.html",
-                    controller: 'deviceMapsController'
-                })
-                .state("userTable", {
-                    url: "/dashboard/userTable",
-                    templateUrl: "app/views/userTable.html",
-                    controller: 'userTableController'
-                })
-                .state("UserGroups", {
-                    url: "/dashboard/UserGroups",
-                    templateUrl: "app/views/userGroups.html",
-                    controller: 'UserGroupsController'
-                })
-                .state("adminstrator", {
-                    url: "/dashboard/administrator",
-                    templateUrl: "app/views/adminstrator.html",
-                    controller: 'AdminstartorController'
-                })
-                .state("serversetting", {
-                    url: "/dashboard/serverSetting",
-                    templateUrl: "app/views/serverSetting.html",
-                    controller: 'serverSettingController'
-                })
-                .state("landingpage", {
-                    url: "/dashboard/landingPage",
-                    templateUrl: "app/views/landingPage.html",
-                    controller: 'landingPageController'
-                })
-                .state("useradminstration", {
-                    url: "/dashboard/userAdminstration",
-                    templateUrl: "app/views/useradminstrator.html",
-                    controller: 'userAdminstrationController'
-                })
-                .state("userDeviceMapping", {
-                  url: "/dashboard/userDeviceMapping",
-                  templateUrl: "app/views/userDeviceMapping.html",
-                  controller: 'userDeviceMappingController'
-            })
-            .state("deviceAdmin", {
-                    url: "/dashboard/deviceAdmin",
-                    templateUrl: "app/views/deviceAdmin.html",
-                    controller: 'deviceAdminController'
-                })
-                .state("addreports", {
-                    url: "/dashboard/addReports",
-                    templateUrl: "app/views/addReports.html",
-                    controller: 'addReportsController'
-                })
-                .state("assignReport", {
-                    url: "/dashboard/assignReport",
-                    templateUrl: "app/views/assignReport.html",
-                    controller: 'assignReportController'
-                })
-                .state("addUsergroups", {
-                    url: "/dashboard/addUsergroups",
-                    templateUrl: "app/views/addUsergroups.html",
-                    controller: 'addUsergroupsController'
-                })
-                .state("quickRun", {
-                    url: "/dashboard/quickRun",
-                    templateUrl: "app/views/quickRun.html",
-                    controller: 'quickRunController'
-                })
-                .state("quickbinding", {
-                    url: "/dashboard/quickbinding",
-                    templateUrl: "app/views/quickbinding.html",
-                    controller: 'quickbindingController'
-                })
+        .state("deviceMaps", {
+            url: "/dashboard/deviceMaps",
+            templateUrl: "app/views/deviceMaps.html",
+            controller: 'deviceMapsController'
+        })
+        .state("userTable", {
+            url: "/dashboard/userTable",
+            templateUrl: "app/views/userTable.html",
+            controller: 'userTableController'
+        })
+        .state("UserGroups", {
+            url: "/dashboard/UserGroups",
+            templateUrl: "app/views/userGroups.html",
+            controller: 'UserGroupsController'
+        })
+        .state("adminstrator", {
+            url: "/dashboard/administrator",
+            templateUrl: "app/views/adminstrator.html",
+            controller: 'AdminstartorController'
+        })
+        .state("serversetting", {
+            url: "/dashboard/serverSetting",
+            templateUrl: "app/views/serverSetting.html",
+            controller: 'serverSettingController'
+        })
+        .state("landingpage", {
+            url: "/dashboard/landingPage",
+            templateUrl: "app/views/landingPage.html",
+            controller: 'landingPageController'
+        })
+        .state("useradminstration", {
+            url: "/dashboard/userAdminstration",
+            templateUrl: "app/views/useradminstrator.html",
+            controller: 'userAdminstrationController'
+        })
+        .state("userDeviceMapping", {
+            url: "/dashboard/userDeviceMapping",
+            templateUrl: "app/views/userDeviceMapping.html",
+            controller: 'userDeviceMappingController'
+        })
+        .state("deviceAdmin", {
+            url: "/dashboard/deviceAdmin",
+            templateUrl: "app/views/deviceAdmin.html",
+            controller: 'deviceAdminController'
+        })
+        .state("addreports", {
+            url: "/dashboard/addReports",
+            templateUrl: "app/views/addReports.html",
+            controller: 'addReportsController'
+        })
+        .state("assignReport", {
+            url: "/dashboard/assignReport",
+            templateUrl: "app/views/assignReport.html",
+            controller: 'assignReportController'
+        })
+        .state("addUsergroups", {
+            url: "/dashboard/addUsergroups",
+            templateUrl: "app/views/addUsergroups.html",
+            controller: 'addUsergroupsController'
+        })
+        .state("quickRun", {
+            url: "/dashboard/quickRun",
+            templateUrl: "app/views/quickRun.html",
+            controller: 'quickRunController'
+        })
+        .state("quickbinding", {
+            url: "/dashboard/quickbinding",
+            templateUrl: "app/views/quickbinding.html",
+            controller: 'quickbindingController'
+        })
 
-                .state("testplanAdmin", {
-                    url: "/dashboard/testplanAdmin",
-                    templateUrl: "app/views/testplanAdmin.html",
-                    controller: 'testplanAdminController'
-                })
+        .state("testplanAdmin", {
+            url: "/dashboard/testplanAdmin",
+            templateUrl: "app/views/testplanAdmin.html",
+            controller: 'testplanAdminController'
+        })
 
-                .state("replayMap", {
-                    url: "/dashboard/replayMap",
-                    templateUrl: "app/views/replay.map.html",
-                    controller: 'replayMapsController'
-                })
-                .state("deviceMeasurements", {
-                    url: "/dashboard/deviceMeasurements",
-                    templateUrl: "app/views/deviceMeasurements.html",
-                    controller: 'deviceMeasurementsController'
-                }).state("heatMaps", {
-                    url: "/dashboard/heatMaps",
-                    templateUrl: "app/views/heatMaps.html",
-                    controller: 'HeatMapsController'
-                })
-                .state("driveRoutes", {
-                    url: "/dashboard/driveRoutes",
-                    templateUrl: "app/views/driveroutes.html",
-                    controller: 'DriveRoutesController'
-                })
-
-
-                .state("reports", {
-                    url: "/dashboard/reports",
-                    templateUrl: "app/views/reports.html",
-                    controller: 'ReportsController'
-                })
-                .state("reportCategory", {
-                	url: "/dashboard/reportsCategory",
-                    templateUrl: "app/views/reportsCategory.html",
-                    controller: 'ReportscategoryController'
-                   
-                }).state("reportTableau", {
-                	 url: "/dashboard/reportsTableau",
-                     templateUrl: "app/views/reportsTableau.html",
-                     controller: 'ReportsTableauController'
-                }).state("reportTableau1", {
-               	 url: "/dashboard/DataPerformance",
-                 templateUrl: "app/views/dataPerformanceReport.html",
-                 controller: 'ReportsTableauController'
-            }).state("reportTableau2", {
-  	 url: "/dashboard/MMS",
-    templateUrl: "app/views/MMSReport.html",
-    controller: 'ReportsTableauController'
-}).state("reportTableau3", {
-  	 url: "/dashboard/SMS",
-     templateUrl: "app/views/SMSReport.html",
-     controller: 'ReportsTableauController'
-}).state("reportTableau4", {
-  	 url: "/dashboard/Mobility",
-     templateUrl: "app/views/MobilityReport.html",
-     controller: 'ReportsTableauController'
-}).state("reportTableau6", {
-  	 url: "/dashboard/VideoQuality",
-     templateUrl: "app/views/VideoQualityReport.html",
-     controller: 'ReportsTableauController'
-}).state("reportTableau7", {
-  	 url: "/dashboard/VoiceQuality",
-     templateUrl: "app/views/VoiceQualityReport.html",
-     controller: 'ReportsTableauController'
-}).state("reportTableau8", {
-  	 url: "/dashboard/WiFiPerformance",
-     templateUrl: "app/views/WiFiPerformanceReport.html",
-     controller: 'ReportsTableauController'
-}).state("reportTableau9", {
-  	 url: "/dashboard/RadioPerformance",
-     templateUrl: "app/views/RadioPerformanceReport.html",
-     controller: 'ReportsTableauController'
-}).state("droolRuleTemplete", {
-    url: "/dashboard/droolruleTemplete",
-    templateUrl: "app/views/create_drools_rule.html",
-    controller: 'DroolruleTempleteController',
-	ncyBreadcrumb: {
-        label: 'Test Plan'
-    }
-})
-                
-                .state("myDevices", {
-                    url: "/dashboard/myDevices",
-                    templateUrl: "app/views/mydevices.html",
-                    controller: 'MyDevicesController'
-                })
-                  .state("createTestPlan", {
-                    url: "/dashboard/createTestPlan",
-                    templateUrl: "app/views/createTestPlan.html",
-                    controller: 'createTestPlan',
-					ncyBreadcrumb: {
-                        label: 'Test Plan'
-                    }
-                })
-                .state("createTestPlanTemplate", {
-                    url: "/dashboard/createTestPlanTemplate",
-                    templateUrl: "app/views/createTestPlanTemplate.html",
-                    controller: 'createTestPlanTemplate',
-					ncyBreadcrumb: {
-                        label: 'Test Plan'
-                    }
-                })
-                .state("createTestPlanFinal", {
-                	url: '/dashboard/createTestPlanFinal',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/createTestPlanFinal.html',
-                            controller: 'testPlanCommandOverride'
-                        }
-                    },
-					ncyBreadcrumb: {
-                        label: 'Test Plan final'
-                    }
-                })
-                .state("createTestPlanTemplateFinal", {
-                	url: '/dashboard/createTestPlanTemplateFinal',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/createTestPlanTemplateFinal.html',
-                            controller: 'testPlanTemplateCommandOverride'
-                        }
-                    },
-					ncyBreadcrumb: {
-                        label: 'Test Plan final'
-                    }
-                })
-                .state("testPlanTestRunAdministration", {
-                	url: '/dashboard/testPlanTestRunAdministration',
-                   templateUrl: 'app/views/testPlanTestRunAdministration.html',
-                   controller: 'testPlanTestRunAdministration',
-					ncyBreadcrumb: {
-                       label: 'Administration'
-                   }
-                     
-                })
-                .state("CreateTestRun", {
-                    url: "/CreateTestRun",
-                    templateUrl: "app/views/editTestRun1.html",
-                    controller: 'createTestRunController',
-                    ncyBreadcrumb: {
-                        label: '{{TestplanName}}'
-                    }
-                }).state("etlPerformance", {
-                    url: "/dashboard/etlPerformance",
-                    templateUrl: "app/views/etlPerfomance.html",
-                    controller: 'TestController'
-                })
-                .state('CreateTestRun.MappingTestRun', {
-                    url: '/MappingTestRun',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/createTestRun.html',
-                            controller: 'createTestRunController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: '{{TestPlanId}}'
-                    }
-                })
-                .state("initiateTestPlan", {
-                    url: "/dashboard/initiateTestPlan",
-                    templateUrl: "app/views/initiateTestPlan.html",
-                    controller: 'createTestPlan',
-					ncyBreadcrumb: {
-                        label: 'Create Test Plan'
-                    }
-                })
-                .state('CreateTestRun.MappingTestRun.MappingDevices', {
-                    url: '/MappingDevices',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/MappingDevices.html',
-                            controller: 'createTestRunController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Select Devices'
-                    }
-                })
-                .state('CreateTestRun.MappingTestRun.MappingDevices.createTestRunScheduleSel', {
-                    url: '/createTestRunScheduleSel',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/createTestRunScheduleSel.html',
-                            controller: 'createTestRunGridController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: '{{TestRunName}}'
-                    }
-                })
-                .state('CreateTestRun.MappingTestRun.MappingDevices.createTestRunScheduleSel.CreateTestRunSchedule', {
-                    url: '/CreateTestRunSchedule',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/TestRunSchedule.html',
-                            controller: 'TestRunScheduleController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Schedule'
-                    }
-                })
-                .state("TestRunSelect", {
-                    url: "/TestRunSelect",
-					views: {
-                        "@": {
-                            templateUrl: "app/views/SelectTestRun.html",
-							controller: 'editTestRunController',
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: '{{TestRuId}}'
-                    }
-                })
-                .state('TestRunSelect.editCommandParameters', {
-                    url: '/editCommandParameters',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/editCommandParameters.html',
-                            controller: 'editTestRunController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Edit Command Parameters'
-                    }
-                })
-                .state('TestRunSelect.editCommandParameters.TestRunforTestplans', {
-                    url: '/TestRunforTestplans',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/TestRunforTestplans.html',
-                            controller: 'TestRunGrids'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: '{{TestRunName}}'
-                    }
-                })
-                .state('TestRunSelect.editCommandParameters.TestRunforTestplans.TestRunSchedule', {
-                    url: '/TestRunSchedule',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/TestRunSchedule.html',
-                            controller: 'TestRunScheduleController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Test Run Schedule'
-                    }
-                })
-                .state("Schedule", {
-                    url: "/Schedule",
-                    templateUrl: "app/views/ScheduleSel.html",
-                    controller: 'createTestRunGridController',
-                    ncyBreadcrumb: {
-                        label: 'TestRunName: {{TestRunName}}'
-                    }
-                })
-                .state('Schedule.CreateTestRunSchedule', {
-                    url: '/CreateTestRunSchedule',
-                    views: {
-                        "@": {
-                            templateUrl: 'app/views/TestRunSchedule.html',
-                            controller: 'TestRunScheduleController'
-                        }
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Test Run Schedule'
-                    }
-                })
-                .state("Performance", {
-                    url: "/dashboard/:performance",
-                    templateUrl: "app/views/performance.html",
-                    controller: 'PerformanceController'
-                })
-                .state("zoneMarket", {
-                    url: "/dashboard/:performance/:zoneMarket",
-                    templateUrl: "app/views/zonemarket.html",
-                    controller: 'MarketController'
-                })
-                .state("CommomReport", {
-                    url: "/dashboard/:performance/:zoneMarket/commomReport",
-                    templateUrl: "app/views/commonReport.html",
-                    controller: 'CommomReportController'
-                })
-                .state("timeSchedule", {
-                    url: "/dashboard/:performance/:zoneMarket/timeSchedule",
-                    templateUrl: "app/views/timeSchedule.html",
-                    controller: 'TimeScheduleController'
-                })
-                .state("performanceResult", {
-                    url: "/dashboard/:performance/:zoneMarket/performanceResult",
-                    templateUrl: "app/views/performanceResult.html",
-                    controller: 'PerformanceResultController'
-                })
+        .state("replayMap", {
+            url: "/dashboard/replayMap",
+            templateUrl: "app/views/replay.map.html",
+            controller: 'replayMapsController'
+        })
+        .state("deviceMeasurements", {
+            url: "/dashboard/deviceMeasurements",
+            templateUrl: "app/views/deviceMeasurements.html",
+            controller: 'deviceMeasurementsController'
+        }).state("heatMaps", {
+        url: "/dashboard/heatMaps",
+        templateUrl: "app/views/heatMaps.html",
+        controller: 'HeatMapsController'
+    })
+        .state("driveRoutes", {
+            url: "/dashboard/driveRoutes",
+            templateUrl: "app/views/driveroutes.html",
+            controller: 'DriveRoutesController'
+        })
 
 
-        $urlRouterProvider.otherwise('/login');
+        .state("reports", {
+            url: "/dashboard/reports",
+            templateUrl: "app/views/reports.html",
+            controller: 'ReportsController'
+        })
+        .state("reportCategory", {
+            url: "/dashboard/reportsCategory",
+            templateUrl: "app/views/reportsCategory.html",
+            controller: 'ReportscategoryController'
 
-        $.ajaxSetup({
-            statusCode: {
-                401: function () {
+        }).state("reportTableau", {
+        url: "/dashboard/reportsTableau",
+        templateUrl: "app/views/reportsTableau.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau1", {
+        url: "/dashboard/DataPerformance",
+        templateUrl: "app/views/dataPerformanceReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau2", {
+        url: "/dashboard/MMS",
+        templateUrl: "app/views/MMSReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau3", {
+        url: "/dashboard/SMS",
+        templateUrl: "app/views/SMSReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau4", {
+        url: "/dashboard/Mobility",
+        templateUrl: "app/views/MobilityReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau6", {
+        url: "/dashboard/VideoQuality",
+        templateUrl: "app/views/VideoQualityReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau7", {
+        url: "/dashboard/VoiceQuality",
+        templateUrl: "app/views/VoiceQualityReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau8", {
+        url: "/dashboard/WiFiPerformance",
+        templateUrl: "app/views/WiFiPerformanceReport.html",
+        controller: 'ReportsTableauController'
+    }).state("reportTableau9", {
+        url: "/dashboard/RadioPerformance",
+        templateUrl: "app/views/RadioPerformanceReport.html",
+        controller: 'ReportsTableauController'
+    }).state("droolRuleTemplete", {
+        url: "/dashboard/droolruleTemplete",
+        templateUrl: "app/views/create_drools_rule.html",
+        controller: 'DroolruleTempleteController',
+        ncyBreadcrumb: {
+            label: 'Test Plan'
+        }
+    })
 
-                    console.log('401 error :: ');
-                    var scope = angular.element(document.getElementById('logoutDiv')).scope();
-                    var $body = angular.element(document.body);
-                    console.log('scope from body ', $body);
-                    var $rootScope = $body.scope().$root;
-                    console.log('root scope from body ', $rootScope);
-                    console.log('scope on signout ', scope);
-                    $rootScope.signOut();
-
-                },
-                200: function () {
-
-                    //   console.log('response 200');
-
-                },
-                error: function (xhr, status, error) {
-                    console.log('error :: ' + status);
-                }
+        .state("myDevices", {
+            url: "/dashboard/myDevices",
+            templateUrl: "app/views/mydevices.html",
+            controller: 'MyDevicesController'
+        })
+        .state("createTestPlan", {
+            url: "/dashboard/createTestPlan",
+            templateUrl: "app/views/createTestPlan.html",
+            controller: 'createTestPlan',
+            ncyBreadcrumb: {
+                label: 'Test Plan'
             }
-        });
+        })
+        .state("createTestPlanTemplate", {
+            url: "/dashboard/createTestPlanTemplate",
+            templateUrl: "app/views/createTestPlanTemplate.html",
+            controller: 'createTestPlanTemplate',
+            ncyBreadcrumb: {
+                label: 'Test Plan'
+            }
+        })
+        .state("createTestPlanFinal", {
+            url: '/dashboard/createTestPlanFinal',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/createTestPlanFinal.html',
+                    controller: 'testPlanCommandOverride'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Test Plan final'
+            }
+        })
+        .state("createTestPlanTemplateFinal", {
+            url: '/dashboard/createTestPlanTemplateFinal',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/createTestPlanTemplateFinal.html',
+                    controller: 'testPlanTemplateCommandOverride'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Test Plan final'
+            }
+        })
+        .state("testPlanTestRunAdministration", {
+            url: '/dashboard/testPlanTestRunAdministration',
+            templateUrl: 'app/views/testPlanTestRunAdministration.html',
+            controller: 'testPlanTestRunAdministration',
+            ncyBreadcrumb: {
+                label: 'Administration'
+            }
 
-    }]);
+        })
+        .state("CreateTestRun", {
+            url: "/CreateTestRun",
+            templateUrl: "app/views/editTestRun1.html",
+            controller: 'createTestRunController',
+            ncyBreadcrumb: {
+                label: '{{TestplanName}}'
+            }
+        }).state("etlPerformance", {
+        url: "/dashboard/etlPerformance",
+        templateUrl: "app/views/etlPerfomance.html",
+        controller: 'TestController'
+    })
+        .state('CreateTestRun.MappingTestRun', {
+            url: '/MappingTestRun',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/createTestRun.html',
+                    controller: 'createTestRunController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: '{{TestPlanId}}'
+            }
+        })
+        .state("initiateTestPlan", {
+            url: "/dashboard/initiateTestPlan",
+            templateUrl: "app/views/initiateTestPlan.html",
+            controller: 'createTestPlan',
+            ncyBreadcrumb: {
+                label: 'Create Test Plan'
+            }
+        })
+        .state('CreateTestRun.MappingTestRun.MappingDevices', {
+            url: '/MappingDevices',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/MappingDevices.html',
+                    controller: 'createTestRunController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Select Devices'
+            }
+        })
+        .state('CreateTestRun.MappingTestRun.MappingDevices.createTestRunScheduleSel', {
+            url: '/createTestRunScheduleSel',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/createTestRunScheduleSel.html',
+                    controller: 'createTestRunGridController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: '{{TestRunName}}'
+            }
+        })
+        .state('CreateTestRun.MappingTestRun.MappingDevices.createTestRunScheduleSel.CreateTestRunSchedule', {
+            url: '/CreateTestRunSchedule',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/TestRunSchedule.html',
+                    controller: 'TestRunScheduleController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Schedule'
+            }
+        })
+        .state("TestRunSelect", {
+            url: "/TestRunSelect",
+            views: {
+                "@": {
+                    templateUrl: "app/views/SelectTestRun.html",
+                    controller: 'editTestRunController',
+                }
+            },
+            ncyBreadcrumb: {
+                label: '{{TestRuId}}'
+            }
+        })
+        .state('TestRunSelect.editCommandParameters', {
+            url: '/editCommandParameters',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/editCommandParameters.html',
+                    controller: 'editTestRunController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Edit Command Parameters'
+            }
+        })
+        .state('TestRunSelect.editCommandParameters.TestRunforTestplans', {
+            url: '/TestRunforTestplans',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/TestRunforTestplans.html',
+                    controller: 'TestRunGrids'
+                }
+            },
+            ncyBreadcrumb: {
+                label: '{{TestRunName}}'
+            }
+        })
+        .state('TestRunSelect.editCommandParameters.TestRunforTestplans.TestRunSchedule', {
+            url: '/TestRunSchedule',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/TestRunSchedule.html',
+                    controller: 'TestRunScheduleController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Test Run Schedule'
+            }
+        })
+        .state("Schedule", {
+            url: "/Schedule",
+            templateUrl: "app/views/ScheduleSel.html",
+            controller: 'createTestRunGridController',
+            ncyBreadcrumb: {
+                label: 'TestRunName: {{TestRunName}}'
+            }
+        })
+        .state('Schedule.CreateTestRunSchedule', {
+            url: '/CreateTestRunSchedule',
+            views: {
+                "@": {
+                    templateUrl: 'app/views/TestRunSchedule.html',
+                    controller: 'TestRunScheduleController'
+                }
+            },
+            ncyBreadcrumb: {
+                label: 'Test Run Schedule'
+            }
+        })
+        .state("Performance", {
+            url: "/dashboard/:performance",
+            templateUrl: "app/views/performance.html",
+            controller: 'PerformanceController'
+        })
+        .state("zoneMarket", {
+            url: "/dashboard/:performance/:zoneMarket",
+            templateUrl: "app/views/zonemarket.html",
+            controller: 'MarketController'
+        })
+        .state("CommomReport", {
+            url: "/dashboard/:performance/:zoneMarket/commomReport",
+            templateUrl: "app/views/commonReport.html",
+            controller: 'CommomReportController'
+        })
+        .state("timeSchedule", {
+            url: "/dashboard/:performance/:zoneMarket/timeSchedule",
+            templateUrl: "app/views/timeSchedule.html",
+            controller: 'TimeScheduleController'
+        })
+        .state("performanceResult", {
+            url: "/dashboard/:performance/:zoneMarket/performanceResult",
+            templateUrl: "app/views/performanceResult.html",
+            controller: 'PerformanceResultController'
+        })
+
+
+    $urlRouterProvider.otherwise('/login');
+
+    $.ajaxSetup({
+        statusCode: {
+            401: function () {
+
+                console.log('401 error :: ');
+                var scope = angular.element(document.getElementById('logoutDiv')).scope();
+                var $body = angular.element(document.body);
+                console.log('scope from body ', $body);
+                var $rootScope = $body.scope().$root;
+                console.log('root scope from body ', $rootScope);
+                console.log('scope on signout ', scope);
+                $rootScope.signOut();
+
+            },
+            200: function () {
+
+                //   console.log('response 200');
+
+            },
+            error: function (xhr, status, error) {
+                console.log('error :: ' + status);
+            }
+        }
+    });
+
+}]);
 
 oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies) {
 
@@ -462,7 +463,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     $rootScope.gotoDashBoard = function () {
         $location.path('/dashboard');
     }
-   
+
     /*
      Function for submenu toggle
      */
@@ -478,17 +479,17 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
                 $(e.currentTarget).parent().children('a').children('em').removeClass('glyphicon-minus').addClass('glyphicon-plus');
             }
         } else if (key == 'Reports') {
-          //  $location.path('/dashboard/reportsCategory');
-        	sessionStorage.setItem('REPORT_HOST_URL', oApp.config.REPORT_HOST_URL);
-        	$location.path('/dashboard/reportsTableau');
-        	
+            //  $location.path('/dashboard/reportsCategory');
+            sessionStorage.setItem('REPORT_HOST_URL', oApp.config.REPORT_HOST_URL);
+            $location.path('/dashboard/reportsTableau');
+
         } else if (key == 'Measurements') {
             $location.path('/dashboard/deviceMeasurements');
         }
         else if (key == 'Heat Maps') {
             $location.path('/dashboard/heatMaps');
         }
-        
+
 
     }
     /*
@@ -498,7 +499,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         console.log();
         var name = screenName.replace(/ /g, "");
 
-        if (menuUrl != null && menuUrl !="" && name != 'DriveRoutes') {
+        if (menuUrl != null && menuUrl != "" && name != 'DriveRoutes') {
             sessionStorage.setItem('menuUrl', menuUrl);
             $location.path('/dashboard/reports');
         } else if (name == 'System') {
@@ -531,40 +532,39 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         }
         else if (name == 'Measurements') {
 
-        	   $location.path('/dashboard/deviceMeasurements');
+            $location.path('/dashboard/deviceMeasurements');
         }
-        
+
     }
 
     /*
-    Function to show reports page
-    */
-   $rootScope.actionCalledURL = function (key,menuUrl, screenName) {
-       console.log();
-       var name = screenName.replace(/ /g, "");
-     var  keyVal=key.replace(/ /g, "");
-     if(keyVal=="Reports"){
-    	 sessionStorage.setItem('tableauURL',menuUrl); 
-    	 $location.path("/dashboard/reportsTableau");
-    	 location.reload();
- 
-     }
-     else{
-    	  if(name == 'Logout') 
-    	  {
-    		  $rootScope.signOut();
+     Function to show reports page
+     */
+    $rootScope.actionCalledURL = function (key, menuUrl, screenName) {
+        console.log();
+        var name = screenName.replace(/ /g, "");
+        var keyVal = key.replace(/ /g, "");
+        if (keyVal == "Reports") {
+            sessionStorage.setItem('tableauURL', menuUrl);
+            $location.path("/dashboard/reportsTableau");
+            location.reload();
 
-    	  }
-    	  else if (menuUrl != null && menuUrl !="" ){
-    	
-    	
-    		  $location.path(menuUrl);
-    	  }	  
-    	   
-       }
-     
-       
-   }
+        }
+        else {
+            if (name == 'Logout') {
+                $rootScope.signOut();
+
+            }
+            else if (menuUrl != null && menuUrl != "") {
+
+
+                $location.path(menuUrl);
+            }
+
+        }
+
+
+    }
     /*
      function for signout
      */
@@ -636,7 +636,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     }
     /*
      Function for assign reports
-     
+
      */
     $rootScope.assignReport = function () {
         $location.path('/dashboard/assignReport');
@@ -657,13 +657,13 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
     $rootScope.getMenuData = function () {
         promise = AppServices.GetDashboardMenu(sessionStorage.userId, sessionStorage.token);
         promise.then(
-                function (data) {
-console.log("Menu:"+data);
-                    $rootScope.menuData = data;
+            function (data) {
+                console.log("Menu:" + data);
+                $rootScope.menuData = data;
 
-                },
-                function (err) {
-                }
+            },
+            function (err) {
+            }
         );
     }
     $rootScope.getTodayDate = function () {
@@ -701,12 +701,12 @@ console.log("Menu:"+data);
     $rootScope.getFavouriteReports = function () {
         promise = AppServices.GetFavouriteReports(sessionStorage.userId, sessionStorage.token);
         promise.then(
-                function (data) {
-                    $rootScope.Favourites = data;
-                },
-                function (err) {
+            function (data) {
+                $rootScope.Favourites = data;
+            },
+            function (err) {
 
-                }
+            }
         );
     }
 
@@ -716,25 +716,25 @@ console.log("Menu:"+data);
     $rootScope.AddFavourite = function (screenId, screenName, menuUrl) {
         promise = AppServices.AddUserFavourites(sessionStorage.userId, screenId, screenName, menuUrl, sessionStorage.token);
         promise.then(
-                function (data) {
-                    //$scope.show = true;
-                    if (data.status != "error") {
-                        $rootScope.FavouritesResponseMessage = data.status;
-                        var newFav = {"menu_id": screenId, "screen_name": screenName, "menu_url": menuUrl};
-                        $rootScope.Favourites.push(newFav);
-                        $('#FavouritesResponseMessageColor').css("color", "green");
-                    } else {
-                        $rootScope.FavouritesResponseMessage = data.errorDescription;
-                        $('#FavouritesResponseMessageColor').css("color", "red");
-                    }
-                    $('#FavouritesResponseMessagePopUp').modal('show');
-                    $timeout(function () {
-                        $('#FavouritesResponseMessagePopUp').modal('hide');
-                    }, 2000);
-                },
-                function (err) {
+            function (data) {
+                //$scope.show = true;
+                if (data.status != "error") {
+                    $rootScope.FavouritesResponseMessage = data.status;
+                    var newFav = {"menu_id": screenId, "screen_name": screenName, "menu_url": menuUrl};
+                    $rootScope.Favourites.push(newFav);
+                    $('#FavouritesResponseMessageColor').css("color", "green");
+                } else {
+                    $rootScope.FavouritesResponseMessage = data.errorDescription;
+                    $('#FavouritesResponseMessageColor').css("color", "red");
+                }
+                $('#FavouritesResponseMessagePopUp').modal('show');
+                $timeout(function () {
+                    $('#FavouritesResponseMessagePopUp').modal('hide');
+                }, 2000);
+            },
+            function (err) {
 
-                });
+            });
     }
     /*
      Remove user Favourites
@@ -745,51 +745,55 @@ console.log("Menu:"+data);
         $rootScope.isRemoveFavorite = true;
         promise = AppServices.RemoveUserFavourites(sessionStorage.getItem("userId"), screen_id, sessionStorage.getItem("token"));
         promise.then(
-                function (data) {
-                    for (var i = 0; i < $rootScope.Favourites.length; i++) {
-                        console.log('favourite menu id: ',$rootScope.Favourites[i].menu_id);
-                        if ($rootScope.Favourites[i].menu_id == screen_id) {
-                           
-                            $rootScope.Favourites.splice(i, 1);
-                        }
-                    }
-                    $rootScope.isRemoveFavorite = false;
-                },
-                function (err) {
+            function (data) {
+                for (var i = 0; i < $rootScope.Favourites.length; i++) {
+                    console.log('favourite menu id: ', $rootScope.Favourites[i].menu_id);
+                    if ($rootScope.Favourites[i].menu_id == screen_id) {
 
+                        $rootScope.Favourites.splice(i, 1);
+                    }
                 }
+                $rootScope.isRemoveFavorite = false;
+            },
+            function (err) {
+
+            }
         );
         e.stopPropagation();
     }
-/*
-    To show Error / message into screen 
-    */
-    $rootScope.showErrorMessage = function (divId,msg) {
-    	 	$("#"+divId).text(msg);
-    		$("#"+divId).css('color', 'red');
-    		$("#"+divId).show();
-    		setTimeout(function(){$('#'+divId).hide();}, 4000);
+    /*
+     To show Error / message into screen 
+     */
+    $rootScope.showErrorMessage = function (divId, msg) {
+        $("#" + divId).text(msg);
+        $("#" + divId).css('color', 'red');
+        $("#" + divId).show();
+        setTimeout(function () {
+            $('#' + divId).hide();
+        }, 4000);
     }
-    $rootScope.showSuccessMessage = function (divId,msg) {
-    		$("#"+divId).text(msg);
-    		$("#"+divId).css('color', 'green');
-    		$("#"+divId).show();
-    		setTimeout(function(){$('#'+divId).hide();}, 4000);
+    $rootScope.showSuccessMessage = function (divId, msg) {
+        $("#" + divId).text(msg);
+        $("#" + divId).css('color', 'green');
+        $("#" + divId).show();
+        setTimeout(function () {
+            $('#' + divId).hide();
+        }, 4000);
     }
-    $rootScope.inNewWindowTableauURL = function(tableauURL){
-    	//alert(tableauURL);
-    	window.open(tableauURL,'mywin','left=180,top=10,width=1500,height=auto,toolbar=1,resizable=0');
-/*	promise = ReportServices.GetReportCategory(userId, token);
-	promise.then(
-		function(data){
-			    $scope.reports = data;
-				sessionStorage.setItem('reportsubmenus',JSON.stringify(data)); to set report data in reportsubmenus 	
-		},
-		function(err){
-			
-		}
-	);*/
-}	
+    $rootScope.inNewWindowTableauURL = function (tableauURL) {
+        //alert(tableauURL);
+        window.open(tableauURL, 'mywin', 'left=180,top=10,width=1500,height=auto,toolbar=1,resizable=0');
+        /*	promise = ReportServices.GetReportCategory(userId, token);
+         promise.then(
+         function(data){
+         $scope.reports = data;
+         sessionStorage.setItem('reportsubmenus',JSON.stringify(data)); to set report data in reportsubmenus 	
+         },
+         function(err){
+
+         }
+         );*/
+    }
 });
 
 
@@ -800,7 +804,7 @@ oTech.filter('capitalize', function () {
 });
 oTech.filter('capitalizeFirstWord', function () {
     return function (input) {
-        return (!!input) ? input.charAt(0).toUpperCase()  : '';
+        return (!!input) ? input.charAt(0).toUpperCase() : '';
     }
 });
 oTech.filter('footerYear', function () {
@@ -810,26 +814,26 @@ oTech.filter('footerYear', function () {
 });
 oTech.filter('headerIcon', function () {
     return function (headerNameStr) {
-    	 var headerName = headerNameStr.replace(/ /g, "");
-    	var iconName="";
-    	if(headerName=="Dashboard"){
-    		iconName="icon-home2 position-left text-slate-600";
-    			
-    	}
-    	else if(headerName=="Reports"){
-    		iconName="icon-pie-chart3 position-left text-orange-800";
-    			
-    	}
-    	else if(headerName=="MySettings"){
-    		iconName="icon-equalizer3 position-left text-teal-300";
-    			
-    	}
-    	else if(headerName=="Admin"){
-    		iconName="icon-pie-chart3 position-left text-brown-300";
-    			
-    	}
-    	
-    
+        var headerName = headerNameStr.replace(/ /g, "");
+        var iconName = "";
+        if (headerName == "Dashboard") {
+            iconName = "icon-home2 position-left text-slate-600";
+
+        }
+        else if (headerName == "Reports") {
+            iconName = "icon-pie-chart3 position-left text-orange-800";
+
+        }
+        else if (headerName == "MySettings") {
+            iconName = "icon-equalizer3 position-left text-teal-300";
+
+        }
+        else if (headerName == "Admin") {
+            iconName = "icon-pie-chart3 position-left text-brown-300";
+
+        }
+
+
         return iconName;
     }
 });
@@ -837,20 +841,20 @@ oTech.filter('headerIcon', function () {
 oTech.directive('passwordMatch', [function () {
     return {
         restrict: 'A',
-        scope:true,
+        scope: true,
         require: 'ngModel',
-        link: function (scope, elem , attrs,control) {
+        link: function (scope, elem, attrs, control) {
             var checker = function () {
- 
+
                 //get the value of the first password
-                var e1 = scope.$eval(attrs.ngModel); 
- 
+                var e1 = scope.$eval(attrs.ngModel);
+
                 //get the value of the other password  
                 var e2 = scope.$eval(attrs.passwordMatch);
                 return e1 == e2;
             };
             scope.$watch(checker, function (n) {
- 
+
                 //set the form control to valid if both 
                 //passwords are the same, else invalid
                 control.$setValidity("passwordMatch", n);
@@ -859,16 +863,16 @@ oTech.directive('passwordMatch', [function () {
     };
 }]);
 
-oTech.directive('contenteditable', function() {
+oTech.directive('contenteditable', function () {
     return {
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-            elm.bind('blur', function() {
-                scope.$apply(function() {
+        link: function (scope, elm, attrs, ctrl) {
+            elm.bind('blur', function () {
+                scope.$apply(function () {
                     ctrl.$setViewValue(elm.html());
                 });
             });
-            ctrl.$render = function() {
+            ctrl.$render = function () {
                 elm.html(ctrl.$viewValue);
             };
 
@@ -901,8 +905,8 @@ oTech.directive('dateParser', function () {
         }
     };
 });
-oTech.directive('myTable', function() {
-    return function(scope, element, attrs) {
+oTech.directive('myTable', function () {
+    return function (scope, element, attrs) {
 
         // apply DataTable options, use defaults if none specified by user
         var options = {};
@@ -924,9 +928,9 @@ oTech.directive('myTable', function() {
         // Tell the dataTables plugin what columns to use
         // We can either derive them from the dom, or use setup from the controller           
         var explicitColumns = [];
-        element.find('th').each(function(index, elem) {
-           // explicitColumns.push($(elem).text());
-        	explicitColumns.push({name : $(elem).text()});
+        element.find('th').each(function (index, elem) {
+            // explicitColumns.push($(elem).text());
+            explicitColumns.push({name: $(elem).text()});
         });
         if (explicitColumns.length > 0) {
             options["aoColumns"] = explicitColumns;
@@ -938,7 +942,7 @@ oTech.directive('myTable', function() {
         if (attrs.aoColumnDefs) {
             options["aoColumnDefs"] = scope.$eval(attrs.aoColumnDefs);
         }
-        
+
         if (attrs.fnRowCallback) {
             options["fnRowCallback"] = scope.$eval(attrs.fnRowCallback);
         }
@@ -946,10 +950,9 @@ oTech.directive('myTable', function() {
         // apply the plugin
         var dataTable = element.dataTable(options);
 
-        
-        
+
         // watch for any changes to our data, rebuild the DataTable
-        scope.$watch(attrs.aaData, function(value) {
+        scope.$watch(attrs.aaData, function (value) {
             var val = value || null;
             if (val) {
                 dataTable.fnClearTable();
@@ -958,143 +961,144 @@ oTech.directive('myTable', function() {
         });
     };
 });
-oTech.directive('gridtableHeight', function() {
-	 return function(scope, element, attrs) {
-		   var rowHeight = 40; // your row height
-		    var headerHeight = 58; // your header height
-		    var footerPage=0;
-		    return {
-		       height: ($scope.addUsergroupsGridOptions.data.length * rowHeight + headerHeight+footerPage) + "px"
-		    };
-	      
-	    };
-	});
+oTech.directive('gridtableHeight', function () {
+    return function (scope, element, attrs) {
+        var rowHeight = 40; // your row height
+        var headerHeight = 58; // your header height
+        var footerPage = 0;
+        return {
+            height: ($scope.addUsergroupsGridOptions.data.length * rowHeight + headerHeight + footerPage) + "px"
+        };
 
-angular.module('oTech').factory('messages', function(){
-  var messages = [];
-  
-  messages.add = function(message){
-     messages.push(message);
-  };
-  return messages;
+    };
+});
+
+angular.module('oTech').factory('messages', function () {
+    var messages = [];
+
+    messages.add = function (message) {
+        messages.push(message);
+    };
+    return messages;
 
 });
 
-angular.module('oTech').factory('messagesTemplate', function(){
-	  var messages = [];
-	  
-	  messages.add = function(message){
-	     messages.push(message);
-	  };
-	  return messages;
+angular.module('oTech').factory('messagesTemplate', function () {
+    var messages = [];
 
-	});
+    messages.add = function (message) {
+        messages.push(message);
+    };
+    return messages;
 
-oTech.directive('selectBoxPreSelected', function($timeout) {
+});
+
+oTech.directive('selectBoxPreSelected', function ($timeout) {
     return {
         restrict: 'AC',
-        link: function(scope, element, attrs) {
-            $timeout(function() {
+        link: function (scope, element, attrs) {
+            $timeout(function () {
                 element.show();
                 $(element).select2();
-            }); 
+            });
         }
     };
 });
 
 oTech.directive('numbersOnly', function () {
-        return {
-            require: 'ngModel',
-            link: function (scope, element, attr, ngModelCtrl) {
-                function fromUser(text) {
-                    if (text) {
-                        var transformedInput = text.replace(/[^0-9-]/g, '');
-                        if (transformedInput !== text) {
-                            ngModelCtrl.$setViewValue(transformedInput);
-                            ngModelCtrl.$render();
-                        }
-                        return transformedInput;
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+                if (text) {
+                    var transformedInput = text.replace(/[^0-9-]/g, '');
+                    if (transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput);
+                        ngModelCtrl.$render();
                     }
-                    return undefined;
+                    return transformedInput;
                 }
-                ngModelCtrl.$parsers.push(fromUser);
+                return undefined;
             }
-        };
-    });
+
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
 
 angular.module('ui.grid').factory('InlineEdit', ['$interval', '$rootScope', 'uiGridRowEditService',
-                                                 function ($interval, $rootScope, uiGridRowEditService) {
-                                                     function inlineEdit(entity, index, grid) {
-                                                         this.grid = grid;
-                                                         this.index = index;
-                                                         this.entity = {};
-                                                         this.isEditModeOn = false;
-                                                         this.init(entity);
-                                                     }
+    function ($interval, $rootScope, uiGridRowEditService) {
+        function inlineEdit(entity, index, grid) {
+            this.grid = grid;
+            this.index = index;
+            this.entity = {};
+            this.isEditModeOn = false;
+            this.init(entity);
+        }
 
-                                                     inlineEdit.prototype = {
-                                                         init: function (rawEntity) {
-                                                             var self = this;
+        inlineEdit.prototype = {
+            init: function (rawEntity) {
+                var self = this;
 
-                                                             for (var prop in rawEntity) {
-                                                                 self.entity[prop] = {
-                                                                     value: rawEntity[prop],
-                                                                     isValueChanged: false,
-                                                                     isSave: false,
-                                                                     isCancel: false,
-                                                                     isEdit: false
-                                                                 }
-                                                             }
-                                                         },
+                for (var prop in rawEntity) {
+                    self.entity[prop] = {
+                        value: rawEntity[prop],
+                        isValueChanged: false,
+                        isSave: false,
+                        isCancel: false,
+                        isEdit: false
+                    }
+                }
+            },
 
-                                                         enterEditMode: function (event) {
-                                                             event && event.stopPropagation();
-                                                             var self = this;
-                                                             self.isEditModeOn = true;
+            enterEditMode: function (event) {
+                event && event.stopPropagation();
+                var self = this;
+                self.isEditModeOn = true;
 
-                                                             // cancel all rows which are in edit mode
-                                                             self.grid.rows.forEach(function (row) {
-                                                                 if (row.inlineEdit && row.inlineEdit.isEditModeOn && row.uid !== self.grid.rows[self.index].uid) {
-                                                                     row.inlineEdit.cancelEdit();
-                                                                 }
-                                                             });
+                // cancel all rows which are in edit mode
+                self.grid.rows.forEach(function (row) {
+                    if (row.inlineEdit && row.inlineEdit.isEditModeOn && row.uid !== self.grid.rows[self.index].uid) {
+                        row.inlineEdit.cancelEdit();
+                    }
+                });
 
-                                                             // Reset all the values
-                                                             for (var prop in self.entity) {
-                                                                 self.entity[prop].isSave = false;
-                                                                 self.entity[prop].isCancel = false;
-                                                                 self.entity[prop].isEdit = true;
-                                                             }
-                                                         },
+                // Reset all the values
+                for (var prop in self.entity) {
+                    self.entity[prop].isSave = false;
+                    self.entity[prop].isCancel = false;
+                    self.entity[prop].isEdit = true;
+                }
+            },
 
-                                                         saveEdit: function (event) {
-                                                             event && event.stopPropagation();
-                                                             var self = this;
+            saveEdit: function (event) {
+                event && event.stopPropagation();
+                var self = this;
 
-                                                             self.isEditModeOn = false;
+                self.isEditModeOn = false;
 
-                                                             for (var prop in self.entity) {
-                                                                 self.entity[prop].isSave = true;
-                                                                 self.entity[prop].isEdit = false;
-                                                             }
+                for (var prop in self.entity) {
+                    self.entity[prop].isSave = true;
+                    self.entity[prop].isEdit = false;
+                }
 
-                                                             uiGridRowEditService.saveRow(self.grid, self.grid.rows[self.index])();
-                                                         },
+                uiGridRowEditService.saveRow(self.grid, self.grid.rows[self.index])();
+            },
 
-                                                         cancelEdit: function (event) {
-                                                             event && event.stopPropagation();
-                                                             var self = this;
+            cancelEdit: function (event) {
+                event && event.stopPropagation();
+                var self = this;
 
-                                                             self.isEditModeOn = false;
-                                                             for (var prop in self.entity) {
-                                                                 self.entity[prop].isCancel = true;
-                                                                 self.entity[prop].isEdit = false;
-                                                             }
-                                                         }
-                                                     }
+                self.isEditModeOn = false;
+                for (var prop in self.entity) {
+                    self.entity[prop].isCancel = true;
+                    self.entity[prop].isEdit = false;
+                }
+            }
+        }
 
-                                                     return inlineEdit;
-                                                 }]);
+        return inlineEdit;
+    }]);
 
 
 

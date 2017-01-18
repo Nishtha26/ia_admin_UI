@@ -6,6 +6,22 @@
         padding-top: 7px;
         padding-right: 27px;
     }
+    
+    .error_msg{
+    float: right;
+    
+    color: red;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 27px;
+}
+.success_msg{
+	float: right;
+    color: #48A64C;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 27px;
+}
 </style>
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
@@ -66,7 +82,10 @@
                                     <div id="DataTables_Table_0_filter" class="dataTables_filter">
                                         <label><span>Filter:</span>
                                             <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
-                                                   placeholder="Type to filter..."></label></div>
+                                                   placeholder="Type to filter..."></label>
+                                                   <span class="error_msg" ng-show ="errorMsg" >{{Message}}</span>
+							 			<span ng-show ="deviceInfo" class="success_msg">{{deviceInfoMsg}}</span>
+                                                   </div>
                                     <!--
                                      <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
                                       <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
@@ -435,7 +454,7 @@
 
 
 <!-- Footer -->
-<div ng-include="'app/views/footer/footer.html'"></div>
+<div ng-include="'app/views/footer/footer.html'" style="position: relative;bottom: 0px;"></div>
 <!-- /footer -->
 
 <!-- /footer -->
