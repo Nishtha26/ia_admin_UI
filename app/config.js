@@ -1751,7 +1751,7 @@ quickrunGridOptions : {
 		enableVerticalScrollbar :0,
 		columnDefs: [
 			{displayName: 'ID', field: 'deviceId' ,width:"18%",pinnedLeft:true,enableCellEdit: false , allowCellFocus : false},
-			{displayName: 'Name', field: 'deviceName',enableCellEdit: false,width:"15%", cellTooltip:
+			{displayName: 'Name', field: 'deviceName',enableCellEdit: true,width:"15%", cellTooltip:
                 function( row, col ) {
                 return '' + row.entity.deviceName + '';
               }},
@@ -1809,11 +1809,11 @@ quickrunGridOptions : {
                 function( row, col ) {
                 return '' + row.entity.imsi + '';
                }},
-			{ displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: false, cellTooltip:
+			{ displayName:'IMEI', field: 'imei' ,width:150,enableCellEdit: true, cellTooltip:
                 function( row, col ) {
                 return '' + row.entity.imei + '';
                }},
-			{ displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: false, cellTooltip:
+			{ displayName:'MSISDN', field: 'msisdn' ,width:"15%",enableCellEdit: true, cellTooltip:
                 function( row, col ) {
                 return '' + row.entity.msisdn + '';
                }},
