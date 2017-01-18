@@ -989,6 +989,27 @@ oTech.service('testScriptService',
 			    });	
 			return deferred.promise; 
 		}
+        
+        service.deActivateTestRun = function( token ,selectedTestRunId){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/testRun/deActivateTestRun",
+				    type: "POST",
+					data : {token:token , testRunId:selectedTestRunId},
+					headers :{
+						'Content-Type': 'application/x-www-form-urlencoded'
+						},
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
 
         return service;
     }])
