@@ -184,20 +184,50 @@ oTech.controller('testPlanTestRunAdministration',
 			    enableHorizontalScrollbar:0,
           columnDefs: [
                          {name:'Id',field: 'testplanId', width: '10%'},
-                         {name:'Name',field: 'testplanName',width: '40%', cellTooltip: 
+                         {name:'Name',field: 'testplanName',width: '30%', cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.testplanName + '';
                            }},
-                         {name:'Use Case',field: 'useCaseName', width: '27%', cellTooltip: 
+                         {name:'Use Case',field: 'useCaseName', width: '20%', cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.useCaseName + '';
                            }},
                      	/*{name:'Created Date',field: 'createdDate', width: '20%'},*/
          				{name:'Created By',field: 'createdByName', width: '20%'},
+         				{name:'Actions', enableRowSelection: false, enableCellEdit: false ,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '20%',cellClass: 'ui-grid-cell-button',
+         					enableColumnMenu: false, enableSorting: false,cellTemplate:
+         	         '<ul class="icons-list">'+
+         				'<li class="dropdown">'+
+         			'<a  class="dropdown-toggle" data-toggle="dropdown">'+
+         				'<i class="icon-menu9"></i>'+
+         			'</a>'+
+         			'<ul class="dropdown-menu dropdown-menu-right">'+
+         				'<li ><a  ng-click="grid.appScope.viewTestPlanForQuickRun(row);" data-toggle="modal" data-target="#TestPlanQuickView"><i class="icon-file-eye2 text-primary"></i> View Test Plan Info</a></li>'+
+         			'</ul>'+
+         		'</li>'+
+         	'</ul>'},
          				
          			
                      ]
         };
+		
+		// view test plan View
+		
+		  $scope.viewTestPlanForQuickRun = function(row){
+			  $scope.dataLoadingForQuickArea = true;
+			  $scope.testPlanView = [];
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	$scope.testPlanView = data.jobVO[0].nodes;
+	                	 $scope.dataLoadingForQuickArea = false;
+	                },
+	                function (err) {
+	                	$scope.dataLoadingForQuickArea = false;
+	                    console.log(err);
+	                }
+	            );
+		  }
 
         //Row selection
         $scope.TestPlanQuickRun.onRegisterApi = function (gridApi) {

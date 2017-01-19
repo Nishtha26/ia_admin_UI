@@ -1191,6 +1191,41 @@ padding: 2px 6px;
 				
 		<!-- /DeviceNotification_List -->
 		
+		
+		
+		<!-- Test Plan Info -->
+				<div id="TestPlanQuickView" class="modal fade" role="dialog" data-backdrop="static">
+					<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+								<div class="heading-elements">
+									<ul class="icons-list">
+				                		<li><a data-dismiss="modal" data-action="close"></a></li>
+				                	</ul>
+			                	</div>
+							</div>
+
+							<div class="modal-body">
+							<div class="row">
+										<div class="col-lg-12" >
+												 <ul class="command_lister_ul" style="list-style: none; padding: 10px;" >
+													<li><div class="col-lg-3 col-sm-3">Title</div><div class="col-lg-5 col-sm-5">Command Params</div><div class="col-lg-2 col-sm-2" style="text-align:right; padding-right: 21px;">Loop</div><div class="col-lg-2 col-sm-2"  style="text-align:center;">Sequence</div></li>
+													<li><hr/></li>
+													<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingForQuickArea"></img>
+													<span ui-tree>
+														<ol ui-tree-nodes=""  ng-model="testPlanView" class="device_attachment_tree" >
+														<li ng-repeat="node in testPlanView" ui-tree-node  data-nodrag ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol>
+													</span>	
+												</ul> 
+										</div>
+										</div>
+						</div>
+						</div>
+					</div>
+				</div>
+		<!-- /Test Plan info -->
+		
 	<div class="popover fade top in editable-container editable-popup"
 	role="tooltip" id="popovercommand" ng-show="showPopover"
 	style="left:50.5%; -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);"  >
