@@ -13,7 +13,7 @@ select {
 }
 
 #webETLSchedulerMappingGrid {
-	overflow-y: scroll;
+	overflow-y: hidden; 
     overflow-x: hidden;
 }
 .mrg > div:nth-child(even) {
@@ -95,6 +95,29 @@ select {
 						
 				</div>
 			</div>
+			<!-- <div>
+				<div>
+					<span>Scheduler Type</span>
+					<select>
+						<option value="-1">Select Type</option>
+						<option value="0">On Demand ETL</option>
+						<option value="1">Periodic ETL</option>
+						<option value="2">Rolling ETL</option>
+					</select>
+					<span>ETL Running Interval</span>
+					<select>
+						<option value="-1">Select</option>
+						<option value="15">15 Mins</option>
+						<option value="30" selected="selected" >30 Mins</option>
+						<option value="45">45 Mins</option>
+						<option value="60">60 Mins</option>
+					</select>
+					
+					<span>ETL Running Overlap Time</span>
+					<input type="text" value="5" name="OverlapTime" placeholder="5" >Mins
+				</div>
+			
+			</div>-->
 			</div>
 
 		</div>
@@ -113,7 +136,7 @@ select {
 		<br><br>
 		<center>
 			<div id="webETLSchedulerMappingGrid" ui-grid="webETLSchedulerMappingGrid" 
-					 style="width:80%;text-align: center;" class="table table-hover grid"  >
+					 style="width:79%;text-align: center;" class="table table-hover grid"  >
 			</div>
 		</center>
 	</div>
