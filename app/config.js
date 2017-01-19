@@ -1875,7 +1875,8 @@ quickrunGridOptions : {
 		enableFiltering: false,			// for searching
 		enableGridMenu: false,		
 		multiSelect:false,
-		enableVerticalScrollbar :0,
+		enableVerticalScrollbar :1,
+		enableHorizontalScrollbar :0, 
 		
 		columnDefs: [
 			{displayName: 'Begin-Date', field: 'beginDate' },

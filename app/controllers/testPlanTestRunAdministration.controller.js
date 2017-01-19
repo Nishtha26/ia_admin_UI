@@ -7,6 +7,7 @@ oTech.controller('testPlanTestRunAdministration',
         console.log('Role: '+$rootScope.role)
 		$scope.createTestPlan = {};
         var sendCreateData = {};
+        $scope.testRunIdForDelete = "";
         
         var TestPlanId ="";
         $templateCache.put('ui-grid/uiGridViewport',
@@ -183,20 +184,50 @@ oTech.controller('testPlanTestRunAdministration',
 			    enableHorizontalScrollbar:0,
           columnDefs: [
                          {name:'Id',field: 'testplanId', width: '10%'},
-                         {name:'Name',field: 'testplanName',width: '40%', cellTooltip: 
+                         {name:'Name',field: 'testplanName',width: '30%', cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.testplanName + '';
                            }},
-                         {name:'Use Case',field: 'useCaseName', width: '27%', cellTooltip: 
+                         {name:'Use Case',field: 'useCaseName', width: '20%', cellTooltip: 
                              function( row, col ) {
                              return '' + row.entity.useCaseName + '';
                            }},
                      	/*{name:'Created Date',field: 'createdDate', width: '20%'},*/
          				{name:'Created By',field: 'createdByName', width: '20%'},
+         				{name:'Actions', enableRowSelection: false, enableCellEdit: false ,headerCellClass: 'header-grid-cell-button', enableFiltering: false, width: '20%',cellClass: 'ui-grid-cell-button',
+         					enableColumnMenu: false, enableSorting: false,cellTemplate:
+         	         '<ul class="icons-list">'+
+         				'<li class="dropdown">'+
+         			'<a  class="dropdown-toggle" data-toggle="dropdown">'+
+         				'<i class="icon-menu9"></i>'+
+         			'</a>'+
+         			'<ul class="dropdown-menu dropdown-menu-right">'+
+         				'<li ><a  ng-click="grid.appScope.viewTestPlanForQuickRun(row);" data-toggle="modal" data-target="#TestPlanQuickView"><i class="icon-file-eye2 text-primary"></i> View Test Plan Info</a></li>'+
+         			'</ul>'+
+         		'</li>'+
+         	'</ul>'},
          				
          			
                      ]
         };
+		
+		// view test plan View
+		
+		  $scope.viewTestPlanForQuickRun = function(row){
+			  $scope.dataLoadingForQuickArea = true;
+			  $scope.testPlanView = [];
+	        	promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+	            promise.then(
+	                function (data) {
+	                	$scope.testPlanView = data.jobVO[0].nodes;
+	                	 $scope.dataLoadingForQuickArea = false;
+	                },
+	                function (err) {
+	                	$scope.dataLoadingForQuickArea = false;
+	                    console.log(err);
+	                }
+	            );
+		  }
 
         //Row selection
         $scope.TestPlanQuickRun.onRegisterApi = function (gridApi) {
@@ -564,6 +595,7 @@ oTech.controller('testPlanTestRunAdministration',
 	            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 	    				Devices = [];
 	    				notificationTypes = [];
+	    				$scope.deleteTestRun = true;
 	    				$scope.jobName = row.entity.testrunName;
 	                    //Get devices service
 	    				if(row.isSelected){
@@ -571,6 +603,7 @@ oTech.controller('testPlanTestRunAdministration',
 								$('#scheduleparam').toggle();
 	    					$scope.dataProcessingOfAllTestRuns = true;
 	    					$rootScope.jobId = row.entity.testrunId;
+	    					$scope.testRunIdForDelete = row.entity.testrunId;
 	    					promise = testScriptService.ViewTestRunDeviceService(userId, token, row.entity.testrunId);
 		                    promise.then(
 		                        function (data) {
@@ -587,6 +620,7 @@ oTech.controller('testPlanTestRunAdministration',
 		                    );
 						}else{
 							$rootScope.jobId = "";
+							$scope.testRunIdForDelete = "";
 							$scope.testRunMappedDevices.data = [];
 							 $scope.searchTestRunMappedDevices = [];
 						}
@@ -621,6 +655,60 @@ oTech.controller('testPlanTestRunAdministration',
 	            gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
 	            });
 	        };
+	        
+	    // delete test run
+	        $scope.deActivateTestRun = function() {
+			   if($scope.testRunIdForDelete != "" && $scope.testRunIdForDelete != undefined){
+				   promise = testScriptService.deActivateTestRun(token, $scope.testRunIdForDelete);
+                   promise.then(
+                       function (data) {
+						if(data.status=="success"){
+							
+							$scope.deleteMsg = true;
+	                        $rootScope.testPlanDeleteMsgSucc = "Successfully Deleted !!!";
+	                        $timeout(function () {
+                            	$scope.deleteMsg = false;
+                            }, 3000);
+	                        $scope.allTestRuns.data = [];
+	                        $scope.deleteTestRun = false;
+	                        promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+	                		promise.then(
+	                			function (data) {
+	                				$scope.loadAllTestRuns = false;
+	                				$scope.hideFilter = true;
+	                				$scope.allTestRuns.data = [];
+	                				$scope.allTestRunsTemp = data.testRunsForTestPlan
+	                				$scope.allTestRuns.data = $scope.allTestRunsTemp;
+	                				$scope.searchTestRuns = $scope.allTestRunsTemp;
+	                			},
+	                			function (err) {
+	                				console.log(err);
+	                			}
+	                		);
+						}
+						else{
+							
+							$scope.deleteMsgerr = true;
+	                        $rootScope.testPlanDeleteMsgFel = "Error Occured !!!";
+	                        $timeout(function () {
+                            	$scope.deleteMsgerr = false;
+                            }, 3000);
+						}
+						
+                       },
+                       function (err) {
+   						
+   						$scope.deleteMsgerr = true;
+                           $rootScope.testPlanDeleteMsgFel = "Error Occured !!!";
+                           $timeout(function () {
+                           	$scope.deleteMsgerr = false;
+                           }, 3000);
+                       }
+                   );
+			   }
+			   
+			   $scope.testRunIdForDelete = "";
+			};
 	    
 	    $scope.testRunMappedDevices = {
 	    		enableSorting: true,

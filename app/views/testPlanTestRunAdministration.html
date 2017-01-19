@@ -848,6 +848,8 @@ padding: 2px 6px;
 										<div class="datatable-header" ng-show ="hideFilter"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
 							 			<input type="type" class="" ng-change="singleFilterForTestRuns()" ng-model="searchTextForTestRuns" placeholder="Type to filter..." ></label>
 							 			<span class="error_msg" ng-show ="errorMsg" >Please Select Test Run.. </span>
+							 			<span ng-show ="deleteMsg" class="success_msg">{{testPlanDeleteMsgSucc}}</span>
+							 			<span class="error_msg" ng-show ="deleteMsgerr" >{{testPlanDeleteMsgFel}}</span>
 							 			</div>
 						 			 </div>
 						 			 
@@ -860,6 +862,15 @@ padding: 2px 6px;
 						 			 <div id="allTestRuns" ui-grid="allTestRuns" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden;height: 450px;" >
 						 			 </div>
 						 			  
+						 			  <div class="col-md-12" style="margin-top: 20px; ">
+						 			  <div class="row pull-right" style="margin-top: -2px;">
+											<!-- <span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span> -->
+											<ul class="icons-list">
+												<li><button class="btn btn-success btn-xs runbtn" ng-show ="deleteTestRun" type="button" ng-click="deActivateTestRun()">Delete Test Run</button></li>
+											</ul>
+										</div>
+										
+									</div>
 									<!-- /test runs ui grid -->
 										</div>
 										<!-- /Test runs list -->
@@ -1179,6 +1190,41 @@ padding: 2px 6px;
 			</div>
 				
 		<!-- /DeviceNotification_List -->
+		
+		
+		
+		<!-- Test Plan Info -->
+				<div id="TestPlanQuickView" class="modal fade" role="dialog" data-backdrop="static">
+					<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+								<div class="heading-elements">
+									<ul class="icons-list">
+				                		<li><a data-dismiss="modal" data-action="close"></a></li>
+				                	</ul>
+			                	</div>
+							</div>
+
+							<div class="modal-body">
+							<div class="row">
+										<div class="col-lg-12" >
+												 <ul class="command_lister_ul" style="list-style: none; padding: 10px;" >
+													<li><div class="col-lg-3 col-sm-3">Title</div><div class="col-lg-5 col-sm-5">Command Params</div><div class="col-lg-2 col-sm-2" style="text-align:right; padding-right: 21px;">Loop</div><div class="col-lg-2 col-sm-2"  style="text-align:center;">Sequence</div></li>
+													<li><hr/></li>
+													<img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingForQuickArea"></img>
+													<span ui-tree>
+														<ol ui-tree-nodes=""  ng-model="testPlanView" class="device_attachment_tree" >
+														<li ng-repeat="node in testPlanView" ui-tree-node  data-nodrag ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol>
+													</span>	
+												</ul> 
+										</div>
+										</div>
+						</div>
+						</div>
+					</div>
+				</div>
+		<!-- /Test Plan info -->
 		
 	<div class="popover fade top in editable-container editable-popup"
 	role="tooltip" id="popovercommand" ng-show="showPopover"
