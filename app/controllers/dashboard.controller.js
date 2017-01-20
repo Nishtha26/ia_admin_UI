@@ -23,19 +23,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.listTypeForPagination = "";
 	
 	}
-	 
-	 
-	 $scope.getServerVersion = function(){
-		  			   promise = testScriptService.getServerVersion(token);
-               promise.then(
-                   function (data) {
-                	   alert($(data.status)[4].data)
-                   },
-                   function (err) {}
-               );
-		   }
-		   
-		  
+
 	 $scope.startUsageDate = "";
 	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
