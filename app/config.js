@@ -1798,7 +1798,7 @@ quickrunGridOptions : {
 						'{{row.entity.firstName}} {{row.entity.deviceStatus}}</div>}}'
 			},*/
 			{ name: 'manufacturer' ,field : 'manufacturer' ,width:150,enableCellEdit: false},
-			{ displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: true},
+			{ displayName:'Default Job ID', field: 'defaultJobId' ,width:150,enableCellEdit: false},
 			{ displayName:'User Name', field: 'fullName' ,width:150,enableCellEdit: false},
 			{ name: 'deviceType' ,width:150,enableCellEdit: false},
 			{ headerName: 'Carrier' ,width:150,field:'carrier',enableCellEdit: false, cellTooltip:
