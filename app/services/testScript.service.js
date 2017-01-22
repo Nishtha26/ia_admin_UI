@@ -818,6 +818,29 @@ oTech.service('testScriptService',
 			    });	
 			return deferred.promise; 
 		}
+
+        service.showDeviceTestStatusLogDetails = function(userId, token,deviceId,jobId){
+            var deferred = $q.defer();
+            $.ajax({
+                url : oApp.config.BASE_URL + "rest/testRun/getIaDeviceStatus",
+                type: "POST",
+                data : {token:token, userId:userId,deviceId:deviceId,jobId:jobId},
+                headers :{
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function(data)
+                {
+
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
 		service.showDeviceNotificationLogDetails = function(userId, token,deviceId,jobId){
 			var deferred = $q.defer();
 			$.ajax({

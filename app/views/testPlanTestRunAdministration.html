@@ -249,7 +249,7 @@
         margin-top: 7px;
     }
 
-    #allTestRuns .ui-grid-viewport, #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport, #deviceNotificationLogListGridOptions .ui-grid-viewport {
+    #allTestRuns .ui-grid-viewport, #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport, #deviceTestStatusLogListGridOptions .ui-grid-viewport, #deviceNotificationLogListGridOptions .ui-grid-viewport {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch
 
@@ -1359,7 +1359,7 @@
     </div>
     <!-- /Device_List -->
 
-    <!-- TestStatus_List -->
+    <!-- DeviceTestStatus_List -->
     <div id="DeviceTestStatus_List" class="modal fade" role="dialog" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -1377,13 +1377,13 @@
                 <div class="modal-body">
                     <img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
                     <p style="text-align:center"
-                       ng-show="deviceTestStatusList.deviceStatusLogList.length <= 0 && !dataLoadingPopup">No
+                       ng-show="deviceTestStatusLogList.deviceTestStatusLogList.length <= 0 && !dataLoadingPopup">No
                         Data Found</p>
 
-                    <div id="deviceTestLogListGridOptions" ui-grid="deviceTestLogListGridOptions"
+                    <div id="deviceTestStatusLogListGridOptions" ui-grid="deviceTestStatusLogListGridOptions"
                          ui-grid-pagination ui-grid-cellNav ui-grid-auto-resize
-                         ng-show="deviceTestStatusLogList.deviceTestStatusLogList.length > 0 && !dataLoadingPopup"
-                         class="table table-hover grid" style="height: 500px;">
+                         ng-show="deviceTestStatusLogList.deviceStausLogList.length > 0 && !dataLoadingPopup"
+                         class="table table-hover grid" style="overflow:hidden;height:500px;">
                     </div>
 
                     <!-- <div class="modal-footer">
@@ -1394,7 +1394,7 @@
             </div>
         </div>
     </div>
-    <!-- /TestStatus_List -->
+    <!-- /DeviceTestStatus_List -->
 
     <!-- DeviceNotification_List -->
     <div id="DeviceNotification_List" class="modal fade" role="dialog" data-backdrop="static">
