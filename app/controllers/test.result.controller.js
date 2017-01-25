@@ -109,6 +109,30 @@ oTech.controller('TestController',
  	    }
     });*/
      
+     $('#SchedulerType').on( "change", function() {
+    	 var selected = $(this).find(":selected").text();
+    	 if($(this).find(":selected").val() == "1") {
+    		 $(".begindatetodisable").prop("disabled", false);
+    		 $(".enddatetodisable").prop("disabled", false);
+    		 $('#ETLExpiryTime1').val("").prop("disabled", true);
+    		 
+    	 }
+    	 if($(this).find(":selected").val() == "3") {
+    		 $(".enddatetodisable").val("");
+    		 $(".enddatetodisable").prop("disabled", true);
+    		 $(".begindatetodisable").prop("disabled", false);
+    		 $('#ETLExpiryTime1').val("").prop("disabled", false);
+    	 }
+    	 if($(this).find(":selected").val() == "2") {
+    		 $(".enddatetodisable").val("");
+    		 $(".begindatetodisable").val("");
+    		 $(".begindatetodisable").prop("disabled", true);
+    		 $(".enddatetodisable").prop("disabled", true);
+    		 $('#ETLExpiryTime1').val("").prop("disabled", false);
+    	 }
+    	 
+    	 
+     });
      
      $("#submitbtn").on('click', function(){
     	 $("#dataLoadingUpdate").show();
@@ -128,6 +152,12 @@ oTech.controller('TestController',
     		 data.commandParamString[i] = {};
     		 data.commandParamString[i].param_index = m[$("#" + i).attr("name")].paramIndex;
     		 if("beginDate" === $("#" + i).attr("name")){
+    			 if($(".begindatetodisable").prop("disabled") == true) {
+    				data.commandParamString[i].param_abbreviation = "-b";
+    				data.commandParamString[i].param_name = "beginDate";
+    			 	data.commandParamString[i].param_values = "";
+    				continue;
+    			 }
     			 var v = $("#" + i).val();
     			 if(typeof v === "undefined" || v == ''){
     				alert("Select Correct beginDate");
@@ -137,6 +167,12 @@ oTech.controller('TestController',
     			 beginDate = new Date($("#" + i).val());
     		 }
     		 if("endDate" === $("#" + i).attr("name")){
+    			 if($(".enddatetodisable").prop("disabled") == true) {
+    				data.commandParamString[i].param_abbreviation = "-e";
+     				data.commandParamString[i].param_name = "endDate";
+     			 	data.commandParamString[i].param_values = "";
+     				continue;
+    			 }
     			 var v = $("#" + i).val();
     			 if(typeof v === "undefined" || v == ''){
     				alert("Select Correct endDate");
@@ -148,7 +184,12 @@ oTech.controller('TestController',
     		 data.commandParamString[i].param_name = $("#" + i).attr("name");
     		 data.commandParamString[i].param_abbreviation = m[$("#" + i).attr("name")].paramAbbreviation;
     		 
-    		 if(("beginDate" === $("#" + i).attr("name")) ||  ("endDate" === $("#" + i).attr("name"))){
+    		 if(("beginDate" === $("#" + i).attr("name"))){
+    			 data.commandParamString[i].param_values = $("#" + i).val().replace("/", "-").replace("/", "-");
+    			 continue;
+    		 }
+    			 
+    		if("endDate" === $("#" + i).attr("name")) {
     			 data.commandParamString[i].param_values = $("#" + i).val().replace("/", "-").replace("/", "-");
     			 continue;
     		 }
@@ -156,7 +197,8 @@ oTech.controller('TestController',
     	}
     	
     	data.isExecuted = 0;
-    	if(beginDate > endDate ){
+    	
+    	if(($('#SchedulerType').val() == 1) && (beginDate > endDate) ){
     		alert("Select Correct beginDate and endDate");
     		$("#dataLoadingUpdate").hide();
     		return false;
@@ -167,6 +209,37 @@ oTech.controller('TestController',
     		return false;
     	}
     	data.scheduledTime = data.scheduledTime.replace("/", "-").replace("/", "-");
+    	
+     	if($('#SchedulerType').val() == -1){
+     		alert("Select Correct Scheduler Type");
+      		$("#dataLoadingUpdate").hide();
+      		return false;
+     	}
+     	
+     	if($('#RunningInterval').val() == -1){
+     		alert("Select Correct Scheduler Type");
+      		$("#dataLoadingUpdate").hide();
+      		return false; 
+     	}
+    	var overlapTime = $('#OverlapTime').val();
+    	if(typeof overlapTime === "undefined" || overlapTime == ''){
+    		alert("Select Correct Overlap Time");
+     		$("#dataLoadingUpdate").hide();
+     		return false; 
+    	}
+    	var expireTime = ($('#ETLExpiryTime1')[0]).value;
+    	if(($('#ETLExpiryTime1').prop("disabled") == false) && (typeof expireTime === "undefined" || expireTime == '') || new Date(data.scheduledTime) > new Date(expireTime)) {
+    		alert("Select Correct Expire Date and Time");
+    		$("#dataLoadingUpdate").hide();
+    		return false;
+    	}
+    	data.schedulerType = parseInt($('#SchedulerType').val());
+    	data.interval = parseInt($('#RunningInterval').val());
+    	data.overlapTime = parseInt(overlapTime);
+    	data.expiryTime = expireTime.replace("/", "-").replace("/", "-");
+    	
+    	var schedulerType = $('#SchedulerType').find(":selected").text();
+    	var runningInterval = $('#RunningInterval').find(":selected").text();
         var json = JSON.stringify(data);
         promise = AppServices.postWebETLSchedulerData(json, token, userId);
         promise.then(
@@ -198,9 +271,9 @@ oTech.controller('TestController',
      $scope.webETLSchedulerMappingGrid = oApp.config.webETLSchedulerMappingGrid;
      $scope.webETLSchedulerMappingGrid.onRegisterApi = function( gridApi ) {
     	 $scope.gridApi = gridApi;
-    	 $scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+    	 /*$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
     		 console.log(row);
- 		});
+ 		});*/
      };
      
      
@@ -231,5 +304,50 @@ oTech.controller('TestController',
      			$("#dataLoadingUpdate").hide();
      			alert("error " + err.status);
      		});
+     };
+     $scope.deleteETLInfo=function($event) {
+    	 console.log($event.target.id);
+    	 $("#dataLoadingUpdate").show();
+    	 promise = AppServices.deleteWebETLSchedulerMapping($event.target.id);
+         promise.then(
+         	function(data) {
+         		$("#dataLoadingUpdate").hide();
+         		if(data.status != 'success')
+         			alert("Some error occured");
+         		else
+         			alert("Deleted Successfully");
+        		$scope.webETLSchedulerMappingGrid.data = [];
+        		promise = AppServices.getWebETLSchedulerMapping();
+        	     promise.then(
+        	     	function(data) {
+        	     		$("#dataLoadingUpdate").hide();
+        	     		$scope.webETLSchedulerMappingGrid.data = data;
+        	     	},
+        	 		function(err){
+        	 			$("#dataLoadingUpdate").hide();
+        	 			alert("error " + err.status);
+        	 		});
+         	},
+     		function(err){
+     			$("#dataLoadingUpdate").hide();
+     			alert("error " + err.status);
+     		});
+     };
+     
+     $scope.callExpiryDateCalender = function(){
+    	 $('#blankclassExpiryDiv').fadeToggle();
+    	 $('#blankclassExpiryDiv').datetimepicker({
+			date: new Date(),
+			viewMode: 'YMDHMS',
+			onDateUpdate: function(){
+				($('#ETLExpiryTime1')[0]).value = this.getText();
+			},
+			onOk: function() {
+				$('#blankclassExpiryDiv').fadeToggle();
+			},
+	   		onToday: function() {
+	   			$('#blankclassExpiryDiv').fadeToggle();
+			}
+		});
      };
 });

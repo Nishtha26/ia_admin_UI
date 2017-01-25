@@ -1884,6 +1884,27 @@ oTech.service('AppServices',
 			    });	
 			return deferred.promise; 
 		}
+		service.deleteWebETLSchedulerMapping = function(id){
+			var deferred = $q.defer();
+			$.ajax({
+				    url : oApp.config.BASE_URL + "rest/etl/deleteETLInfo/" + id,
+		            type: "GET",
+	                data: {},
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+				    success: function(data)
+				    {
+						deferred.resolve(data);
+				    },
+				    error: function (err)
+				    {
+						deferred.reject(err);
+						console.log(err);
+				    }
+			    });	
+			return deferred.promise; 
+		}
 		
 	return service; 		
 }])
