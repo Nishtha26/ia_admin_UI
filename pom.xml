@@ -22,7 +22,6 @@
 				<includes>
 					<include>app/**</include>
 					<include>assets/**</include>
-					<include>bower_components/**</include>
 					<include>ckeditor/**</include>
 					<include>css/**</include>
 					<include>fonts/**</include>
