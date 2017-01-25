@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
+var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid','ui.grid.pagination','ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
 });
 
 
@@ -427,8 +427,9 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 
 }]);
 
-oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies) {
+oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies, testScriptService) {
 
+    var token = sessionStorage.getItem("token");
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
 
         if ($location.path() !== '/login' && sessionStorage.getItem('isLogin') == null) {
@@ -436,8 +437,19 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
         }
 
     });
-
-
+    /**
+     * Function for IAS Version
+     */
+    $rootScope.getServerVersion = function () {
+        promise = testScriptService.getServerVersion(token);
+        promise.then(
+            function (data) {
+                alert($(data.status)[4].data);
+            },
+            function (err) {
+            }
+        );
+    }
     /*
      Function for menu toggle
      */
@@ -565,6 +577,7 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
 
 
     }
+
     /*
      function for signout
      */

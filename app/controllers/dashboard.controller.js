@@ -23,6 +23,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 		$scope.listTypeForPagination = "";
 	
 	}
+
 	 $scope.startUsageDate = "";
 	  $scope.dtmax = new Date();
 	 $scope.createTestPlan = function () {
