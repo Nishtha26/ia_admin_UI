@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid','ui.grid.pagination','ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
+var oTech = angular.module("oTech", ['toastr', 'ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
 });
 
 
@@ -427,7 +427,7 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
 
 }]);
 
-oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies, testScriptService) {
+oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $timeout, $cookieStore, $cookies, testScriptService, toastr) {
 
     var token = sessionStorage.getItem("token");
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -441,14 +441,24 @@ oTech.run(function ($rootScope, $location, $stateParams, $sce, AppServices, $tim
      * Function for IAS Version
      */
     $rootScope.getServerVersion = function () {
-        promise = testScriptService.getServerVersion(token);
-        promise.then(
-            function (data) {
-                alert($(data.status)[4].data);
+        var token = sessionStorage.getItem("token");
+        $.ajax({
+            url: oApp.config.BASE_URL + "rest/testRun/getServerVersion",
+            type: "POST",
+            data: {token: token},
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            function (err) {
+            success: function (data) {
+                console.log(data.status);
+                toastr.info(data.status + "<br/>" + "IAA Version : " + oApp.config.IAAVersion, 'Powered by Orchestratec', {
+                    allowHtml: true
+                });
+            },
+            error: function (err) {
+                console.log(err);
             }
-        );
+        });
     }
     /*
      Function for menu toggle

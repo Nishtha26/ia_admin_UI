@@ -22,13 +22,14 @@
 				<includes>
 					<include>app/**</include>
 					<include>assets/**</include>
+					<include>bower_components/**</include>
 					<include>ckeditor/**</include>
 					<include>css/**</include>
 					<include>fonts/**</include>
 					<include>images/**</include>
 					<include>js/**</include>
 					<include>starters/**</include>
-					<include>documentatin.txt</include>
+					<include>documentatation.txt</include>
 					<include>index.html</include>
 				</includes>
 				<targetPath>${basedir}/target/</targetPath>
