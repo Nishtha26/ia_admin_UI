@@ -1883,15 +1883,17 @@ quickrunGridOptions : {
 			{displayName: 'End-Date', field: 'endDate' },
 			{displayName: 'Schedule Date Time', field: 'scheduleDateTime'},
 			{displayName: 'Current Status', field: 'currentStatus', enableCellEdit: false,  cellTemplate: '<div class="ui-grid-cell-contents">'+
-				  '<span ng-if="row.entity.currentStatus ==  \'OPEN\'"><span class="label label-default">OPEN</span></span>'+
+				  '<span ng-if="row.entity.currentStatus ==  \'SCHEDULED\'"><span class="label label-default">SCHEDULED</span></span>'+
 				  '<span ng-if="row.entity.currentStatus ==  \'RUNNING\'"><span class="label label-primary">RUNNING</span></span>'+
 				  '<span ng-if="row.entity.currentStatus ==  \'FINISHED\'"><span class="label label-success">FINISHED</span></span>'+
 				  '<span ng-if="row.entity.currentStatus ==  \'FORCEFULLY STOPPED\'"><span class="label label-warning">FORCEFULLY STOPPED</span></span>'+
 				  '<span ng-if="row.entity.currentStatus ==  \'ABRUPTLY STOPPED\'"><span class="label label-danger">ABRUPTLY STOPPED</span></span>'+
 				  '</span></div>'}
 			,{displayName: 'Action', field: 'stat', cellTemplate: '<div class="ui-grid-cell-contents">'+
-				  '<div ng-if="row.entity.currentStatus == \'RUNNING\'"><button type="button" style="padding:1px 12px" class="stopbtn btn btn-danger" ng-click="grid.appScope.stopETL()">Stop ETL</button></div>' + 
-				  '<div ng-if="row.entity.currentStatus != \'RUNNING\'">----</div></div>'
+				'<div ng-if="row.entity.currentStatus == \'RUNNING\'"><button style="padding:1px 12px" class="stopbtn btn btn-danger" ng-click="grid.appScope.stopETL()">Stop ETL</button></div>' + 
+				'<div ng-if="row.entity.currentStatus == \'SCHEDULED\'"><button id="{{row.entity.id}}" style="padding:1px 12px" class="btn btn-info" ng-click="grid.appScope.deleteETLInfo($event)">Delete</button></div>' +
+				'<div ng-if="row.entity.currentStatus != \'RUNNING\'">----</div>' + 
+				'</div>'
 			},
 		]
 	},
