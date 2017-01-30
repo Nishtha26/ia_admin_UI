@@ -28,7 +28,7 @@
 					<include>images/**</include>
 					<include>js/**</include>
 					<include>starters/**</include>
-					<include>documentatin.txt</include>
+					<include>documentatation.txt</include>
 					<include>index.html</include>
 				</includes>
 				<targetPath>${basedir}/target/</targetPath>

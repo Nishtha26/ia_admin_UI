@@ -3,6 +3,7 @@ oTech.controller('DashBoardController', function($timeout, $scope, $rootScope, $
 	$rootScope.name = sessionStorage.getItem("username");
 	$scope.email = sessionStorage.getItem("email");
 	$rootScope.role = sessionStorage.getItem("role");
+
 	
 	$rootScope.slideContent();
 	window.onresize = function(event) {
