@@ -97,41 +97,30 @@ oTech.controller('TestController',
 			 }
 		});
      }
-    /*$(document).on("click",function(event){
-    	 if( $(event.target).closest("#blankclassBeginDiv").length != 1) {
- 	    	$('#blankclassBeginDiv').fadeToggle();
- 	    }
-    	if( $(event.target).closest("#blankclassEndDiv").length != 1){
- 	    	$('#blankclassEndDiv').fadeToggle();
- 	    }
-    	if( $(event.target).closest("#blankclassscheduleDateDiv").length != 1){
-    		$('#blankclassscheduleDateDiv').fadeToggle();
- 	    }
-    });*/
-     
+
      $('#SchedulerType').on( "change", function() {
-    	 var selected = $(this).find(":selected").text();
+    	 //var selected = $(this).find(":selected").text();
     	 if($(this).find(":selected").val() == "1") {
-    		 $(".begindatetodisable").prop("disabled", false);
-    		 $(".enddatetodisable").prop("disabled", false);
+    		 $('#OverlapTime').val("").prop("disabled", true);
+    		 $('#RunningInterval').val("-1").prop("disabled", true);
     		 $('#ETLExpiryTime1').val("").prop("disabled", true);
-    		 
+    		 $(".begindatetodisable").prop("disabled", false);
+    		 $(".enddatetodisable").prop("disabled", false);    		 
     	 }
     	 if($(this).find(":selected").val() == "3") {
-    		 $(".enddatetodisable").val("");
-    		 $(".enddatetodisable").prop("disabled", true);
-    		 $(".begindatetodisable").prop("disabled", false);
+    		 $('#OverlapTime').val("").prop("disabled", false);
+    		 $('#RunningInterval').val("30").prop("disabled", false);
     		 $('#ETLExpiryTime1').val("").prop("disabled", false);
+    		 $(".enddatetodisable").val("").prop("disabled", true);
+    		 $(".begindatetodisable").prop("disabled", false);
     	 }
     	 if($(this).find(":selected").val() == "2") {
-    		 $(".enddatetodisable").val("");
-    		 $(".begindatetodisable").val("");
-    		 $(".begindatetodisable").prop("disabled", true);
-    		 $(".enddatetodisable").prop("disabled", true);
+    		 $('#OverlapTime').val("").prop("disabled", false);
+    		 $('#RunningInterval').val("30").prop("disabled", false);
     		 $('#ETLExpiryTime1').val("").prop("disabled", false);
+    		 $(".begindatetodisable").prop("disabled", true);
+    		 $(".enddatetodisable").val("").prop("disabled", true);    		 
     	 }
-    	 
-    	 
      });
      
      $("#submitbtn").on('click', function(){
@@ -216,19 +205,20 @@ oTech.controller('TestController',
       		return false;
      	}
      	
-     	if($('#RunningInterval').val() == -1){
+     	if(($('#RunningInterval').val() == -1) && ($('#SchedulerType').val() != 1)){
      		alert("Select Correct Scheduler Type");
       		$("#dataLoadingUpdate").hide();
       		return false; 
      	}
     	var overlapTime = $('#OverlapTime').val();
-    	if(typeof overlapTime === "undefined" || overlapTime == ''){
+    	if((typeof overlapTime === "undefined" || overlapTime == '') && ($('#SchedulerType').val() == 2 || $('#SchedulerType').val() == 3)){
+    		
     		alert("Select Correct Overlap Time");
      		$("#dataLoadingUpdate").hide();
      		return false; 
     	}
     	var expireTime = ($('#ETLExpiryTime1')[0]).value;
-    	if(($('#ETLExpiryTime1').prop("disabled") == false) && (typeof expireTime === "undefined" || expireTime == '') || new Date(data.scheduledTime) > new Date(expireTime)) {
+    	if(($('#ETLExpiryTime1').prop("disabled") == false) && (typeof expireTime === "undefined" || expireTime == '') ) {
     		alert("Select Correct Expire Date and Time");
     		$("#dataLoadingUpdate").hide();
     		return false;
