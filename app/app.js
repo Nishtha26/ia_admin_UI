@@ -246,6 +246,10 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
         url: "/dashboard/etlPerformance",
         templateUrl: "app/views/etlPerfomance.html",
         controller: 'TestController'
+    }).state("reportConfig", {
+        url: "/dashboard/reportConfig",
+        templateUrl: "app/views/reportConfig.html",
+        controller: 'ReportConfigController'
     })
         .state('CreateTestRun.MappingTestRun', {
             url: '/MappingTestRun',

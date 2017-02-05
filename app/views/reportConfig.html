@@ -1,0 +1,180 @@
+<style>
+    .pd {
+        padding: 5px;
+    }
+
+    select {
+        border: 1px solid #ddd;
+        width: 172px;
+        height: 27px;
+    }
+
+    #headd {
+        text-align: center;
+    }
+
+    .grid1484207901843 .ui-grid-render-container-body .ui-grid-viewport {
+        width: 100% !important;
+    }
+
+    #webETLSchedulerMappingGrid {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+    .mrg > div:nth-child(even) {
+        position: relative;
+        left: 25%;
+    }
+
+    @media screen and (max-width: 1300px) {
+        .mrg > div:nth-child(even) {
+            position: relative;
+            left: 15%;
+        }
+
+        .mrg > div:nth-child(odd) {
+            position: relative;
+            left: 15%;
+        }
+    }
+
+    @media screen and (max-width: 1030px) {
+        .mrg > div:nth-child(even) {
+            position: relative;
+            left: 2%;
+        }
+
+        .mrg > div:nth-child(odd) {
+            position: relative;
+            left: 2%;
+        }
+    }
+
+    @media screen and (max-width: 1030px) {
+        .mrg > div:nth-child(even) {
+            position: relative;
+            left: 0%;
+        }
+
+        .mrg > div:nth-child(odd) {
+            position: relative;
+            left: 0%;
+        }
+    }
+
+    .col-md-3 {
+        width: 15%;
+    }
+
+    .ui-grid-cell-contents {
+        text-align: center;
+    }
+
+    #blankclassBeginDiv {
+        position: absolute;
+        z-index: 1;
+    }
+
+    #blankclassEndDiv {
+        position: absolute;
+        z-index: 1;
+    }
+
+    #blankclassscheduleDateDiv {
+        position: absolute;
+        z-index: 1;
+    }
+
+    #blankclassExpiryDiv {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .datefields {
+        width: 172px;
+        height: 27px;
+        border-radius: 0px;
+    }
+
+    .textinput {
+        border: 1px solid #ccc;
+        width: 172px;
+        height: 27px;
+        border-radius: 0px;
+    }
+
+    .myGrid {
+        height: 450px;
+    }
+
+    #reportConfigGridOptions .ui-grid-viewport {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch
+    }
+</style>
+<script>
+
+</script>
+<div ng-include="'app/views/header/header.html'"></div>
+<div ng-include="'app/views/menus/menu.html'"></div>
+<div class="page-container ng-scope">
+    <div class="page-content">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="panel panel-white">
+                    <div class='panel-body'>
+                        <div class="form-group col-lg-3" style="padding-left:0px;">
+                            <label class="text-semibold">Category</label>
+                            <select id="category" class="form-control select" style="width:250px;">
+                                <option ng-repeat="(id,val) in devices" value="{{id}}">{{val}}</option>
+                            </select>
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div class="datatable-header">
+                            <div id="DataTables_Table_0_filter" class="dataTables_filter"
+                                 style="padding-top:5px !important;"><label><span>Filter:</span>
+                                <input type="type" class="" ng-change="singleFilterForDM()" ng-model="searchText"
+                                       placeholder="Type to filter..."></label></div>
+                        </div>
+                        <div class="table table-hover datatable-highlight myGrid" id="reportConfigGridOptions"
+                             ui-grid="reportConfigGridOptions" ui-grid-selection
+                             ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning>
+                            <div class="error loadingErrMsg" ng-show="err"> No Data Found</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert"
+                                     aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to
+                                    {{endLimit}} of {{totalRecords}} entries
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="dataTables_paginate paging_simple_numbers">
+                                    <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                       ng-click="prevPage()">&larr;</a>
+                                    <span>
+											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+											</span>
+
+                                    <a ng-class="DisableNextPage()" class="paginate_button next"
+                                       ng-click="nextPage()">&rarr;</a>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <img id="dataLoadingDM" class="loading loading-imgac" src="images/loading_new.gif"
+                             style="display: none;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-include="'app/views/footer/footer.html'"></div>

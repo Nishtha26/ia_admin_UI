@@ -1,526 +1,552 @@
 <style>
-.icons-list li .live, .icons-list li .replay{
-margin:5px;
-padding:4px 8px;
-}
-.map-popup .form-group{
-	margin:10px 0;
-}
-
-.angularjs-datetime-picker{
-z-index: 1002;
-}
-.vertical{
-    -webkit-transform:rotate(-90deg);
-    -moz-transform:rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    -ms-transform:rotate(-90deg);
-    transform: rotate(-90deg);
-    transform-origin: left top 0;
-    float: left;
-    position: absolute;
-    top: 50%;
-    left: 1.5%;
-}
-.testRun-vertical {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-    transform-origin: left top 0;
-    float: right;
-    position: absolute;
-    top: 35%;
-    right: -7%;
-    z-index:1;
-}
-.devices-graph{
-	margin-left:20px;
-}
-.status_graph span em {
-    display: inline-block;
-    margin-right: 5px;
-    width: 10px;
-    height: 10px;}
-    .status_graph span:nth-child(1) em {
-    background-color: rgba(95, 146, 146,0.5);
+    .icons-list li .live, .icons-list li .replay {
+        margin: 5px;
+        padding: 4px 8px;
     }
+
+    .map-popup .form-group {
+        margin: 10px 0;
+    }
+
+    .angularjs-datetime-picker {
+        z-index: 1002;
+    }
+
+    .vertical {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        transform-origin: left top 0;
+        float: left;
+        position: absolute;
+        top: 50%;
+        left: 1.5%;
+    }
+
+    .testRun-vertical {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+        transform-origin: left top 0;
+        float: right;
+        position: absolute;
+        top: 35%;
+        right: -7%;
+        z-index: 1;
+    }
+
+    .devices-graph {
+        margin-left: 20px;
+    }
+
+    .status_graph span em {
+        display: inline-block;
+        margin-right: 5px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .status_graph span:nth-child(1) em {
+        background-color: rgba(95, 146, 146, 0.5);
+    }
+
     .status_graph span:nth-child(2) em {
-    background-color: rgba(97,184,100,0.5);
-}
-.display-equal{
-	 display: flex;
-}
-.equal .heading-elements{
-	
-	flex: 1;
-}
-.equal .panel-heading{
-padding:25px 20px;	
-}
-.map-info{
-	padding:5px 10px;
-}
-.map-active{
-	font-weight:bold;
-	text-decoration: underline;
-}
+        background-color: rgba(97, 184, 100, 0.5);
+    }
+
+    .display-equal {
+        display: flex;
+    }
+
+    .equal .heading-elements {
+
+        flex: 1;
+    }
+
+    .equal .panel-heading {
+        padding: 25px 20px;
+    }
+
+    .map-info {
+        padding: 5px 10px;
+    }
+
+    .map-active {
+        font-weight: bold;
+        text-decoration: underline;
+    }
 </style>
 
 
 <!-- Header Start -->
-	<div ng-include="'app/views/header/header.html'"></div>
-	<!-- Header End -->
-	<!-- Second navbar -->
-	<div ng-include="'app/views/menus/menu.html'"></div>
-	<!-- /second navbar -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- Header End -->
+<!-- Second navbar -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /second navbar -->
 
 
+<!-- Page header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4>
+                <!-- <span class="text-semibold">Home</span> - Dashboard -->
+                <small class="display-block">Welcome, {{name | capitalize}}</small>
+            </h4>
+        </div>
 
-	<!-- Page header -->
-	<div class="page-header">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4>
-					<!-- <span class="text-semibold">Home</span> - Dashboard -->
-					<small class="display-block">Welcome, {{name | capitalize}}</small>
-				</h4>
-			</div>
+        <!-- <div class="heading-elements">
+            <div class="heading-btn-group">
+                <a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+            </div>
+        </div> -->
+    </div>
+</div>
 
-			<!-- <div class="heading-elements">
-				<div class="heading-btn-group">
-					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
-				</div>
-			</div> -->
-		</div>
-	</div>
-	
-	<!-- Page container -->
-	<div class="page-container">
+<!-- Page container -->
+<div class="page-container">
 
-		<!-- Page content -->
-		<div class="page-content">
+    <!-- Page content -->
+    <div class="page-content">
 
-			<!-- Main content -->
-			<div class="content-wrapper" ng-show="{{role != 'ROLE_REPORTING'}}">
-				<div class="row">
-					<div class="col-lg-12" >
-						
-					<!-- Devices Div -->
-						
+        <!-- Main content -->
+        <div class="content-wrapper" ng-show="{{role != 'ROLE_REPORTING'}}">
+            <div class="row">
+                <div class="col-lg-12">
 
-							<!-- Device Synopsis Row -->
-							
-								<div class="col-lg-6" ng-show="{{role == 'ROLE_OTADMIN'}}">
-									<div class="panel panel-white">
-										<div class="panel-heading"><h6>Devices  &nbsp;  <span class="label label-primary">{{activeDeviceCountPer}}% Currently Active</span></h6> 
-											<div class="heading-elements">
-											
-												<!-- <div class="form-group">
-													<div class="input-group">
-														<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-														<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
-													</div>
-												</div> -->
-											</div>
-										</div>
-
-										<div class="panel-body">
-											
-											<div class="col-lg-4">
-
-												<!-- Members online -->
-												<div class="panel bg-teal-400">
-													<div class="panel-body">
-														<h3 class="no-margin">{{registeredDeviceCount}}</h3>
-														<div class="text-muted text-size-small">Registered Devices</div>
-													</div>
-
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
-
-											<div class="col-lg-4">
-
-												<!-- Members online -->
-												<div class="panel bg-primary-400">
-													<div class="panel-body">
-														<div class="heading-elements">
-															<span class="heading-text badge bg-teal-800">{{approvedDeviceCountPer}}%</span>
-														</div>
-
-														<h3 class="no-margin">{{approvedDeviceCount}}</h3>
-														<div class="text-muted text-size-small"> Licensed Devices</div>
-													</div>
-
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
+                    <!-- Devices Div -->
 
 
-											<div class="col-lg-4">
+                    <!-- Device Synopsis Row -->
 
-												<!-- Members online -->
-												<div class="panel bg-indigo-400">
-													<div class="panel-body">
-														<div class="heading-elements">
-															<span class="heading-text badge bg-teal-800">{{availableDeviceCountPer}}%</span>
-														</div>
+                    <div class="col-lg-6" ng-show="{{role == 'ROLE_OTADMIN'}}">
+                        <div class="panel panel-white">
+                            <div class="panel-heading"><h6>Devices &nbsp; <span class="label label-primary">{{activeDeviceCountPer}}% Currently Active</span>
+                            </h6>
+                                <div class="heading-elements">
 
-														<h3 class="no-margin">{{availableDeviceCount}}</h3>
-														<div class="text-muted text-size-small"> Available Devices</div>
-													</div>
+                                    <!-- <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                            <input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015">
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
 
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
+                            <div class="panel-body">
 
+                                <div class="col-lg-4">
 
+                                    <!-- Members online -->
+                                    <div class="panel bg-teal-400">
+                                        <div class="panel-body">
+                                            <h3 class="no-margin">{{registeredDeviceCount}}</h3>
+                                            <div class="text-muted text-size-small">Registered Devices</div>
+                                        </div>
 
-										</div>
-									</div>
-									</div>
-									<!-- Tests Synopsis Row -->
-								
-								<div class="col-lg-6">
-									<div class="panel panel-white">
-										<div class="panel-heading"><h6>Test Runs &nbsp; 					
-										<img class="loading " src="images/loading_new.gif"
-										id="dataLoadingTest" style="height:25px;width:25px;display:none;position:absolute;top: 34%;left: 70%;" ></img> <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
-											<div class="heading-elements">
-												<div class="form-group">
-										
-													<div class="input-group">
-										
-														<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-														<input id="testRunDate" type="text"  class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
-													</div>
-												</div>
-											</div>
-										</div>
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
 
-										<div class="panel-body">
-											
-											<div class="col-lg-4">
+                                <div class="col-lg-4">
 
-												<!-- Members online -->
-												<div class="panel bg-teal-400">
-													<div class="panel-body">
-														<h3 class="no-margin">{{totalTestPlanCount}}</h3>
-														<div class="text-muted text-size-small">Test Plan Created</div>
-													</div>
+                                    <!-- Members online -->
+                                    <div class="panel bg-primary-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <span class="heading-text badge bg-teal-800">{{approvedDeviceCountPer}}%</span>
+                                            </div>
 
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
+                                            <h3 class="no-margin">{{approvedDeviceCount}}</h3>
+                                            <div class="text-muted text-size-small"> Licensed Devices</div>
+                                        </div>
 
-											<div class="col-lg-4">
-
-												<!-- Members online -->
-												<div class="panel bg-primary-400">
-													<div class="panel-body">
-													<!-- 	<div class="heading-elements">
-															<span class="heading-text badge bg-teal-800">19.4%</span>
-														</div> -->
-
-														<h3 class="no-margin">{{totalTestRunCount}}</h3>
-														<div class="text-muted text-size-small">Test Run Created</div>
-													</div>
-
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
 
 
-											<div class="col-lg-4">
+                                <div class="col-lg-4">
 
-												<!-- Members online -->
-												<div class="panel bg-indigo-400">
-													<div class="panel-body">
-													<!-- 	<div class="heading-elements">
-															<span class="heading-text badge bg-teal-800">3%</span>
-														</div> -->
+                                    <!-- Members online -->
+                                    <div class="panel bg-indigo-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <span class="heading-text badge bg-teal-800">{{availableDeviceCountPer}}%</span>
+                                            </div>
 
-														<h3 class="no-margin">{{totalActiveTestRunCount}}</h3>
-														<div class="text-muted text-size-small">Test Run  Triggered</div>
-													</div>
+                                            <h3 class="no-margin">{{availableDeviceCount}}</h3>
+                                            <div class="text-muted text-size-small"> Available Devices</div>
+                                        </div>
 
-													<div class="container-fluid">
-														<div id="members-online"></div>
-													</div>
-												</div>
-												<!-- /members online -->
-											</div>
-
-
-
-										</div>
-									</div>
-								</div>
-						
-							<!-- /Tests Synopsis Row -->
-							</div>
-							</div>
-						
-							<!-- /Device Synopsis Row -->
-							
-							
-							
-							
-
-							<!-- Device stats -->
-							<div class="row  display-equal">
-								<div class="col-lg-12">		
-								<div class="col-lg-6  equal">							
-									<div class="panel panel-white">
-										<div class="panel-heading">
-											<h6 class="panel-title">Device Usage</h6>
-								 			<div class="heading-elements" style="top: 67%;">
-								 				<div class="status_graph text-capitalize"> <!-- pull-right -->
-											<span><em></em> Active &nbsp; &nbsp;</span>
-											<span><em></em> Idle</span>
-										</div>
-										
-						           </div> 
-										</div>
-
-						
-										
-										<div class="content-group-sm" >
-											<span class="device_graph_text vertical"># of Devices</span>
-											<div class="devices-graph" style="height:313px;">
-												<canvas id="canvas" height="208px" width="600px"></canvas>
-											</div>
-										</div>
-										<div id="devices_online_stats"></div>
-									</div>
-								</div>
-								<!-- /Device stats -->
-								<!-- Test Runs Div -->
-						<div class="col-lg-6 equal">
-							<!-- Test stats -->
-							
-									<div class="panel panel-white">
-										<div class="panel-heading">
-											<h6 class="panel-title">Test Run Status</h6>
-											<div class="heading-elements">
-												<!-- <form class="heading-form" action="#"> -->
-													<div class="form-group">
-														<!-- <select class="change-date select-sm" id="select_date_test">
-															<optgroup label="<i class='icon-watch pull-right'></i> Time period">
-																<option value="val1">June, 29 - July, 5</option>
-																<option value="val2">June, 22 - June 28</option>
-																<option value="val3" selected="selected">June, 15 - June, 21</option>
-																<option value="val4">June, 8 - June, 14</option>
-															</optgroup>
-														</select> -->
-										<!-- <div style="float:right;position:relative;top:-25px;"> -->
-										<div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy">
-											<span class="input-group-addon"><i class="icon-calendar22"></i></span>
-											<input class="form-control" id="dat" type="text" readonly style="width:100%;" />
-											
-										</div>
-									<!-- </div> -->
-													</div>
-												<!-- </form> -->
-						           </div>
-										</div>
-<!-- 
-										<div class="container-fluid">
-											<div class="row text-center">
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-plus2 position-left text-slate"></i>23</h5>
-														<span class="text-muted text-size-small">Test Plans This Week</span>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-plus position-left text-slate"></i> 68</h5>
-														<span class="text-muted text-size-small">Test Plans This Month</span>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="content-group">
-														<h5 class="text-semibold no-margin"><i class="icon-phone-wave position-left text-slate"></i>11</h5>
-														<span class="text-muted text-size-small">Tests Run</span>
-													</div>
-												</div>
-											</div>
-										</div> -->
-
-										<div class="content-group-sm" id="test_plans_lines"></div>
-										<div class="testRun-vertical">Color for Device(s) </div>
-										<div id="chart_div" style="height:314px;"></div>
-									</div>
-								
-							<!-- /Test stats -->
-
-							
-
-						</div>
-					<!-- /Test Runs Div -->
-								
-								
-								
-							</div>
-							</div>
-							
-		
-					<!-- /Devices Div -->
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
 
 
-					<div class="row">
-					<div class="col-lg-12">
-					<div class="col-lg-12">
-					<div class="panel panel-white">
-					<div class="panel-heading" style="padding:20px;">
-						<h5 class="panel-title" ng-show="live_heading">Map</h5>
-						<h5 class="panel-title" ng-show="replay_heading">Replay View</h5>
-						<div class="heading-elements">
-							<ul class="icons-list map-popup">
-								<li class="pointer-link live" ng-click="getMapData();"><span id="live_span" class="label label-primary map-info map-active">Live</span></li>
-		                		<li class="dropdown replay">
-							    <a class="dropdown-toggle pointer-link" ng-click="closeReplayDropDown();"><span id="replay_span" class="label label-primary map-info">Replay <span class="caret" style="margin:0; padding:0;"></span	></span></a>
-							
-							    
-                			<div id="replay_content" class="dropdown-menu " style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
-                			<img alt="close" class="pointer-link" style="float: right;" src="images/close.gif" ng-click="closeReplayDropDown();"/>
-						<form id="replayform" name="replayform" novalidate>
-							<div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tests Synopsis Row -->
 
-							<div id="devicesel" class="col-sm-12 form-group">
-							<label>Devices:</label> 
-							<select id="deviceId" name="deviceId" ng-model="deviceId" class="select" required>
-							<option value="">Select </option>
-							<option ng-repeat="device in DeviceList"
-										ng-selected="device.selected" ng-model="device.deviceId">{{device.deviceId}}</option>
-							</select>
-									<div class="clear"></div>
-									<div 
-										ng-show="replayform.deviceId.$touched || replayform.$submitted"
-										ng-messages="replayform.deviceId.$error"
-										class="errors ">
-										<div ng-message="required">**Device is required</div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-white">
+                            <div class="panel-heading"><h6>Test Runs &nbsp;
+                                <img class="loading " src="images/loading_new.gif"
+                                     id="dataLoadingTest"
+                                     style="height:25px;width:25px;display:none;position:absolute;top: 34%;left: 70%;"></img>
+                                <!-- <span class="label label-primary">9.6% Current Active</span> --> </h6>
+                                <div class="heading-elements">
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                            <input id="testRunDate" type="text" class="form-control daterange-basic"
+                                                   value="01/01/2015 - 01/31/2015">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="col-lg-4">
+
+                                    <!-- Members online -->
+                                    <div class="panel bg-teal-400">
+                                        <div class="panel-body">
+                                            <h3 class="no-margin">{{totalTestPlanCount}}</h3>
+                                            <div class="text-muted text-size-small">Test Plan Created</div>
+                                        </div>
+
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
+
+                                <div class="col-lg-4">
+
+                                    <!-- Members online -->
+                                    <div class="panel bg-primary-400">
+                                        <div class="panel-body">
+                                            <!-- 	<div class="heading-elements">
+                                                    <span class="heading-text badge bg-teal-800">19.4%</span>
+                                                </div> -->
+
+                                            <h3 class="no-margin">{{totalTestRunCount}}</h3>
+                                            <div class="text-muted text-size-small">Test Run Created</div>
+                                        </div>
+
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
 
 
-									</div>
-							</div>
-						<div class="col-sm-12 form-group">
-								<label>From: </label>
-								<div class="input-group date ">
+                                <div class="col-lg-4">
+
+                                    <!-- Members online -->
+                                    <div class="panel bg-indigo-400">
+                                        <div class="panel-body">
+                                            <!-- 	<div class="heading-elements">
+                                                    <span class="heading-text badge bg-teal-800">3%</span>
+                                                </div> -->
+
+                                            <h3 class="no-margin">{{totalActiveTestRunCount}}</h3>
+                                            <div class="text-muted text-size-small">Test Run Triggered</div>
+                                        </div>
+
+                                        <div class="container-fluid">
+                                            <div id="members-online"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /Tests Synopsis Row -->
+                </div>
+            </div>
+
+            <!-- /Device Synopsis Row -->
+
+
+            <!-- Device stats -->
+            <div class="row  display-equal">
+                <div class="col-lg-12">
+                    <div class="col-lg-6  equal">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Device Usage</h6>
+                                <div class="heading-elements" style="top: 67%;">
+                                    <div class="status_graph text-capitalize"> <!-- pull-right -->
+                                        <span><em></em> Active &nbsp; &nbsp;</span>
+                                        <span><em></em> Idle</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="content-group-sm">
+                                <span class="device_graph_text vertical"># of Devices</span>
+                                <div class="devices-graph" style="height:313px;">
+                                    <canvas id="canvas" height="208px" width="600px"></canvas>
+                                </div>
+                            </div>
+                            <div id="devices_online_stats"></div>
+                        </div>
+                    </div>
+                    <!-- /Device stats -->
+                    <!-- Test Runs Div -->
+                    <div class="col-lg-6 equal">
+                        <!-- Test stats -->
+
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">Test Run Status</h6>
+                                <div class="heading-elements">
+                                    <!-- <form class="heading-form" action="#"> -->
+                                    <div class="form-group">
+                                        <!-- <select class="change-date select-sm" id="select_date_test">
+                                            <optgroup label="<i class='icon-watch pull-right'></i> Time period">
+                                                <option value="val1">June, 29 - July, 5</option>
+                                                <option value="val2">June, 22 - June 28</option>
+                                                <option value="val3" selected="selected">June, 15 - June, 21</option>
+                                                <option value="val4">June, 8 - June, 14</option>
+                                            </optgroup>
+                                        </select> -->
+                                        <!-- <div style="float:right;position:relative;top:-25px;"> -->
+                                        <div id="datepicker" class="input-group date" data-date-format="mm-dd-yyyy">
+                                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                            <input class="form-control" id="dat" type="text" readonly
+                                                   style="width:100%;"/>
+
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                            <!--
+                                                                    <div class="container-fluid">
+                                                                        <div class="row text-center">
+                                                                            <div class="col-md-4">
+                                                                                <div class="content-group">
+                                                                                    <h5 class="text-semibold no-margin"><i class="icon-phone-plus2 position-left text-slate"></i>23</h5>
+                                                                                    <span class="text-muted text-size-small">Test Plans This Week</span>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4">
+                                                                                <div class="content-group">
+                                                                                    <h5 class="text-semibold no-margin"><i class="icon-phone-plus position-left text-slate"></i> 68</h5>
+                                                                                    <span class="text-muted text-size-small">Test Plans This Month</span>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4">
+                                                                                <div class="content-group">
+                                                                                    <h5 class="text-semibold no-margin"><i class="icon-phone-wave position-left text-slate"></i>11</h5>
+                                                                                    <span class="text-muted text-size-small">Tests Run</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> -->
+
+                            <div class="content-group-sm" id="test_plans_lines"></div>
+                            <div class="testRun-vertical">Color for Device(s)</div>
+                            <div id="chart_div" style="height:314px;"></div>
+                        </div>
+
+                        <!-- /Test stats -->
+
+
+                    </div>
+                    <!-- /Test Runs Div -->
+
+
+                </div>
+            </div>
+
+
+            <!-- /Devices Div -->
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading" style="padding:20px;">
+                                <h5 class="panel-title" ng-show="live_heading">Map</h5>
+                                <h5 class="panel-title" ng-show="replay_heading">Replay View</h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list map-popup">
+                                        <li class="pointer-link live" ng-click="getMapData();"><span id="live_span"
+                                                                                                     class="label label-primary map-info map-active">Live</span>
+                                        </li>
+                                        <li class="dropdown replay">
+                                            <a class="dropdown-toggle pointer-link"
+                                               ng-click="closeReplayDropDown();"><span id="replay_span"
+                                                                                       class="label label-primary map-info">Replay <span
+                                                    class="caret" style="margin:0; padding:0;"></span></span></a>
+
+
+                                            <div id="replay_content" class="dropdown-menu "
+                                                 style="width:250px; padding: 10px 15px; absolute;top: 30px; left: -190px;">
+                                                <img alt="close" class="pointer-link" style="float: right;"
+                                                     src="images/close.gif" ng-click="closeReplayDropDown();"/>
+                                                <form id="replayform" name="replayform" novalidate>
+                                                    <div class="row">
+
+                                                        <div id="devicesel" class="col-sm-12 form-group">
+                                                            <label>Devices:</label>
+                                                            <select id="deviceId" name="deviceId" ng-model="deviceId"
+                                                                    class="select" required>
+                                                                <option value="">Select</option>
+                                                                <option ng-repeat="device in DeviceList"
+                                                                        ng-selected="device.selected"
+                                                                        ng-model="device.deviceId">{{device.deviceId}}
+                                                                </option>
+                                                            </select>
+                                                            <div class="clear"></div>
+                                                            <div
+                                                                    ng-show="replayform.deviceId.$touched || replayform.$submitted"
+                                                                    ng-messages="replayform.deviceId.$error"
+                                                                    class="errors ">
+                                                                <div ng-message="required">**Device is required</div>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 form-group">
+                                                            <label>From: </label>
+                                                            <div class="input-group date ">
 									 <span class="input-group-addon">
 										<span class="icon-calendar22"></span>
 									</span>
-									<input id="fromDate" name="fromDate" ng-model="fromDate"  class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm" required> 
-								</div>
-									<div class="clear"></div>
-									<div
-										ng-show="replayform.fromDate.$touched || replayform.$submitted"
-										ng-messages="replayform.fromDate.$error"
-										class="errors ">
-										<div ng-message="required">**From Date is required</div>
-										
+                                                                <input id="fromDate" name="fromDate" ng-model="fromDate"
+                                                                       class="form-control" style="height: 37px;"
+                                                                       datetime-picker="" date-format="MM/dd/yyyy HH:mm"
+                                                                       required>
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                            <div
+                                                                    ng-show="replayform.fromDate.$touched || replayform.$submitted"
+                                                                    ng-messages="replayform.fromDate.$error"
+                                                                    class="errors ">
+                                                                <div ng-message="required">**From Date is required</div>
 
-									</div>
-							</div>
-							<div class="col-sm-12 form-group">
-								<label>To: </label>
-								<div class="input-group date ">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 form-group">
+                                                            <label>To: </label>
+                                                            <div class="input-group date ">
 								 <span class="input-group-addon">
 										<span class="icon-calendar22"></span>
 									</span>
-									<input id="toDate" name="toDate" ng-model="toDate" max-date="dtmax" class="form-control" style="height: 37px;" datetime-picker="" date-format="MM/dd/yyyy HH:mm" required> 
-									
-								</div>
-									<div class="clear"></div>
-									<div
-										ng-show="replayform.toDate.$touched || replayform.$submitted"
-										ng-messages="replayform.toDate.$error"
-										class="errors ">
-										<div ng-message="required">**To Date is required</div>
-										
+                                                                <input id="toDate" name="toDate" ng-model="toDate"
+                                                                       max-date="dtmax" class="form-control"
+                                                                       style="height: 37px;" datetime-picker=""
+                                                                       date-format="MM/dd/yyyy HH:mm" required>
 
-									</div>
-							</div>
-					
-										
-							<div class="col-sm-12 form-group text-center">
-							<button type="submit" class="btn btn-success"  ng-click="showReplayMap()" >Replay Map</button>
-									<!-- <input  class="btn btn-success btn-sm" ng-disabled="replayform.$invalid" type="submit" ng-click="showReplayMap();" value="Replay Map"> -->
-							</div> 
-							
-								
-							</div>
-						</form>
-					</div>
-					</li>
-		                		
-		               
-		                	</ul>
-	                	</div>
-					</div>
-<img class="loading loading-imgac" src="images/loading_new.gif"
-										ng-show="dataLoadingMap" style="position: absolute;z-index:1;top:25%;"></img>
-					<div class="panel-body" ng-show="livemap_container">
-					
-					<div class="map-container" id="Map"></div>
-						
-					</div>
-					
-					<div class="panel-body" ng-show="replaymap_container"  id="rePlayMap_container" >
-						<div id="replay_map_error" class="errors" style="display:none;"></div>
-					<div class="map-container" id="rePlayMap"></div>
-						
-					</div>
-				</div>
-				</div>
-				</div>
-				</div>
-			</div>
-			<div class="content-wrapper" ng-show="{{role == 'ROLE_REPORTING'}}">
-			
-			</div>
-			<!-- /main content -->
-
-		</div>
-		<!-- /page content -->
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                            <div
+                                                                    ng-show="replayform.toDate.$touched || replayform.$submitted"
+                                                                    ng-messages="replayform.toDate.$error"
+                                                                    class="errors ">
+                                                                <div ng-message="required">**To Date is required</div>
 
 
-
-		<!-- footer  -->
-		<div ng-include="'app/views/footer/footer.html'"></div>
-		<!-- /footer  -->
-
-	</div>
-	<!-- /page container -->
+                                                            </div>
+                                                        </div>
 
 
-<script> 
-$(function () {
-$('.select').select2(
-		/* {
-    minimumResultsForSearch: Infinity
-} */
-);
-$("body").css('background', 'none');
-});
+                                                        <div class="col-sm-12 form-group text-center">
+                                                            <button type="submit" class="btn btn-success"
+                                                                    ng-click="showReplayMap()">Replay Map
+                                                            </button>
+                                                            <!-- <input  class="btn btn-success btn-sm" ng-disabled="replayform.$invalid" type="submit" ng-click="showReplayMap();" value="Replay Map"> -->
+                                                        </div>
+
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <img class="loading loading-imgac" src="images/loading_new.gif"
+                                 ng-show="dataLoadingMap" style="position: absolute;z-index:1;top:25%;"></img>
+                            <div class="panel-body" ng-show="livemap_container">
+
+                                <div class="map-container" id="Map"></div>
+
+                            </div>
+
+                            <div class="panel-body" ng-show="replaymap_container" id="rePlayMap_container">
+                                <div id="replay_map_error" class="errors" style="display:none;"></div>
+                                <div class="map-container" id="rePlayMap"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper" ng-show="{{role == 'ROLE_REPORTING'}}">
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+
+    <!-- footer  -->
+    <div ng-include="'app/views/footer/footer.html'"></div>
+    <!-- /footer  -->
+
+</div>
+<!-- /page container -->
+
+
+<script>
+    $(function () {
+        $('.select').select2(
+                /* {
+                 minimumResultsForSearch: Infinity
+                 } */
+        );
+        $("body").css('background', 'none');
+    });
 </script>
