@@ -1,44 +1,51 @@
 <!-- Second navbar -->
 <div class="navbar navbar-default" id="navbar-second">
-	<ul class="nav navbar-nav no-border visible-xs-block">
-		<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-	</ul>
+    <ul class="nav navbar-nav no-border visible-xs-block">
+        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                class="icon-menu7"></i></a></li>
+    </ul>
 
-	<div class="navbar navbar-default" id="navbar-second">
-		<ul class="nav navbar-nav no-border visible-xs-block">
-			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-		</ul>
-		<div class="navbar-collapse collapse" id="navbar-second-toggle">
-			<ul class="nav navbar-nav">
-				<li ng-repeat="(key, val) in menuData" class="dropdown">
-					<a ng-if = "val.length == 1 && val[0].screenName==key" ng-repeat="x in menuData[key]" class="" ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"  >
-						<i class="{{x.iconUrl}}"></i>	{{x.screenName}}
-					</a>
-					<span ng-if ="val.length == 1 && val[0].screenName!=key">
-							<a  class="dropdown-toggle" data-toggle="dropdown"><i class="{{key | headerIcon}}"></i> {{key}} <span class="caret"></span></a>
-							<ul class="dropdown-menu width-250" >
-								<li ng-repeat="x in val"><a  ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
-								<!-- <li ng-repeat="x in menuData[key]">
-									<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
-									<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
-								</li> -->
-							</ul>
-					</span>			
-					<span ng-if ="val.length > 1">
-						<a  class="dropdown-toggle" data-toggle="dropdown"><i class="{{key | headerIcon}}"></i> {{key}} <span class="caret"></span></a>
-							<ul class="dropdown-menu width-250" >
-								<li ng-repeat="x in val"><a  ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
-								<!-- <li ng-repeat="x in menuData[key]">
-									<a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
-									<img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
-								</li> -->
+    <div class="navbar navbar-default" id="navbar-second">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                    class="icon-menu7"></i></a></li>
+        </ul>
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="(key, val) in menuData" class="dropdown">
+                    <a ng-if="val.length == 1 && val[0].screenName==key" ng-repeat="x in menuData[key]" class=""
+                       ng-click="actionCalledURL(key,x.menuUrl,x.screenName)">
+                        <i class="{{x.iconUrl}}"></i> {{x.screenName}}
+                    </a>
+                    <span ng-if="val.length == 1 && val[0].screenName!=key">
+							<a class="dropdown-toggle" data-toggle="dropdown"><i class="{{key | headerIcon}}"></i> {{key}} <span
+                                    class="caret"></span></a>
+							<ul class="dropdown-menu width-250">
+								<li ng-repeat="x in val"><a ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i
+                                        class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
+                                <!-- <li ng-repeat="x in menuData[key]">
+                                    <a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
+                                    <img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
+                                </li> -->
 							</ul>
 					</span>
-				</li>
-				
-				<li class ="pull-left"><a  ng-click="getServerVersion()"><i class="icon-help"></i></a></li>
-			</ul>
-		</div>
-	</div>
+                    <span ng-if="val.length > 1">
+						<a class="dropdown-toggle" data-toggle="dropdown"><i
+                                class="{{key | headerIcon}}"></i> {{key}} <span class="caret"></span></a>
+							<ul class="dropdown-menu width-250">
+								<li ng-repeat="x in val"><a ng-click="actionCalledURL(key,x.menuUrl,x.screenName)"><i
+                                        class="{{x.iconUrl}}"></i>{{x.screenName}}</a></li>
+                                <!-- <li ng-repeat="x in menuData[key]">
+                                    <a href="javascript:void(0);" ng-click="ShowReports(x.menuUrl, x.screenName)">{{x.screenName}}</a>
+                                    <img src="images/fav_icon.png" ng-show = "{{x.screenName != 'System' && x.screenName != 'Customer'}}" ng-click="AddFavourite(x.screenId,x.screenName,x.menuUrl)" style="float: right; margin-right: 13px; margin-top: 13px; cursor: pointer;width:11px;height:11px;" />
+                                </li> -->
+							</ul>
+					</span>
+                </li>
+
+                <li class="pull-left"><a ng-click="getServerVersion()"><i class="icon-help"></i></a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- /second navbar -->

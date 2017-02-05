@@ -1,192 +1,117 @@
-
 <!-- Header Start -->
-	<div ng-include="'app/views/header/header.html'"></div>
-	<!-- Header End -->
-	<!-- Second navbar -->
-	<div ng-include="'app/views/menus/menu.html'"></div>
-	<!-- /second navbar -->
-	<!-- Page header -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- Header End -->
+<!-- Second navbar -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /second navbar -->
+<!-- Page header -->
 <!-- 		<script type="text/javascript" src="assets/js/pages/form_select2.js"></script> -->
-	<!-- <div class="page-header">
-		<div class="page-header-content">
-			<div class="page-title">
-				<h4>
-					<span class="text-semibold">Measurements</span>
-				</h4>
-			</div>
+<!-- <div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4>
+                <span class="text-semibold">Measurements</span>
+            </h4>
+        </div>
 
-			<div class="heading-elements">
-				<div class="heading-btn-group">
-					<a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
-				</div>
-			</div>
-		</div>
-	</div> -->
-	<!-- /page header -->
-	<!-- Page container -->
-	<div class="page-container">
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+                <a href="#" class="btn btn-link btn-float has-text"><i class="icon-hash text-primary"></i><span>Videos</span></a>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- /page header -->
+<!-- Page container -->
+<div class="page-container">
 
-		<!-- Page content -->
-		<div class="page-content">
+    <!-- Page content -->
+    <div class="page-content">
 
-			<!-- Main content -->
-			<div class="content-wrapper">
-				
-				<!-- Highlighting rows and columns -->
-				<div class="panel panel-white">
-			
+        <!-- Main content -->
+        <div class="content-wrapper">
 
-					<DIV class='panel-body'>
+            <!-- Highlighting rows and columns -->
+            <div class="panel panel-white">
 
 
-						<div class="form-group col-lg-3" style="padding-left:0px;">
-							<label class="text-semibold">Category</label>
-							<select id="category"  class="form-control select" style="width:250px;" >
-							
-							<option ng-repeat ="(id,val) in devices"   value="{{id}}">{{val}}</option>
-					
-							</select>
-						</div>
-						<div style="clear:both;"></div>
-									<div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter" style="padding-top:5px !important;"><label><span>Filter:</span>
-						 <input type="type" class="" ng-change="singleFilterForDM()" ng-model="searchText" placeholder="Type to filter..." ></label></div>
-						<!-- 
-						 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
-						  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-						  <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
-						  <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
-						  <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
-						  <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
-						  <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
-						  </div>
-						  -->
-						  </div>
-										 
-						 <div class="table table-hover datatable-highlight" id="myGrid" ui-grid="devicesMeasurementGridOptions" ng-style="getTableHeight()"  ui-grid-selection ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning  >
-							 
-											<div class ="error loadingErrMsg" ng-show ="err"> No Data Found </div>			 
-					 </div>	
-					
-					 <div class="row">
-							<div class="col-sm-6">
-									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
-									</div>
-<div class="col-sm-6">
-										<div   class="dataTables_paginate paging_simple_numbers">
-																			
-											  <a ng-class="DisablePrevPage()" class="paginate_button previous" ng-click="prevPage()" >&larr;</a>
-											
-											<span>
-											  <a  ng-repeat="n in range()" ng-class="{current: n == currentPage}" ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+                <div class='panel-body'>
+
+
+                    <div class="form-group col-lg-3" style="padding-left:0px;">
+                        <label class="text-semibold">Category</label>
+                        <select id="category" class="form-control select" style="width:250px;">
+
+                            <option ng-repeat="(id,val) in devices" value="{{id}}">{{val}}</option>
+
+                        </select>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="datatable-header">
+                        <div id="DataTables_Table_0_filter" class="dataTables_filter"
+                             style="padding-top:5px !important;"><label><span>Filter:</span>
+                            <input type="type" class="" ng-change="singleFilterForDM()" ng-model="searchText"
+                                   placeholder="Type to filter..."></label></div>
+                        <!--
+                         <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
+                          <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                          <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+                          <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
+                          <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
+                          <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
+                          <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
+                          </div>
+                          -->
+                    </div>
+
+                    <div class="table table-hover datatable-highlight" id="myGrid"
+                         ui-grid="devicesMeasurementGridOptions" ng-style="getTableHeight()" ui-grid-selection
+                         ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning>
+
+                        <div class="error loadingErrMsg" ng-show="err"> No Data Found</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert"
+                                 aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to
+                                {{endLimit}} of {{totalRecords}} entries
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="dataTables_paginate paging_simple_numbers">
+                                <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                   ng-click="prevPage()">&larr;</a>
+                                <span>
+											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
 											</span>
-										
-											  <a ng-class="DisableNextPage()" class="paginate_button next" ng-click="nextPage()">&rarr;</a>
-											
-										 
-										</div>
-									</div>	
-				
-	</div>	
-			 <img id="dataLoadingDM" class="loading loading-imgac" src="{{dataLoadingImage}}" style="display: none;"></img>
-		
-				<!-- 	<table class="table table-bordered table-hover datatable-highlight" >
-						
-							<thead>
-								<tr>
-									<th>Device ID</th>
-									<th>Job ID</th>
-									<th>Time Stamp</th>
-									<th>APN ID</th>
-									<th>APN Name</th>
-									<th>APN Numeric</th>
-									<th>APN MCC</th>
-									<th>APN MNC</th>
-									<th>APN APN</th>
-									<th>APN User</th>
-									<th>APN Server</th>
-									<th>APN Password</th>
-									<th>APN Proxy</th>
-									<th>APN Port</th>
-									<th>APN MMS Proxy</th>
-									<th>APN MMS Port</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>3815</td>
-									<td>99453</td>
-									<td>08/13/2016 13:05:58</td>
-									<td>894959</td>
-									<td>vfalmms</td>
-									<td>8949920049</td>
-									<td>202</td>
-									<td>01</td>
-									<td>internet</td>
-									<td>samj</td>
-									<td>http://mmsc.cosmote.gr:8002</td>
-									<td>jackson</td>
-									<td>10.10.10.20</td>
-									<td>8002</td>
-									<td>10.10.10.24</td>
-									<td>8002</td>
-								</tr>
-								<tr>
-									<td>3815</td>
-									<td>99453</td>
-									<td>08/13/2016 13:05:58</td>
-									<td>894959</td>
-									<td>vfalmms</td>
-									<td>8949920049</td>
-									<td>202</td>
-									<td>01</td>
-									<td>internet</td>
-									<td>samj</td>
-									<td>http://mmsc.cosmote.gr:8002</td>
-									<td>jackson</td>
-									<td>10.10.10.20</td>
-									<td>8002</td>
-									<td>10.10.10.24</td>
-									<td>8002</td>
-								</tr>
-								<tr>
-									<td>3815</td>
-									<td>99453</td>
-									<td>08/13/2016 13:05:58</td>
-									<td>894959</td>
-									<td>vfalmms</td>
-									<td>8949920049</td>
-									<td>202</td>
-									<td>01</td>
-									<td>internet</td>
-									<td>samj</td>
-									<td>http://mmsc.cosmote.gr:8002</td>
-									<td>jackson</td>
-									<td>10.10.10.20</td>
-									<td>8002</td>
-									<td>10.10.10.24</td>
-									<td>8002</td>
-								</tr>
-							</tbody>
-						</table> 
-						-->
-					</DIV>
-				</div>
-				<!-- /highlighting rows and columns -->
+
+                                <a ng-class="DisableNextPage()" class="paginate_button next"
+                                   ng-click="nextPage()">&rarr;</a>
 
 
-			</div>
-			<!-- /main content -->
+                            </div>
+                        </div>
+                    </div>
+                    <img id="dataLoadingDM" class="loading loading-imgac" src="{{dataLoadingImage}}"
+                         style="display: none;"/>
+                </div>
+            </div>
+            <!-- /highlighting rows and columns -->
 
-		</div>
-		<!-- /page content -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
 
 
-		
+</div>
 
-	</div>
-
-	<!-- Page container -->
-	<!-- Footer -->
-			<div ng-include="'app/views/footer/footer.html'" style="position: relative;bottom: 0px;"></div>
-		<!-- /footer -->
+<!-- Page container -->
+<!-- Footer -->
+<div ng-include="'app/views/footer/footer.html'" style="position: relative;bottom: 0px;"></div>
+<!-- /footer -->
 

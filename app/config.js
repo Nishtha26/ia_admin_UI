@@ -2202,6 +2202,60 @@ oApp.config = {
         ]
     },
     loadingImageName: 'images/loading_new.gif',
-    menuData: null
+    menuData: null,
+
+
+    //Report Config
+    //device-market-config colums
+    columnDefdeviceMarketConfig: [
+        {field: 'projectName', displayName: 'Project Name', width: "120"},
+        {field: 'marketName', displayName: 'Market Name', width: "120"},
+        {field: 'deviceId', displayName: 'DeviceId', width: "120"},
+        {field: 'deviceName', displayName: 'Device Name', width: "120"},
+        {field: 'jobId', displayName: 'Job ID', width: "120"},
+        {field: 'deviceRole', displayName: 'Device Role', width: "120"},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', width: "120"},
+        {field: 'groupName', displayName: 'Group Name', width: "120"},
+        {field: 'startTime', displayName: 'Start Time', width: "120"},
+        {field: 'endTime', displayName: 'End Time', width: "120"},
+        {field: 'operator', displayName: 'Operator', width: "120"},
+        {field: 'pairedOperator', displayName: 'Paired Operator', width: "120"},
+        {field: 'kpiGroup', displayName: 'KPI Group', width: "120"},
+        {field: 'testAreaSubset', displayName: 'TestArea Subset', width: "120"}
+    ],
+
+    columnDefgeoMarketConfig: [
+        {field: 'id', displayName: 'ID'},
+        {field: 'projectName', displayName: 'Project Name'},
+        {field: 'marketName', displayName: 'Market Name'},
+        {field: 'x_param_min', displayName: 'x_param_min'},
+        {field: 'x_param_max', displayName: 'x_param_max'},
+        {field: 'y_param_min', displayName: 'y_param_min'},
+        {field: 'y_param_max', displayName: 'y_param_max'},
+        {field: 'x_param_center', displayName: 'x_param_center'},
+        {field: 'y_param_center', displayName: 'y_param_center'},
+        {field: 'timeZoneOffset', displayName: 'Timezone Offset'}
+    ],
+
+    columnDefVQTBoxTable: [
+        {field: 'jobId', displayName: 'Job Id'},
+        {field: 'a1', displayName: 'A1'},
+        {field: 'b1', displayName: 'B1'},
+        {field: 'host_url', displayName: 'Host URL'},
+        {field: 'active', displayName: 'Active'},
+        {field: 'configuration', displayName: 'Configuration'},
+        {field: 'a', displayName: 'A'},
+        {field: 'b', displayName: 'B'},
+    ],
+    columnDefL1Config: [
+        {field: 'deviceId', displayName: 'deviceId'},
+        {field: 'timeZone', displayName: 'timeZone'},
+        {field: 'timeZoneOffset', displayName: 'timeZoneOffset'}
+    ],
+    columnDefDeviceTimeZoneOffset: [
+        {field: 'deviceId', displayName: 'deviceId'},
+        {field: 'timeZone', displayName: 'timeZone'},
+        {field: 'timeZoneOffset', displayName: 'timeZoneOffset'}
+    ],
 }
 	
