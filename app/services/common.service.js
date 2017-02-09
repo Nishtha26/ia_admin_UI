@@ -1798,5 +1798,77 @@ oTech.service('AppServices',
             return deferred.promise;
         }
 
+        service.addRow = function (table, json) {
+            console.log(JSON.stringify(json));
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/repData/" +table + "?userId=-2",
+                type: "POST",
+                data: json,
+                headers: {
+                    'X-Auth-Token': token,
+                    "Content-Type": "application/json"
+                },
+                success: function (data) {
+                    deferred.resolve(data);
+
+                },
+                error: function (err) {
+                    deferred.reject(err);
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
+        service.delRow = function (table, json) {
+            console.log(JSON.stringify(json));
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/repData/" + table + "?userId=-2",
+                type: "POST",
+                data: json,
+                headers: {
+                    'X-Auth-Token': token,
+                    "Content-Type": "application/json"
+                },
+                success: function (data) {
+                    deferred.resolve(data);
+
+                },
+                error: function (err) {
+                    deferred.reject(err);
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
+        service.updateRow = function (table, json) {
+            console.log(JSON.stringify(json));
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/repData/" + table + "?userId=-2",
+                type: "POST",
+                data: json,
+                headers: {
+                    'X-Auth-Token': token,
+                    "Content-Type": "application/json"
+                },
+                success: function (data) {
+                    deferred.resolve(data);
+
+                },
+                error: function (err) {
+                    deferred.reject(err);
+                }
+
+            });
+
+            return deferred.promise;
+        }
+
         return service;
     }])
