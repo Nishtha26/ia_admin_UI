@@ -1,5 +1,5 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache) {
+    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
@@ -298,7 +298,7 @@ oTech.controller('testPlanTestRunAdministration',
         promise = testScriptService.FetchingTestService(userId, token);
         promise.then(
             function (data) {
-
+                console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
                 $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
@@ -1157,7 +1157,7 @@ oTech.controller('testPlanTestRunAdministration',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
-            paginationPageSizes: [25,50,75,100],
+            paginationPageSizes: [25, 50, 75, 100],
             columnDefs: [
                 {
                     field: 'jobStatus',
@@ -1482,31 +1482,37 @@ oTech.controller('testPlanTestRunAdministration',
                         }
 
                     }
-
-                    $scope.selectedOption = $scope.deviceProfileList[0];
-                    $scope.taskTableArray = $scope.deviceProfileList[0].content[0].nodes;
-                    if ($scope.deviceProfileList[0].phoneNo) {
-                        $scope.showOnlyDeviceProfileAndPhoneNo = true;
-                        $scope.showOnlyDeviceProfile = false;
-                    } else {
-                        $scope.showOnlyDeviceProfileAndPhoneNo = false;
-                        $scope.showOnlyDeviceProfile = true;
+                    console.log($scope.deviceProfileList);
+                    if ($scope.deviceProfileList.length == 0) {
+                        toastr.error('Create Device Profile First', 'Device Profile not Found!')
+                        console.log("No Device Profile Found !");
+                        $scope.dataLoading = false;
                     }
-
-                    $scope.renderHtmlForTask($scope.taskTableArray);
-                    promise = testScriptService.getRealDevices(token, userId);
-                    promise.then(
-                        function (data) {
-                            $scope.dataLoading = false;
-                            $(".save").removeClass("disabled");
-                            $scope.RealDevicesOptions.data = data.devicesList;
-                            $scope.tempRealDeviceList = data.devicesList;
-                        },
-                        function (err) {
-                            console.log(err);
+                    else {
+                        $scope.selectedOption = $scope.deviceProfileList[0];
+                        $scope.taskTableArray = $scope.deviceProfileList[0].content[0].nodes;
+                        if ($scope.deviceProfileList[0].phoneNo) {
+                            $scope.showOnlyDeviceProfileAndPhoneNo = true;
+                            $scope.showOnlyDeviceProfile = false;
+                        } else {
+                            $scope.showOnlyDeviceProfileAndPhoneNo = false;
+                            $scope.showOnlyDeviceProfile = true;
                         }
-                    );
 
+                        $scope.renderHtmlForTask($scope.taskTableArray);
+                        promise = testScriptService.getRealDevices(token, userId);
+                        promise.then(
+                            function (data) {
+                                $scope.dataLoading = false;
+                                $(".save").removeClass("disabled");
+                                $scope.RealDevicesOptions.data = data.devicesList;
+                                $scope.tempRealDeviceList = data.devicesList;
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
+                    }
 
                 },
                 function (err) {
