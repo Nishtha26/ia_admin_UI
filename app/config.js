@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "5.1.2",
+    IAAVersion: "5.2.1",
     programmingSkills: [
         {
             value: 20,
@@ -2208,54 +2208,94 @@ oApp.config = {
     //Report Config
     //device-market-config colums
     columnDefdeviceMarketConfig: [
-        {field: 'projectName', displayName: 'Project Name', width: "120"},
-        {field: 'marketName', displayName: 'Market Name', width: "120"},
-        {field: 'deviceId', displayName: 'DeviceId', width: "120"},
-        {field: 'deviceName', displayName: 'Device Name', width: "120"},
-        {field: 'jobId', displayName: 'Job ID', width: "120"},
-        {field: 'deviceRole', displayName: 'Device Role', width: "120"},
-        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', width: "120"},
-        {field: 'groupName', displayName: 'Group Name', width: "120"},
-        {field: 'startTime', displayName: 'Start Time', width: "120"},
-        {field: 'endTime', displayName: 'End Time', width: "120"},
-        {field: 'operator', displayName: 'Operator', width: "120"},
-        {field: 'pairedOperator', displayName: 'Paired Operator', width: "120"},
-        {field: 'kpiGroup', displayName: 'KPI Group', width: "120"},
-        {field: 'testAreaSubset', displayName: 'TestArea Subset', width: "120"}
+        {field: 'projectName', displayName: 'Project Name', width: "120", enableCellEdit: true},
+        {field: 'marketName', displayName: 'Market Name', width: "120", enableCellEdit: true},
+        {field: 'deviceId', displayName: 'DeviceId', width: "120", enableCellEdit: true},
+        {field: 'deviceName', displayName: 'Device Name', width: "120", enableCellEdit: true},
+        {field: 'jobId', displayName: 'Job ID', width: "120", enableCellEdit: true},
+        {field: 'deviceRole', displayName: 'Device Role', width: "120", enableCellEdit: true},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', width: "120", enableCellEdit: true},
+        {field: 'groupName', displayName: 'Group Name', width: "120", enableCellEdit: true},
+        {field: 'startTime', displayName: 'Start Time', width: "120", enableCellEdit: true},
+        {field: 'endTime', displayName: 'End Time', width: "120", enableCellEdit: true},
+        {field: 'operator', displayName: 'Operator', width: "120", enableCellEdit: true},
+        {field: 'pairedOperator', displayName: 'Paired Operator', width: "120", enableCellEdit: true},
+        {field: 'kpiGroup', displayName: 'KPI Group', width: "120", enableCellEdit: true},
+        {field: 'testAreaSubset', displayName: 'TestArea Subset', width: "120", enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        }
     ],
 
     columnDefgeoMarketConfig: [
-        {field: 'id', displayName: 'ID'},
-        {field: 'projectName', displayName: 'Project Name'},
-        {field: 'marketName', displayName: 'Market Name'},
-        {field: 'x_param_min', displayName: 'x_param_min'},
-        {field: 'x_param_max', displayName: 'x_param_max'},
-        {field: 'y_param_min', displayName: 'y_param_min'},
-        {field: 'y_param_max', displayName: 'y_param_max'},
-        {field: 'x_param_center', displayName: 'x_param_center'},
-        {field: 'y_param_center', displayName: 'y_param_center'},
-        {field: 'timeZoneOffset', displayName: 'Timezone Offset'}
+        {field: 'id', displayName: 'ID', enableCellEdit: false, hidden: true},
+        {field: 'projectName', displayName: 'Project Name', enableCellEdit: true},
+        {field: 'marketName', displayName: 'Market Name', enableCellEdit: true},
+        {field: 'x_param_min', displayName: 'x_param_min', enableCellEdit: true},
+        {field: 'x_param_max', displayName: 'x_param_max', enableCellEdit: true},
+        {field: 'y_param_min', displayName: 'y_param_min', enableCellEdit: true},
+        {field: 'y_param_max', displayName: 'y_param_max', enableCellEdit: true},
+        {field: 'x_param_center', displayName: 'x_param_center', enableCellEdit: true},
+        {field: 'y_param_center', displayName: 'y_param_center', enableCellEdit: true},
+        {field: 'zoom', displayName: 'zoom', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        }
     ],
 
     columnDefVQTBoxTable: [
-        {field: 'jobId', displayName: 'Job Id'},
-        {field: 'a1', displayName: 'A1'},
-        {field: 'b1', displayName: 'B1'},
-        {field: 'host_url', displayName: 'Host URL'},
-        {field: 'active', displayName: 'Active'},
-        {field: 'configuration', displayName: 'Configuration'},
-        {field: 'a', displayName: 'A'},
-        {field: 'b', displayName: 'B'},
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true},
+        {field: 'a1', displayName: 'A1', enableCellEdit: true},
+        {field: 'b1', displayName: 'B1', enableCellEdit: true},
+        {field: 'host_url', displayName: 'Host URL', enableCellEdit: true},
+        {field: 'active', displayName: 'Active', enableCellEdit: true},
+        {field: 'configuration', displayName: 'Configuration', enableCellEdit: true},
+        {field: 'a', displayName: 'A', enableCellEdit: true},
+        {field: 'b', displayName: 'B', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
     ],
     columnDefL1Config: [
-        {field: 'deviceId', displayName: 'deviceId'},
-        {field: 'timeZone', displayName: 'timeZone'},
-        {field: 'timeZoneOffset', displayName: 'timeZoneOffset'}
+        {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
+        {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
     ],
     columnDefDeviceTimeZoneOffset: [
-        {field: 'deviceId', displayName: 'deviceId'},
-        {field: 'timeZone', displayName: 'timeZone'},
-        {field: 'timeZoneOffset', displayName: 'timeZoneOffset'}
+        {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
+        {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true, width: "30%"},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
     ],
 }
 	

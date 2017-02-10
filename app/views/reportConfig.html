@@ -62,7 +62,9 @@
             left: 0%;
         }
     }
-
+    .grid-align {
+        text-align: center;
+    }
     .col-md-3 {
         width: 15%;
     }
@@ -124,11 +126,20 @@
             <div class="row">
                 <div class="panel panel-white">
                     <div class='panel-body'>
-                        <div class="form-group col-lg-3" style="padding-left:0px;">
-                            <label class="text-semibold">Category</label>
-                            <select id="category" class="form-control select" style="width:250px;">
-                                <option ng-repeat="(id,val) in devices" value="{{id}}">{{val}}</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-sm-3" style="padding-left:0px;">
+                                <label class="text-semibold">Category</label>
+                                <select id="category" class="form-control select" style="width:250px;">
+                                    <option ng-repeat="(id,val) in devices" value="{{id}}">{{val}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-9" style="text-align: right">
+                                <div style="padding-left: 30px;">
+                                    <button type="button" id="addRow" class="btn btn-success" ng-click="openModal()">Add
+                                        Row
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div style="clear:both;"></div>
                         <div class="datatable-header">
@@ -138,35 +149,13 @@
                                        placeholder="Type to filter..."></label></div>
                         </div>
                         <div class="table table-hover datatable-highlight myGrid" id="reportConfigGridOptions"
-                             ui-grid="reportConfigGridOptions" ui-grid-selection
+                             ui-grid="reportConfigGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection
                              ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning>
-                            <div class="error loadingErrMsg" ng-show="err"> No Data Found</div>
+                            <div class="error loadingErrMsg" ng-show="err"> Error</div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert"
-                                     aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to
-                                    {{endLimit}} of {{totalRecords}} entries
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="dataTables_paginate paging_simple_numbers">
-                                    <a ng-class="DisablePrevPage()" class="paginate_button previous"
-                                       ng-click="prevPage()">&larr;</a>
-                                    <span>
-											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
-                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
-											</span>
-
-                                    <a ng-class="DisableNextPage()" class="paginate_button next"
-                                       ng-click="nextPage()">&rarr;</a>
-
-
-                                </div>
-                            </div>
-                        </div>
-
+                        <br/>
+                        <strong ng-show="msg.lastCellEdited">Last Edit:</strong> {{msg.lastCellEdited}}
+                        <br/>
                         <img id="dataLoadingDM" class="loading loading-imgac" src="images/loading_new.gif"
                              style="display: none;"/>
                     </div>
@@ -174,6 +163,31 @@
             </div>
         </div>
     </div>
+
+    <script type="text/ng-template" id="editTableModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fa fa-table fa-lg" aria-hidden="true"></i> {{modal.title}}</h3>
+        </div>
+        <div class="modal-body">
+            <form  id="addRowForm" class="form-horizontal" role="form">
+                <fieldset>
+                    <!-- Text input-->
+                    <div class="form-group" ng-repeat="field in modal.fields" ng-if="!field.modalHidden"
+                         style="margin-bottom:4px;">
+                        <label class="col-sm-3 control-label">{{field.displayName}}</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="{{field.field}}" name="{{field.field}}" placeholder="{{field.displayName}}" class="form-control input-sm">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="save()">Save Data</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
 </div>
 
 

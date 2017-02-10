@@ -1,10 +1,11 @@
 oTech.controller('ReportConfigController',
-    function ($scope, $rootScope, $location, AppServices, $stateParams) {
+    function ($scope, $rootScope, $location, AppServices, $stateParams, $uibModal, $log) {
         //Controller Initialization
         var token = sessionStorage.token;
         var userId = sessionStorage.userId;
         var pwd, matchingPwd;
         var table = "";
+        $scope.msg = {};
         $rootScope.slideContent();
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -38,7 +39,7 @@ oTech.controller('ReportConfigController',
             var gridHeight = 0;
             var dataCount = $scope.reportConfigGridOptions.data.length;
             gridHeight = ((dataCount * rowHeight) + headerHeight + footerPage);
-           // $(".ui-grid-viewport").css("height", gridHeight - headerHeight);
+            // $(".ui-grid-viewport").css("height", gridHeight - headerHeight);
             //$(".ui-grid-menu-mid").css("height", "450px;");
             //$(".")
             return {
@@ -76,10 +77,44 @@ oTech.controller('ReportConfigController',
             enableVerticalScrollbar: 3,
             enableHorizontalScrollbar: 0,
         };
+        $scope.reportConfigGridOptions.onRegisterApi = function (gridApi) {
+            $scope.gridApi = gridApi;
+            gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
 
+                $scope.msg.lastCellEdited = 'Column: ' + colDef.name +
+                    ', New Value: ' + newValue + ', Old Value: ' + oldValue;
+                $scope.editRow(rowEntity, colDef, newValue, oldValue);
+                $scope.$apply();
+            });
+
+        };
 
         //Methods of Controller
         //Populate Data and change column Defs on basis of Table name
+        //get current Selected Table Name
+        $scope.getCurrentTableDisplayName = function () {
+            return $("#category option:selected").text();
+        };
+        $scope.getCurrentTableName = function () {
+            return $("#category").val();
+        };
+
+        $scope.getCurrentTableDef = function () {
+            var table = $("#category").val();
+            var columnDef = {};
+            if (table == "getDeviceMarketConfig")
+                columnDef = oApp.config.columnDefdeviceMarketConfig;
+            if (table == "getGeoMarketConfig")
+                columnDef = oApp.config.columnDefgeoMarketConfig;
+            if (table == "getVQTBoxData")
+                columnDef = oApp.config.columnDefVQTBoxTable;
+            if (table == "getL1Config")
+                columnDef = oApp.config.columnDefL1Config;
+            if (table == "getDevicesTimeZoneOffset")
+                columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
+            return columnDef
+        };
+
         $scope.showData = function (table) {
             //Show Data Loader
             $("#dataLoadingDM").show();
@@ -215,7 +250,7 @@ oTech.controller('ReportConfigController',
         //On Document Ready
         $(document).ready(function () {
             $scope.showData("getDeviceMarketConfig");
-            table="getDeviceMarketConfig";
+            table = "getDeviceMarketConfig";
         });
 
         $scope.openDevicedata = function (id, value) {
@@ -227,4 +262,191 @@ oTech.controller('ReportConfigController',
             $scope.openDevicedata($(this).val(), $("#category option:selected").text());
         });
 
-    });
+        //open Modal
+        $scope.modal = {};
+        $scope.openModal = function () {
+            modal = $uibModal.open({
+                templateUrl: 'editTableModal.html',
+                scope: $scope
+            });
+
+            $scope.modalInstance = modal;
+            $scope.modal.title = $scope.getCurrentTableDisplayName();
+            $scope.modal.fields = $scope.getCurrentTableDef();
+
+            return modal.result
+        };
+
+
+        $scope.modalPopupTrigger = function () {
+            $scope.modalPopup()
+                .then(function (data) {
+                    $scope.handleSuccess(data);
+                })
+                .then(null, function (reason) {
+                    $scope.handleDismiss(reason);
+                });
+        };
+
+        $scope.save = function () {
+            var jsonArray = $("form#addRowForm").serializeArray();
+            var result = {};
+            for (var i in jsonArray) {
+                var name = jsonArray[i].name;
+                var value = jsonArray[i].value;
+                result[name] = value;
+            }
+            var tableName = $scope.getCurrentTableName();
+            $scope.saveData(tableName.replace("get", "add"), JSON.stringify(result));
+        };
+
+        $scope.cancel = function () {
+            $scope.modalInstance.dismiss('Cancelled')
+        };
+
+        //Send Data to Server
+        $scope.saveData = function (table, json) {
+            $("#dataLoadingDM").show();
+            promise = AppServices.addRow(table, json);
+            promise.then(function (data) {
+                $scope.err = false;
+                $log.info(json);
+                $scope.reportConfigGridOptions.data.push(JSON.parse(json));
+                $log.info(JSON.stringify(data));
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+            }, function (err) {
+                $scope.err = true;
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+                console.log(err);
+            });
+            $scope.modalInstance.close('Saving Data !');
+        }
+
+        //Del Row
+        $scope.delRow = function (row) {
+            var table = $scope.getCurrentTableName();
+            var json = {};
+            if (table == "getDeviceMarketConfig") {
+                json["projectName"] = row.entity.projectName;
+                json["marketName"] = row.entity.marketName;
+                json["deviceId"] = row.entity.deviceId;
+                json["jobId"] = row.entity.jobId;
+            }
+            if (table == "getGeoMarketConfig") {
+                json["id"] = row.entity.id;
+            }
+            if (table == "getVQTBoxData") {
+                json["a"] = row.entity.a;
+                json["a1"] = row.entity.a1;
+                json["active"] = row.entity.active;
+                json["b"] = row.entity.b;
+                json["b1"] = row.entity.b1;
+                json["configuration"] = row.entity.configuration;
+                json["host_url"] = row.entity.host_url;
+                json["jobId"] = row.entity.jobId;
+            }
+            if (table == "getL1Config") {
+                json["deviceId"] = row.entity.deviceId;
+            }
+            if (table == "getDevicesTimeZoneOffset") {
+                json["deviceId"] = row.entity.deviceId;
+            }
+            $("#dataLoadingDM").show();
+            table = table.replace("get", "del");
+            promise = AppServices.delRow(table, JSON.stringify(json));
+            promise.then(function (data) {
+                $scope.err = false;
+                $log.info(JSON.stringify(data));
+                var index = $scope.reportConfigGridOptions.data.indexOf(row.entity);
+                $scope.reportConfigGridOptions.data.splice(index, 1);
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+            }, function (err) {
+                $scope.err = true;
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+                console.log(err);
+            });
+        }
+
+        //Update Row
+        $scope.editRow = function (rowEntity, colDef, newValue, oldValue) {
+            var table = $scope.getCurrentTableName();
+            var json = {};
+            if (table == "getDeviceMarketConfig") {
+                var result={};
+                json["projectName"] = rowEntity.projectName;
+                json["marketName"] = rowEntity.marketName;
+                json["deviceId"] = rowEntity.deviceId;
+                json["deviceName"] = rowEntity.deviceName;
+                json["jobId"] = rowEntity.jobId;
+                json["deviceRole"] = rowEntity.deviceRole;
+                json["timeZoneOffset"] = rowEntity.timeZoneOffset;
+                json["groupName"] = rowEntity.groupName;
+                json["startTime"] = rowEntity.startTime;
+                json["endTime"] = rowEntity.endTime;
+                json["operator"] = rowEntity.operator;
+                json["pairedOperator"] = rowEntity.pairedOperator;
+                json["kpiGroup"] = rowEntity.kpiGroup;
+                json["testAreaSubset"] = rowEntity.testAreaSubset;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
+            }
+            if (table == "getGeoMarketConfig") {
+                json["id"] = rowEntity.id;
+                json["projectName"] = rowEntity.projectName;
+                json["marketName"] = rowEntity.marketName;
+                json["x_param_min"] = rowEntity.x_param_min;
+                json["x_param_max"] = rowEntity.x_param_max;
+                json["y_param_min"] = rowEntity.y_param_min;
+                json["y_param_max"] = rowEntity.y_param_max;
+                json["x_param_center"] = rowEntity.x_param_center;
+                json["y_param_center"] = rowEntity.y_param_center;
+                json["zoom"] = rowEntity.zoom;
+            }
+            if (table == "getVQTBoxData") {
+                var result = {};
+                json["a"] = rowEntity.a;
+                json["a1"] = rowEntity.a1;
+                json["active"] = rowEntity.active;
+                json["b"] = rowEntity.b;
+                json["b1"] = rowEntity.b1;
+                json["configuration"] = rowEntity.configuration;
+                json["host_url"] = rowEntity.host_url;
+                json["jobId"] = rowEntity.jobId;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
+            }
+            if (table == "getL1Config") {
+                json["deviceId"] = rowEntity.deviceId;
+                json["timeZone"] = rowEntity.timeZone;
+                json["timeZoneOffset"] = rowEntity.timeZoneOffset;
+            }
+            if (table == "getDevicesTimeZoneOffset") {
+                json["deviceId"] = rowEntity.deviceId;
+                json["timeZone"] = rowEntity.timeZone;
+                json["timeZoneOffset"] = rowEntity.timeZoneOffset;
+            }
+            $("#dataLoadingDM").show();
+            table = table.replace("get", "update");
+            promise = AppServices.updateRow(table, JSON.stringify(json));
+            promise.then(function (data) {
+                $scope.err = false;
+                $log.info(JSON.stringify(data));
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+            }, function (err) {
+                $scope.err = true;
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+                console.log(err);
+            });
+        }
+    }
+);
