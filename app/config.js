@@ -2297,5 +2297,30 @@ oApp.config = {
             modalHidden: true
         },
     ],
+    columnDefAlertMonitoring: [
+        {field: 'id', displayName: 'ID', enableCellEdit: false,width: "120"},
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true,width: "120"},
+        {field: 'deviceId', displayName: 'Device Id', enableCellEdit: true,width: "120"},
+        {field: 'deviceLocalStartTime', displayName: 'Start Time', enableCellEdit: true,width: "120"},
+        {field: 'deviceLocalEndTime', displayName: 'End Time', enableCellEdit: true,width: "120"},
+        {field: 'lastNotfEndTime', displayName: 'Last Notification End Time', enableCellEdit: true,width: "120"},
+        {field: 'monInt', displayName: 'Interval', enableCellEdit: true,width: "120"},
+        {field: 'emailList', displayName: 'Email List', enableCellEdit: true,width: "120"},
+        {field: 'emailFreqId', displayName: 'Email Frequency', enableCellEdit: true,width: "120"},
+        {field: 'lastEmailSentTime', displayName: 'Last Email Sent Time', enableCellEdit: true,width: "120"},
+        {field: 'executed', displayName: 'Executed', enableCellEdit: true,width: "120"},
+        {field: 'allNotfSent', displayName: 'All Notification Sent', enableCellEdit: true,width: "120"},
+        {field: 'timeoffset', displayName: 'Time Offset', enableCellEdit: true,width: "120"},
+        {field: 'alertStatus', displayName: 'Alert Status', enableCellEdit: true,width: "120"},
+        {field: 'deviceLocalTimeZone', displayName: 'Device Local TimeZone', enableCellEdit: true,width: "120"},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
 }
 	

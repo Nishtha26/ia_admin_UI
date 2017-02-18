@@ -57,7 +57,8 @@ oTech.controller('ReportConfigController',
             "getGeoMarketConfig": "Geo Market Mapping",
             "getVQTBoxData": "VQT Configuration",
             "getL1Config": "L1 Timezone Configuration",
-            "getDevicesTimeZoneOffset": "Device Timezone Configuration"
+            "getDevicesTimeZoneOffset": "Device Timezone Configuration",
+            "getAlertMonitoringDetails": "Alert Configuration"
         };
 
         //Table Setting Here
@@ -112,6 +113,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefL1Config;
             if (table == "getDevicesTimeZoneOffset")
                 columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
+            if (table == "getAlertMonitoringDetails")
+                columnDef = oApp.config.columnDefAlertMonitoring;
             return columnDef
         };
 
@@ -129,6 +132,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL1Config;
             if (table == "getDevicesTimeZoneOffset")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefDeviceTimeZoneOffset;
+            if (table == "getAlertMonitoringDetails")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefAlertMonitoring;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -353,6 +358,9 @@ oTech.controller('ReportConfigController',
             if (table == "getDevicesTimeZoneOffset") {
                 json["deviceId"] = row.entity.deviceId;
             }
+            if (table == "getAlertMonitoringDetails") {
+                json["deviceId"] = row.entity.deviceId;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
             promise = AppServices.delRow(table, JSON.stringify(json));
@@ -432,6 +440,23 @@ oTech.controller('ReportConfigController',
                 json["deviceId"] = rowEntity.deviceId;
                 json["timeZone"] = rowEntity.timeZone;
                 json["timeZoneOffset"] = rowEntity.timeZoneOffset;
+            }
+            if (table == "getAlertMonitoringDetails") {
+                json["id"] = rowEntity.id;
+                json["jobId"] = rowEntity.jobId;
+                json["deviceId"] = rowEntity.deviceId;
+                json["deviceLocalStartTime"] = rowEntity.deviceLocalStartTime;
+                json["deviceLocalEndTime"] = rowEntity.deviceLocalEndTime;
+                json["lastNotfEndTime"] = rowEntity.lastNotfEndTime;
+                json["monInt"] = rowEntity.monInt;
+                json["emailList"] = rowEntity.emailList;
+                json["emailFreqId"] = rowEntity.emailFreqId;
+                json["lastEmailSentTime"] = rowEntity.lastEmailSentTime;
+                json["executed"] = rowEntity.executed;
+                json["allNotfSent"] = rowEntity.allNotfSent;
+                json["timeoffset"] = rowEntity.timeoffset;
+                json["alertStatus"] = rowEntity.alertStatus;
+                json["deviceLocalTimeZone"] = rowEntity.deviceLocalTimeZone;
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");
