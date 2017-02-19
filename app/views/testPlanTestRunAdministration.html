@@ -1497,8 +1497,10 @@
                             <p style="text-align: center"
                                ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No
                                 Data Found</p>
+
                             <div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination ui-grid-cellNav
-                                 ui-grid-auto-resize ng-show="commandInfoList.length > 0 && !dataLoadingPopup"
+                                 ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ui-grid-resize-columns
+                                 ng-show="commandInfoList.length > 0 && !dataLoadingPopup"
                                  class="table table-hover grid" style="height: 500px;">
                             </div>
                         </div>
