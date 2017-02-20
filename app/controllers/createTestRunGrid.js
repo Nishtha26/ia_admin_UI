@@ -1418,7 +1418,7 @@ oTech.controller('createTestRunGridController',
 				                        function( row, col ) {
 				                        return '' + row.entity.testCaseId + '';
 				                      }},
-				    				{field: 'parameters', name: 'Parameters', headerCellClass: $scope.highlightFilteredHeader,cellTooltip: 
+				    				{field: 'parameters', name: 'Parameters', headerCellClass: $scope.highlightFilteredHeader,cellTooltip:
 				                        function( row, col ) {
 				                        return '' + row.entity.parameters + '';
 				                      }},
