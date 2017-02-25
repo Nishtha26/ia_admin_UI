@@ -58,7 +58,8 @@ oTech.controller('ReportConfigController',
             "getVQTBoxData": "VQT Configuration",
             "getL1Config": "L1 Timezone Configuration",
             "getDevicesTimeZoneOffset": "Device Timezone Configuration",
-            "getAlertHBDeviceDetails": "Alert Configuration"
+            "getAlertHBDeviceDetails": "Alert Configuration",
+            "getTabDashboardConfig": "Tableau Email Reporter"
         };
 
         //Table Setting Here
@@ -115,6 +116,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
                 columnDef = oApp.config.columnDefAlertHBDevice;
+            if (table == "getTabDashboardConfig")
+                columnDef = oApp.config.columnDefTabDashboardConfig;
             return columnDef
         };
 
@@ -134,6 +137,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefAlertHBDevice;
+            if (table == "getTabDashboardConfig")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefTabDashboardConfig;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -361,6 +366,9 @@ oTech.controller('ReportConfigController',
             if (table == "getAlertHBDeviceDetails") {
                 json["deviceId"] = row.entity.deviceId;
             }
+            if (table == "getTabDashboardConfig") {
+                json["id"] = row.entity.id;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
             promise = AppServices.delRow(table, JSON.stringify(json));
@@ -441,28 +449,6 @@ oTech.controller('ReportConfigController',
                 json["timeZone"] = rowEntity.timeZone;
                 json["timeZoneOffset"] = rowEntity.timeZoneOffset;
             }
-            /**
-             CREATE TABLE dummy (
-             `ia_device_id` INT(11) NOT NULL DEFAULT '1',
-             `ia_device_name` VARCHAR(50) NULL DEFAULT '1',
-             `ia_operator` VARCHAR(50) NULL DEFAULT '1',
-             `ia_network_type` VARCHAR(50) NULL DEFAULT '1',
-             `description` VARCHAR(50) NULL DEFAULT NULL,
-             `x_param` FLOAT(16,8) NULL DEFAULT '0.00000000',
-             `y_param` FLOAT(16,8) NULL DEFAULT '0.00000000',
-             `moving` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `highlight` INT(10) UNSIGNED NULL DEFAULT '0',
-             `voice` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `data` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `vqt` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `gsm` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `location` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `wifi` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
-             `heartbeat` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000'
-             )
-
-             */
-
             if (table == "getAlertHBDeviceDetails") {
                 json["deviceId"] = rowEntity.deviceId;
                 json["deviceName"] = rowEntity.deviceName;
@@ -480,6 +466,13 @@ oTech.controller('ReportConfigController',
                 json["location"] = rowEntity.location;
                 json["wifi"] = rowEntity.wifi;
                 json["heartbeat"] = rowEntity.heartbeat;
+            }
+            if (table == "getTabDashboardConfig") {
+                json["id"] = rowEntity.id;
+                json["dashboardName"] = rowEntity.dashboardName;
+                json["dashboardURL"] = rowEntity.dashboardURL;
+                json["notifyURL"] = rowEntity.notifyURL;
+                json["printFlag"] = rowEntity.printFlag;
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");
