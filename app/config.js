@@ -2299,7 +2299,7 @@ oApp.config = {
     ],
 
     columnDefAlertHBDevice: [
-        {field: 'deviceId', displayName: 'Device Id', enableCellEdit: false,},
+        {field: 'deviceId', displayName: 'Device Id'},
         {field: 'deviceName', displayName: 'Device Name', enableCellEdit: true, visible:false ,},
         {field: 'operator', displayName: 'Operator', enableCellEdit: true,visible:false ,},
         {field: 'networkType', displayName: 'Network Type', enableCellEdit: true,visible:false ,},
@@ -2315,6 +2315,21 @@ oApp.config = {
         {field: 'location', displayName: 'Lcoation', enableCellEdit: true,},
         {field: 'wifi', displayName: 'WiFi', enableCellEdit: true,},
         {field: 'heartbeat', displayName: 'HeartBeat', enableCellEdit: true,},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
+    columnDefTabDashboardConfig: [
+        {field: 'id', displayName: 'ID'},
+        {field: 'dashboardName', displayName: 'Dashboard Name', enableCellEdit: true},
+        {field: 'dashboardURL', displayName: 'Dashboard URL', enableCellEdit: true},
+        {field: 'notifyURL', displayName: 'Email', enableCellEdit: true},
+        {field: 'printFlag', displayName: 'Print Flag', enableCellEdit: true},
         {
             name: 'Action',
             cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
