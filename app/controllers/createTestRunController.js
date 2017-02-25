@@ -16,17 +16,17 @@ oTech.controller('createTestRunController',
         var TestRunName = $cookieStore.get('DependantTestRunName');
         var DeviceName = [];
         $rootScope.my_tree = {};
-		$scope.dataLoading = true;
-		$scope.dataLoading1 = true;
-		$scope.isPlanDetialView = false;
-		$scope.dataProcessingCommandParams=false;
-		if($rootScope.uiTreeJSON !=null && $rootScope.uiTreeJSON != undefined)	 {
-			$.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
-		$scope.uiTreeJSON = $rootScope.uiTreeJSON;
-		}else if($.cookie("uiTreeJSON")!= undefined){
-			$scope.uiTreeJSON= JSON.parse($.cookie("uiTreeJSON"));
-		}
-		
+        $scope.dataLoading = true;
+        $scope.dataLoading1 = true;
+        $scope.isPlanDetialView = false;
+        $scope.dataProcessingCommandParams = false;
+        if ($rootScope.uiTreeJSON != null && $rootScope.uiTreeJSON != undefined) {
+            $.cookie("uiTreeJSON", JSON.stringify($rootScope.uiTreeJSON));
+            $scope.uiTreeJSON = $rootScope.uiTreeJSON;
+        } else if ($.cookie("uiTreeJSON") != undefined) {
+            $scope.uiTreeJSON = JSON.parse($.cookie("uiTreeJSON"));
+        }
+
         $rootScope.slideContent();
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -48,18 +48,18 @@ oTech.controller('createTestRunController',
                 $rootScope.getFavouriteReports();
             }
         }
-		
-		$scope.testPlanGoForTestRun = function () {
 
-                $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
+        $scope.testPlanGoForTestRun = function () {
+
+            $location.path('/CreateTestRun/MappingTestRun/MappingDevices');
         }
-		
-		$scope.nextTestPlan = function(){
-			$location.path('/dashboard/testScript');
-		}
-		
-		$scope.testScript = function () {
-                $location.path('/dashboard/testScript');
+
+        $scope.nextTestPlan = function () {
+            $location.path('/dashboard/testScript');
+        }
+
+        $scope.testScript = function () {
+            $location.path('/dashboard/testScript');
         }
 
         $scope.getDashBoardMenu();
@@ -83,8 +83,8 @@ oTech.controller('createTestRunController',
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.dataProcessing = false;
-				$(".btn-info").addClass("disabled");
+                $scope.dataProcessing = false;
+                $(".btn-info").addClass("disabled");
 
                 $rootScope.RowCreateTestrun = row.entity;
                 var TestPlanId = row.entity.testplanId;
@@ -110,12 +110,12 @@ oTech.controller('createTestRunController',
                 promise = testScriptService.getTestplan(token, userId, TestPlanId);
                 promise.then(
                     function (data) {
-						$scope.uiTreeJSON = data.jobVO;
-						$rootScope.uiTreeJSON = data.jobVO;
+                        $scope.uiTreeJSON = data.jobVO;
+                        $rootScope.uiTreeJSON = data.jobVO;
                         $cookieStore.put('uiTreeJSON', $rootScope.uiTreeJSON);
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
-						},
+                        $scope.dataProcessing = false;
+                        $(".btn-info").removeClass("disabled");
+                    },
                     function (err) {
                         console.log(err);
                     }
@@ -165,15 +165,15 @@ oTech.controller('createTestRunController',
 
         //Deleting each row For Mapping devices
         $scope.deleteDevices = function (Device) {
-        	var index = 0;
-        	for (var i = 0; i < jQuery.makeArray( $scope.DeviceMapping ).length; i++){
-				if($scope.DeviceMapping[i].RealDeviceId == Device.RealDeviceId){
-					Devices.splice(i, 1);
-					VirtualDevicelist.splice(i, 1);
-					$scope.DeviceMapping = jQuery.extend(true, new Object(), Devices);
-					break;
-				}
-			}
+            var index = 0;
+            for (var i = 0; i < jQuery.makeArray($scope.DeviceMapping).length; i++) {
+                if ($scope.DeviceMapping[i].RealDeviceId == Device.RealDeviceId) {
+                    Devices.splice(i, 1);
+                    VirtualDevicelist.splice(i, 1);
+                    $scope.DeviceMapping = jQuery.extend(true, new Object(), Devices);
+                    break;
+                }
+            }
         };
 
         $scope.TestRunforTestplans = function () {
@@ -209,15 +209,15 @@ oTech.controller('createTestRunController',
                     templateUrl: 'app/views/CommandParametrsModal.html',
                     controller: ['$scope', 'Names', '$uibModalInstance', function ($scope, Names, $uibModalInstance) {
 
-                         var treeGridCollapse = function() {
-                             if ($rootScope.tree_data !== null && $rootScope.tree_data !== undefined) {
+                        var treeGridCollapse = function () {
+                            if ($rootScope.tree_data !== null && $rootScope.tree_data !== undefined) {
 
-                                 setTimeout(function () {
-                                     $rootScope.$apply($rootScope.my_tree.expand_all);
-                                 }, 10);
+                                setTimeout(function () {
+                                    $rootScope.$apply($rootScope.my_tree.expand_all);
+                                }, 10);
 
-                             }
-                         }
+                            }
+                        }
 
                         //Update function of Popup
                         $scope.UpdateComndPrms = function () {
@@ -251,7 +251,6 @@ oTech.controller('createTestRunController',
                                         $('#MessagePopUp').modal('hide');
                                     }, 2000);
                                     treeGridCollapse();
-
 
 
                                     //Calling getTestplan service and looping data as tree structure
@@ -393,32 +392,33 @@ oTech.controller('createTestRunController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
-			enableVerticalScrollbar :0,
-			enableHorizontalScrollbar:0,
+            enableVerticalScrollbar: 0,
+            enableHorizontalScrollbar: 0,
             columnDefs: [
-                {field: 'deviceProfileName',
-                	name: 'Device Profile Name',
-                	headerCellClass: $scope.highlightFilteredHeader,
-                	
-                	},
-					/*{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >Cmd Definition</a>'},*/
+                {
+                    field: 'deviceProfileName',
+                    name: 'Device Profile Name',
+                    headerCellClass: $scope.highlightFilteredHeader,
+
+                },
+                /*{ name: 'Action',cellTemplate:' <a data-toggle="modal" data-target="#CommandDetails"  ng-click="grid.appScope.viewTaskDetail()" >Cmd Definition</a>'},*/
             ]
         };
         $scope.deviceProfileList = [];
         promise = testScriptService.getVirtualDevices(TestPlanId, token, userId);
         promise.then(
             function (data) {
-				$scope.dataLoading1 = false;
+                $scope.dataLoading1 = false;
                 $scope.VirtualDevicesOptions.data = data;
-                for(var i=0; i < data.length; i++){
-                var temp = {};
-				temp['deviceProfileName'] = data[i].deviceProfileName;
-				temp['deviceId'] = data[i].deviceId;
-				temp['row'] = data[i];
-				$scope.deviceProfileList.push(temp);
-				$scope.selectedOption = $scope.deviceProfileList[0];
+                for (var i = 0; i < data.length; i++) {
+                    var temp = {};
+                    temp['deviceProfileName'] = data[i].deviceProfileName;
+                    temp['deviceId'] = data[i].deviceId;
+                    temp['row'] = data[i];
+                    $scope.deviceProfileList.push(temp);
+                    $scope.selectedOption = $scope.deviceProfileList[0];
                 }
-               
+
             },
             function (err) {
                 console.log(err);
@@ -428,27 +428,27 @@ oTech.controller('createTestRunController',
         $scope.VirtualDevicesOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.msg="";
+                $scope.msg = "";
                 $rootScope.RowVirtualDevices = row.entity;
-				if(row.isSelected){
-                $rootScope.VirtualDeviceId = row.entity.deviceId;
-             
-                $cookieStore.put('JobDeviceId', row.entity.deviceId);
-				$cookieStore.put('VirtualDeviceId', row.entity.deviceId);
-                $cookieStore.put('VirtualDeviceName', row.entity.deviceName);
-                if ($scope.VirtualDevicelist1.indexOf(row.entity.deviceName) == -1) {
-                    $scope.VirtualDevicelist1.push(row.entity.deviceName);
+                if (row.isSelected) {
+                    $rootScope.VirtualDeviceId = row.entity.deviceId;
+
+                    $cookieStore.put('JobDeviceId', row.entity.deviceId);
+                    $cookieStore.put('VirtualDeviceId', row.entity.deviceId);
+                    $cookieStore.put('VirtualDeviceName', row.entity.deviceName);
+                    if ($scope.VirtualDevicelist1.indexOf(row.entity.deviceName) == -1) {
+                        $scope.VirtualDevicelist1.push(row.entity.deviceName);
+                    }
+
+                } else {
+                    $cookieStore.remove('JobDeviceId');
+                    $cookieStore.remove('VirtualDeviceId');
+                    $cookieStore.remove('VirtualDeviceName');
                 }
-                
-				}else{
-					$cookieStore.remove('JobDeviceId');
-					$cookieStore.remove('VirtualDeviceId');
-					$cookieStore.remove('VirtualDeviceName');
-				}
-				if($scope.isPlanDetialView){
-					$scope.taskDetail();
-					
-				}
+                if ($scope.isPlanDetialView) {
+                    $scope.taskDetail();
+
+                }
             });
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
 
@@ -461,22 +461,27 @@ oTech.controller('createTestRunController',
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: true,
-			enableVerticalScrollbar :2,
-			enableHorizontalScrollbar:2,
+            enableVerticalScrollbar: 2,
+            enableHorizontalScrollbar: 2,
             columnDefs: [
-                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader,width:"10%"},
-                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader,width:"20%"},
-                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader,width:"40%"},
-				//{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
-				//{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
-				//{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
-				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader,width:"30%"},
+                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader, width: "10%"},
+                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader, width: "20%"},
+                {field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader, width: "40%"},
+                //{field: 'region', name: 'city', headerCellClass: $scope.highlightFilteredHeader},
+                //{field: 'model', name: 'Model', headerCellClass: $scope.highlightFilteredHeader},
+                //{field: 'network', name: 'network', headerCellClass: $scope.highlightFilteredHeader},
+                {
+                    field: 'manufacturer',
+                    name: 'manufacturer',
+                    headerCellClass: $scope.highlightFilteredHeader,
+                    width: "30%"
+                },
             ]
         };
         promise = testScriptService.getRealDevices(token, userId);
         promise.then(
             function (data) {
-				$scope.dataLoading = false;
+                $scope.dataLoading = false;
                 $scope.RealDevicesOptions.data = data.devicesList;
             },
             function (err) {
@@ -487,108 +492,105 @@ oTech.controller('createTestRunController',
         $scope.RealDevicesOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi1 = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.dataProcessing = true;
-				$scope.msg="";
+                $scope.dataProcessing = true;
+                $scope.msg = "";
                 $rootScope.RowRealDevices = row.entity;
                 $rootScope.RealDeviceId = row.entity.deviceId;
-				var VirtualDeviceName = $scope.selectedOption.row.deviceName;
-				var VirtualDeviceId = $scope.selectedOption.row.deviceId;
-				var deviceProfileName = $scope.selectedOption.row.deviceProfileName;
-				if(VirtualDeviceName == undefined && VirtualDeviceId == undefined){
-				$scope.msg = "Please select Virtual Device First";
-				$scope.dataProcessing = false;
-				}
-				var RealDeviceName = row.entity.deviceName;
-				var RealDeviceId =  row.entity.deviceId;
-				if(row.isSelected && VirtualDeviceName != undefined){
-				Devices.push({
-                                'VirtualDeviceName': VirtualDeviceName,
-                                'deviceProfileName': deviceProfileName,
-								'VirtualDeviceId': VirtualDeviceId,
-                                'deviceName': RealDeviceName,
-                                'deviceId': RealDeviceId,
-								'model': row.entity.model,
-								'manufacturer': row.entity.manufacturer,
-								'msisdn': row.entity.msisdn,
-								'row' : row,
-								'testplanId': TestPlanId,
-								'testrunId': 0,
-								'virtualDeviceId': VirtualDeviceId,
-								'realDeviceId': RealDeviceId
-                            });
-					VirtualDevicelist.push({
-								'testplanId': TestPlanId,
-								'testrunId': 0,
-								'virtualDeviceId': VirtualDeviceId,
-								'realDeviceId': RealDeviceId
-					});
-				}else{
-					for (var i = 0; i < Devices.length; i++){
-						if(Devices[i].realDeviceId == row.entity.deviceId){
-							Devices.splice(i, 1);
-							VirtualDevicelist.splice(i, 1);
-						}
-					}
-				}
-				$scope.addRealDevices = function () {
-					 $scope.DeviceMapping.data =  jQuery.makeArray(Devices);
-					//$scope.DeviceMapping.data = jQuery.extend(true, new Object(), Devices);
-					 angular.forEach($scope.gridApi1.selection.getSelectedRows(), function (data, index) {
-			                 //angular.copy(data, $scope.DeviceMapping.data);
-					        $scope.RealDevicesOptions.data.splice($scope.RealDevicesOptions.data.lastIndexOf(data), 1);
-					      });
-		                }
-				
-				//$scope.TestRunCreate_Data(VirtualDevicelist);				 
+                var VirtualDeviceName = $scope.selectedOption.row.deviceName;
+                var VirtualDeviceId = $scope.selectedOption.row.deviceId;
+                var deviceProfileName = $scope.selectedOption.row.deviceProfileName;
+                if (VirtualDeviceName == undefined && VirtualDeviceId == undefined) {
+                    $scope.msg = "Please select Virtual Device First";
+                    $scope.dataProcessing = false;
+                }
+                var RealDeviceName = row.entity.deviceName;
+                var RealDeviceId = row.entity.deviceId;
+                if (row.isSelected && VirtualDeviceName != undefined) {
+                    Devices.push({
+                        'VirtualDeviceName': VirtualDeviceName,
+                        'deviceProfileName': deviceProfileName,
+                        'VirtualDeviceId': VirtualDeviceId,
+                        'deviceName': RealDeviceName,
+                        'deviceId': RealDeviceId,
+                        'model': row.entity.model,
+                        'manufacturer': row.entity.manufacturer,
+                        'msisdn': row.entity.msisdn,
+                        'row': row,
+                        'testplanId': TestPlanId,
+                        'testrunId': 0,
+                        'virtualDeviceId': VirtualDeviceId,
+                        'realDeviceId': RealDeviceId
+                    });
+                    VirtualDevicelist.push({
+                        'testplanId': TestPlanId,
+                        'testrunId': 0,
+                        'virtualDeviceId': VirtualDeviceId,
+                        'realDeviceId': RealDeviceId
+                    });
+                } else {
+                    for (var i = 0; i < Devices.length; i++) {
+                        if (Devices[i].realDeviceId == row.entity.deviceId) {
+                            Devices.splice(i, 1);
+                            VirtualDevicelist.splice(i, 1);
+                        }
+                    }
+                }
+                $scope.addRealDevices = function () {
+                    $scope.DeviceMapping.data = jQuery.makeArray(Devices);
+                    //$scope.DeviceMapping.data = jQuery.extend(true, new Object(), Devices);
+                    angular.forEach($scope.gridApi1.selection.getSelectedRows(), function (data, index) {
+                        //angular.copy(data, $scope.DeviceMapping.data);
+                        $scope.RealDevicesOptions.data.splice($scope.RealDevicesOptions.data.lastIndexOf(data), 1);
+                    });
+                }
+
+                //$scope.TestRunCreate_Data(VirtualDevicelist);
                 $scope.dataProcessing = false;
             });
             gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
             });
         };
-        
-        
+
+
         $scope.DeviceMapping = {
-                enableFiltering: true,
-                enableRowHeaderSelection: false,
-                enableRowSelection: true,
-                multiSelect: true,
-    			enableVerticalScrollbar :0,
-    			enableHorizontalScrollbar:0,
-                columnDefs: [
-                    {field: 'deviceProfileName', name: 'Device Profile', headerCellClass: $scope.highlightFilteredHeader},
-    				{field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader},
-                    {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader},
-                    //{field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
-    				{field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
-                ]
-            };
-        
+            enableFiltering: true,
+            enableRowHeaderSelection: false,
+            enableRowSelection: true,
+            multiSelect: true,
+            enableVerticalScrollbar: 0,
+            enableHorizontalScrollbar: 0,
+            columnDefs: [
+                {field: 'deviceProfileName', name: 'Device Profile', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'deviceName', name: 'Name', headerCellClass: $scope.highlightFilteredHeader},
+                //{field: 'msisdn', name: 'MSISDN', headerCellClass: $scope.highlightFilteredHeader},
+                {field: 'manufacturer', name: 'manufacturer', headerCellClass: $scope.highlightFilteredHeader},
+            ]
+        };
+
         $scope.DeviceMapping.onRegisterApi = function (gridApi) {
             $scope.gridApi2 = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				$scope.removeMappings = function () {
-					 angular.forEach($scope.gridApi2.selection.getSelectedRows(), function (data, index) {
-						 for (var i = 0; i < Devices.length; i++){
-								if(Devices[i].deviceId == data.deviceId){
-									Devices.splice(i, 1);
-									VirtualDevicelist.splice(i, 1);
-								}
-							}
-						 $scope.RealDevicesOptions.data.push( data);
-					        $scope.DeviceMapping.data.splice($scope.DeviceMapping.data.lastIndexOf(data), 1);
-					      });
-		                }
+                $scope.removeMappings = function () {
+                    angular.forEach($scope.gridApi2.selection.getSelectedRows(), function (data, index) {
+                        for (var i = 0; i < Devices.length; i++) {
+                            if (Devices[i].deviceId == data.deviceId) {
+                                Devices.splice(i, 1);
+                                VirtualDevicelist.splice(i, 1);
+                            }
+                        }
+                        $scope.RealDevicesOptions.data.push(data);
+                        $scope.DeviceMapping.data.splice($scope.DeviceMapping.data.lastIndexOf(data), 1);
+                    });
+                }
             });
-           
+
         };
-		
-		
-		
-		
+
 
         //Create Testrun
         $scope.TestRunCreate_Data = function (VirtualDevicelist) {
-			
+
 
             $rootScope.CreateTestRun_Data = JSON.stringify({
                 "testplanVo": {"testplanId": TestPlanId},
@@ -600,31 +602,31 @@ oTech.controller('createTestRunController',
         }
 
         $scope.CreateTestrun = function () {
-        	VirtualDevicelist = [];
-        	for(var i=0; i < $scope.DeviceMapping.data.length; i++){
-		        	VirtualDevicelist.push({
-						'testplanId': $scope.DeviceMapping.data[i].testplanId,
-						'testrunId': 0,
-						'virtualDeviceId': $scope.DeviceMapping.data[i].VirtualDeviceId,
-						'realDeviceId': $scope.DeviceMapping.data[i].realDeviceId
-		        	});
-        	}
-        	$rootScope.CreateTestRun_Data = JSON.stringify({
+            VirtualDevicelist = [];
+            for (var i = 0; i < $scope.DeviceMapping.data.length; i++) {
+                VirtualDevicelist.push({
+                    'testplanId': $scope.DeviceMapping.data[i].testplanId,
+                    'testrunId': 0,
+                    'virtualDeviceId': $scope.DeviceMapping.data[i].VirtualDeviceId,
+                    'realDeviceId': $scope.DeviceMapping.data[i].realDeviceId
+                });
+            }
+            $rootScope.CreateTestRun_Data = JSON.stringify({
                 "testplanVo": {"testplanId": TestPlanId},
                 "jobVo": {},
                 "virtualRealDeviceList": VirtualDevicelist
             });
-        	
+
             if ($rootScope.RowRealDevices != null) {
-				$scope.dataProcessing = true;
-				$(".btn-info").addClass("disabled");
+                $scope.dataProcessing = true;
+                $(".btn-info").addClass("disabled");
                 var TestRunData = $rootScope.CreateTestRun_Data;
                 promise = testScriptService.CreateTestRun(TestRunData, token, userId);
                 promise.then(
                     function (data) {
                         var DependantTestRunName = data.NewTestRun.jobName;
-						$scope.dataProcessing = false;
-						$(".btn-info").removeClass("disabled");
+                        $scope.dataProcessing = false;
+                        $(".btn-info").removeClass("disabled");
                         $cookieStore.put('DependantTestRunName', DependantTestRunName);
                         $location.path('/CreateTestRun/MappingTestRun/MappingDevices/createTestRunScheduleSel');
 
@@ -636,8 +638,8 @@ oTech.controller('createTestRunController',
             }
             else {
                 $rootScope.Message = "Please Select Devices";
-				$scope.dataProcessing = false;
-				$(".btn-info").removeClass("disabled");
+                $scope.dataProcessing = false;
+                $(".btn-info").removeClass("disabled");
                 $('#MessageColor').css("color", "red");
                 console.log($('#MessageColor').css("color", "red"))
                 $('#MessagePopUp').modal('show');
@@ -680,66 +682,66 @@ oTech.controller('createTestRunController',
 
         }
 
-		 var VirtualJobsOptions = [];
-			var JobId =  $cookieStore.get('TestPLANId');
-	        promise = testScriptService.getVirtualJob(token, userId, JobId);
-					promise.then(
-	                    function (data) {
-						
-							sessionStorage.setItem('JobId', data.jobId);
-							for (var i = 0; i < data.length; i++){
-							VirtualJobsOptions.push({
-	                                'jobId': data[i].jobId,
-									'jobName': data[i].jobName,
-	                                'jobDescription': data[i].jobDescription,
-	                                'jobCreateDate': data[i].jobCreateDate,
-									'jobCreatedByName': data[i].jobCreatedByName,
-									'useCaseName': data[i].useCaseName,
-									
-	                            });
-							}
-							
-							$scope.VirtualJob = VirtualJobsOptions;
-							
-							$(".btn-info").removeClass("disabled");
-	                    },
-	                    function (err) {
-	                        console.log(err);
-	                    }
-	                );
-        
-					$scope.viewTaskDetail=function(){
-						
-						$scope.isPlanDetialView=true;
-					}
-					  $scope.taskDetail=function(){  
+        var VirtualJobsOptions = [];
+        var JobId = $cookieStore.get('TestPLANId');
+        promise = testScriptService.getVirtualJob(token, userId, JobId);
+        promise.then(
+            function (data) {
+
+                sessionStorage.setItem('JobId', data.jobId);
+                for (var i = 0; i < data.length; i++) {
+                    VirtualJobsOptions.push({
+                        'jobId': data[i].jobId,
+                        'jobName': data[i].jobName,
+                        'jobDescription': data[i].jobDescription,
+                        'jobCreateDate': data[i].jobCreateDate,
+                        'jobCreatedByName': data[i].jobCreatedByName,
+                        'useCaseName': data[i].useCaseName,
+
+                    });
+                }
+
+                $scope.VirtualJob = VirtualJobsOptions;
+
+                $(".btn-info").removeClass("disabled");
+            },
+            function (err) {
+                console.log(err);
+            }
+        );
+
+        $scope.viewTaskDetail = function () {
+
+            $scope.isPlanDetialView = true;
+        }
+        $scope.taskDetail = function () {
 //					function taskDetail(){
-					$scope.dataProcessingCommandParams = true;
-					$scope.isPlanDetialView=false;
-						$(".btn-info").addClass("disabled");
-		                //$rootScope.RowCreateTestrun = row.entity;	
-		                $('.treeSection').css("display", "none");
-						var jobDeviceId =  $rootScope.RowVirtualDevices.jobDeviceId;
-						var jobId =  $rootScope.RowVirtualDevices.jobId;
-					
-						promise = testScriptService.getVirtualJobsTask(token, userId, jobId, jobDeviceId);
-						promise.then(
-		                    function (data) {
-		                        $scope.uiTreeJSON = data.jobVO;
-								$rootScope.uiTreeJSON = data.jobVO;
-								$scope.dataProcessingCommandParams = false;
-								$(".btn-info").removeClass("disabled");
-								$('.treeSection').css("display", "block");
-		                    },
-		                    function (err) {
-		                    	$scope.dataProcessingCommandParams = false;
-		                        console.log(err);
-		                    }
-		                );
-						
-						
-					}
-					
+            $scope.dataProcessingCommandParams = true;
+            $scope.isPlanDetialView = false;
+            $(".btn-info").addClass("disabled");
+            //$rootScope.RowCreateTestrun = row.entity;
+            $('.treeSection').css("display", "none");
+            var jobDeviceId = $rootScope.RowVirtualDevices.jobDeviceId;
+            var jobId = $rootScope.RowVirtualDevices.jobId;
+
+            promise = testScriptService.getVirtualJobsTask(token, userId, jobId, jobDeviceId);
+            promise.then(
+                function (data) {
+                    $scope.uiTreeJSON = data.jobVO;
+                    $rootScope.uiTreeJSON = data.jobVO;
+                    $scope.dataProcessingCommandParams = false;
+                    $(".btn-info").removeClass("disabled");
+                    $('.treeSection').css("display", "block");
+                },
+                function (err) {
+                    $scope.dataProcessingCommandParams = false;
+                    console.log(err);
+                }
+            );
+
+
+        }
+
 
     });
 
