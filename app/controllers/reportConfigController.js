@@ -58,7 +58,7 @@ oTech.controller('ReportConfigController',
             "getVQTBoxData": "VQT Configuration",
             "getL1Config": "L1 Timezone Configuration",
             "getDevicesTimeZoneOffset": "Device Timezone Configuration",
-            "getAlertMonitoringDetails": "Alert Configuration"
+            "getAlertHBDeviceDetails": "Alert Configuration"
         };
 
         //Table Setting Here
@@ -113,8 +113,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefL1Config;
             if (table == "getDevicesTimeZoneOffset")
                 columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
-            if (table == "getAlertMonitoringDetails")
-                columnDef = oApp.config.columnDefAlertMonitoring;
+            if (table == "getAlertHBDeviceDetails")
+                columnDef = oApp.config.columnDefAlertHBDevice;
             return columnDef
         };
 
@@ -132,8 +132,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL1Config;
             if (table == "getDevicesTimeZoneOffset")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefDeviceTimeZoneOffset;
-            if (table == "getAlertMonitoringDetails")
-                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefAlertMonitoring;
+            if (table == "getAlertHBDeviceDetails")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefAlertHBDevice;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -358,7 +358,7 @@ oTech.controller('ReportConfigController',
             if (table == "getDevicesTimeZoneOffset") {
                 json["deviceId"] = row.entity.deviceId;
             }
-            if (table == "getAlertMonitoringDetails") {
+            if (table == "getAlertHBDeviceDetails") {
                 json["deviceId"] = row.entity.deviceId;
             }
             $("#dataLoadingDM").show();
@@ -441,22 +441,45 @@ oTech.controller('ReportConfigController',
                 json["timeZone"] = rowEntity.timeZone;
                 json["timeZoneOffset"] = rowEntity.timeZoneOffset;
             }
-            if (table == "getAlertMonitoringDetails") {
-                json["id"] = rowEntity.id;
-                json["jobId"] = rowEntity.jobId;
+            /**
+             CREATE TABLE dummy (
+             `ia_device_id` INT(11) NOT NULL DEFAULT '1',
+             `ia_device_name` VARCHAR(50) NULL DEFAULT '1',
+             `ia_operator` VARCHAR(50) NULL DEFAULT '1',
+             `ia_network_type` VARCHAR(50) NULL DEFAULT '1',
+             `description` VARCHAR(50) NULL DEFAULT NULL,
+             `x_param` FLOAT(16,8) NULL DEFAULT '0.00000000',
+             `y_param` FLOAT(16,8) NULL DEFAULT '0.00000000',
+             `moving` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `highlight` INT(10) UNSIGNED NULL DEFAULT '0',
+             `voice` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `data` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `vqt` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `gsm` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `location` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `wifi` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000',
+             `heartbeat` INT(10) UNSIGNED ZEROFILL NULL DEFAULT '0000000000'
+             )
+
+             */
+
+            if (table == "getAlertHBDeviceDetails") {
                 json["deviceId"] = rowEntity.deviceId;
-                json["deviceLocalStartTime"] = rowEntity.deviceLocalStartTime;
-                json["deviceLocalEndTime"] = rowEntity.deviceLocalEndTime;
-                json["lastNotfEndTime"] = rowEntity.lastNotfEndTime;
-                json["monInt"] = rowEntity.monInt;
-                json["emailList"] = rowEntity.emailList;
-                json["emailFreqId"] = rowEntity.emailFreqId;
-                json["lastEmailSentTime"] = rowEntity.lastEmailSentTime;
-                json["executed"] = rowEntity.executed;
-                json["allNotfSent"] = rowEntity.allNotfSent;
-                json["timeoffset"] = rowEntity.timeoffset;
-                json["alertStatus"] = rowEntity.alertStatus;
-                json["deviceLocalTimeZone"] = rowEntity.deviceLocalTimeZone;
+                json["deviceName"] = rowEntity.deviceName;
+                json["operator"] = rowEntity.operator;
+                json["networkType"] = rowEntity.networkType;
+                json["description"] = rowEntity.description;
+                json["xParam"] = rowEntity.xParam;
+                json["yParam"] = rowEntity.yParam;
+                json["moving"] = rowEntity.moving;
+                json["highlight"] = rowEntity.highlight;
+                json["voice"] = rowEntity.voice;
+                json["data"] = rowEntity.data;
+                json["vqt"] = rowEntity.vqt;
+                json["gsm"] = rowEntity.gsm;
+                json["location"] = rowEntity.location;
+                json["wifi"] = rowEntity.wifi;
+                json["heartbeat"] = rowEntity.heartbeat;
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");
