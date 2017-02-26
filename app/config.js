@@ -2224,7 +2224,7 @@ oApp.config = {
         {field: 'testAreaSubset', displayName: 'TestArea Subset', width: "120", enableCellEdit: true},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2245,7 +2245,7 @@ oApp.config = {
         {field: 'zoom', displayName: 'zoom', enableCellEdit: true},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2264,7 +2264,7 @@ oApp.config = {
         {field: 'b', displayName: 'B', enableCellEdit: true},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2277,7 +2277,7 @@ oApp.config = {
         {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2290,7 +2290,7 @@ oApp.config = {
         {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true, width: "30%"},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2317,7 +2317,7 @@ oApp.config = {
         {field: 'heartbeat', displayName: 'HeartBeat', enableCellEdit: true,},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
@@ -2332,7 +2332,7 @@ oApp.config = {
         {field: 'printFlag', displayName: 'Print Flag', enableCellEdit: true},
         {
             name: 'Action',
-            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delRow(row)" aria-hidden="true"></i></div>',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
             enableCellEdit: false,
             width: "10%",
             pinnedRight: true,
