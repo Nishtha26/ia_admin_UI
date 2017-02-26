@@ -188,6 +188,18 @@
         </div>
     </script>
 
+    <script type="text/ng-template" id="delPopup.html">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fa fa-remove fa-lg" aria-hidden="true"></i> Delete Row ?</h3>
+        </div>
+        <div class="modal-body">
+            Are you really sure you want to do delete this?
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="delRow(modal.row)">Delete</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>
 
 

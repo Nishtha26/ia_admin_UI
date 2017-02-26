@@ -334,6 +334,18 @@ oTech.controller('ReportConfigController',
             $scope.modalInstance.close('Saving Data !');
         }
 
+        //Del Popup
+        $scope.delPopup = function(row){
+            modal = $uibModal.open({
+                templateUrl: 'delPopup.html',
+                scope: $scope
+            });
+
+            $scope.modalInstance = modal;
+            $scope.modal.row = row;
+            return modal.result
+        }
+
         //Del Row
         $scope.delRow = function (row) {
             var table = $scope.getCurrentTableName();
@@ -371,6 +383,8 @@ oTech.controller('ReportConfigController',
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
+            //Dismiss Modal
+            $scope.modalInstance.dismiss('Cancelled')
             promise = AppServices.delRow(table, JSON.stringify(json));
             promise.then(function (data) {
                 $scope.err = false;

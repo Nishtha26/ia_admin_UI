@@ -118,14 +118,12 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
         url: "/dashboard/heatMaps",
         templateUrl: "app/views/heatMaps.html",
         controller: 'HeatMapsController'
-    })
+        })
         .state("driveRoutes", {
             url: "/dashboard/driveRoutes",
             templateUrl: "app/views/driveroutes.html",
             controller: 'DriveRoutesController'
         })
-
-
         .state("reports", {
             url: "/dashboard/reports",
             templateUrl: "app/views/reports.html",
@@ -140,47 +138,46 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
         url: "/dashboard/reportsTableau",
         templateUrl: "app/views/reportsTableau.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau1", {
+        }).state("reportTableau1", {
         url: "/dashboard/DataPerformance",
         templateUrl: "app/views/dataPerformanceReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau2", {
+        }).state("reportTableau2", {
         url: "/dashboard/MMS",
         templateUrl: "app/views/MMSReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau3", {
+        }).state("reportTableau3", {
         url: "/dashboard/SMS",
         templateUrl: "app/views/SMSReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau4", {
+        }).state("reportTableau4", {
         url: "/dashboard/Mobility",
         templateUrl: "app/views/MobilityReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau6", {
+        }).state("reportTableau6", {
         url: "/dashboard/VideoQuality",
         templateUrl: "app/views/VideoQualityReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau7", {
+       }).state("reportTableau7", {
         url: "/dashboard/VoiceQuality",
         templateUrl: "app/views/VoiceQualityReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau8", {
+       }).state("reportTableau8", {
         url: "/dashboard/WiFiPerformance",
         templateUrl: "app/views/WiFiPerformanceReport.html",
         controller: 'ReportsTableauController'
-    }).state("reportTableau9", {
+       }).state("reportTableau9", {
         url: "/dashboard/RadioPerformance",
         templateUrl: "app/views/RadioPerformanceReport.html",
         controller: 'ReportsTableauController'
-    }).state("droolRuleTemplete", {
+       }).state("droolRuleTemplete", {
         url: "/dashboard/droolruleTemplete",
         templateUrl: "app/views/create_drools_rule.html",
         controller: 'DroolruleTempleteController',
         ncyBreadcrumb: {
             label: 'Test Plan'
         }
-    })
-
+       })
         .state("myDevices", {
             url: "/dashboard/myDevices",
             templateUrl: "app/views/mydevices.html",
