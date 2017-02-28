@@ -71,7 +71,7 @@ oTech.service('testScriptService',
                 },
                 success: function (data)
                 {
-                    //alert("success");
+;                    //alert("success");
                     deferred.resolve(data);
                 },
                 error: function (err)
@@ -281,6 +281,32 @@ oTech.service('testScriptService',
                 {
                     //alert("success");
                     deferred.resolve($.parseJSON(data.items));
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
+        service.delTestplan = function (token,userId, testplanId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/delTestplan",
+                type: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+                    'testplanId': testplanId
+                },
+                success: function (data)
+                {
+                    console.log(data);
+                    //alert("success");
+                    deferred.resolve(data);
                 },
                 error: function (err)
                 {
