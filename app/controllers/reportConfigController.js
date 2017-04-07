@@ -59,7 +59,9 @@ oTech.controller('ReportConfigController',
             "getL1Config": "L1 Timezone Configuration",
             "getDevicesTimeZoneOffset": "Device Timezone Configuration",
             "getAlertHBDeviceDetails": "Alert Configuration",
-            "getTabDashboardConfig": "Tableau Email Reporter"
+            "getTabDashboardConfig": "Tableau Email Reporter",
+            "getMarketBuildConfig": "Market Building Config",
+            "getTWCJobTestType": "Job config",
         };
 
         //Table Setting Here
@@ -118,6 +120,10 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefAlertHBDevice;
             if (table == "getTabDashboardConfig")
                 columnDef = oApp.config.columnDefTabDashboardConfig;
+            if (table == "getMarketBuildConfig")
+                columnDef = oApp.config.columnDefMarketBuildingConfig;
+            if (table == "getTWCJobTestType")
+                columnDef = oApp.config.columnDefTWCJobTestType;
             return columnDef
         };
 
@@ -139,6 +145,10 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefAlertHBDevice;
             if (table == "getTabDashboardConfig")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefTabDashboardConfig;
+            if (table == "getMarketBuildConfig")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefMarketBuildingConfig;
+            if (table == "getTWCJobTestType")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefTWCJobTestType;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -335,7 +345,7 @@ oTech.controller('ReportConfigController',
         }
 
         //Del Popup
-        $scope.delPopup = function(row){
+        $scope.delPopup = function (row) {
             modal = $uibModal.open({
                 templateUrl: 'delPopup.html',
                 scope: $scope
@@ -381,6 +391,16 @@ oTech.controller('ReportConfigController',
             if (table == "getTabDashboardConfig") {
                 json["id"] = row.entity.id;
             }
+            if (table == "getMarketBuildConfig") {
+                json["buildingName"] = row.entity.buildingName;
+                json["marketName"] = row.entity.buildingName;
+                json["lat"] = row.entity.lat;
+                json["lng"] = row.entity.lng;
+            }
+            if (table == "getTWCJobTestType") {
+                json["jobId"] = row.entity.jobId;
+                json["testType"] = row.entity.testType;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
             //Dismiss Modal
@@ -406,7 +426,7 @@ oTech.controller('ReportConfigController',
             var table = $scope.getCurrentTableName();
             var json = {};
             if (table == "getDeviceMarketConfig") {
-                var result={};
+                var result = {};
                 json["projectName"] = rowEntity.projectName;
                 json["marketName"] = rowEntity.marketName;
                 json["deviceId"] = rowEntity.deviceId;
@@ -487,6 +507,28 @@ oTech.controller('ReportConfigController',
                 json["dashboardURL"] = rowEntity.dashboardURL;
                 json["notifyURL"] = rowEntity.notifyURL;
                 json["printFlag"] = rowEntity.printFlag;
+            }
+
+            if (table == "getMarketBuildConfig") {
+                var result = {};
+                json["buildingName"] = rowEntity.buildingName;
+                json["marketName"] = rowEntity.buildingName;
+                json["lat"] = rowEntity.lat;
+                json["lng"] = rowEntity.lng;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
+            }
+
+            if (table == "getTWCJobTestType") {
+                var result = {};
+                json["testType"] = rowEntity.testType;
+                json["jobId"] = rowEntity.jobId;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");

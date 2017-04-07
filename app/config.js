@@ -2300,14 +2300,14 @@ oApp.config = {
 
     columnDefAlertHBDevice: [
         {field: 'deviceId', displayName: 'Device Id'},
-        {field: 'deviceName', displayName: 'Device Name', enableCellEdit: true, visible:false ,modalHidden: true},
-        {field: 'operator', displayName: 'Operator', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'networkType', displayName: 'Network Type', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'description', displayName: 'Description', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'xParam', displayName: 'X Param', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'yParam', displayName: 'Y Param', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'moving', displayName: 'Moving', enableCellEdit: true,visible:false ,modalHidden: true},
-        {field: 'highlight', displayName: 'HighLight', enableCellEdit: true,visible:false ,modalHidden: true},
+        {field: 'deviceName', displayName: 'Device Name', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'operator', displayName: 'Operator', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'networkType', displayName: 'Network Type', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'description', displayName: 'Description', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'xParam', displayName: 'X Param', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'yParam', displayName: 'Y Param', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'moving', displayName: 'Moving', enableCellEdit: true, visible: false, modalHidden: true},
+        {field: 'highlight', displayName: 'HighLight', enableCellEdit: true, visible: false, modalHidden: true},
         {field: 'voice', displayName: 'Voice', enableCellEdit: true,},
         {field: 'data', displayName: 'Data', enableCellEdit: true,},
         {field: 'vqt', displayName: 'VQT', enableCellEdit: true,},
@@ -2340,5 +2340,31 @@ oApp.config = {
             modalHidden: true
         },
     ],
+    columnDefTWCJobTestType: [
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true},
+        {field: 'testType', displayName: 'Test Type', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
+    columnDefMarketBuildingConfig: [
+        {field: 'buildingName', displayName: 'Building Name', enableCellEdit: true},
+        {field: 'marketName', displayName: 'Market Name', enableCellEdit: true},
+        {field: 'lat', displayName: 'Lat', enableCellEdit: true},
+        {field: 'lng', displayName: 'Long', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ]
 }
 	
