@@ -1,10 +1,9 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr, $log) {
+    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
         $rootScope.role = sessionStorage.getItem("role");
-        $scope.update_btn=false;
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
         var sendCreateData = {};
@@ -12,7 +11,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         var TestPlanId = "";
         $templateCache.put('ui-grid/uiGridViewport',
-            "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" ng-if=\"grid.appScope.showRow(row.entity)\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
+            "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
         );
         var Devices = [];
         var createTestRunDevices = [];
@@ -131,7 +130,6 @@ oTech.controller('testPlanTestRunAdministration',
                     '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Delete Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
@@ -143,10 +141,6 @@ oTech.controller('testPlanTestRunAdministration',
             ],
 
         };
-
-        $scope.showRow = function (row) {
-            return row.isActive == 'Y';
-        }
 
         $scope.TestPlanOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
@@ -1490,7 +1484,7 @@ oTech.controller('testPlanTestRunAdministration',
                     }
                     console.log($scope.deviceProfileList);
                     if ($scope.deviceProfileList.length == 0) {
-                        toastr.error('Create Device Profile First', 'Device Profile not Found!');
+                        toastr.error('Create Device Profile First', 'Device Profile not Found!')
                         console.log("No Device Profile Found !");
                         $scope.dataLoading = false;
                     }
@@ -2179,20 +2173,16 @@ oTech.controller('testPlanTestRunAdministration',
             promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
             promise.then(
                 function (data) {
+
                     if (data.isMappedTestPlanTestRun.length > 0) {
                         $scope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
-                        //TesPlan for which
-                        if ($scope.isMappedTestPlanTestRun == "notExist" && data.jobVO.length == 0) {
-                            toastr.error('No Device Profile Exist !', 'Error !');
-                            $scope.update_btn = false;
-                            $scope.dataProcessingForEditTestPlan = false;
-                        }
-                        else if ($scope.isMappedTestPlanTestRun == "notExist" && data.jobVO.length > 0) {
-                            $scope.update_btn = true;
+
+                        if ($scope.isMappedTestPlanTestRun == "notExist") {
                             $scope.scrollToTestRunDiv();
                             $scope.mainTab = 2;
                             cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray(data.jobVO[0]));
                             cloneCopyOfJobDevice[0].jobDeviceId = 0;
+
                             deepCopyObjectForEditTestPlan = jQuery.extend(true, new Object(), data);
                             for (var i = 0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++) {
 
@@ -2290,6 +2280,8 @@ oTech.controller('testPlanTestRunAdministration',
 
                     if (data.isMappedTestPlanTestRun.length > 0) {
                         $scope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
+
+
                         $scope.scrollToTestRunDiv();
                         $scope.mainTab = 2;
                         cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray(data.jobVO[0]));
@@ -2309,6 +2301,7 @@ oTech.controller('testPlanTestRunAdministration',
                         }
 
                         for (var i = 0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++) {
+
                             var arr = jQuery.makeArray(deepCopyObjectForEditTestPlan.jobVO[i]);
                             $scope.deviceProfileListForAdd.push({'deviceProfileName': deepCopyObjectForEditTestPlan.jobVO[i].deviceProfileName});
                         }
