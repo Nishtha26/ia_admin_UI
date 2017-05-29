@@ -106,6 +106,30 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+        
+        service.createCopyTestplan = function (token,userId, TestPlanId) {
+        	
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/createCopyTestplan",
+                type: "POST",
+                data: {token: token, testplanId: TestPlanId, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
 		
 		service.createCloneTestplan = function (token,userId, TestPlanId) {
             var deferred = $q.defer();

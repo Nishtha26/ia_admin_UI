@@ -1,5 +1,5 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr) {
+    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr, messages) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
@@ -8,7 +8,7 @@ oTech.controller('testPlanTestRunAdministration',
         $scope.createTestPlan = {};
         var sendCreateData = {};
         $scope.testRunIdForDelete = "";
-
+        $scope.update_btn=false;
         var TestPlanId = "";
         $templateCache.put('ui-grid/uiGridViewport',
             "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
@@ -133,6 +133,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
+                    '<li ng-click="grid.appScope.copyTestPlan(row);"><a><i class="icon-copy4 text-primary"></i> Copy Test Plan</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -499,6 +500,36 @@ oTech.controller('testPlanTestRunAdministration',
             );
         }
 
+        $scope.copyTestPlan = function (row) {
+        	           
+            $scope.dataProcessingTestPlan = true;
+            promise = testScriptService.createCopyTestplan(token, userId, row.entity.testplanId);
+            promise.then(
+                function (data) {
+                	
+                	$scope.shareData = [];
+                    $scope.shareData.push({'key': 'treeJson', 'value': data.CopiedTestPlan.taskVOList});
+                    $scope.shareData.push({'key': 'testPlanName', 'value': data.CopiedTestPlan.jobName});
+                    $scope.shareData.push({'key': 'testPlanDescription', 'value': data.CopiedTestPlan.jobDescription});
+                    $scope.shareData.push({'key': 'usecaseId', 'value': data.CopiedTestPlan.useCaseId});
+                    $scope.shareData.push({'key': 'useCaseName', 'value': data.CopiedTestPlan.useCaseName});
+                    
+                    if (messages.length == 1) {
+                        messages.splice(0, 1);
+                    }
+
+                    messages.add($scope.shareData);
+                   
+                	$location.path('/dashboard/copyTestPlan');
+                	$scope.dataProcessingTestPlan = false;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        
+        }
+        
         $scope.clone = function (row) {
             $scope.dataProcessingTestPlan = true;
             promise = testScriptService.createCloneTestplan(token, userId, row.entity.testplanId);
@@ -764,10 +795,10 @@ oTech.controller('testPlanTestRunAdministration',
                 },
                 /* {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},*/
                 {
-                    field: 'jobProgress',
+                	field: 'jobStatusName',
                     name: 'Test Run Monitoring',
                     headerCellClass: $scope.highlightFilteredHeader,
-                    cellTemplate: '<div class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobProgress\" type="success"><b style="position: absolute;left: 40%;color: #3d3d3d;">{{row.entity.jobProgress}}%</b></uib-progressbar></div>'
+                    cellTemplate: '<div title=\"{{row.entity.jobStatusName}}\" ng-if=\"row.entity.jobStatusName.indexOf(\'%\') > -1\" class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobStatusName\" type="success"><b style="position: absolute;left: 10%;color: #3d3d3d;">{{row.entity.jobStatusName}}</b></uib-progressbar></div><div class="ui-grid-cell-contents ng-binding ng-scope" title=\"{{row.entity.jobStatusName}}\" ng-if=\"row.entity.jobStatusName.indexOf(\'%\') < 0\">{{row.entity.jobStatusName}}</div>'
                 },
                 /*{field: 'action', name: 'Action', cellTemplate:'<div>' +'<a href="{{row.entity.showScheduleUrl}}" target="_blank">{{row.entity.action}}</a>' +'</div>' },
                  {field: 'deviceLogLevel', name: ' Device Log Level', headerCellClass: $scope.highlightFilteredHeader},*/
@@ -2185,7 +2216,7 @@ oTech.controller('testPlanTestRunAdministration',
 
                             deepCopyObjectForEditTestPlan = jQuery.extend(true, new Object(), data);
                             for (var i = 0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++) {
-
+                            	$scope.update_btn=true;
                                 if (editVirtualDevice[i].id == deepCopyObjectForEditTestPlan.jobVO[i].deviceId) {
                                     editVirtualDevice.splice(i, 1);
                                 }
@@ -2281,7 +2312,7 @@ oTech.controller('testPlanTestRunAdministration',
                     if (data.isMappedTestPlanTestRun.length > 0) {
                         $scope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
 
-
+                        
                         $scope.scrollToTestRunDiv();
                         $scope.mainTab = 2;
                         cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray(data.jobVO[0]));
@@ -2454,9 +2485,12 @@ oTech.controller('testPlanTestRunAdministration',
                 }
 
             }
+            for (var i = mapping.index + 1 ; i < $scope.deviceProfileListForEdit.length; i++) {
+            	$scope.deviceProfileListForEdit[i].index = $scope.deviceProfileListForEdit[i].index - 1; 
+            }
             $scope.deviceProfileListForEdit.splice(mapping.index, 1);
             $scope.deviceProfileCounter--;
-            $scope.tree2 = "";
+            //$scope.tree2 = "";
         }
 
         $scope.selectedTab = 0;
