@@ -1037,6 +1037,31 @@ var technology=heatMapInput.technology;
 			else
 				str +=  "    <td class='tg-5hgy'>"+deviceInfo.ping+"</td>               ";
 			str += 	"  </tr>                                                ";
+			
+			if(deviceInfo.wifirssi != null && deviceInfo.wifirssi > -126 && deviceInfo.wifirssi <= -1 ) {
+				
+				str = str + 
+				 "  <tr>  												  "+
+				 "  <tr>                                                   "+
+				 "    <th class='tg-5klj'>Wifi RSSI</th>                "+
+				 "    <th class='tg-5klj'>SSID</th>                "+
+				 "    <th class='tg-5klj'>BSSID</th>                         "+
+				 "    <th class='tg-5klj'>WiFi Frequency</th>                      "+
+				 "  </tr>                                                  "+
+				 "  <tr>                                                   ";
+				
+				if(deviceInfo.wifirssi <= -1 && deviceInfo.wifirssi > -126 )
+					str += "    <td class='tg-5hgy'>"+deviceInfo.wifirssi+"dBm</td>  ";
+				else 
+					str += "    <td class='tg-5hgy'></td>      " ;
+
+				str += "<td class='tg-5hgy'>"+deviceInfo.wifissid+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wifibssid == 0 ? "" : deviceInfo.wifibssid)+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wififreq == 0 ? "" : deviceInfo.wififreq)+"</td>  ";
+				str += "  </tr>   ";
+			
+			}
+			
 			str += 	"</table>                                               ";
 
 
@@ -1091,6 +1116,31 @@ var technology=heatMapInput.technology;
 			else
 				str +=  "    <td class='tg-5hgy'>"+deviceInfo.ping+"</td>               ";
 			str += 	"  </tr>                                                ";
+			
+			if(deviceInfo.wifirssi != null && deviceInfo.wifirssi > -126 && deviceInfo.wifirssi <= -1 ) {
+				
+				str = str + 
+				 "  <tr>  												  "+
+				 "  <tr>                                                   "+
+				 "    <th class='tg-5klj'>Wifi RSSI</th>                "+
+				 "    <th class='tg-5klj'>SSID</th>                "+
+				 "    <th class='tg-5klj'>BSSID</th>                         "+
+				 "    <th class='tg-5klj'>WiFi Frequency</th>                      "+
+				 "  </tr>                                                  "+
+				 "  <tr>                                                   ";
+				
+				if(deviceInfo.wifirssi <= -1 && deviceInfo.wifirssi > -126 )
+					str += "    <td class='tg-5hgy'>"+deviceInfo.wifirssi+"dBm</td>  ";
+				else 
+					str += "    <td class='tg-5hgy'></td>      " ;
+
+				str += "<td class='tg-5hgy'>"+deviceInfo.wifissid+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wifibssid == 0 ? "" : deviceInfo.wifibssid)+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wififreq == 0 ? "" : deviceInfo.wififreq)+"</td>  ";
+				str += "  </tr>   ";
+			
+			}
+			
 			str += 	"</table>                                               ";
 
 
@@ -1166,7 +1216,7 @@ var technology=heatMapInput.technology;
 				 }
 				 str = str + " <td class='tg-5hgy' colspan='1'>"+jQuery.format.date(deviceInfo.timestamp, oApp.constant.GRID_DATE_TIME_FORMAT)+"</td>           ";
 				
-				if(deviceInfo.wifirssi<-1)
+				if(deviceInfo.wifirssi <= -1 && deviceInfo.wifirssi > -126 )
 						str += "    <td class='tg-5hgy'>"+deviceInfo.wifirssi+"dBm</td>  ";
 					else 
 						str += "    <td class='tg-5hgy'></td>      " ;
@@ -1372,10 +1422,33 @@ var technology=heatMapInput.technology;
 				str += "    <td class='tg-5hgy'>"+deviceInfo.rssi+"dBm</td>  ";
 			else 
 				str += "    <td class='tg-5hgy'></td>      ";
-			str += 	"  </tr>                                                ";
-			str += 	"</table>                                               ";
-
+			str += 	"  </tr>  " ;
 			
+			if(deviceInfo.wifirssi != null && deviceInfo.wifirssi > -126 && deviceInfo.wifirssi <= -1 ) {
+			
+				str = str + 
+				 "  <tr>  												  "+
+				 "  <tr>                                                   "+
+				 "    <th class='tg-5klj'>Wifi RSSI</th>                "+
+				 "    <th class='tg-5klj'>SSID</th>                "+
+				 "    <th class='tg-5klj'>BSSID</th>                         "+
+				 "    <th class='tg-5klj'>WiFi Frequency</th>                      "+
+				 "  </tr>                                                  "+
+				 "  <tr>                                                   ";
+				
+				if(deviceInfo.wifirssi <= -1 && deviceInfo.wifirssi > -126 )
+					str += "    <td class='tg-5hgy'>"+deviceInfo.wifirssi+"dBm</td>  ";
+				else 
+					str += "    <td class='tg-5hgy'></td>      " ;
+
+				str += "<td class='tg-5hgy'>"+deviceInfo.wifissid+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wifibssid == 0 ? "" : deviceInfo.wifibssid)+"</td>  ";
+				str += "<td class='tg-5hgy'>"+(deviceInfo.wififreq == 0 ? "" : deviceInfo.wififreq)+"</td>  ";
+				str += "  </tr>   ";
+			
+			}
+			
+			str += 	"</table>                                               ";
 			
 		}
 	return str;
