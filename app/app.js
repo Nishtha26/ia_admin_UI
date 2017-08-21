@@ -191,6 +191,14 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                 label: 'Test Plan'
             }
         })
+         .state("copyTestPlan", {
+            url: "/dashboard/copyTestPlan",
+            templateUrl: "app/views/copyTestPlan.html",
+            controller: 'copyTestPlan',
+            ncyBreadcrumb: {
+                label: 'Test Plan'
+            }
+        })
         .state("createTestPlanTemplate", {
             url: "/dashboard/createTestPlanTemplate",
             templateUrl: "app/views/createTestPlanTemplate.html",

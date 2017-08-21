@@ -1,5 +1,5 @@
 oTech.controller('testPlanTestRunAdministration',
-    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr) {
+    function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr, messages) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
         $scope.name = sessionStorage.getItem("username");
@@ -133,6 +133,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
+                    '<li ng-click="grid.appScope.copyTestPlan(row);"><a><i class="icon-copy4 text-primary"></i> Copy Test Plan</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -499,6 +500,36 @@ oTech.controller('testPlanTestRunAdministration',
             );
         }
 
+        $scope.copyTestPlan = function (row) {
+        	           
+            $scope.dataProcessingTestPlan = true;
+            promise = testScriptService.createCopyTestplan(token, userId, row.entity.testplanId);
+            promise.then(
+                function (data) {
+                	
+                	$scope.shareData = [];
+                    $scope.shareData.push({'key': 'treeJson', 'value': data.CopiedTestPlan.taskVOList});
+                    $scope.shareData.push({'key': 'testPlanName', 'value': data.CopiedTestPlan.jobName});
+                    $scope.shareData.push({'key': 'testPlanDescription', 'value': data.CopiedTestPlan.jobDescription});
+                    $scope.shareData.push({'key': 'usecaseId', 'value': data.CopiedTestPlan.useCaseId});
+                    $scope.shareData.push({'key': 'useCaseName', 'value': data.CopiedTestPlan.useCaseName});
+                    
+                    if (messages.length == 1) {
+                        messages.splice(0, 1);
+                    }
+
+                    messages.add($scope.shareData);
+                   
+                	$location.path('/dashboard/copyTestPlan');
+                	$scope.dataProcessingTestPlan = false;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        
+        }
+        
         $scope.clone = function (row) {
             $scope.dataProcessingTestPlan = true;
             promise = testScriptService.createCloneTestplan(token, userId, row.entity.testplanId);
