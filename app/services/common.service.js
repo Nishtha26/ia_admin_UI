@@ -1798,7 +1798,7 @@ oTech.service('AppServices',
             return deferred.promise;
         }
 
-        service.addRow = function (table, json) {
+        service.addRow = function (table, json,token) {
             console.log(JSON.stringify(json));
             var deferred = $q.defer();
             $.ajax({
@@ -1822,7 +1822,7 @@ oTech.service('AppServices',
             return deferred.promise;
         }
 
-        service.delRow = function (table, json) {
+        service.delRow = function (table, json,token) {
             console.log(JSON.stringify(json));
             var deferred = $q.defer();
             $.ajax({
@@ -1846,7 +1846,7 @@ oTech.service('AppServices',
             return deferred.promise;
         }
 
-        service.updateRow = function (table, json) {
+        service.updateRow = function (table, json,token) {
             console.log(JSON.stringify(json));
             var deferred = $q.defer();
             $.ajax({
