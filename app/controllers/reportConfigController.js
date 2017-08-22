@@ -317,7 +317,7 @@ oTech.controller('ReportConfigController',
                 result[name] = value;
             }
             var tableName = $scope.getCurrentTableName();
-            $scope.saveData(tableName.replace("get", "add"), JSON.stringify(result));
+            $scope.saveData(tableName.replace("get", "add"), JSON.stringify(result),token);
         };
 
         $scope.cancel = function () {
@@ -325,9 +325,9 @@ oTech.controller('ReportConfigController',
         };
 
         //Send Data to Server
-        $scope.saveData = function (table, json) {
+        $scope.saveData = function (table, json,token) {
             $("#dataLoadingDM").show();
-            promise = AppServices.addRow(table, json);
+            promise = AppServices.addRow(table, json,token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(json);
@@ -357,7 +357,7 @@ oTech.controller('ReportConfigController',
         }
 
         //Del Row
-        $scope.delRow = function (row) {
+        $scope.delRow = function (row,token) {
             var table = $scope.getCurrentTableName();
             var json = {};
             if (table == "getDeviceMarketConfig") {
@@ -405,7 +405,7 @@ oTech.controller('ReportConfigController',
             table = table.replace("get", "del");
             //Dismiss Modal
             $scope.modalInstance.dismiss('Cancelled')
-            promise = AppServices.delRow(table, JSON.stringify(json));
+            promise = AppServices.delRow(table, JSON.stringify(json),token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(JSON.stringify(data));
@@ -532,7 +532,7 @@ oTech.controller('ReportConfigController',
             }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");
-            promise = AppServices.updateRow(table, JSON.stringify(json));
+            promise = AppServices.updateRow(table, JSON.stringify(json),token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(JSON.stringify(data));
