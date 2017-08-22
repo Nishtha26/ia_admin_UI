@@ -357,7 +357,7 @@ oTech.controller('ReportConfigController',
         }
 
         //Del Row
-        $scope.delRow = function (row,token) {
+        $scope.delRow = function (row) {
             var table = $scope.getCurrentTableName();
             var json = {};
             if (table == "getDeviceMarketConfig") {
