@@ -505,22 +505,22 @@ oApp.config = {
             return '' + row.entity.jobStartTimeMs + '';
         }
         },
-        {displayName: "PCI", field: "pci"},
-        {
-            headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
-            return '' + row.entity.cellId + '';
-        }
-        },
-        {
-            headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
-            return '' + row.entity.cellName + '';
-        }
-        },
-        {
-            displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
-            return '' + row.entity.channelBandWidth + '';
-        }
-        },
+        // {displayName: "PCI", field: "pci"},
+        // {
+        //     headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellId + '';
+        // }
+        // },
+        // {
+        //     headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellName + '';
+        // }
+        // },
+        // {
+        //     displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
+        //     return '' + row.entity.channelBandWidth + '';
+        // }
+        // },
         {
             displayName: "File URL", field: "fileUrl", cellTooltip: function (row, col) {
             return '' + row.entity.fileUrl + '';
