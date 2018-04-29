@@ -522,7 +522,7 @@ oApp.config = {
         // }
         // },
         {
-            displayName: "File URL", field: "fileUrl", cellTooltip: function (row, col) {
+            displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
             return '' + row.entity.fileUrl + '';
         }
         }
