@@ -62,6 +62,7 @@ oTech.controller('ReportConfigController',
             "getTabDashboardConfig": "Tableau Email Reporter",
             "getMarketBuildConfig": "Market Building Config",
             "getTWCJobTestType": "Job config",
+            "getVoiceCallMapping": "Voice Call Mapping",
         };
 
         //Table Setting Here
@@ -124,6 +125,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefMarketBuildingConfig;
             if (table == "getTWCJobTestType")
                 columnDef = oApp.config.columnDefTWCJobTestType;
+            if (table == "getVoiceCallMapping")
+                columnDef = oApp.config.columnVoiceCallMapping;
             return columnDef
         };
 
@@ -149,6 +152,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefMarketBuildingConfig;
             if (table == "getTWCJobTestType")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefTWCJobTestType;
+            if (table == "getVoiceCallMapping")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnVoiceCallMapping;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -401,6 +406,14 @@ oTech.controller('ReportConfigController',
                 json["jobId"] = row.entity.jobId;
                 json["testType"] = row.entity.testType;
             }
+            if (table == "getVoiceCallMapping") {
+                json["jobId"] = row.entity.jobId;
+                json["callingDeviceId"] = row.entity.callingDeviceId;
+                json["callingPartyNo"] = row.entity.callingPartyNo;
+                json["calledDeviceId"] = row.entity.calledDeviceId;
+                json["calledPartyNo"] = row.entity.calledPartyNo;
+                json["taskExId"] = row.entity.taskExId;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
             //Dismiss Modal
@@ -525,6 +538,19 @@ oTech.controller('ReportConfigController',
                 var result = {};
                 json["testType"] = rowEntity.testType;
                 json["jobId"] = rowEntity.jobId;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
+            }
+            if(table == "getVoiceCallMapping"){
+                var result = {};
+                json["jobId"] = row.entity.jobId;
+                json["callingDeviceId"] = row.entity.callingDeviceId;
+                json["callingPartyNo"] = row.entity.callingPartyNo;
+                json["calledDeviceId"] = row.entity.calledDeviceId;
+                json["calledPartyNo"] = row.entity.calledPartyNo;
+                json["taskExId"] = row.entity.taskExId;
                 result["new"] = Object.assign({}, json);
                 json[colDef.name] = oldValue;
                 result["old"] = Object.assign({}, json);
