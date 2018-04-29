@@ -2365,6 +2365,22 @@ oApp.config = {
             pinnedRight: true,
             modalHidden: true
         },
+    ],
+    columnVoiceCallMapping: [
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true},
+        {field: 'callingDeviceId', displayName: 'Calling Device Id', enableCellEdit: true},
+        {field: 'callingPartyNo', displayName: 'Calling Party Number', enableCellEdit: true},
+        {field: 'calledDeviceId', displayName: 'Called Device Id', enableCellEdit: true},
+        {field: 'calledPartyNo', displayName: 'Called Party Number', enableCellEdit: true},
+        {field: 'taskExId', displayName: 'Task Executor Id', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
     ]
 }
 	
