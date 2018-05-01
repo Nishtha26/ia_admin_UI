@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "6.2.1",
+    IAAVersion: "7.1.1",
     programmingSkills: [
         {
             value: 20,
@@ -505,24 +505,24 @@ oApp.config = {
             return '' + row.entity.jobStartTimeMs + '';
         }
         },
-        {displayName: "PCI", field: "pci"},
+        // {displayName: "PCI", field: "pci"},
+        // {
+        //     headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellId + '';
+        // }
+        // },
+        // {
+        //     headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellName + '';
+        // }
+        // },
+        // {
+        //     displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
+        //     return '' + row.entity.channelBandWidth + '';
+        // }
+        // },
         {
-            headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
-            return '' + row.entity.cellId + '';
-        }
-        },
-        {
-            headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
-            return '' + row.entity.cellName + '';
-        }
-        },
-        {
-            displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
-            return '' + row.entity.channelBandWidth + '';
-        }
-        },
-        {
-            displayName: "File URL", field: "fileUrl", cellTooltip: function (row, col) {
+            displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
             return '' + row.entity.fileUrl + '';
         }
         }
