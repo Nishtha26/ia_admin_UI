@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "6.2.1",
+    IAAVersion: "7.1.1",
     programmingSkills: [
         {
             value: 20,
@@ -2357,6 +2357,22 @@ oApp.config = {
         {field: 'marketName', displayName: 'Market Name', enableCellEdit: true},
         {field: 'lat', displayName: 'Lat', enableCellEdit: true},
         {field: 'lng', displayName: 'Long', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
+    columnVoiceCallMapping: [
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true},
+        {field: 'callingDeviceId', displayName: 'Calling Device Id', enableCellEdit: true},
+        {field: 'callingPartyNo', displayName: 'Calling Party Number', enableCellEdit: true},
+        {field: 'calledDeviceId', displayName: 'Called Device Id', enableCellEdit: true},
+        {field: 'calledPartyNo', displayName: 'Called Party Number', enableCellEdit: true},
+        {field: 'taskExId', displayName: 'Task Executor Id', enableCellEdit: true},
         {
             name: 'Action',
             cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
