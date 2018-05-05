@@ -185,6 +185,8 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
                 else if (link == 'L1LOG')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsl1log;
+                else if (link == 'L3LOG')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsl3log;
                 else if (link == 'Location')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefslocation;
                 else if (link == 'MMS')

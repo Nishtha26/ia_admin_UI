@@ -527,6 +527,37 @@ oApp.config = {
         }
         }
     ],
+    columnDefsl3log: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "deviceId", field: "deviceId", pinnedLeft: true},
+        {headerName: "jobId", field: "jobId"},
+        {
+            headerName: "testcaseId", field: "testcaseId", cellTooltip: function (row, col) {
+            return '' + row.entity.testcaseId + '';
+        }
+        },
+        {
+            headerName: "jobStartTime", field: "jobStartTime", cellTooltip: function (row, col) {
+            return '' + row.entity.jobStartTime + '';
+        }
+        },
+        {
+            displayName: "Job StartTime(MS)", field: "jobStartTimeMs", cellTooltip: function (row, col) {
+            return '' + row.entity.jobStartTimeMs + '';
+        }
+        },
+        {
+            displayName: "Job CaptureTime(MS)", field: "jobCaptureTimeMS", cellTooltip: function (row, col) {
+            return '' + row.entity.jobCaptureTimeMS + '';
+        }
+        },
+        {
+            displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
+            return '' + row.entity.fileUrl + '';
+        }
+        }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
@@ -2272,6 +2303,19 @@ oApp.config = {
         },
     ],
     columnDefL1Config: [
+        {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
+        {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
+    columnDefL3Config: [
         {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
         {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
         {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true},
