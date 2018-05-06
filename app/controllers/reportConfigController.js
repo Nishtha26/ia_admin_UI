@@ -57,6 +57,7 @@ oTech.controller('ReportConfigController',
             "getGeoMarketConfig": "Geo Market Mapping",
             "getVQTBoxData": "VQT Configuration",
             "getL1Config": "L1 Timezone Configuration",
+            "getL3Config": "L3 Timezone Configuration",
             "getDevicesTimeZoneOffset": "Device Timezone Configuration",
             "getAlertHBDeviceDetails": "Alert Configuration",
             "getTabDashboardConfig": "Tableau Email Reporter",
@@ -115,6 +116,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefVQTBoxTable;
             if (table == "getL1Config")
                 columnDef = oApp.config.columnDefL1Config;
+            if (table == "getL3Config")
+                columnDef = oApp.config.columnDefL3Config;
             if (table == "getDevicesTimeZoneOffset")
                 columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
@@ -142,6 +145,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefVQTBoxTable;
             if (table == "getL1Config")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL1Config;
+            if (table == "getL3Config")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL3Config;
             if (table == "getDevicesTimeZoneOffset")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
