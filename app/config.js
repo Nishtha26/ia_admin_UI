@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "6.1.1",
+    IAAVersion: "7.1.1",
     programmingSkills: [
         {
             value: 20,
@@ -505,24 +505,55 @@ oApp.config = {
             return '' + row.entity.jobStartTimeMs + '';
         }
         },
-        {displayName: "PCI", field: "pci"},
+        // {displayName: "PCI", field: "pci"},
+        // {
+        //     headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellId + '';
+        // }
+        // },
+        // {
+        //     headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
+        //     return '' + row.entity.cellName + '';
+        // }
+        // },
+        // {
+        //     displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
+        //     return '' + row.entity.channelBandWidth + '';
+        // }
+        // },
         {
-            headerName: "cellId", field: "cellId", cellTooltip: function (row, col) {
-            return '' + row.entity.cellId + '';
+            displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
+            return '' + row.entity.fileUrl + '';
+        }
+        }
+    ],
+    columnDefsl3log: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "deviceId", field: "deviceId", pinnedLeft: true},
+        {headerName: "jobId", field: "jobId"},
+        {
+            headerName: "testcaseId", field: "testcaseId", cellTooltip: function (row, col) {
+            return '' + row.entity.testcaseId + '';
         }
         },
         {
-            headerName: "cellName", field: "cellName", cellTooltip: function (row, col) {
-            return '' + row.entity.cellName + '';
+            headerName: "jobStartTime", field: "jobStartTime", cellTooltip: function (row, col) {
+            return '' + row.entity.jobStartTime + '';
         }
         },
         {
-            displayName: "Channel Bandwidth", field: "channelBandWidth", cellTooltip: function (row, col) {
-            return '' + row.entity.channelBandWidth + '';
+            displayName: "Job StartTime(MS)", field: "jobStartTimeMs", cellTooltip: function (row, col) {
+            return '' + row.entity.jobStartTimeMs + '';
         }
         },
+        // {
+        //     displayName: "Job CaptureTime(MS)", field: "jobCaptureTimeMS", cellTooltip: function (row, col) {
+        //     return '' + row.entity.jobCaptureTimeMS + '';
+        // }
+        // },
         {
-            displayName: "File URL", field: "fileUrl", cellTooltip: function (row, col) {
+            displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
             return '' + row.entity.fileUrl + '';
         }
         }
@@ -2284,6 +2315,19 @@ oApp.config = {
             modalHidden: true
         },
     ],
+    columnDefL3Config: [
+        {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
+        {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
+        {field: 'timeZoneOffset', displayName: 'TimeZone Offset', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
     columnDefDeviceTimeZoneOffset: [
         {field: 'deviceId', displayName: 'Device ID', enableCellEdit: false, width: "30%"},
         {field: 'timeZone', displayName: 'Time Zone', enableCellEdit: true, width: "30%"},
@@ -2357,6 +2401,22 @@ oApp.config = {
         {field: 'marketName', displayName: 'Market Name', enableCellEdit: true},
         {field: 'lat', displayName: 'Lat', enableCellEdit: true},
         {field: 'lng', displayName: 'Long', enableCellEdit: true},
+        {
+            name: 'Action',
+            cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',
+            enableCellEdit: false,
+            width: "10%",
+            pinnedRight: true,
+            modalHidden: true
+        },
+    ],
+    columnVoiceCallMapping: [
+        {field: 'jobId', displayName: 'Job Id', enableCellEdit: true},
+        {field: 'callingDeviceId', displayName: 'Calling Device Id', enableCellEdit: true},
+        {field: 'callingPartyNo', displayName: 'Calling Party Number', enableCellEdit: true},
+        {field: 'calledDeviceId', displayName: 'Called Device Id', enableCellEdit: true},
+        {field: 'calledPartyNo', displayName: 'Called Party Number', enableCellEdit: true},
+        {field: 'taskExId', displayName: 'Task Executor Id', enableCellEdit: true},
         {
             name: 'Action',
             cellTemplate: '<div style="text-align: center;"><i class="fa fa-trash fa-lg" ng-click="grid.appScope.delPopup(row)" aria-hidden="true"></i></div>',

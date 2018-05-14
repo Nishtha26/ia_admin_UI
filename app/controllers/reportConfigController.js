@@ -57,11 +57,13 @@ oTech.controller('ReportConfigController',
             "getGeoMarketConfig": "Geo Market Mapping",
             "getVQTBoxData": "VQT Configuration",
             "getL1Config": "L1 Timezone Configuration",
+            "getL3Config": "L3 Timezone Configuration",
             "getDevicesTimeZoneOffset": "Device Timezone Configuration",
             "getAlertHBDeviceDetails": "Alert Configuration",
             "getTabDashboardConfig": "Tableau Email Reporter",
             "getMarketBuildConfig": "Market Building Config",
             "getTWCJobTestType": "Job config",
+            "getVoiceCallMapping": "Voice Call Mapping",
         };
 
         //Table Setting Here
@@ -114,6 +116,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefVQTBoxTable;
             if (table == "getL1Config")
                 columnDef = oApp.config.columnDefL1Config;
+            if (table == "getL3Config")
+                columnDef = oApp.config.columnDefL3Config;
             if (table == "getDevicesTimeZoneOffset")
                 columnDef = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
@@ -124,6 +128,8 @@ oTech.controller('ReportConfigController',
                 columnDef = oApp.config.columnDefMarketBuildingConfig;
             if (table == "getTWCJobTestType")
                 columnDef = oApp.config.columnDefTWCJobTestType;
+            if (table == "getVoiceCallMapping")
+                columnDef = oApp.config.columnVoiceCallMapping;
             return columnDef
         };
 
@@ -139,6 +145,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefVQTBoxTable;
             if (table == "getL1Config")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL1Config;
+            if (table == "getL3Config")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefL3Config;
             if (table == "getDevicesTimeZoneOffset")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefDeviceTimeZoneOffset;
             if (table == "getAlertHBDeviceDetails")
@@ -149,6 +157,8 @@ oTech.controller('ReportConfigController',
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefMarketBuildingConfig;
             if (table == "getTWCJobTestType")
                 $scope.reportConfigGridOptions.columnDefs = oApp.config.columnDefTWCJobTestType;
+            if (table == "getVoiceCallMapping")
+                $scope.reportConfigGridOptions.columnDefs = oApp.config.columnVoiceCallMapping;
             promise = AppServices.GetReportData(userId,
                 token, 0, 0, table);
             promise.then(function (data) {
@@ -317,7 +327,7 @@ oTech.controller('ReportConfigController',
                 result[name] = value;
             }
             var tableName = $scope.getCurrentTableName();
-            $scope.saveData(tableName.replace("get", "add"), JSON.stringify(result));
+            $scope.saveData(tableName.replace("get", "add"), JSON.stringify(result),token);
         };
 
         $scope.cancel = function () {
@@ -325,9 +335,9 @@ oTech.controller('ReportConfigController',
         };
 
         //Send Data to Server
-        $scope.saveData = function (table, json) {
+        $scope.saveData = function (table, json,token) {
             $("#dataLoadingDM").show();
-            promise = AppServices.addRow(table, json);
+            promise = AppServices.addRow(table, json,token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(json);
@@ -401,11 +411,19 @@ oTech.controller('ReportConfigController',
                 json["jobId"] = row.entity.jobId;
                 json["testType"] = row.entity.testType;
             }
+            if (table == "getVoiceCallMapping") {
+                json["jobId"] = row.entity.jobId;
+                json["callingDeviceId"] = row.entity.callingDeviceId;
+                json["callingPartyNo"] = row.entity.callingPartyNo;
+                json["calledDeviceId"] = row.entity.calledDeviceId;
+                json["calledPartyNo"] = row.entity.calledPartyNo;
+                json["taskExId"] = row.entity.taskExId;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "del");
             //Dismiss Modal
             $scope.modalInstance.dismiss('Cancelled')
-            promise = AppServices.delRow(table, JSON.stringify(json));
+            promise = AppServices.delRow(table, JSON.stringify(json),token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(JSON.stringify(data));
@@ -530,9 +548,22 @@ oTech.controller('ReportConfigController',
                 result["old"] = Object.assign({}, json);
                 json = result;
             }
+            if(table == "getVoiceCallMapping"){
+                var result = {};
+                json["jobId"] = row.entity.jobId;
+                json["callingDeviceId"] = row.entity.callingDeviceId;
+                json["callingPartyNo"] = row.entity.callingPartyNo;
+                json["calledDeviceId"] = row.entity.calledDeviceId;
+                json["calledPartyNo"] = row.entity.calledPartyNo;
+                json["taskExId"] = row.entity.taskExId;
+                result["new"] = Object.assign({}, json);
+                json[colDef.name] = oldValue;
+                result["old"] = Object.assign({}, json);
+                json = result;
+            }
             $("#dataLoadingDM").show();
             table = table.replace("get", "update");
-            promise = AppServices.updateRow(table, JSON.stringify(json));
+            promise = AppServices.updateRow(table, JSON.stringify(json),token);
             promise.then(function (data) {
                 $scope.err = false;
                 $log.info(JSON.stringify(data));
