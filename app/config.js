@@ -547,11 +547,11 @@ oApp.config = {
             return '' + row.entity.jobStartTimeMs + '';
         }
         },
-        {
-            displayName: "Job CaptureTime(MS)", field: "jobCaptureTimeMS", cellTooltip: function (row, col) {
-            return '' + row.entity.jobCaptureTimeMS + '';
-        }
-        },
+        // {
+        //     displayName: "Job CaptureTime(MS)", field: "jobCaptureTimeMS", cellTooltip: function (row, col) {
+        //     return '' + row.entity.jobCaptureTimeMS + '';
+        // }
+        // },
         {
             displayName: "File URL", field: "fileUrl", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.fileUrl}}" target="_blank">{{row.entity.fileUrl}}</a></div>', cellTooltip: function (row, col) {
             return '' + row.entity.fileUrl + '';
