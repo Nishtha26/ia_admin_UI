@@ -558,6 +558,99 @@ oApp.config = {
         }
         }
     ],
+    columnDefsNECommands: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Test Case ID", field: "testCaseID", cellTooltip: function (row, col) {
+            return '' + row.entity.testCaseID + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Device Time", field: "deviceTime", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceTime + '';
+        }
+        },
+        {
+            displayName: "Device Time Zone", field: "deviceTimeZone", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceTimeZone + '';
+        }
+        },
+        {
+            headerName: "IP Address", field: "ipAddress", cellTooltip: function (row, col) {
+            return '' + row.entity.ipAddress + '';
+        }
+        },
+        {
+            displayName: "Command Run", field: "commandRun", cellTooltip: function (row, col) {
+            return '' + row.entity.commandRun + '';
+        }
+        },
+        {
+            displayName: "Command Output", field: "commandOutput", cellTooltip: function (row, col) {
+            return '' + row.entity.commandOutput + '';
+        }
+        }
+    ],
+    columnDefsRemoteControl: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Test Case ID", field: "testCaseID", cellTooltip: function (row, col) {
+            return '' + row.entity.testCaseID + '';
+        }
+        },
+        {
+            headerName: "Command Start Time", field: "commandStartTime", cellTooltip: function (row, col) {
+            return '' + row.entity.commandStartTime + '';
+        }
+        },
+        {
+            displayName: "Command Execution Time", field: "commandExecutionTime", cellTooltip: function (row, col) {
+            return '' + row.entity.commandExecutionTime + '';
+        }
+        },
+        {
+            displayName: "Time Zone", field: "timeZone", cellTooltip: function (row, col) {
+            return '' + row.entity.timeZone + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Device Local Time", field: "deviceLocalTime", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceLocalTime + '';
+        }
+        },
+        {
+            displayName: "ADB Type", field: "adbType", cellTooltip: function (row, col) {
+            return '' + row.entity.adbType + '';
+        }
+        },
+        {
+            displayName: "Collect ADB ID", field: "collectADBID", cellTooltip: function (row, col) {
+            return '' + row.entity.collectADBID + '';
+        }
+        }
+        // ,
+        // {
+        //     displayName: "Session ID", field: "sessionID", cellTooltip: function (row, col) {
+        //     return '' + row.entity.sessionID + '';
+        // }
+        // }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
