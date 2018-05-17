@@ -227,6 +227,10 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdownload;
                 else if (link == 'Radio')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsradio;
+                else if (link == 'NECommands')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsNECommands;
+                else if (link == 'RemoteControl')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsRemoteControl;
                 if (startLimit == 1) {
                     startLimit = 0;
                 }
