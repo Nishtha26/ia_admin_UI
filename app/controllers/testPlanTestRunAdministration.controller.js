@@ -2259,7 +2259,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         /**del Test Plan **/
         $scope.delTestPlan = function (row) {
-            $log.debug("Deleting Row");
+           // $log.debug("Deleting Row");
             promise = testScriptService.delTestplan(token, userId, row.entity.testplanId);
             promise.then(
                 function (data) {
