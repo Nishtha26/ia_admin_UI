@@ -134,6 +134,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
                     '<li ng-click="grid.appScope.copyTestPlan(row);"><a><i class="icon-copy4 text-primary"></i> Copy Test Plan</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Test Plan</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
