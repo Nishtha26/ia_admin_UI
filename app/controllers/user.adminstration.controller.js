@@ -1,5 +1,5 @@
 oTech.controller('userAdminstrationController',
-    function ($scope, $rootScope, $location, AppServices, $stateParams, $timeout, $filter, $templateCache) {
+    function ($scope, $rootScope, $location, AppServices, $stateParams, $timeout, $filter,$uibModal, $templateCache,toastr) {
         var token = sessionStorage.getItem("token");
         var userId = sessionStorage.getItem("userId");
         $rootScope.role = sessionStorage.getItem("role");
@@ -485,6 +485,58 @@ oTech.controller('userAdminstrationController',
             $scope.myForm.$setPristine();
             $scope.myForm.$setUntouched();
         }
+
+        //method for editing password
+        $scope.editPassBtn = function(userId){
+            //open Modal
+            console.log("Inside Method, userId "+userId);
+            $scope.openModal(userId);
+
+        }
+
+        $scope.modal = {};
+        $scope.openModal = function (userId) {
+            modal = $uibModal.open({
+                templateUrl: 'editPassModal.html',
+                scope: $scope
+            });
+            $scope.modalInstance = modal;
+            $scope.modal.title = "Edit Password";
+            $scope.modal.userId = userId;
+            return modal.result
+        };
+
+        $scope.save = function () {
+            var jsonArray = $("form#addRowForm").serializeArray();
+            var result = {};
+            for (var i in jsonArray) {
+                var name = jsonArray[i].name;
+                var value = jsonArray[i].value;
+                result[name] = value;
+            }
+            $("#dataLoadingDM").show();
+            console.log(JSON.stringify(result));
+            console.log("UserId :: "+$scope.modal.userId);
+            promise = AppServices.changePassword(token,$scope.modal.userId,result['pwd'],result['matchingPwd']);
+            promise.then(function (data) {
+                $scope.err = false;
+                toastr.success('Password Changed Successfully !', 'Success!')
+                console.info(JSON.stringify(data));
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+            }, function (err) {
+                $scope.err = true;
+                toastr.error('Unable to change password !', 'Failure!')
+                //Hide page Loader
+                $("#dataLoadingDM").hide();
+                console.log(err);
+            });
+            $scope.modalInstance.close('Saving Data !');
+        };
+
+        $scope.cancel = function () {
+            $scope.modalInstance.close('Cancelled')
+        };
         $scope.cancelUserEdit = function () {
             $("#cancel_user_edit_label").hide();
             $("#create_new_user_label").show();
