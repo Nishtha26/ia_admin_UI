@@ -474,6 +474,7 @@ oTech.controller('testPlanTestRunAdministration',
             promise = testScriptService.getTestRuns(token, row.entity.testplanId, userId);
             promise.then(
                 function (data) {
+                    console.log(JSON.stringify(data));
                     if (data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0) {
                         $scope.errorMsg = true;
                         $scope.Message = "No Test Run Exists..";
