@@ -994,6 +994,9 @@
                                                           ng-show="errorMsg">Please Select Test Run.. </span>
                                                     <span ng-show="deleteMsg" class="success_msg">{{testPlanDeleteMsgSucc}}</span>
                                                     <span class="error_msg" ng-show="deleteMsgerr">{{testPlanDeleteMsgFel}}</span>
+
+                                                    <a ng-click="refreshAllTestRuns()" class="btn bg-green-300 pull-right"
+                                                       style="margin-bottom: 10px;"><i class="icon-database-refresh position-left"></i> Refresh</a>
                                                 </div>
                                             </div>
 
@@ -1056,8 +1059,10 @@
                                                         <span class="scheduleError_msg" ng-show="errorMsgForDevice">{{msg3}}</span>
                                                         <span ng-show="successMsg" class="success_msg">{{msg1}}</span>
                                                         <span ng-show="scheduleMsg1" class="success_msg">{{msg2}}</span>
-
+                                                        <a ng-click="refreshTestRunMappedDevice()" class="btn bg-green-300 pull-right"
+                                                           style="margin-bottom: 10px;"><i class="icon-database-refresh position-left"></i> Refresh</a>
                                                     </div>
+
                                                 </div>
                                                 <div id="testRunMappedDevices" ui-grid="testRunMappedDevices"
                                                      ui-grid-selection ui-grid-cellNav ui-grid-auto-resize

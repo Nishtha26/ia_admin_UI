@@ -295,7 +295,6 @@ oTech.controller('testPlanTestRunAdministration',
             });
         };
 
-
         //Test plan table Service
         promise = testScriptService.FetchingTestService(userId, token);
         promise.then(
@@ -463,9 +462,46 @@ oTech.controller('testPlanTestRunAdministration',
 
         $scope.refreshTestRuns = function () {
             console.log("Inside refresh test runs");
-            if($scope.currentTestPlanRow !=-1){
+            if ($scope.currentTestPlanRow != -1) {
                 $scope.viewTestRuns($scope.currentTestPlanRow);
             }
+        }
+
+        $scope.refreshAllTestRuns = function(){
+            console.log("Refresh All test runs");
+            promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+            promise.then(
+                function (data) {
+                    $scope.loadAllTestRuns = false;
+                    $scope.hideFilter = true;
+                    $scope.allTestRuns.data = [];
+                    $scope.allTestRunsTemp = data.testRunsForTestPlan
+                    $scope.allTestRuns.data = $scope.allTestRunsTemp;
+                    $scope.searchTestRuns = $scope.allTestRunsTemp;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
+
+        $scope.refreshTestRunMappedDevice = function(){
+            console.log("Refresh TestRunMappedDevice");
+            $scope.dataProcessingOfAllTestRuns = true;
+            promise = testScriptService.ViewTestRunDeviceService(userId, token,$rootScope.jobId);
+            promise.then(
+                function (data) {
+                    $scope.dataProcessingOfAllTestRuns = false;
+                    $scope.testRunMappedDevices.data = data.testRunDeviceData;
+                    $scope.searchTestRunMappedDevices = data.testRunDeviceData
+                    /*$timeout(function () {
+                     $scope.refreshCallForJobProgress(userId, token, testrunID);
+                     }, 3000);*/
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
         }
 
         $scope.currentTestPlanRow = -1;
@@ -1060,7 +1096,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         // job progress interval call till 100% job compleate
         $scope.refreshCallForJobProgress = function (userId, token, testrunID) {
-
             promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
             promise.then(
                 function (data) {
@@ -1298,6 +1333,7 @@ oTech.controller('testPlanTestRunAdministration',
                 {field: 'retryCount', name: 'Retry Count', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };
+
         $scope.showDeviceNotificationLogDetails = function (row) {
             $scope.dataLoadingPopup = true;
             $scope.header = "Device Notification Log Details"
@@ -1616,7 +1652,6 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.renderHtmlForTask($scope.taskTableArray);
         }
 
-
         //Real Devices
         $scope.RealDevicesOptions = {
             enableSorting: true,
@@ -1757,7 +1792,6 @@ oTech.controller('testPlanTestRunAdministration',
             });
         };
 
-
         $scope.DeviceMapping = {
             enableSorting: true,
             enableFilter: true,
@@ -1823,7 +1857,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         };
 
-
         //Get Devices grid
         $scope.CreateTestRunRealDeviceOptions = {
             enableSorting: true,
@@ -1877,7 +1910,6 @@ oTech.controller('testPlanTestRunAdministration',
                 },
             ]
         };
-
 
         $scope.CreateTestrun = function () {
             if ($scope.deviceProfileList.length == 0) {
@@ -2423,7 +2455,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         }
 
-
         $scope.addTabForDeviceProfile = function () {
 
             if ($scope.deviceProfileListForAdd.length > 0) {
@@ -2765,7 +2796,6 @@ oTech.controller('testPlanTestRunAdministration',
         }
         /* end popover */
 
-
         //Real Devices
         $scope.RealDevicesOptionsForQuickRun = {
             enableSorting: true,
@@ -2820,7 +2850,6 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.RealDevicesOptionsForQuickRun.data = $filter('filter')($scope.tempRealDeviceListForQuickRun, $scope.searchTextForQuickRunRealDevices, undefined);
 
         };
-
         promise = testScriptService.getRealDevices(token, userId);
         $(".quickRun").addClass("disabled");
         promise.then(
@@ -2833,7 +2862,6 @@ oTech.controller('testPlanTestRunAdministration',
                 console.log(err);
             }
         );
-
 
         $scope.CreateQuickTestrun = function () {
 
