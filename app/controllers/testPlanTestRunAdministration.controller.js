@@ -500,6 +500,7 @@ oTech.controller('testPlanTestRunAdministration',
                 },
                 function (err) {
                     console.log(err);
+                    $scope.dataProcessingOfAllTestRuns = false;
                 }
             );
         }
