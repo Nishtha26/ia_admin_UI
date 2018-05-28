@@ -558,6 +558,99 @@ oApp.config = {
         }
         }
     ],
+    columnDefsNECommands: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Test Case ID", field: "testCaseID", cellTooltip: function (row, col) {
+            return '' + row.entity.testCaseID + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Device Time", field: "deviceTime", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceTime + '';
+        }
+        },
+        {
+            displayName: "Device Time Zone", field: "deviceTimeZone", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceTimeZone + '';
+        }
+        },
+        {
+            headerName: "IP Address", field: "ipAddress", cellTooltip: function (row, col) {
+            return '' + row.entity.ipAddress + '';
+        }
+        },
+        {
+            displayName: "Command Run", field: "commandRun", cellTooltip: function (row, col) {
+            return '' + row.entity.commandRun + '';
+        }
+        },
+        {
+            displayName: "Command Output", field: "commandOutput", cellTooltip: function (row, col) {
+            return '' + row.entity.commandOutput + '';
+        }
+        }
+    ],
+    columnDefsRemoteControl: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Test Case ID", field: "testCaseID", cellTooltip: function (row, col) {
+            return '' + row.entity.testCaseID + '';
+        }
+        },
+        {
+            headerName: "Command Start Time", field: "commandStartTime", cellTooltip: function (row, col) {
+            return '' + row.entity.commandStartTime + '';
+        }
+        },
+        {
+            displayName: "Command Execution Time", field: "commandExecutionTime", cellTooltip: function (row, col) {
+            return '' + row.entity.commandExecutionTime + '';
+        }
+        },
+        {
+            displayName: "Time Zone", field: "timeZone", cellTooltip: function (row, col) {
+            return '' + row.entity.timeZone + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Device Local Time", field: "deviceLocalTime", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceLocalTime + '';
+        }
+        },
+        {
+            displayName: "ADB Type", field: "adbType", cellTooltip: function (row, col) {
+            return '' + row.entity.adbType + '';
+        }
+        },
+        {
+            displayName: "Collect ADB ID", field: "collectADBID", cellTooltip: function (row, col) {
+            return '' + row.entity.collectADBID + '';
+        }
+        }
+        // ,
+        // {
+        //     displayName: "Session ID", field: "sessionID", cellTooltip: function (row, col) {
+        //     return '' + row.entity.sessionID + '';
+        // }
+        // }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
@@ -1610,6 +1703,7 @@ oApp.config = {
                 '<ul class="dropdown-menu dropdown-menu-right">' +
                 '<li class="delete_user"><a  ng-click="grid.appScope.DeleteUserBtn()"><i class="icon-backspace2 text-warning-800"></i> Activate/Deactivate</a></li>' +
                 '<li class="edit_user"><a ng-click="grid.appScope.UpdateUserBtn();"><i class="icon-pencil5 text-primary user_editor_link"></i> Edit User</a></li>' +
+                '<li class="edit_pass"><a ng-click="grid.appScope.editPassBtn(row.entity.userId);"><i class="icon-pencil5 text-warning-800 user_editor_link"></i> Edit Password</a></li>' +
                 '<li ng-if="row.entity.roleName != \'ROLE_REPORTING\' " ng-show="{{grid.appScope.role == \'ROLE_OTADMIN\'}}" class="assign_devices"><a  ng-click="grid.appScope.assignDeviceToUser()" ><i class=" icon-cart-add2 text-green-800"></i> Assign Devices</a></li>' +
 
                 /*	'<li class="show_user"><a "><i class="icon-user text-muted"></i> Show Detail</a></li>'+*/
