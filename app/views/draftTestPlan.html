@@ -1,0 +1,361 @@
+<style>
+    .loading-imgac {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+    }
+
+    .error_msg {
+        float: right;
+
+        color: red;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .dataTables_filter {
+        width: 100%;
+    }
+
+    .success_msg {
+        float: right;
+        color: #48A64C;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .ui-grid-pager-count {
+        padding-right: 34px;
+    }
+
+    .ui-grid-pager-panel {
+        padding-left: 15px;
+        padding-bottom: 15px;
+    }
+
+    .modal-body {
+        padding: 0px 20px 40px 20px !important;
+        border-top: 2px solid #ddd;
+        margin-top: 20px;
+
+    }
+
+    .Absolute-Center {
+        text-align: center;
+    }
+
+    .Absolute-Center button {
+        background: #1f8ee7 none repeat scroll 0 0;
+        border: medium none;
+        width: 40%;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    #commands_div input {
+        width: 50px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 7px 0;
+        text-align: center;
+        height: 30px;
+    }
+
+    .t {
+        background-color: #DBDEE5;
+        padding: 5px 5px 5px 0px;
+    }
+
+    .c {
+        padding: 5px 5px 5px 10px;
+    }
+
+    .cc {
+        padding: 5px 5px 5px 20px;
+
+    }
+
+    .wr {
+        word-wrap: break-word;
+        padding-right: 15px;
+    }
+
+    .taskseq {
+        border: 1px solid #fff;
+        margin: 2px 0;
+        text-align: center;
+        background-color: #DBDEE5;
+    }
+
+    .taskloop {
+        border: 1px solid #fff;
+        margin: 2px 0;
+        text-align: center;
+        background-color: #DBDEE5;
+    }
+
+    .seq {
+        border: 1px solid #DBDEE5;
+        margin: 2px 0;
+        text-align: center;
+    }
+
+    .loop {
+        border: 1px solid #DBDEE5;
+        margin: 2px 0;
+        text-align: center;
+    }
+
+    ul ul, ol ul, ul ol, ol ol {
+        list-style-type: none;
+    }
+
+    ol {
+        margin-left: -25px;
+    }
+
+    .device_attachment_tree li div:first-child {
+        padding-left: 0px;
+    }
+
+    .device_attachment_tree li li div:first-child {
+        padding-left: 20px;
+    }
+
+    .device_attachment_tree li li li div:first-child {
+        padding-left: 40px;
+    }
+
+    .device_attachment_tree li li li li div:first-child {
+        padding-left: 60px;
+    }
+
+    .device_attachment_tree li div {
+        margin-bottom: 5px;
+    }
+
+    .command_lister_ul > li div {
+        font-weight: bold;
+    }
+
+    hr {
+        margin-top: 35px;
+    }
+
+    .angular-ui-tree-handle {
+        border: none;
+        background: none;
+        padding: 0px 0px;
+
+    }
+
+    .angular-ui-tree-node, .angular-ui-tree-placeholder {
+        min-height: 0px;
+    }
+
+    .devices_table_body tr td.active {
+        text-decoration: underline;
+        background: none;
+    }
+
+    .datatable-header > div:first-child {
+        padding-left: 20px;
+    }
+
+    .datatable-header {
+        padding-top: 10px;
+    }
+
+    .icons-list > li {
+        float: left;
+    }
+
+    .form-control {
+        height: 37px;
+        display: inline-block;
+    }
+
+    .loaderandwait {
+        position: absolute;
+        top: 50%;
+        left: 38%;
+    }
+
+    .popover > .arrow:after {
+        border: none;
+        content: " ";
+    }
+
+    .popover > .arrow {
+        bordrer: none
+    }
+
+    .popover {
+        display: block;
+    }
+
+    .popover.top > .arrow {
+        border-top-color: transparent;
+        border-top-color: transparent;
+        bottom: 0px;
+    }
+
+    .editable-container.popover {
+        width: 20%;
+        min-width: 200px;
+    }
+
+    .popover-content {
+        padding: 0 0 20px 0px;
+    }
+
+    .form-control-label {
+        border: none;
+    }
+
+    .editable-click, a.editable-click, .editable-click:hover, a.editable-click:hover {
+        border-bottom: none;
+    }
+
+    .nav-tabs > .active {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+        color: #fff;
+    }
+
+    .nav-tabs > .active > a:focus {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+        color: #fff;
+
+    }
+
+    .nav-tabs.nav-tabs-bottom > li.active > a, .nav-tabs.nav-tabs-bottom > li.active > a:hover, .nav-tabs.nav-tabs-bottom > li.active > a:focus {
+        border-bottom: none;
+    }
+
+    .icons-list {
+        margin-top: 7px;
+        padding: 0 0 0 20px;
+
+    }
+
+    .progress {
+        margin-top: 7px;
+    }
+
+    #allTestRuns .ui-grid-viewport, #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport, #deviceTestStatusLogListGridOptions .ui-grid-viewport, #deviceNotificationLogListGridOptions .ui-grid-viewport {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch
+
+    }
+
+    #jobStatusList .ui-grid-pager-panel {
+        top: 100%;
+    }
+
+    .runbtn {
+        padding: 2px 6px;
+    }
+</style>
+
+<!-- header  -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- /header  -->
+<!-- menu -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /menu -->
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- top row for the test plan details -->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Test Case list -->
+                    <div class="col-lg-6">
+
+                        <!-- Test case list -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Draft Test Plan List</h5>
+                            </div>
+
+                            <div class="panel-body">
+                                <!-- test plan ui grid -->
+                                <div class="datatable-header">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                        <label><span>Filter:</span>
+                                            <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
+                                                   placeholder="Type to filter..."></label>
+                                        <span class="error_msg" ng-show="errorMsg">{{Message}}</span>
+                                        <span ng-show="testPlanName" class="success_msg">{{testPlanNameMsg}}</span>
+                                    </div>
+                                    <!--
+                                    <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
+                                     <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                     <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+                                     <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
+                                     <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
+                                     <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
+                                     <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
+                                     </div>
+                                     -->
+                                </div>
+                                <div id="DraftTestPlanOptions" ui-grid="DraftTestPlanOptions" ui-grid-selection ui-grid-cellNav
+                                     ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
+                                     class="table table-hover grid">
+                                    <img class="loading loaderandwait" src="images/please_wait.gif"
+                                         ng-show="dataProcessingTestPlan"></img>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
+                                             role="alert" aria-live="polite" aria-relevant="all">Showing
+                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                               ng-click="prevPage()">&larr;</a>
+                                            <span>
+												  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                     ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+												</span>
+                                            <a ng-class="DisableNextPage()" class="paginate_button next"
+                                               ng-click="nextPage()">&rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /test plan ui grid -->
+                            </div>
+                        </div>
+                        <!-- /test case list -->
+                    </div>
+                    <!-- /Test Case list -->
+
+                </div>
+            </div>
+            <!-- /top row for the test plan details -->
+
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+        <!-- footer  -->
+        <div ng-include="'app/views/footer/footer.html'"></div>
+        <!-- /footer  -->
+    </div>
+    <!-- /page container -->

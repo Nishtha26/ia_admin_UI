@@ -471,14 +471,19 @@
                                     <span style="color:red" ng-show="jobIsExitsError" class="help-block">Provide Unique Test Plan Name !!</span>
                                 </li>
                             </ul>
-                            <ul class="pull-right">
-                                <li><a>
-                                    <button type="submit" ng-disabled="form.$invalid" class='btn btn-xs btn-primary'
-                                            ng-click="createTestPlanService()">Submit
-                                    </button>
-                                </a></li>
-                            </ul>
-                        </div>
+							<ul class="pull-right">
+								<li><a>
+										<button type="submit" ng-disabled="form.$invalid"
+											class='btn btn-xs btn-warning'
+											ng-click="createTestPlanService('draft')">Save Draft</button>
+								</a></li>
+								<li><a>
+										<button type="submit" ng-disabled="form.$invalid"
+											class='btn btn-xs btn-primary'
+											ng-click="createTestPlanService('finalcopy')">Submit</button>
+								</a></li>
+							</ul>
+						</div>
                         <!-- /panel footer -->
                     </div>
                 </div>
