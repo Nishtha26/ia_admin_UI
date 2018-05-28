@@ -27,10 +27,16 @@ oTech.controller('testPlanCommandOverride',
                     $scope.uiTreeJSON = messages[0][i].value;
                 if (messages[0][i].key == "usecase")
                     $scope.usecaseVal = messages[0][i].value.id;
+                if (messages[0][i].key == "jobId")
+                    $scope.jobId = messages[0][i].value;
+                if (messages[0][i].key == "action")
+                    $scope.action = messages[0][i].value;
 
             }
         }
 
+        
+        
         $rootScope.slideContent();
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -452,14 +458,12 @@ oTech.controller('testPlanCommandOverride',
             //$scope.rows = $scope.tabs[mapping.id].content;
             //$scope.renderRowForTree($scope.rows) ;
         }
-
-
+        
         $scope.saveTestPlan = function () {
 
             $scope.finalizeTestPlan = true;
             $(".btn").addClass("disabled");
             $rootScope.uiTreeJSON = $scope.uiTreeJSON;
-
 
             var superParentObject, parentObject = {}, childObject = {};
             superParentObject = $scope.uiTreeJSON[0].nodes;
@@ -491,6 +495,7 @@ oTech.controller('testPlanCommandOverride',
                 }
             }
             sendCreateData.jobName = $scope.testPlanName;
+            sendCreateData.jobId = $scope.jobId;
             sendCreateData.jobDescription = $scope.testPlanDescription;
             sendCreateData.jobCreatedBy = userId;
             sendCreateData.taskVOList = [];
@@ -612,9 +617,14 @@ oTech.controller('testPlanCommandOverride',
 
             }
 
-
             var jsonData = JSON.stringify(sendCreateData);
-            promise = testScriptService.CreateSrvc(userId, jsonData, token);
+            
+            if($scope.action && $scope.action == 'editDraft'){
+            	promise = testScriptService.saveDraftTestPlan(userId, jsonData, token);
+            }            	
+            else {
+            	promise = testScriptService.CreateSrvc(userId, jsonData, token);
+            }
 
             $scope.dataProcessing = true;
             $(".btn").addClass("disabled");
