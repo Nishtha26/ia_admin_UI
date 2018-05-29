@@ -185,6 +185,8 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
                 else if (link == 'L1LOG')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsl1log;
+                else if (link == 'L3LOG')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsl3log;
                 else if (link == 'Location')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefslocation;
                 else if (link == 'MMS')
@@ -225,6 +227,10 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsdownload;
                 else if (link == 'Radio')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsradio;
+                else if (link == 'NECommands')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsNECommands;
+                else if (link == 'RemoteControl')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsRemoteControl;
                 if (startLimit == 1) {
                     startLimit = 0;
                 }

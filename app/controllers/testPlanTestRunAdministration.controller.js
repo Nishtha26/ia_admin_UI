@@ -8,7 +8,7 @@ oTech.controller('testPlanTestRunAdministration',
         $scope.createTestPlan = {};
         var sendCreateData = {};
         $scope.testRunIdForDelete = "";
-        $scope.update_btn=false;
+        $scope.update_btn = false;
         var TestPlanId = "";
         $templateCache.put('ui-grid/uiGridViewport',
             "<div role=\"rowgroup\" class=\"ui-grid-viewport\" ><!-- tbody --><div class=\"ui-grid-canvas\"><div ng-repeat=\"(rowRenderIndex, row) in rowContainer.renderedRows track by $index\" class=\"ui-grid-row\" ng-style=\"Viewport.rowStyle(rowRenderIndex)\"><div role=\"row\" ui-grid-row=\"row\" row-render-index=\"rowRenderIndex\"></div></div></div></div>"
@@ -134,6 +134,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
                     '<li ng-click="grid.appScope.copyTestPlan(row);"><a><i class="icon-copy4 text-primary"></i> Copy Test Plan</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Test Plan</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -200,13 +201,13 @@ oTech.controller('testPlanTestRunAdministration',
                 {name: 'Id', field: 'testplanId', width: '10%'},
                 {
                     name: 'Name', field: 'testplanName', width: '30%', cellTooltip: function (row, col) {
-                    return '' + row.entity.testplanName + '';
-                }
+                        return '' + row.entity.testplanName + '';
+                    }
                 },
                 {
                     name: 'Use Case', field: 'useCaseName', width: '20%', cellTooltip: function (row, col) {
-                    return '' + row.entity.useCaseName + '';
-                }
+                        return '' + row.entity.useCaseName + '';
+                    }
                 },
                 /*{name:'Created Date',field: 'createdDate', width: '20%'},*/
                 {name: 'Created By', field: 'createdByName', width: '20%'},
@@ -293,7 +294,6 @@ oTech.controller('testPlanTestRunAdministration',
 
             });
         };
-
 
         //Test plan table Service
         promise = testScriptService.FetchingTestService(userId, token);
@@ -460,12 +460,58 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.isAction = true;
         }
 
+        $scope.refreshTestRuns = function () {
+            console.log("Inside refresh test runs");
+            if ($scope.currentTestPlanRow != -1) {
+                $scope.viewTestRuns($scope.currentTestPlanRow);
+            }
+        }
 
+        $scope.refreshAllTestRuns = function(){
+            console.log("Refresh All test runs");
+            promise = testScriptService.getAllTestRunsForSchedule(token, userId);
+            promise.then(
+                function (data) {
+                    $scope.loadAllTestRuns = false;
+                    $scope.hideFilter = true;
+                    $scope.allTestRuns.data = [];
+                    $scope.allTestRunsTemp = data.testRunsForTestPlan
+                    $scope.allTestRuns.data = $scope.allTestRunsTemp;
+                    $scope.searchTestRuns = $scope.allTestRunsTemp;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
+
+        $scope.refreshTestRunMappedDevice = function(){
+            console.log("Refresh TestRunMappedDevice");
+            $scope.dataProcessingOfAllTestRuns = true;
+            promise = testScriptService.ViewTestRunDeviceService(userId, token,$rootScope.jobId);
+            promise.then(
+                function (data) {
+                    $scope.dataProcessingOfAllTestRuns = false;
+                    $scope.testRunMappedDevices.data = data.testRunDeviceData;
+                    $scope.searchTestRunMappedDevices = data.testRunDeviceData
+                    /*$timeout(function () {
+                     $scope.refreshCallForJobProgress(userId, token, testrunID);
+                     }, 3000);*/
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingOfAllTestRuns = false;
+                }
+            );
+        }
+
+        $scope.currentTestPlanRow = -1;
         $scope.viewTestRuns = function (row) {
-
+            $scope.currentTestPlanRow = row;
             promise = testScriptService.getTestRuns(token, row.entity.testplanId, userId);
             promise.then(
                 function (data) {
+                    console.log(JSON.stringify(data));
                     if (data.status == 'No TestRun Exists' || data.testRunsForTestPlan.length == 0) {
                         $scope.errorMsg = true;
                         $scope.Message = "No Test Run Exists..";
@@ -501,35 +547,35 @@ oTech.controller('testPlanTestRunAdministration',
         }
 
         $scope.copyTestPlan = function (row) {
-        	           
+
             $scope.dataProcessingTestPlan = true;
             promise = testScriptService.createCopyTestplan(token, userId, row.entity.testplanId);
             promise.then(
                 function (data) {
-                	
-                	$scope.shareData = [];
+
+                    $scope.shareData = [];
                     $scope.shareData.push({'key': 'treeJson', 'value': data.CopiedTestPlan.taskVOList});
                     $scope.shareData.push({'key': 'testPlanName', 'value': data.CopiedTestPlan.jobName});
                     $scope.shareData.push({'key': 'testPlanDescription', 'value': data.CopiedTestPlan.jobDescription});
                     $scope.shareData.push({'key': 'usecaseId', 'value': data.CopiedTestPlan.useCaseId});
                     $scope.shareData.push({'key': 'useCaseName', 'value': data.CopiedTestPlan.useCaseName});
-                    
+
                     if (messages.length == 1) {
                         messages.splice(0, 1);
                     }
 
                     messages.add($scope.shareData);
-                   
-                	$location.path('/dashboard/copyTestPlan');
-                	$scope.dataProcessingTestPlan = false;
+
+                    $location.path('/dashboard/copyTestPlan');
+                    $scope.dataProcessingTestPlan = false;
                 },
                 function (err) {
                     console.log(err);
                 }
             );
-        
+
         }
-        
+
         $scope.clone = function (row) {
             $scope.dataProcessingTestPlan = true;
             promise = testScriptService.createCloneTestplan(token, userId, row.entity.testplanId);
@@ -601,8 +647,8 @@ oTech.controller('testPlanTestRunAdministration',
                     name: 'Test Plan Name',
                     headerCellClass: $scope.highlightFilteredHeader, width: '15%'
                     , cellTooltip: function (row, col) {
-                    return '' + row.entity.testPlanName + '';
-                }
+                        return '' + row.entity.testPlanName + '';
+                    }
                 },
                 {
                     field: 'testrunUserName',
@@ -795,7 +841,7 @@ oTech.controller('testPlanTestRunAdministration',
                 },
                 /* {field: 'notificationStatusName', name: ' Request status', headerCellClass: $scope.highlightFilteredHeader, cellTemplate:'<div data-toggle="modal" data-target="#DeviceNotification_List" ng-click="grid.appScope.showDeviceNotificationLogDetails({{row.entity.deviceId}},{{row.entity.jobId}});">'+'<a>{{row.entity.notificationStatusName}}</a>' +'</div>'},*/
                 {
-                	field: 'jobStatusName',
+                    field: 'jobStatusName',
                     name: 'Test Run Monitoring',
                     headerCellClass: $scope.highlightFilteredHeader,
                     cellTemplate: '<div title=\"{{row.entity.jobStatusName}}\" ng-if=\"row.entity.jobStatusName.indexOf(\'%\') > -1\" class="ui-grid-progress-strip"><uib-progressbar animate="false" value=\"row.entity.jobStatusName\" type="success"><b style="position: absolute;left: 10%;color: #3d3d3d;">{{row.entity.jobStatusName}}</b></uib-progressbar></div><div class="ui-grid-cell-contents ng-binding ng-scope" title=\"{{row.entity.jobStatusName}}\" ng-if=\"row.entity.jobStatusName.indexOf(\'%\') < 0\">{{row.entity.jobStatusName}}</div>'
@@ -1051,7 +1097,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         // job progress interval call till 100% job compleate
         $scope.refreshCallForJobProgress = function (userId, token, testrunID) {
-
             promise = testScriptService.ViewTestRunDeviceService(userId, token, testrunID);
             promise.then(
                 function (data) {
@@ -1289,6 +1334,7 @@ oTech.controller('testPlanTestRunAdministration',
                 {field: 'retryCount', name: 'Retry Count', headerCellClass: $scope.highlightFilteredHeader},
             ]
         };
+
         $scope.showDeviceNotificationLogDetails = function (row) {
             $scope.dataLoadingPopup = true;
             $scope.header = "Device Notification Log Details"
@@ -1607,7 +1653,6 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.renderHtmlForTask($scope.taskTableArray);
         }
 
-
         //Real Devices
         $scope.RealDevicesOptions = {
             enableSorting: true,
@@ -1748,7 +1793,6 @@ oTech.controller('testPlanTestRunAdministration',
             });
         };
 
-
         $scope.DeviceMapping = {
             enableSorting: true,
             enableFilter: true,
@@ -1814,7 +1858,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         };
 
-
         //Get Devices grid
         $scope.CreateTestRunRealDeviceOptions = {
             enableSorting: true,
@@ -1868,7 +1911,6 @@ oTech.controller('testPlanTestRunAdministration',
                 },
             ]
         };
-
 
         $scope.CreateTestrun = function () {
             if ($scope.deviceProfileList.length == 0) {
@@ -2216,7 +2258,7 @@ oTech.controller('testPlanTestRunAdministration',
 
                             deepCopyObjectForEditTestPlan = jQuery.extend(true, new Object(), data);
                             for (var i = 0; i < deepCopyObjectForEditTestPlan.jobVO.length; i++) {
-                            	$scope.update_btn=true;
+                                $scope.update_btn = true;
                                 if (editVirtualDevice[i].id == deepCopyObjectForEditTestPlan.jobVO[i].deviceId) {
                                     editVirtualDevice.splice(i, 1);
                                 }
@@ -2258,7 +2300,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         /**del Test Plan **/
         $scope.delTestPlan = function (row) {
-            $log.debug("Deleting Row");
+            // $log.debug("Deleting Row");
             promise = testScriptService.delTestplan(token, userId, row.entity.testplanId);
             promise.then(
                 function (data) {
@@ -2312,7 +2354,7 @@ oTech.controller('testPlanTestRunAdministration',
                     if (data.isMappedTestPlanTestRun.length > 0) {
                         $scope.isMappedTestPlanTestRun = data.isMappedTestPlanTestRun[0].isMappedTestPlanTestRun;
 
-                        
+
                         $scope.scrollToTestRunDiv();
                         $scope.mainTab = 2;
                         cloneCopyOfJobDevice = jQuery.extend(true, new Object(), jQuery.makeArray(data.jobVO[0]));
@@ -2414,7 +2456,6 @@ oTech.controller('testPlanTestRunAdministration',
 
         }
 
-
         $scope.addTabForDeviceProfile = function () {
 
             if ($scope.deviceProfileListForAdd.length > 0) {
@@ -2485,8 +2526,8 @@ oTech.controller('testPlanTestRunAdministration',
                 }
 
             }
-            for (var i = mapping.index + 1 ; i < $scope.deviceProfileListForEdit.length; i++) {
-            	$scope.deviceProfileListForEdit[i].index = $scope.deviceProfileListForEdit[i].index - 1; 
+            for (var i = mapping.index + 1; i < $scope.deviceProfileListForEdit.length; i++) {
+                $scope.deviceProfileListForEdit[i].index = $scope.deviceProfileListForEdit[i].index - 1;
             }
             $scope.deviceProfileListForEdit.splice(mapping.index, 1);
             $scope.deviceProfileCounter--;
@@ -2756,7 +2797,6 @@ oTech.controller('testPlanTestRunAdministration',
         }
         /* end popover */
 
-
         //Real Devices
         $scope.RealDevicesOptionsForQuickRun = {
             enableSorting: true,
@@ -2811,7 +2851,6 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.RealDevicesOptionsForQuickRun.data = $filter('filter')($scope.tempRealDeviceListForQuickRun, $scope.searchTextForQuickRunRealDevices, undefined);
 
         };
-
         promise = testScriptService.getRealDevices(token, userId);
         $(".quickRun").addClass("disabled");
         promise.then(
@@ -2824,7 +2863,6 @@ oTech.controller('testPlanTestRunAdministration',
                 console.log(err);
             }
         );
-
 
         $scope.CreateQuickTestrun = function () {
 

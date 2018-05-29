@@ -926,7 +926,6 @@ oTech.service('AppServices',
          Change password
          */
         service.changePassword = function (token, userId, pwd, matchingPwd) {
-
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/usergroup/changePassword",
@@ -936,11 +935,11 @@ oTech.service('AppServices',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 success: function (data) {
-                    alert("Password changed successfully");
+                   // alert("Password changed successfully");
                     deferred.resolve(data);
                 },
                 error: function (err) {
-                    alert("error");
+                    //alert("error");
                     deferred.reject(err);
                 }
             });
