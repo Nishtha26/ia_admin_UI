@@ -1,29 +1,34 @@
 <!-- <script type="text/javascript" src="assets/js/pages/form_select2.js"></script> -->
 <!-- 	  <script type="text/javascript" src="assets/js/pages/form_dual_listboxes.js"></script> -->
 <style>
-.name-inline{
-width: 48%!important;
-display: inline!important;
-}
+    .name-inline {
+        width: 48% !important;
+        display: inline !important;
+    }
 
-.filter-datatable-header{
-	padding-top:0px;}
-.dataTables_filter .filter-width{
-	width:100% !important;
-}
-#filter-width{
-margin-left: 0px !important;
-padding-left:5px;
-}
-.dropdown-menu{
-/*border:1px solid #00BCD4;*/}
+    .filter-datatable-header {
+        padding-top: 0px;
+    }
 
-#allusersgroupGridOptions .ui-grid-viewport,#existingusersGridOptions .ui-grid-viewport,#allDeviceGridOptions .ui-grid-viewport,#selectedDeviceGridOptions .ui-grid-viewport{
-overflow-y: auto;
-height:372px;
-	-webkit-overflow-scrolling: touch;
-	
-}
+    .dataTables_filter .filter-width {
+        width: 100% !important;
+    }
+
+    #filter-width {
+        margin-left: 0px !important;
+        padding-left: 5px;
+    }
+
+    .dropdown-menu {
+        /*border:1px solid #00BCD4;*/
+    }
+
+    #allusersgroupGridOptions .ui-grid-viewport, #existingusersGridOptions .ui-grid-viewport, #allDeviceGridOptions .ui-grid-viewport, #selectedDeviceGridOptions .ui-grid-viewport {
+        overflow-y: auto;
+        height: 372px;
+        -webkit-overflow-scrolling: touch;
+
+    }
 </style>
 
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
@@ -32,11 +37,11 @@ height:372px;
 
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
-	<div  ng-include="'app/views/header/header.html'"></div>
-	<!-- Header End -->
-	<!-- Second navbar -->
-	<div ng-include="'app/views/menus/menu.html'"></div>
-	<!-- /second navbar -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- Header End -->
+<!-- Second navbar -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /second navbar -->
 <!-- Page header -->
 <!-- 	<div class="page-header">
 		<div class="page-header-content">
@@ -53,1043 +58,1248 @@ height:372px;
 			</div>
 		</div>
 	</div> -->
-	<!-- /page header -->
+<!-- /page header -->
 
 
-	<!-- Page container -->
-	<div class="page-container">
+<!-- Page container -->
+<div class="page-container">
 
-		<!-- Page content -->
-		<div class="page-content">
+    <!-- Page content -->
+    <div class="page-content">
 
-			<!-- Main content -->
-			<div class="content-wrapper">
-				
-
-			<div class="row">
-					
-				<div class="col-lg-12">
-					
-					<!-- User Groups -->
-					<div class="col-md-5" ng-show="{{role == 'ROLE_OTADMIN'}}">
-						
-
-						<!-- User Groups -->
-						<div class="panel panel-white">
-							<div class="panel-heading">
-								<h5 class="panel-title">User Groups</h5>
-								<div class="heading-elements">
-									<ul class="icons-list">
-						<li id='group_list_label' ><span class='label label-info pointer-link' ng-click="groupListLabel();availableUsergroupsGrid();">Groups List</span></li>
-                		<li id='create_new_group_label'><span class='label label-primary pointer-link' ng-click="showUsergroups()">Create Group</span></li>
-                		<li id='group_cancel_create_label' style="display: none;" ng-click="groupCancelCreateLabel()"><span class='label label-warning pointer-link'>Cancel Create</span></li>
-                		<li id='group_cancel_edit_label' style="display: none;" ng-click="groupCancelEditLabel()"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
-                		<li id='assign_user_cancel_label' style="display: none;" ng-click="cancelAssignUserLabel()"><span class='label label-warning pointer-link'>Exit Assign User</span></li>
-                	</ul>
-              	</div>
-              	
-							</div>
+        <!-- Main content -->
+        <div class="content-wrapper">
 
 
-							<!-- Group list div -->
-							<DIV class='panel-body' id='group_list_div' style="padding:5px 20px 20px 20px;">
-						<!-- 		<label class="control-label col-lg-12">Existing Groups List</label> -->
-							<div class="datatable-header filter-datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter" style="padding-top:5px !important;"><label><span>Filter:</span>
-						 <input type="type" class="" ng-change="singleFilterUserGroup()" ng-model="searchTextUserGroup" placeholder="Type to filter..." ></label></div>
-						<!-- 
-						 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
-						  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-						  <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
-						  <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
-						  <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
-						  <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
-						  <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
-						  </div>
-						  -->
-						  </div>
-								<div id="addUsergroupsGridOptions" ui-grid="addUsergroupsGridOptions" ui-grid-selection ui-grid-cellNav  ui-grid-resize-columns ui-grid-auto-resize ng-style="getTableHeightUserGroup()"   class="table table-hover grid" >
+            <div class="row">
 
-								</div>
-															<div class="row">
-							<div class="col-sm-6">
-									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPageUG*currentPageUG+1)}} to {{endLimitUG}} of {{totalRecordsUG}} entries</div>
-									</div>
-<div class="col-sm-6">
-										<div   class="dataTables_paginate paging_simple_numbers">
-																			
-											  <a ng-class="DisablePrevPageUG()" class="paginate_button previous" ng-click="prevPageUG()" >&larr;</a>
-											
-											<span>
-											  <a  ng-repeat="n in rangeUG()" ng-class="{current: n == currentPageUG}" ng-click="setPageUG(n)" class="paginate_button">{{n+1}}</a>
+                <div class="col-lg-12">
+
+                    <!-- User Groups -->
+                    <div class="col-md-5" ng-show="{{role == 'ROLE_OTADMIN'}}">
+
+
+                        <!-- User Groups -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">User Groups</h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li id='group_list_label'><span class='label label-info pointer-link'
+                                                                        ng-click="groupListLabel();availableUsergroupsGrid();">Groups List</span>
+                                        </li>
+                                        <li id='create_new_group_label'><span class='label label-primary pointer-link'
+                                                                              ng-click="showUsergroups()">Create Group</span>
+                                        </li>
+                                        <li id='group_cancel_create_label' style="display: none;"
+                                            ng-click="groupCancelCreateLabel()"><span
+                                                class='label label-warning pointer-link'>Cancel Create</span></li>
+                                        <li id='group_cancel_edit_label' style="display: none;"
+                                            ng-click="groupCancelEditLabel()"><span
+                                                class='label label-warning pointer-link'>Cancel Edit</span></li>
+                                        <li id='assign_user_cancel_label' style="display: none;"
+                                            ng-click="cancelAssignUserLabel()"><span
+                                                class='label label-warning pointer-link'>Exit Assign User</span></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Group list div -->
+                            <DIV class='panel-body' id='group_list_div' style="padding:5px 20px 20px 20px;">
+                                <!-- 		<label class="control-label col-lg-12">Existing Groups List</label> -->
+                                <div class="datatable-header filter-datatable-header">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"
+                                         style="padding-top:5px !important;"><label><span>Filter:</span>
+                                        <input type="type" class="" ng-change="singleFilterUserGroup()"
+                                               ng-model="searchTextUserGroup" placeholder="Type to filter..."></label>
+                                    </div>
+                                    <!--
+                                     <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
+                                      <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                      <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+                                      <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
+                                      <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
+                                      <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
+                                      <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
+                                      </div>
+                                      -->
+                                </div>
+                                <div id="addUsergroupsGridOptions" ui-grid="addUsergroupsGridOptions" ui-grid-selection
+                                     ui-grid-cellNav ui-grid-resize-columns ui-grid-auto-resize
+                                     ng-style="getTableHeightUserGroup()" class="table table-hover grid">
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
+                                             role="alert" aria-live="polite" aria-relevant="all">Showing
+                                            {{(itemsPerPageUG*currentPageUG+1)}} to {{endLimitUG}} of {{totalRecordsUG}}
+                                            entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+
+                                            <a ng-class="DisablePrevPageUG()" class="paginate_button previous"
+                                               ng-click="prevPageUG()">&larr;</a>
+
+                                            <span>
+											  <a ng-repeat="n in rangeUG()" ng-class="{current: n == currentPageUG}"
+                                                 ng-click="setPageUG(n)" class="paginate_button">{{n+1}}</a>
 											</span>
-										
-											  <a ng-class="DisableNextPageUG()" class="paginate_button next" ng-click="nextPageUG()">&rarr;</a>
-											
-										 
-										</div>
-									</div>	
-				
-	</div>
-								
-					
-							</DIV>
 
-							<!-- create group div -->
-							<div class="panel-body" id='group_create_div' style='display: none;'>
-
-								<form  class="ng-pristine ng-valid"  name="usergroupform" novalidate="novalidate">
-									<fieldset class="content-group">
-										<legend class="text-bold">Group Name<span class="error-star"></span></legend> 
-										<div class="form-group">
-											<div class="col-lg-12">
-												<div class="">
-													<input type="text" class="form-control" placeholder="Group Name"  name="user_group" id="user_group" ng-model="user_group" required ng-minlength="2" style="width:90%;"/>
-													<button type="submit" ng-show="createButton" class="input-group-addon button-pointer-position btn btn-primary" ng-click=" addUsergroup()" id='group_add_submit_button' style="clear: both;">Save</button>
-													
-														
-										  	<span class="input-group-addon button-pointer-position" ng-show="updateButton" id='group_add_submit_button' ng-click="updateUserGroup()">Update</span>
-										
-										</div>
-												</div>
-												<!-- <span class="errors validation-error-label" ng-show="usergroupform.user_group.$dirty && usergroupform.user_group.$error.required">User Group is required</span>
-														<span  ng-show="usergroupform.user_group.$error.minlength" class="errors "> User Group field length should not be less than 2 characters</span> -->
-									<div class="clear"></div>
-									<div 
-																ng-show="usergroupform.user_group.$touched || usergroupform.$submitted"
-																ng-messages="usergroupform.user_group.$error"
-																class="errors">
-																<div ng-message="required">**User Group is required</div>
-																<span  ng-message= "minlength" class="errors"> User Group field length should not be less than 2 characters</span>
-																
-									</div>
-											<div id="input_group_error_message" style='display: none; margin-top: 15px; '></div>
-										</div>
-									</fieldset>
-								</form>
+                                            <a ng-class="DisableNextPageUG()" class="paginate_button next"
+                                               ng-click="nextPageUG()">&rarr;</a>
 
 
-							</div>
-							<!-- create group div -->
-							
-							
-							<!-- Assign user Start -->
-							<div class="panel panel-white" id="assign_user" style="display: none; border: 0px; box-shadow: none;">
-							<div class="panel-heading">
-								<h5 class="panel-title" style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i class="icon-user-check position-left"></i> Assign User</h5>
-							</div>
-								<!-- create group div -->
-							<div class="panel-body"  style="padding-top:0px; padding-bottom:0px;">
-								
+                                        </div>
+                                    </div>
 
-								<!-- User creation form -->
-								<div class="row">
-									<div class="col-md-12">
-											
-										<fieldset>
-							        
-											<div class="row">
-												<div class="col-md-12 form-horizontal" style="padding:10px 0;">
-													
-													<!-- Switchery toggles -->
-													<!-- Multiple selection -->
-													<div class="panel panel-flat" style="border:0; margin-bottom:0px;">
-														
-												<div class="panel panel-white" style="border:0; -webkit-box-shadow: 0 0px 0px rgba(255, 255, 255, 0); box-shadow: 0 0px 0px rgba(255, 255, 255, 0); margin-bottom:0px;">
-												
-												
-								 				
-													<div class="panel-body" style="padding:0px 0px 0px 0px;">
-													<div class="col-sm-5">
-													<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
-									 			<input type="type" class="filter-width" ng-change="singleFilterForAllUser()" ng-model="searchTextForAlluser" placeholder="Filter in All users..." ></label>
-									 			</div>
-													 <div  id="allusersgroupGridOptions" ui-grid="allusersgroupGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
-								 			
-								 			 </div>
-								 			 </div>
-								 			 <div class="col-sm-2" style="padding:0; margin-top:20%;">
-										<div class="ot-toggle toggle-margin">
-												<div class="assign-button">
-													<button type="button" class=""
-														ng-click="addUser();">
-														<i class="icon-forward3"></i></button><br/>
-														<button type="button" class="" ng-click="removeUser();">
-														<i class="icon-backward2"></i></button>
-													
-												</div>
-
-											</div>
-										</div>
-										<div class="col-sm-5">
-										<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
-									 			<input type="type" class="filter-width" ng-change="singleFilterForExistUser()" ng-model="searchTextForExistuser" placeholder="Filter in Selected user..." ></label>
-									 			</div>
-										<div  id="existingusersGridOptions" ui-grid="existingusersGridOptions" ui-grid-selection ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
-														 
-										</div>
-										</div>
-								 			 
-								 			 </div>
-												
-											</div>
-												
-										
-														
-
-												
-													</div>
-													<!-- /multiple selection -->
-
-													<!-- /switchery toggles -->
-
-												</div>
-											</div>
-
-											
-										</fieldset>
-
-									</div>
-								</div>
-								<!-- /User creation form -->
-							</div>
-						
-						<!-- /changable divs 2-->
-					<!-- /User -->
+                                </div>
 
 
-				</div>
-							
-							<!-- Assign user end -->
-						</div>
-						<!-- /User Groups -->
-					</div>
-					<!-- /User Groups -->
+                            </DIV>
 
-					<!-- Users -->
-					<div class="col-md-7">
-						<!-- Users -->
-						<div class="panel panel-white">
-							<div class="panel-heading">
-								<h5 class="panel-title">Users</h5>
-								<div class="heading-elements">
-									<ul class="icons-list">
-						<li id='show_all_users_label' ng-click="userTableData()"><span class='label label-info pointer-link'>All Users</span></li>
-                		<li id='create_new_user_label'><span class='label label-primary pointer-link' ng-click="toCreateNewUserAccount()">Create User</span></li>
-                		<li id='user_list_label' style="display: none;"><span class='label label-default pointer-link'>Users List</span></li>
-                		<li id='cancel_user_edit_label' ng-click="cancelUserEdit();" style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span></li>
-                		<li id='cancel_user_create_label' ng-click="cancelUserCreate();"  style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span></li>
-                		<li id='cancel_user_detail_label' style="display: none;"><span class='label label-warning pointer-link'>Cancel Detail</span></li>
-                		<li id='cancel_assign_device_label' ng-click="cancelAssignDeviceToUser()" style="display: none;"><span class='label label-warning pointer-link'>Exit Assign Devices</span></li>
-                	</ul>
-              	</div>
-              	<div id="input_user_error_message" style='display: none; margin-top: 15px;'></div>
-							</div>
+                            <!-- create group div -->
+                            <div class="panel-body" id='group_create_div' style='display: none;'>
+
+                                <form class="ng-pristine ng-valid" name="usergroupform" novalidate="novalidate">
+                                    <fieldset class="content-group">
+                                        <legend class="text-bold">Group Name<span class="error-star"></span></legend>
+                                        <div class="form-group">
+                                            <div class="col-lg-12">
+                                                <div class="">
+                                                    <input type="text" class="form-control" placeholder="Group Name"
+                                                           name="user_group" id="user_group" ng-model="user_group"
+                                                           required ng-minlength="2" style="width:90%;"/>
+                                                    <button type="submit" ng-show="createButton"
+                                                            class="input-group-addon button-pointer-position btn btn-primary"
+                                                            ng-click=" addUsergroup()" id='group_add_submit_button'
+                                                            style="clear: both;">Save
+                                                    </button>
 
 
-							<!-- Group list div -->
-							
-							<DIV class='panel-body' id='user_list_div' style="padding:5px 20px 20px 20px;">
-									<!-- 	<div class="col-md-12" style='padding-bottom: 20px; margin-bottom: 20px; border-bottom: 5px double #ccc;'>
-									<div class="form-group">
-										<label class="control-label col-lg-2">Search Users: </label>
-										<div class="col-lg-10">
-											<div class="input-group">
-				            		<input class="form-control" type="text" placeholder="Search..." />
-												<span class="input-group-addon">Search</span>
-											</div>
-										</div>
-									</div>
-	              </div> -->
-						<!-- 		<label>Most Recently Created 50 Users</label> -->
-						<div class="datatable-header filter-datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter" style="padding-top:5px !important;"><label><span>Filter:</span>
-						 <input type="type" class="" ng-change="singleFilter()" ng-model="searchText" placeholder="Type to filter..." ></label></div>
-						<!-- 
-						 <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
-						  <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-						  <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
-						  <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
-						  <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
-						  <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
-						  <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
-						  </div>
-						  -->
-						  </div>
-								<div id="userTableGridOptions" ui-grid="userTableGridOptions" ui-grid-selection  ui-grid-resize-columns ui-grid-auto-resize ng-style="getTableHeight()" class="table table-hover grid"  >
-								
-		
-								
-								</div>
-												<div class="row">
-							<div class="col-sm-6">
-									<div class="dataTables_info data-info_d-list" id="dataTables-example_info" role="alert" aria-live="polite" aria-relevant="all">Showing {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries</div>
-									</div>
-<div class="col-sm-6">
-										<div   class="dataTables_paginate paging_simple_numbers">
-																			
-											  <a ng-class="DisablePrevPage()" class="paginate_button previous" ng-click="prevPage()" >&larr;</a>
-											
-											<span>
-											  <a  ng-repeat="n in range()" ng-class="{current: n == currentPage}" ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+                                                    <span class="input-group-addon button-pointer-position"
+                                                          ng-show="updateButton" id='group_add_submit_button'
+                                                          ng-click="updateUserGroup()">Update</span>
+
+                                                </div>
+                                            </div>
+                                            <!-- <span class="errors validation-error-label" ng-show="usergroupform.user_group.$dirty && usergroupform.user_group.$error.required">User Group is required</span>
+                                                    <span  ng-show="usergroupform.user_group.$error.minlength" class="errors "> User Group field length should not be less than 2 characters</span> -->
+                                            <div class="clear"></div>
+                                            <div
+                                                    ng-show="usergroupform.user_group.$touched || usergroupform.$submitted"
+                                                    ng-messages="usergroupform.user_group.$error"
+                                                    class="errors">
+                                                <div ng-message="required">**User Group is required</div>
+                                                <span ng-message="minlength" class="errors"> User Group field length should not be less than 2 characters</span>
+
+                                            </div>
+                                            <div id="input_group_error_message"
+                                                 style='display: none; margin-top: 15px; '></div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
+
+                            </div>
+                            <!-- create group div -->
+
+
+                            <!-- Assign user Start -->
+                            <div class="panel panel-white" id="assign_user"
+                                 style="display: none; border: 0px; box-shadow: none;">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"
+                                        style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i
+                                            class="icon-user-check position-left"></i> Assign User</h5>
+                                </div>
+                                <!-- create group div -->
+                                <div class="panel-body" style="padding-top:0px; padding-bottom:0px;">
+
+
+                                    <!-- User creation form -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <fieldset>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 form-horizontal" style="padding:10px 0;">
+
+                                                        <!-- Switchery toggles -->
+                                                        <!-- Multiple selection -->
+                                                        <div class="panel panel-flat"
+                                                             style="border:0; margin-bottom:0px;">
+
+                                                            <div class="panel panel-white"
+                                                                 style="border:0; -webkit-box-shadow: 0 0px 0px rgba(255, 255, 255, 0); box-shadow: 0 0px 0px rgba(255, 255, 255, 0); margin-bottom:0px;">
+
+
+                                                                <div class="panel-body"
+                                                                     style="padding:0px 0px 0px 0px;">
+                                                                    <div class="col-sm-5">
+                                                                        <div id="filter-width"
+                                                                             class="dataTables_filter"><label>
+                                                                            <!-- <span>Filter:</span> -->
+                                                                            <input type="type" class="filter-width"
+                                                                                   ng-change="singleFilterForAllUser()"
+                                                                                   ng-model="searchTextForAlluser"
+                                                                                   placeholder="Filter in All users..."></label>
+                                                                        </div>
+                                                                        <div id="allusersgroupGridOptions"
+                                                                             ui-grid="allusersgroupGridOptions"
+                                                                             ui-grid-selection ui-grid-cellNav
+                                                                             ui-grid-auto-resize
+                                                                             class="table text-nowrap table-hover grid"
+                                                                             style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;">
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2"
+                                                                         style="padding:0; margin-top:20%;">
+                                                                        <div class="ot-toggle toggle-margin">
+                                                                            <div class="assign-button">
+                                                                                <button type="button" class=""
+                                                                                        ng-click="addUser();">
+                                                                                    <i class="icon-forward3"></i>
+                                                                                </button>
+                                                                                <br/>
+                                                                                <button type="button" class=""
+                                                                                        ng-click="removeUser();">
+                                                                                    <i class="icon-backward2"></i>
+                                                                                </button>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div id="filter-width"
+                                                                             class="dataTables_filter"><label>
+                                                                            <!-- <span>Filter:</span> -->
+                                                                            <input type="type" class="filter-width"
+                                                                                   ng-change="singleFilterForExistUser()"
+                                                                                   ng-model="searchTextForExistuser"
+                                                                                   placeholder="Filter in Selected user..."></label>
+                                                                        </div>
+                                                                        <div id="existingusersGridOptions"
+                                                                             ui-grid="existingusersGridOptions"
+                                                                             ui-grid-selection ui-grid-cellNav
+                                                                             ui-grid-auto-resize
+                                                                             class="table text-nowrap table-hover grid"
+                                                                             style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;">
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                        <!-- /multiple selection -->
+
+                                                        <!-- /switchery toggles -->
+
+                                                    </div>
+                                                </div>
+
+
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                    <!-- /User creation form -->
+                                </div>
+
+                                <!-- /changable divs 2-->
+                                <!-- /User -->
+
+
+                            </div>
+
+                            <!-- Assign user end -->
+                        </div>
+                        <!-- /User Groups -->
+                    </div>
+                    <!-- /User Groups -->
+
+                    <!-- Users -->
+                    <div class="col-md-7">
+                        <!-- Users -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Users</h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li id='show_all_users_label' ng-click="userTableData()"><span
+                                                class='label label-info pointer-link'>All Users</span></li>
+                                        <li id='create_new_user_label'><span class='label label-primary pointer-link'
+                                                                             ng-click="toCreateNewUserAccount()">Create User</span>
+                                        </li>
+                                        <li id='user_list_label' style="display: none;"><span
+                                                class='label label-default pointer-link'>Users List</span></li>
+                                        <li id='cancel_user_edit_label' ng-click="cancelUserEdit();"
+                                            style="display: none;"><span class='label label-warning pointer-link'>Cancel Edit</span>
+                                        </li>
+                                        <li id='cancel_user_create_label' ng-click="cancelUserCreate();"
+                                            style="display: none;"><span class='label label-warning pointer-link'>Cancel Create</span>
+                                        </li>
+                                        <li id='cancel_user_detail_label' style="display: none;"><span
+                                                class='label label-warning pointer-link'>Cancel Detail</span></li>
+                                        <li id='cancel_assign_device_label' ng-click="cancelAssignDeviceToUser()"
+                                            style="display: none;"><span class='label label-warning pointer-link'>Exit Assign Devices</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="input_user_error_message" style='display: none; margin-top: 15px;'></div>
+                            </div>
+
+
+                            <!-- Group list div -->
+
+                            <DIV class='panel-body' id='user_list_div' style="padding:5px 20px 20px 20px;">
+                                <!-- 	<div class="col-md-12" style='padding-bottom: 20px; margin-bottom: 20px; border-bottom: 5px double #ccc;'>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-2">Search Users: </label>
+                                    <div class="col-lg-10">
+                                        <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Search..." />
+                                            <span class="input-group-addon">Search</span>
+                                        </div>
+                                    </div>
+                                </div>
+              </div> -->
+                                <!-- 		<label>Most Recently Created 50 Users</label> -->
+                                <div class="datatable-header filter-datatable-header">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"
+                                         style="padding-top:5px !important;"><label><span>Filter:</span>
+                                        <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
+                                               placeholder="Type to filter..."></label></div>
+                                    <!--
+                                     <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
+                                      <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                      <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+                                      <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
+                                      <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
+                                      <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
+                                      <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
+                                      </div>
+                                      -->
+                                </div>
+                                <div id="userTableGridOptions" ui-grid="userTableGridOptions" ui-grid-selection
+                                     ui-grid-resize-columns ui-grid-auto-resize ng-style="getTableHeight()"
+                                     class="table table-hover grid">
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
+                                             role="alert" aria-live="polite" aria-relevant="all">Showing
+                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+
+                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                               ng-click="prevPage()">&larr;</a>
+
+                                            <span>
+											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
 											</span>
-										
-											  <a ng-class="DisableNextPage()" class="paginate_button next" ng-click="nextPage()">&rarr;</a>
-											
-										 
-										</div>
-									</div>	
-				
-	</div>
-                                  
-							<!-- 	<table class="table table-hover">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Name</th>
-											<th>Groups</th>
-											<th>Created By</th>
-											<th>Created On</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Sam Bobbins</td>
-											<td>AdminGroup, SetupGroup</td>
-											<td>admin</td>
-											<td>09/09/2015</td>
-											<td class="text-center">
-												<ul class="icons-list">
-													<li class="dropdown">
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-															<i class="icon-menu9"></i>
-														</a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
-															<li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
-															<li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
-														</ul>
-													</li>
-												</ul>
-											</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>Anthony Carrell</td>
-											<td>myNewGroup, maintenance group</td>
-											<td>admin</td>
-											<td>09/15/2015</td>
-											<td class="text-center">
-												<ul class="icons-list">
-													<li class="dropdown">
-														<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-															<i class="icon-menu9"></i>
-														</a>
-														<ul class="dropdown-menu dropdown-menu-right">
-															<li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
-															<li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
-															<li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
-														</ul>
-													</li>
-												</ul>
-											</td>
-										</tr>
-									</tbody>
-								</table> -->
-							</DIV>
-							<!-- /group list div -->
 
-							<!-- edit group div -->
-							<div class="panel-body" id='user_edit_div' style='display: none;'>
-								
+                                            <a ng-class="DisableNextPage()" class="paginate_button next"
+                                               ng-click="nextPage()">&rarr;</a>
 
-							</div>
-							<!-- /edit group div -->
 
-							<!-- create group div -->
-							<div class="panel-body" id='user_create_div' style='display: none;'>
-								
+                                        </div>
+                                    </div>
 
-								<!-- User creation form -->
-								<div class="row">
-									<div class="col-md-12">
-								<form  id="myForm" name="myForm"   novalidate="novalidate">
-										<fieldset>
-											
-							        <legend class="text-semibold"> <i class="icon-user-plus position-left"></i> User details</legend>
+                                </div>
 
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>First name</label><span class="error-star"></span>
-														<input type="text" name="firstname" ng-model="firstname" id="firstname" placeholder="Enter First name" class="form-control" ng-minlength="2" required ng-pattern="/^[a-zA-Z0-9 ]*$/" />
-														<!-- <span ng-show="myForm.firstname.$error.required" class="errors validation-error-label"> **Firstname field should not be empty</span>
-												<span ng-show="myForm.firstname.$error.minlength" class="errors validation-error-label"> **Firstname field length should not be less than 2 characters</span> -->
-													<div 
-																ng-show="myForm.firstname.$touched || myForm.$submitted"
-																ng-messages="myForm.firstname.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**First Name field should not be empty</div>
-																<span  ng-message= "minlength" class="errors">**First Name length should not be less than 2 characters</span>
-																<div ng-message="pattern" class="errors">**First Name should be alphanumeric </div>
-																
-									             </div>
-													</div>
-												</div>
+                                <!-- 	<table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Groups</th>
+                                                <th>Created By</th>
+                                                <th>Created On</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Sam Bobbins</td>
+                                                <td>AdminGroup, SetupGroup</td>
+                                                <td>admin</td>
+                                                <td>09/09/2015</td>
+                                                <td class="text-center">
+                                                    <ul class="icons-list">
+                                                        <li class="dropdown">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                <i class="icon-menu9"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                                <li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
+                                                                <li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
+                                                                <li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Anthony Carrell</td>
+                                                <td>myNewGroup, maintenance group</td>
+                                                <td>admin</td>
+                                                <td>09/15/2015</td>
+                                                <td class="text-center">
+                                                    <ul class="icons-list">
+                                                        <li class="dropdown">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                <i class="icon-menu9"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                                <li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
+                                                                <li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
+                                                                <li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                            </DIV>
+                            <!-- /group list div -->
 
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Last name</label>
-														<input type="text" placeholder="Enter Last name" id="lastname"  class="form-control">
-													</div>
-												</div>
-											</div>
+                            <!-- edit group div -->
+                            <div class="panel-body" id='user_edit_div' style='display: none;'>
 
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Email</label><span class="error-star"></span>
-														<input placeholder="Enter Email" class="form-control" type="email" name="mail"  id="email-8"  ng-model="mail" 
-														ng-pattern="/^([a-zA-Z][a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/" required />
-														 <!-- <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors validation-error-label"> **Email field should not be empty</span>
-												<span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors validation-error-label"> **Email is invalid</span> -->
-													<div 
-																ng-show="myForm.mail.$touched || myForm.$submitted"
-																ng-messages="myForm.mail.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**Email field should not be empty</div>
-																 <span  ng-message= "email" class="errors">**Email is invalid</span>
-																  <div ng-message="pattern" class="errors">**Email is invalid</div>
-																
-									             </div>
-													</div>
-												</div>
 
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Username</label><span class="error-star"></span>
-														<input type="text" placeholder="Enter username for login purposes" class="form-control" name="userName" id="username-7" ng-model="userName"
-				 					 required ng-minlength="2" ng-pattern="/^[a-zA-Z0-9]*$/"/>
-				 					 	<div 
-																ng-show="myForm.userName.$touched || myForm.$submitted"
-																ng-messages="myForm.userName.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**Username field should not be empty</div>
-																<span  ng-message= "minlength" class="errors">**Username field length should not be less than 2 characters</span>
-																<div ng-message="pattern" class="errors">**Username field should be alphanumeric </div>
-																
-									    </div>
-				 					 <!--   <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors validation-error-label"> **User name field should not be empty</span>
-									<span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors validation-error-label"> **User name field length should not be less than 2 characters</span> -->
-													</div>
-												</div>
-											</div>
+                            </div>
+                            <!-- /edit group div -->
 
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-                            <label>Password</label><span class="error-star"></span>
-                            
-                            <input autocomplete="off" type="hidden" placeholder="Enter password" class="form-control" id="orgPassword" name="orgPassword"  ng-model="orgPassword" />
-														<input autocomplete="off" type="password" placeholder="Enter password" class="form-control" id="password" name="password" required ng-model="password" ng-trim="true" />
-														<!-- <span class=" errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span> -->
-                          	<div 
-																ng-show="myForm.password.$touched || myForm.$submitted"
-																ng-messages="myForm.password.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**Password field should not be empty</div>
-																
-									    </div>
-                          </div>
-												</div>
+                            <!-- create group div -->
+                            <div class="panel-body" id='user_create_div' style='display: none;'>
 
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Password Confirmation</label><span class="error-star"></span>
-														<input autocomplete="off" type="password" placeholder="Enter password confirmation" class="form-control" id="cnfpassword" name="passwordConfirmation" 
-														 ng-model="passwordConfirmation" ng-trim="true" required password-match="password" />
-														<!--  <span class="help-block ng-hide errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span> -->
-											  <!--div style="color:red" ng-show="errormsg"> Password do not match </div-->
-											  <!-- <div class=" errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.passwordMatch">Passwords do not match.</div> -->
-											  	<div 
-																ng-show="myForm.$submitted"
-																ng-messages="myForm.passwordConfirmation.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**Confirm Password field should not be empty</div>
-																<div ng-message="passwordMatch" class="errors">**Passwords do not match</div>
-																
-									                   </div>
-													</div>
-												</div>
-											</div>
-												<div class="row">
-												<div class="col-md-6">
-													<div class="form-group" ng-show="role1">
-													<label > Role</label>
-													<select id="role" name="roleName"    ng-model="roleName" class="form-control select roleadmin" >
-														 	<option  ng-repeat="item in roleList[role]" >{{item}}</option> 
-														
-														</select>
-												<!-- <span class="help-block errors validation-error-label" ng-show="myForm.roleName.$dirty && myForm.roleName.$error.required">
-												**Role field should be selected</span> -->
 
-													</div>
-													  <div class="form-group" ng-show="role2">
-											<label > Role</label>
-											<select class="form-control select edit-role" id="edit_role"   data-ng-model="tablerole" data-placeholder="Select Role" >
-												<option  ng-repeat="item in roleList[role]" >{{item}}</option>
-											</select>
-										  </div>
-												</div>
-												<div class="col-md-6" style="padding-right: 0px ! important;">
-													<div class="form-group">
-														<div class="col-md-6">
-														<label>Customer</label><span class="error-star"></span>
-														</div>
-														<div class="col-md-6">
-															<div ng-show="{{role == 'ROLE_OTADMIN'}}">
-												<!-- data-toggle="dropdown"  -->
-												
-												<a id="add-Customer" href="" class="table-emailAdd pull-right" ng-show="addCustomer">
-												Add New Customer <i class="icon-plus-circle2 text-primary"></i>
-													</a>
-													<div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd" style="width: 350px;margin-left: 12px;position: absolute;top: 20px;left: -107%;">
-														<form class="form-horizontal" name="customerform">
-															<div class="col-sm-12">
-															<br/>
-																<div class="form-group">
-																	<label for="customer_name" class="col-sm-5 control-label" >Customer Name :</label>
-																	
-																	<div class="col-sm-7">
-														<input type="text" class="form-control font-adduser" id="customer_name"  >
-														  <span id="customer_name-msg" style="display:none;"  class="errors"> **Customer Name field should not be empty</span>
-														  <div class="user-btns"  style="text-align:center;">
-														  <img class="loading" src="images/loading_new.gif"  ng-show="dataLoadingCustomer" style="position: absolute; z-index: 1; width: 30px; top: 2px; right: 15px;"></img>	
-																 	<button class="btn btn-info ot-btn" type="button"  ng-click="createCustomer()">Save</button>
-																	<button class="btn btn-info ot-btn" type="button" ng-click="closerCreatePop()">Cancel</button>
-																</div>
-																	</div>
-																	
-																</div>
-																
-															</div>
-														</form>
-													</div>
-										
-												</div>
-												</div>
-												
-														</div>
-														<select id="customer-8" name="customer" ng-model="customer" data-placeholder="Select Customer" class="form-control select" required>
-														<option value="">Select </option>
-														<option ng-repeat="customer in customers" >{{customer}}</option>
-														</select>
-														<!--   <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span> -->
-														  	<div 
-																ng-show="myForm.customer.$touched || myForm.$submitted"
-																ng-messages="myForm.customer.$error"
-																class="errors">
-																<div ng-message="required" class="errors">**Customer field should not be empty</div>
-																
-									                   </div>
-													</div>
-												</div>
-												
-									
-									
-								
-											<div class="row" ng-show="{{role == 'ROLE_OTADMIN'}}">
-												<div class="col-md-12">
-													
-													<!-- Switchery toggles -->
-													<div class="panel panel-white">
-														<div class="panel-heading">
-															<h5 class="panel-title">Select User Groups</h5>
-														</div>
+                                <!-- User creation form -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form id="myForm" name="myForm" novalidate="novalidate">
+                                            <fieldset>
 
-														<div class="panel-body">
+                                                <legend class="text-semibold"><i
+                                                        class="icon-user-plus position-left"></i> User details
+                                                </legend>
 
-															<div class="row">
-																<div class="col-md-12">
-																	<div class="content-group-lg">
-																	<!-- 	<div class="col-md-3">
-																			<div class="checkbox checkbox-switchery switchery-xs">
-																				<label>
-																					<input type="checkbox" class="switchery" checked="checked"> Sam's Group
-																				</label>
-																			</div>
-																		</div> -->
-												<span ng-repeat="userGroup in activeUserGroups" >
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>First name</label><span class="error-star"></span>
+                                                            <input type="text" name="firstname" ng-model="firstname"
+                                                                   id="firstname" placeholder="Enter First name"
+                                                                   class="form-control" ng-minlength="2" required
+                                                                   ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+                                                            <!-- <span ng-show="myForm.firstname.$error.required" class="errors validation-error-label"> **Firstname field should not be empty</span>
+                                                    <span ng-show="myForm.firstname.$error.minlength" class="errors validation-error-label"> **Firstname field length should not be less than 2 characters</span> -->
+                                                            <div
+                                                                    ng-show="myForm.firstname.$touched || myForm.$submitted"
+                                                                    ng-messages="myForm.firstname.$error"
+                                                                    class="errors">
+                                                                <div ng-message="required" class="errors">**First Name
+                                                                    field should not be empty
+                                                                </div>
+                                                                <span ng-message="minlength" class="errors">**First Name length should not be less than 2 characters</span>
+                                                                <div ng-message="pattern" class="errors">**First Name
+                                                                    should be alphanumeric
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Last name</label>
+                                                            <input type="text" placeholder="Enter Last name"
+                                                                   id="lastname" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Email</label><span class="error-star"></span>
+                                                            <input placeholder="Enter Email" class="form-control"
+                                                                   type="email" name="mail" id="email-8" ng-model="mail"
+                                                                   ng-pattern="/^([a-zA-Z][a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/"
+                                                                   required/>
+                                                            <!-- <span ng-show="myForm.mail.$dirty && myForm.mail.$error.required" class="errors validation-error-label"> **Email field should not be empty</span>
+                                                   <span ng-show="myForm.mail.$dirty && myForm.mail.$error.email" class="errors validation-error-label"> **Email is invalid</span> -->
+                                                            <div
+                                                                    ng-show="myForm.mail.$touched || myForm.$submitted"
+                                                                    ng-messages="myForm.mail.$error"
+                                                                    class="errors">
+                                                                <div ng-message="required" class="errors">**Email field
+                                                                    should not be empty
+                                                                </div>
+                                                                <span ng-message="email" class="errors">**Email is invalid</span>
+                                                                <div ng-message="pattern" class="errors">**Email is
+                                                                    invalid
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Username</label><span class="error-star"></span>
+                                                            <input type="text"
+                                                                   placeholder="Enter username for login purposes"
+                                                                   class="form-control" name="userName" id="username-7"
+                                                                   ng-model="userName"
+                                                                   required ng-minlength="2"
+                                                                   ng-pattern="/^[a-zA-Z0-9]*$/"/>
+                                                            <div
+                                                                    ng-show="myForm.userName.$touched || myForm.$submitted"
+                                                                    ng-messages="myForm.userName.$error"
+                                                                    class="errors">
+                                                                <div ng-message="required" class="errors">**Username
+                                                                    field should not be empty
+                                                                </div>
+                                                                <span ng-message="minlength" class="errors">**Username field length should not be less than 2 characters</span>
+                                                                <div ng-message="pattern" class="errors">**Username
+                                                                    field should be alphanumeric
+                                                                </div>
+
+                                                            </div>
+                                                            <!--   <span ng-show="myForm.userName.$dirty && myForm.userName.$error.required" class="errors validation-error-label"> **User name field should not be empty</span>
+                                                          <span ng-show="myForm.userName.$dirty && myForm.userName.$error.minlength" class="errors validation-error-label"> **User name field length should not be less than 2 characters</span> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" ng-show="!updateButton">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Password</label><span class="error-star"></span>
+
+                                                            <input autocomplete="off" type="hidden"
+                                                                   placeholder="Enter password" class="form-control"
+                                                                   id="orgPassword" name="orgPassword"
+                                                                   ng-model="orgPassword"/>
+                                                            <input autocomplete="off" type="password"
+                                                                   placeholder="Enter password" class="form-control"
+                                                                   id="password" name="password" required
+                                                                   ng-model="password" ng-trim="true"/>
+                                                            <!-- <span class=" errors validation-error-label" ng-show="myForm.password.$dirty && myForm.password.$error.required">**Password field should not be empty</span> -->
+                                                            <div
+                                                                    ng-show="!updateButton && (myForm.password.$touched || myForm.$submitted)"
+                                                                    ng-messages="myForm.password.$error"
+                                                                    class="errors">
+                                                                <div ng-message="required" class="errors">**Password
+                                                                    field should not be empty
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Password Confirmation</label><span
+                                                                class="error-star"></span>
+                                                            <input autocomplete="off" type="password"
+                                                                   placeholder="Enter password confirmation"
+                                                                   class="form-control" id="cnfpassword"
+                                                                   name="passwordConfirmation"
+                                                                   ng-model="passwordConfirmation" ng-trim="true"
+                                                                   required password-match="password"/>
+                                                            <!--  <span class="help-block ng-hide errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.required">**Confirm Password field should not be empty</span> -->
+                                                            <!--div style="color:red" ng-show="errormsg"> Password do not match </div-->
+                                                            <!-- <div class=" errors validation-error-label" ng-show="myForm.passwordConfirmation.$dirty && myForm.passwordConfirmation.$error.passwordMatch">Passwords do not match.</div> -->
+                                                            <div
+                                                                    ng-show="myForm.$submitted"
+                                                                    ng-messages="myForm.passwordConfirmation.$error"
+                                                                    class="errors">
+                                                                <div ng-message="required" class="errors">**Confirm
+                                                                    Password field should not be empty
+                                                                </div>
+                                                                <div ng-message="passwordMatch" class="errors">
+                                                                    **Passwords do not match
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group" ng-show="role1">
+                                                            <label> Role</label>
+                                                            <select id="role" name="roleName" ng-model="roleName"
+                                                                    class="form-control select roleadmin">
+                                                                <option ng-repeat="item in roleList[role]">{{item}}
+                                                                </option>
+
+                                                            </select>
+                                                            <!-- <span class="help-block errors validation-error-label" ng-show="myForm.roleName.$dirty && myForm.roleName.$error.required">
+                                                            **Role field should be selected</span> -->
+
+                                                        </div>
+                                                        <div class="form-group" ng-show="role2">
+                                                            <label> Role</label>
+                                                            <select class="form-control select edit-role" id="edit_role"
+                                                                    data-ng-model="tablerole"
+                                                                    data-placeholder="Select Role">
+                                                                <option ng-repeat="item in roleList[role]">{{item}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6" style="padding-right: 0px ! important;">
+                                                        <div class="form-group">
+                                                            <div class="col-md-6">
+                                                                <label>Customer</label><span class="error-star"></span>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                                    <!-- data-toggle="dropdown"  -->
+
+                                                                    <a id="add-Customer" href=""
+                                                                       class="table-emailAdd pull-right"
+                                                                       ng-show="addCustomer">
+                                                                        Add New Customer <i
+                                                                            class="icon-plus-circle2 text-primary"></i>
+                                                                    </a>
+                                                                    <div class="dropdown-menu customer-dropdown popup-AdministrationAdd emailAdd"
+                                                                         style="width: 350px;margin-left: 12px;position: absolute;top: 20px;left: -107%;">
+                                                                        <form class="form-horizontal"
+                                                                              name="customerform">
+                                                                            <div class="col-sm-12">
+                                                                                <br/>
+                                                                                <div class="form-group">
+                                                                                    <label for="customer_name"
+                                                                                           class="col-sm-5 control-label">Customer
+                                                                                        Name :</label>
+
+                                                                                    <div class="col-sm-7">
+                                                                                        <input type="text"
+                                                                                               class="form-control font-adduser"
+                                                                                               id="customer_name">
+                                                                                        <span id="customer_name-msg"
+                                                                                              style="display:none;"
+                                                                                              class="errors"> **Customer Name field should not be empty</span>
+                                                                                        <div class="user-btns"
+                                                                                             style="text-align:center;">
+                                                                                            <img class="loading"
+                                                                                                 src="images/loading_new.gif"
+                                                                                                 ng-show="dataLoadingCustomer"
+                                                                                                 style="position: absolute; z-index: 1; width: 30px; top: 2px; right: 15px;"></img>
+                                                                                            <button class="btn btn-info ot-btn"
+                                                                                                    type="button"
+                                                                                                    ng-click="createCustomer()">
+                                                                                                Save
+                                                                                            </button>
+                                                                                            <button class="btn btn-info ot-btn"
+                                                                                                    type="button"
+                                                                                                    ng-click="closerCreatePop()">
+                                                                                                Cancel
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <select id="customer-8" name="customer" ng-model="customer"
+                                                                data-placeholder="Select Customer"
+                                                                class="form-control select" required>
+                                                            <option value="">Select</option>
+                                                            <option ng-repeat="customer in customers">{{customer}}
+                                                            </option>
+                                                        </select>
+                                                        <!--   <span ng-show="myForm.company.$error.required" class="errors" > **customer field should not be empty</span> -->
+                                                        <div
+                                                                ng-show="myForm.customer.$touched || myForm.$submitted"
+                                                                ng-messages="myForm.customer.$error"
+                                                                class="errors">
+                                                            <div ng-message="required" class="errors">**Customer field
+                                                                should not be empty
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row" ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                    <div class="col-md-12">
+
+                                                        <!-- Switchery toggles -->
+                                                        <div class="panel panel-white">
+                                                            <div class="panel-heading">
+                                                                <h5 class="panel-title">Select User Groups</h5>
+                                                            </div>
+
+                                                            <div class="panel-body">
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="content-group-lg">
+                                                                            <!-- 	<div class="col-md-3">
+                                                                                    <div class="checkbox checkbox-switchery switchery-xs">
+                                                                                        <label>
+                                                                                            <input type="checkbox" class="switchery" checked="checked"> Sam's Group
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div> -->
+                                                                            <span ng-repeat="userGroup in activeUserGroups">
 												<div class="col-md-3">
 												<div class="checkbox checkbox-switchery switchery-xs">
 												<label>
 												<input type="checkbox" class="switchery"
-												 ng-checked="selectedUserGroup.indexOf(userGroup.userGroupName) > -1" checklist-value="userGroup.userGroupName" 
-												 ng-click="getCheckedUserGroup(userGroup.userGroupName)">
+                                                       ng-checked="selectedUserGroup.indexOf(userGroup.userGroupName) > -1"
+                                                       checklist-value="userGroup.userGroupName"
+                                                       ng-click="getCheckedUserGroup(userGroup.userGroupName)">
 												{{userGroup.userGroupName | capitalize}}
 												</label>
 												</div>
 												</div>
 												</span>
-																		
-
-																	</div>
-																</div>
-															</div>
-
-														</div>
-													</div>
-													<!-- /switchery toggles -->
-
-												</div>
-											</div>
-
-											<div class="row pull-right" ng-show="createButton">
-												<input type="submit"  class="btn btn-primary"  ng-click="CreateUser()" value="Submit" />
-											</div>
-											 <div  class="row pull-right"  ng-show="updateButton"> 
-										  <input type="submit" class="btn btn-info ot-btn"  ng-click="UpdateUser()" value="Update">
-										<!--   <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button> -->
-										  </div>
-										 
-										</fieldset>
- 									</form>
-									</div>
-								</div>
-								<!-- /User creation form -->
 
 
-							</div>
-							<!-- /create group div -->
-							
-									<!-- user device mapping  -->
-							<div class="panel panel-white" id='assign_device_div' style='display: none;  border: 0px; box-shadow: none;'>
-								 
-								 		<div class="panel-heading">
-								<h5 class="panel-title" style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i class="icon-user-check position-left"></i> Associate Device to user</h5>
-							</div>
-								<!-- create group div -->
-							<div class="panel-body"  style="padding-top:0px; padding-bottom:0px;">
-								
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-								<!-- User creation form -->
-								<div class="row">
-									<div class="col-md-12">
-											
-										<fieldset>
-							        
-											<div class="row">
-												<div class="col-md-12 form-horizontal" style="padding:10px 0;">
-													
-													<!-- Switchery toggles -->
-													<!-- Multiple selection -->
-													<div class="panel panel-flat" style="border:0; margin-bottom:0px;">
-														
-												<div class="panel panel-white" style="border:0; -webkit-box-shadow: 0 0px 0px rgba(255, 255, 255, 0); box-shadow: 0 0px 0px rgba(255, 255, 255, 0); margin-bottom:0px;">
-												
-												
-								 				
-													<div class="panel-body" style="padding:0px 0px 0px 0px;">
-													<div class="col-sm-5">
-													<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
-									 			<input type="type" class="filter-width" ng-change="singleFilterForAllDevice()" ng-model="searchTextForAllDevice" placeholder="Filter in All Devices..." ></label>
-									 			</div>
-													 <div  id="allDeviceGridOptions" ui-grid="allDeviceGridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
-								 			
-								 			 </div>
-								 			 </div>
-								 			 <div class="col-sm-2" style="padding:0; margin-top:15%;">
-										<div class="ot-toggle toggle-margin">
-												<div class="assign-button">
-													<button type="button" class=""
-														ng-click="addDevice();">
-														<i class="icon-forward3"></i></button><br/>
-														<button type="button" class="" ng-click="removeDevice();">
-														<i class="icon-backward2"></i></button>
-													
-												</div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /switchery toggles -->
 
-											</div>
-										</div>
-										<div class="col-sm-5">
-										<div id="filter-width" class="dataTables_filter"><label><!-- <span>Filter:</span> -->
-									 			<input type="type" class="filter-width" ng-change="singleFilterForSelectedDevice()" ng-model="searchTextForSelectedDevice" placeholder="Filter in Assign Devices..." ></label>
-									 			</div>
-										<div  id="selectedDeviceGridOptions" ui-grid="selectedDeviceGridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-cellNav ui-grid-auto-resize class="table text-nowrap table-hover grid" style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;" >
-														 
-										</div>
-										</div>
-								 			 
-								 			 </div>
-												
-											</div>
-												
-										
-														
+                                                    </div>
+                                                </div>
 
-												
-													</div>
+                                                <div class="row pull-right" ng-show="createButton">
+                                                    <input type="submit" class="btn btn-primary" ng-click="CreateUser()"
+                                                           value="Submit"/>
+                                                </div>
+                                                <div class="row pull-right" ng-show="updateButton">
+                                                    <input type="submit" class="btn btn-info ot-btn"
+                                                           ng-click="UpdateUser()" value="Update">
+                                                    <!--   <button type="button" class="btn btn-info ot-btn" ng-click="cancel()">Cancel</button> -->
+                                                </div>
 
-												</div>
-											</div>
-
-											
-										</fieldset>
-
-									</div>
-								</div>
-							</div>
-						
-
-								 
-
-							</div>
-							<!-- /assign device to user -->
-							
-							<div class="panel-body" id='show_user_details_div' style="display:none;">
-								
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="panel border-left-lg border-left-success invoice-grid timeline-content">
-											<div class="panel-body">
-
-												<!-- User card -->
-												<div class="row">
-													<div class="col-sm-6">
-														<h6 class="text-semibold no-margin-top">{{}}</h6>
-														<ul class="list list-unstyled">
-															<li>Created By : &nbsp;Roger Gittleman</li>
-															<li>Created on: <span class="text-semibold">11 Feb 2015</span></li>
-														</ul>
-													</div>
-
-													<div class="col-sm-6">
-														<h6 class="text-semibold text-right no-margin-top">T-Mobile</h6>
-														<ul class="list list-unstyled text-right">
-															<li>Last Login: <span class="text-semibold">4 Days ago</span></li>
-														</ul>
-													</div>
-												</div>
-												<!-- /User Card -->
-											</div>
-
-											<div class="panel-footer">
-												<ul>
-													<li><span class="label label-info">Send Password Reset Mail</span></li>
-												</ul>
-
-												<ul class="pull-right">
-													<li><span class="label label-warning">Disable Login</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-
-									<!-- test creation & activity row -->
-
-									<div class="col-lg-12">
-										<!-- Test creation row -->
-										<div class="col-lg-6">
-											<h6>Test Case History</h6>
-											<table class="table">
-												<thead>
-													<tr>
-														<th>Test Case</th>
-														<th>Created On</th>
-														<th># Times Run</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<!-- Test creation row -->
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /User creation form -->
 
 
-										<!-- Activity row -->
-										<div class="col-md-6">
-											<h6>Activity History</h6>
-											<table class="table">
-												<thead>
-													<tr>
-														<th>Activity</th>
-														<th>Created On</th>
-														<th># Times Run</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Created User</td>
-														<td>7th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Created Case</td>
-														<td>17th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Ran Test Case</td>
-														<td>27th Nov 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Created User</td>
-														<td>7th Oct 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Ran Test Case</td>
-														<td>17th Oct 2014</td>
-														<td>8</td>
-													</tr>
-													<tr>
-														<td>Sam's Case</td>
-														<td>27th Dec 2014</td>
-														<td>8</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<!-- Activity row -->
+                            </div>
+                            <!-- /create group div -->
 
-									</div>
+                            <!-- user device mapping  -->
+                            <div class="panel panel-white" id='assign_device_div'
+                                 style='display: none;  border: 0px; box-shadow: none;'>
+
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"
+                                        style=" font-size: 12px; text-transform: uppercase; font-weight: 500;"><i
+                                            class="icon-user-check position-left"></i> Associate Device to user</h5>
+                                </div>
+                                <!-- create group div -->
+                                <div class="panel-body" style="padding-top:0px; padding-bottom:0px;">
 
 
-									<!-- test creation & activity row -->
+                                    <!-- User creation form -->
+                                    <div class="row">
+                                        <div class="col-md-12">
 
-								</div>
+                                            <fieldset>
 
-							</div>
-						</div>
-						<!-- /Users -->
+                                                <div class="row">
+                                                    <div class="col-md-12 form-horizontal" style="padding:10px 0;">
 
-					</div>
-					<!-- /User -->
+                                                        <!-- Switchery toggles -->
+                                                        <!-- Multiple selection -->
+                                                        <div class="panel panel-flat"
+                                                             style="border:0; margin-bottom:0px;">
 
-
-				</div>
-
-			</div>
-
-
-
+                                                            <div class="panel panel-white"
+                                                                 style="border:0; -webkit-box-shadow: 0 0px 0px rgba(255, 255, 255, 0); box-shadow: 0 0px 0px rgba(255, 255, 255, 0); margin-bottom:0px;">
 
 
-			</div>
-			<!-- /main content -->
+                                                                <div class="panel-body"
+                                                                     style="padding:0px 0px 0px 0px;">
+                                                                    <div class="col-sm-5">
+                                                                        <div id="filter-width"
+                                                                             class="dataTables_filter"><label>
+                                                                            <!-- <span>Filter:</span> -->
+                                                                            <input type="type" class="filter-width"
+                                                                                   ng-change="singleFilterForAllDevice()"
+                                                                                   ng-model="searchTextForAllDevice"
+                                                                                   placeholder="Filter in All Devices..."></label>
+                                                                        </div>
+                                                                        <div id="allDeviceGridOptions"
+                                                                             ui-grid="allDeviceGridOptions"
+                                                                             ui-grid-selection ui-grid-resize-columns
+                                                                             ui-grid-cellNav ui-grid-auto-resize
+                                                                             class="table text-nowrap table-hover grid"
+                                                                             style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;">
 
-		</div>
-		<!-- /page content -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-2"
+                                                                         style="padding:0; margin-top:15%;">
+                                                                        <div class="ot-toggle toggle-margin">
+                                                                            <div class="assign-button">
+                                                                                <button type="button" class=""
+                                                                                        ng-click="addDevice();">
+                                                                                    <i class="icon-forward3"></i>
+                                                                                </button>
+                                                                                <br/>
+                                                                                <button type="button" class=""
+                                                                                        ng-click="removeDevice();">
+                                                                                    <i class="icon-backward2"></i>
+                                                                                </button>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-5">
+                                                                        <div id="filter-width"
+                                                                             class="dataTables_filter"><label>
+                                                                            <!-- <span>Filter:</span> -->
+                                                                            <input type="type" class="filter-width"
+                                                                                   ng-change="singleFilterForSelectedDevice()"
+                                                                                   ng-model="searchTextForSelectedDevice"
+                                                                                   placeholder="Filter in Assign Devices..."></label>
+                                                                        </div>
+                                                                        <div id="selectedDeviceGridOptions"
+                                                                             ui-grid="selectedDeviceGridOptions"
+                                                                             ui-grid-selection ui-grid-resize-columns
+                                                                             ui-grid-cellNav ui-grid-auto-resize
+                                                                             class="table text-nowrap table-hover grid"
+                                                                             style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;">
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
 
 
-	
-	</div>
-	<!-- /page container -->
-	<!-- Footer -->
-	<!-- 	<div class="footer text-muted">
-			&copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
-		</div> -->
-		<div ng-include="'app/views/footer/footer.html'"></div>
-		<!-- /footer -->
+                                                        </div>
 
- <!--         <table my-table="overrideOptions"
-            aa-data="sampleProductCategories"
-        ao-column-defs="columnDefs"
-        fn-row-callback="myCallback"
-            >
-            <thead>
-            <tr>
-                <th style="width:150px">Category</th>
-                <th style="width:250px">Name</th>
-                <th style="width:100px">Price</th>
+                                                    </div>
+                                                </div>
 
-            </tr>
-            </thead>
-        </table> -->
+
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /assign device to user -->
+
+                            <div class="panel-body" id='show_user_details_div' style="display:none;">
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel border-left-lg border-left-success invoice-grid timeline-content">
+                                            <div class="panel-body">
+
+                                                <!-- User card -->
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 class="text-semibold no-margin-top">{{}}</h6>
+                                                        <ul class="list list-unstyled">
+                                                            <li>Created By : &nbsp;Roger Gittleman</li>
+                                                            <li>Created on: <span
+                                                                    class="text-semibold">11 Feb 2015</span></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <h6 class="text-semibold text-right no-margin-top">T-Mobile</h6>
+                                                        <ul class="list list-unstyled text-right">
+                                                            <li>Last Login: <span
+                                                                    class="text-semibold">4 Days ago</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- /User Card -->
+                                            </div>
+
+                                            <div class="panel-footer">
+                                                <ul>
+                                                    <li><span class="label label-info">Send Password Reset Mail</span>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="pull-right">
+                                                    <li><span class="label label-warning">Disable Login</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- test creation & activity row -->
+
+                                    <div class="col-lg-12">
+                                        <!-- Test creation row -->
+                                        <div class="col-lg-6">
+                                            <h6>Test Case History</h6>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Test Case</th>
+                                                    <th>Created On</th>
+                                                    <th># Times Run</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Test creation row -->
+
+
+                                        <!-- Activity row -->
+                                        <div class="col-md-6">
+                                            <h6>Activity History</h6>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Activity</th>
+                                                    <th>Created On</th>
+                                                    <th># Times Run</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Created User</td>
+                                                    <td>7th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Created Case</td>
+                                                    <td>17th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ran Test Case</td>
+                                                    <td>27th Nov 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Created User</td>
+                                                    <td>7th Oct 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ran Test Case</td>
+                                                    <td>17th Oct 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sam's Case</td>
+                                                    <td>27th Dec 2014</td>
+                                                    <td>8</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Activity row -->
+
+                                    </div>
+
+
+                                    <!-- test creation & activity row -->
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Users -->
+
+                    </div>
+                    <!-- /User -->
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+
+</div>
+<script type="text/ng-template" id="editPassModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title"><i class="fa fa-table fa-lg" aria-hidden="true"></i> {{modal.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form  id="addRowForm" class="form-horizontal" role="form">
+            <fieldset>
+                <!-- Text input-->
+                <div class="form-group" style="margin-bottom:4px;">
+                    <label class="col-sm-3 control-label">New Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="pwd" name="pwd" placeholder="password" class="form-control input-sm">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:4px;">
+                    <label class="col-sm-3 control-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="matchingPwd" name="matchingPwd" placeholder="password" class="form-control input-sm">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="save()">Save Data</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<!-- /page container -->
+<!-- Footer -->
+<!-- 	<div class="footer text-muted">
+        &copy; 2015. <a href="#">Sparkplug</a> powered by <a href="http://powermatrix.energy" target="_blank">Powermatrix</a>
+    </div> -->
+<div ng-include="'app/views/footer/footer.html'"></div>
+<!-- /footer -->
+
+<!--         <table my-table="overrideOptions"
+           aa-data="sampleProductCategories"
+       ao-column-defs="columnDefs"
+       fn-row-callback="myCallback"
+           >
+           <thead>
+           <tr>
+               <th style="width:150px">Category</th>
+               <th style="width:250px">Name</th>
+               <th style="width:100px">Price</th>
+
+           </tr>
+           </thead>
+       </table> -->
 
 <script type="text/javascript">
-	$(document).ready(function() {
-	//	 w3IncludeHTML();		
+    $(document).ready(function () {
+        //	 w3IncludeHTML();
 
-		 // group functions
+        // group functions
 
-/* 
-		 $("#group_list_label").click(function(){
-		 	$("#group_create_div").hide();
-		 	$("#group_edit_div").hide();
-		 	$("#group_list_div").show();
-		 	$("#group_list_label").hide();
-		 	$("#create_new_group_label").show();
-		 	$("#group_cancel_edit_label").hide();
-		 }); */
+        /*
+                 $("#group_list_label").click(function(){
+                     $("#group_create_div").hide();
+                     $("#group_edit_div").hide();
+                     $("#group_list_div").show();
+                     $("#group_list_label").hide();
+                     $("#create_new_group_label").show();
+                     $("#group_cancel_edit_label").hide();
+                 }); */
 
-	/*	 $("#group_cancel_edit_label").click(function(){
-		 	$("#group_create_div").hide();
-		 	$("#group_edit_div").hide();
-		 	$("#group_list_div").show();
-		 	$("#group_list_label").hide();
-		 	$("#create_new_group_label").show();
-		 	$("#group_edit_label").hide();
-		 });*/
+        /*	 $("#group_cancel_edit_label").click(function(){
+                 $("#group_create_div").hide();
+                 $("#group_edit_div").hide();
+                 $("#group_list_div").show();
+                 $("#group_list_label").hide();
+                 $("#create_new_group_label").show();
+                 $("#group_edit_label").hide();
+             });*/
 
-		 // delete group functionality
-		 $(".delete_group").click(function() {
-		 	if (confirm('Deleting group..... Are you sure?')){
-			 	$(this).closest('tr').hide();
-		 	}
-		 	else{
-		 		null();
-		 	}
-		 });
+        // delete group functionality
+        $(".delete_group").click(function () {
+            if (confirm('Deleting group..... Are you sure?')) {
+                $(this).closest('tr').hide();
+            }
+            else {
+                null();
+            }
+        });
 
-	/*	 $("#group_add_submit_button").click(function() {
-		 	if ($("#group_name_input_control").val() === 'test'){
-		 		$("#input_group_error_message").text('This group name is already taken ... try again');
-		 		$("#input_group_error_message").css('color', 'red');
-		 		$("#input_group_error_message").show();
-		 	}
-		 	else{
-				$("#input_group_error_message").text('Group created successfully');
-		 		$("#input_group_error_message").css('color', 'green');
-		 		$("#input_group_error_message").show();
-		 	}
-		 });
-*/
+        /*	 $("#group_add_submit_button").click(function() {
+                 if ($("#group_name_input_control").val() === 'test'){
+                     $("#input_group_error_message").text('This group name is already taken ... try again');
+                     $("#input_group_error_message").css('color', 'red');
+                     $("#input_group_error_message").show();
+                 }
+                 else{
+                    $("#input_group_error_message").text('Group created successfully');
+                     $("#input_group_error_message").css('color', 'green');
+                     $("#input_group_error_message").show();
+                 }
+             });
+    */
 
-		 // Create User Functionality
-		 $("#create_new_user_label").click(function() {
-				$("#user_list_div").hide();
-			 	$("#user_create_div").show();
-			 	$("#user_edit_div").hide();
-			 	$("#user_list_label").hide();
-			 	$("#show_user_details_div").hide();		 	
-			 	$("#create_new_user_label").hide();
-			 	$("#cancel_user_edit_label").hide();
-			 	$("#cancel_user_create_label").show();
-			 	$("#cancel_assign_device_label").hide();
-				$("#assign_device_div").hide();
-		// 	$("#group_cancel_edit_label").hide();
+        // Create User Functionality
+        $("#create_new_user_label").click(function () {
+            $("#user_list_div").hide();
+            $("#user_create_div").show();
+            $("#user_edit_div").hide();
+            $("#user_list_label").hide();
+            $("#show_user_details_div").hide();
+            $("#create_new_user_label").hide();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_user_create_label").show();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
+            // 	$("#group_cancel_edit_label").hide();
 
-		 });
+        });
 
-		 $("#user_list_label").click(function() {
-		 	$("#user_list_div").show();
-		 	$("#user_create_div").hide();
-		 	$("#user_edit_div").hide();
-		 	$("#user_list_label").hide();
-		 	$("#create_new_user_label").show();
-		 	$("#cancel_user_edit_label").hide();
-			$("#cancel_assign_device_label").hide();
-			$("#assign_device_div").hide();
-		// 	$("#group_cancel_edit_label").hide();
-		 });
-		 // Show the edit user div when the user's edit function is called
-		 $("#cancel_user_create_label").click(function() {
-		 	$("#user_list_div").show();
-		 	$("#user_create_div").hide();
-		 	$("#user_edit_div").hide();
-		 	$("#user_list_label").hide();
-		 	$("#show_user_details_div").hide();
-		 	$("#create_new_user_label").show();
-		 	$("#cancel_user_edit_label").hide();
-		 	$("#cancel_user_create_label").hide();
-			$("#cancel_assign_device_label").hide();
-			$("#assign_device_div").hide();
-		 });
+        $("#user_list_label").click(function () {
+            $("#user_list_div").show();
+            $("#user_create_div").hide();
+            $("#user_edit_div").hide();
+            $("#user_list_label").hide();
+            $("#create_new_user_label").show();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
+            // 	$("#group_cancel_edit_label").hide();
+        });
+        // Show the edit user div when the user's edit function is called
+        $("#cancel_user_create_label").click(function () {
+            $("#user_list_div").show();
+            $("#user_create_div").hide();
+            $("#user_edit_div").hide();
+            $("#user_list_label").hide();
+            $("#show_user_details_div").hide();
+            $("#create_new_user_label").show();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_user_create_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
+        });
 
-		 $("#show_all_users_label").click(function() {
-		 	$("#user_list_div").show();
-		 	$("#user_create_div").hide();
-		 	$("#user_edit_div").hide();
-		 	$("#user_list_label").hide();
-		 	$("#show_user_details_div").hide();		 	
-		 	$("#create_new_user_label").show();
-		 	$("#cancel_user_edit_label").hide();
-		 	$("#cancel_user_create_label").hide();
-			$("#cancel_assign_device_label").hide();
-			$("#assign_device_div").hide();
-		 });
+        $("#show_all_users_label").click(function () {
+            $("#user_list_div").show();
+            $("#user_create_div").hide();
+            $("#user_edit_div").hide();
+            $("#user_list_label").hide();
+            $("#show_user_details_div").hide();
+            $("#create_new_user_label").show();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_user_create_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
+        });
 
-		 $(".show_user").click(function() {
-		 	$("#user_list_div").hide();
-		 	$("#user_create_div").hide();
-		 	$("#user_edit_div").hide();
-		 	$("#user_list_label").show();
-		 	$("#show_user_details_div").show();
-		 	$("#create_new_user_label").hide();
-		 	$("#cancel_user_edit_label").hide();
-		 	$("#cancel_user_create_label").hide();
-			$("#cancel_assign_device_label").hide();
-			$("#assign_device_div").hide();
-		 });
-		 $("#cancel_assign_device_label").click(function() {
-			 $("#user_list_div").show();
-			 	$("#user_create_div").hide();
-			 	$("#user_edit_div").hide();
-			 	$("#user_list_label").hide();
-			 	$("#show_user_details_div").hide();
-			 	$("#create_new_user_label").show();
-			 	$("#cancel_user_edit_label").hide();
-			 	$("#cancel_user_create_label").hide();
-			 	$("#cancel_assign_device_label").hide();
-				$("#cancel_assign_device_label").hide();
-				$("#assign_device_div").hide();
-			 	
-			 });
-		 $(".assign_devices").click(function() {
-			
-			
-			 	
-			 	
-			 });
-		 /* 
-		 $(".user_editor_link").click(function() {
-			 	$("#create_new_user_label").hide();
-			 	$("#user_list_label").hide();
-			 	
-			 	$("#user_create_div").show();
-			 	$("#user_list_div").hide();
-			 	$("#cancel_user_edit_label").show();
-			 	
-			 }); */
+        $(".show_user").click(function () {
+            $("#user_list_div").hide();
+            $("#user_create_div").hide();
+            $("#user_edit_div").hide();
+            $("#user_list_label").show();
+            $("#show_user_details_div").show();
+            $("#create_new_user_label").hide();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_user_create_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
+        });
+        $("#cancel_assign_device_label").click(function () {
+            $("#user_list_div").show();
+            $("#user_create_div").hide();
+            $("#user_edit_div").hide();
+            $("#user_list_label").hide();
+            $("#show_user_details_div").hide();
+            $("#create_new_user_label").show();
+            $("#cancel_user_edit_label").hide();
+            $("#cancel_user_create_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#cancel_assign_device_label").hide();
+            $("#assign_device_div").hide();
 
-			/* $("#cancel_user_edit_label").click(function() {
-				 deletePage();
-			 	
-			 });*/
+        });
+        $(".assign_devices").click(function () {
 
 
-	});
+        });
+        /*
+        $(".user_editor_link").click(function() {
+                $("#create_new_user_label").hide();
+                $("#user_list_label").hide();
+
+                $("#user_create_div").show();
+                $("#user_list_div").hide();
+                $("#cancel_user_edit_label").show();
+
+            }); */
+
+        /* $("#cancel_user_edit_label").click(function() {
+             deletePage();
+
+         });*/
+
+
+    });
 
 </script>

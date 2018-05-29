@@ -34,6 +34,32 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 		
+        service.saveDraftTestPlan = function (userId, createData, token) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/saveDraftTestPlan",
+                type: "POST",
+                data: createData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+		
+        
 		 service.isTestPlanExist = function (userId, createData, token) {
             var deferred = $q.defer();
             $.ajax({
@@ -71,7 +97,31 @@ oTech.service('testScriptService',
                 },
                 success: function (data)
                 {
-;                    //alert("success");
+                   //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+        
+        service.FetchingDraftTestService = function (userId, token) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/testPlan/fetchDraftTestplans ",
+                type: "POST",
+                data: {token: token, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data)
+                {
+                    //alert("success");
                     deferred.resolve(data);
                 },
                 error: function (err)
@@ -129,6 +179,30 @@ oTech.service('testScriptService',
                 }
             });
             return deferred.promise;
+        }
+        
+        service.editDraftTestplan = function (token,userId, TestPlanId) {
+
+        	var deferred = $q.defer();
+        	$.ajax({
+        		url: oApp.config.BASE_URL + "rest/testPlan/editDraftTestplan",
+        		type: "POST",
+        		data: {token: token, testplanId: TestPlanId, userId: userId},
+        		headers: {
+        			'Content-Type': 'application/x-www-form-urlencoded'
+        		},
+        		success: function (data)
+        		{
+        			//alert("success");
+        			deferred.resolve(data);
+        		},
+        		error: function (err)
+        		{
+        			console.log(err);
+        			deferred.reject(err);
+        		}
+        	});
+        	return deferred.promise;
         }
 		
 		service.createCloneTestplan = function (token,userId, TestPlanId) {
