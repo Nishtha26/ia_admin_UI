@@ -651,6 +651,37 @@ oApp.config = {
         // }
         // }
     ],
+    columnDefsSpeechRecord: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Speech Data ID", field: "speechDataID", cellTooltip: function (row, col) {
+            return '' + row.entity.speechDataID + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Local Time", field: "localTime", cellTooltip: function (row, col) {
+            return '' + row.entity.localTime + '';
+        }
+        },
+        {
+            headerName: "Speech URL", field: "speechURL", cellTooltip: function (row, col) {
+            return '' + row.entity.speechURL + '';
+        }
+        },
+        {
+            displayName: "Speech Type", field: "speechType", cellTooltip: function (row, col) {
+            return '' + row.entity.speechType + '';
+        }
+        }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
