@@ -672,7 +672,7 @@ oApp.config = {
         }
         },
         {
-            headerName: "Speech URL", field: "speechURL", cellTooltip: function (row, col) {
+            headerName: "Speech URL", field: "speechURL", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.speechURL}}" target="_blank">{{row.entity.speechURL}}</a></div>', cellTooltip: function (row, col) {
             return '' + row.entity.speechURL + '';
         }
         },
