@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "7.1.1",
+    IAAVersion: "7.1.2",
     programmingSkills: [
         {
             value: 20,
@@ -650,6 +650,37 @@ oApp.config = {
         //     return '' + row.entity.sessionID + '';
         // }
         // }
+    ],
+    columnDefsSpeechRecord: [
+        // this row just shows the row index, doesn't use any data from the row
+
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "Speech Data ID", field: "speechDataID", cellTooltip: function (row, col) {
+            return '' + row.entity.speechDataID + '';
+        }
+        },
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Local Time", field: "localTime", cellTooltip: function (row, col) {
+            return '' + row.entity.localTime + '';
+        }
+        },
+        {
+            headerName: "Speech URL", field: "speechURL", cellTemplate: '<div class="ui-grid-cell-contents"><a href="{{row.entity.speechURL}}" target="_blank">{{row.entity.speechURL}}</a></div>', cellTooltip: function (row, col) {
+            return '' + row.entity.speechURL + '';
+        }
+        },
+        {
+            displayName: "Speech Type", field: "speechType", cellTooltip: function (row, col) {
+            return '' + row.entity.speechType + '';
+        }
+        }
     ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
