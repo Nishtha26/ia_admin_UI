@@ -129,7 +129,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
@@ -2076,13 +2076,28 @@ oTech.controller('testPlanTestRunAdministration',
                 $(".schedule").removeAttr("disabled");
                 return false;
             }
+            function getUTCTime(dateString) {
+                Number.prototype.padLeft = function(base,chr){
+                    var  len = (String(base || 10).length - String(this).length)+1;
+                    return len > 0? new Array(len).join(chr || '0')+this : this;
+                }
+                var date = new Date()
+                var timeZoneOffset = date.getTimezoneOffset() * 60 * 1000;
+                var timeStamp = new Date(dateString).getTime();
+                var utcTimeStamp = timeStamp + timeZoneOffset;
+                var utcDate = new Date(utcTimeStamp);
+                var str = utcDate.getFullYear() + "-" + (utcDate.getMonth() + 1).padLeft() + "-" + utcDate.getDate().padLeft() + " " +  utcDate.getHours().padLeft() + ":" + utcDate.getMinutes().padLeft() + ":" + utcDate.getSeconds().padLeft();
+                return str;
+            }
+
             var ScheduleData = JSON.stringify({
                 "jobId": $scope.testRunIdShcedule,
                 "jobName": jName,
                 "jobDescription": $scope.jobTemplateDescription,
                 "jobCreatedBy": userId,
                 "jobStartDate": "2016-02-08",
-                "jobStartDateTime": $scope.Datendtime,
+                //"jobStartDateTime": $scope.Datendtime,
+                "jobStartDateTime": getUTCTime($scope.Datendtime),
 //	                    "jobStartDate": $scope.StartDate,
                 "jobEndDate": $scope.EndDate,
                 "recurrence": $scope.recurrence,
