@@ -1,0 +1,1551 @@
+<style>
+    .loading-imgac {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+    }
+
+    .error_msg {
+        float: right;
+
+        color: red;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .dataTables_filter {
+        width: 100%;
+    }
+
+    .success_msg {
+        float: right;
+        color: #48A64C;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .ui-grid-pager-count {
+        padding-right: 34px;
+    }
+
+    .ui-grid-pager-panel {
+        padding-left: 15px;
+        padding-bottom: 15px;
+    }
+
+    .modal-body {
+        padding: 0px 20px 40px 20px !important;
+        border-top: 2px solid #ddd;
+        margin-top: 20px;
+
+    }
+
+    .Absolute-Center {
+        text-align: center;
+    }
+
+    .Absolute-Center button {
+        background: #1f8ee7 none repeat scroll 0 0;
+        border: medium none;
+        width: 40%;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    #commands_div input {
+        width: 50px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 7px 0;
+        text-align: center;
+        height: 30px;
+    }
+
+    .t {
+        background-color: #DBDEE5;
+        padding: 5px 5px 5px 0px;
+    }
+
+    .c {
+        padding: 5px 5px 5px 10px;
+    }
+
+    .cc {
+        padding: 5px 5px 5px 20px;
+
+    }
+
+    .wr {
+        word-wrap: break-word;
+        padding-right: 15px;
+    }
+
+    .taskseq {
+        border: 1px solid #fff;
+        margin: 2px 0;
+        text-align: center;
+        background-color: #DBDEE5;
+    }
+
+    .taskloop {
+        border: 1px solid #fff;
+        margin: 2px 0;
+        text-align: center;
+        background-color: #DBDEE5;
+    }
+
+    .seq {
+        border: 1px solid #DBDEE5;
+        margin: 2px 0;
+        text-align: center;
+    }
+
+    .loop {
+        border: 1px solid #DBDEE5;
+        margin: 2px 0;
+        text-align: center;
+    }
+
+    ul ul, ol ul, ul ol, ol ol {
+        list-style-type: none;
+    }
+
+    ol {
+        margin-left: -25px;
+    }
+
+    .device_attachment_tree li div:first-child {
+        padding-left: 0px;
+    }
+
+    .device_attachment_tree li li div:first-child {
+        padding-left: 20px;
+    }
+
+    .device_attachment_tree li li li div:first-child {
+        padding-left: 40px;
+    }
+
+    .device_attachment_tree li li li li div:first-child {
+        padding-left: 60px;
+    }
+
+    .device_attachment_tree li div {
+        margin-bottom: 5px;
+    }
+
+    .command_lister_ul > li div {
+        font-weight: bold;
+    }
+
+    hr {
+        margin-top: 35px;
+    }
+
+    .angular-ui-tree-handle {
+        border: none;
+        background: none;
+        padding: 0px 0px;
+
+    }
+
+    .angular-ui-tree-node, .angular-ui-tree-placeholder {
+        min-height: 0px;
+    }
+
+    .devices_table_body tr td.active {
+        text-decoration: underline;
+        background: none;
+    }
+
+    .datatable-header > div:first-child {
+        padding-left: 20px;
+    }
+
+    .datatable-header {
+        padding-top: 10px;
+    }
+
+    .icons-list > li {
+        float: left;
+    }
+
+    .form-control {
+        height: 37px;
+        display: inline-block;
+    }
+
+    .loaderandwait {
+        position: absolute;
+        top: 50%;
+        left: 38%;
+    }
+
+    .popover > .arrow:after {
+        border: none;
+        content: " ";
+    }
+
+    .popover > .arrow {
+        bordrer: none
+    }
+
+    .popover {
+        display: block;
+    }
+
+    .popover.top > .arrow {
+        border-top-color: transparent;
+        border-top-color: transparent;
+        bottom: 0px;
+    }
+
+    .editable-container.popover {
+        width: 20%;
+        min-width: 200px;
+    }
+
+    .popover-content {
+        padding: 0 0 20px 0px;
+    }
+
+    .form-control-label {
+        border: none;
+    }
+
+    .editable-click, a.editable-click, .editable-click:hover, a.editable-click:hover {
+        border-bottom: none;
+    }
+
+    .nav-tabs > .active {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+        color: #fff;
+    }
+
+    .nav-tabs > .active > a:focus {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+        color: #fff;
+
+    }
+
+    .nav-tabs.nav-tabs-bottom > li.active > a, .nav-tabs.nav-tabs-bottom > li.active > a:hover, .nav-tabs.nav-tabs-bottom > li.active > a:focus {
+        border-bottom: none;
+    }
+
+    .icons-list {
+        margin-top: 7px;
+        padding: 0 0 0 20px;
+
+    }
+
+    .progress {
+        margin-top: 7px;
+    }
+
+    #allTestRuns .ui-grid-viewport, #RealDevicesOptions .ui-grid-viewport, #jobStatusList .ui-grid-viewport, #deviceLogListGridOptions .ui-grid-viewport, #deviceTestStatusLogListGridOptions .ui-grid-viewport, #deviceNotificationLogListGridOptions .ui-grid-viewport {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch
+
+    }
+
+    #jobStatusList .ui-grid-pager-panel {
+        top: 100%;
+    }
+
+    .runbtn {
+        padding: 2px 6px;
+    }
+
+
+</style>
+
+<script type="text/ng-template" id="tableTree_renderer-commandgroup-command.html">
+    <tbody>
+    <tr>
+        <td class="text-left">{{node.title}}</td>
+        <td class="text-right"><input type="text" ng-model="node.sequenceNo" style="width: 50px;" maxlength="4"
+                                      value="1"/></td>
+        <td class="text-right"><input type="text" ng-model="node.loop" style="width: 50px;" maxlength="4" value="12"/>
+        </td>
+    </tr>
+    <tr style="background-color: #F9FCF1;">
+        <td colspan="3"><span class="text-italic">{{node.commandParams}}</span></td>
+
+    </tr>
+    </tbody>
+</script>
+
+<script type="text/ng-template" id="tableTree_renderer-commandgroup.html">
+    <tbody>
+    <tr class="active border-double">
+        <td class="text-semibold text-italic" style="background-color: #DBDEE5;">{{node.title}}</td>
+        <td class="text-right"><input type="text" ng-model="node.sequenceNo" style="width: 50px;" maxlength="4"
+                                      value="0"/></td>
+        <td class="text-right"><input type="text" ng-model="node.loop" style="width: 50px;" maxlength="4" value="0"/>
+        </td>
+    </tr>
+
+
+    <tr ng-repeat="node in node.nodes" ng-include="'tableTree_renderer-commandgroup-command.html'"></tr>
+    </tbody>
+</script>
+
+<script type="text/ng-template" id="tableTree_renderer.html">
+    <tr class="active border-double">
+        <td class="text-semibold text-italic" style="background-color: #DBDEE5;">{{node.title}}</td>
+        <td class="text-right"><input type="text" ng-model="node.sequenceNo" style="width: 50px;" maxlength="4"
+                                      value="1"/></td>
+        <td class="text-right"><input type="text" ng-model="node.loop" style="width: 50px;" maxlength="4" value="12"/>
+        </td>
+    </tr>
+
+    <tr ng-repeat="node in node.nodes" ng-include="'tableTree_renderer-commandgroup.html'"></tr>
+</script>
+
+<script type="text/ng-template" id="nodrop_nodes_renderer2.html">
+    <!--<div class="col-lg-1">	</div>-->
+    <span ui-tree-handle>
+<div class="col-lg-4 col-sm-4 col-xs-4">
+<a data-nodrag ng-click="toggle(this)">
+		<span ng-class="{
+		'icon-folder-plus': collapsed,
+		'icon-folder-minus': !collapsed
+		}">
+		</span>
+		</a>
+{{node.title}}</div>
+<div class="col-lg-4 col-sm-4 col-xs-4"><span ng-if="node.commandParams && node.isCommand"><input class="form-control "
+                                                                                                  ng-model="node.commandParams"
+                                                                                                  type="text"
+                                                                                                  style="border:none;  display: inline-block; width: 92%; padding-left:0px;"/><a
+        href class="editable editable-click editable-open" aria-describedby="popovercommand"
+        ng-click="createFrom(node,$event)"><i class="icon-pencil5 text-green-800 user_editor_link"></i></a></span>
+<span ng-if="!node.commandParams.length && node.isCommand"><input class="form-control " ng-model="node.commandParams"
+                                                                  type="text"
+                                                                  style="display: inline-block; width: 92%; padding-left:0px;"/></span></div>
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control command_loop_number" ng-model="node.loop"
+                                               style="width: 50px; text-align:center;" maxlength="4" type="text"
+                                               numbers-only/></div>
+<div class="col-lg-2 col-sm-2 col-xs-2"><input class="form-control sequence_number"
+                                               style="width: 50px; text-align:center;" ng-model="node.sequenceNo"
+                                               maxlength="4" type="text" numbers-only/></div>
+</span>
+
+    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node data-nodrag ng-include="'nodrop_nodes_renderer2.html'"></li>
+    </ol>
+
+
+</script>
+<!-- header  -->
+<div ng-include="'app/views/header/header.html'"></div>
+<!-- /header  -->
+<!-- menu -->
+<div ng-include="'app/views/menus/menu.html'"></div>
+<!-- /menu -->
+
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- top row for the test plan details -->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Test Case list -->
+                    <div class="col-lg-6">
+
+                        <!-- Test case list -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Batch Run List</h5>
+                            </div>
+
+                            <div class="panel-body">
+                                <!-- test plan ui grid -->
+                                <div class="datatable-header">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                        <label><span>Filter:</span>
+                                            <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
+                                                   placeholder="Type to filter..."></label>
+                                        <span class="error_msg" ng-show="errorMsg">{{Message}}</span>
+                                        <span ng-show="testPlanName" class="success_msg">{{testPlanNameMsg}}</span>
+                                    </div>
+
+                                </div>
+                                <div id="BatchRunOptions" ui-grid="BatchRunOptions" ui-grid-selection ui-grid-cellNav
+                                     ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
+                                     class="table table-hover grid">
+                                    <img class="loading loaderandwait" src="images/please_wait.gif"
+                                         ng-show="dataProcessingTestPlan"></img>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
+                                             role="alert" aria-live="polite" aria-relevant="all">Showing
+                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
+                                               ng-click="prevPage()">&larr;</a>
+                                            <span>
+												  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
+                                                     ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
+												</span>
+                                            <a ng-class="DisableNextPage()" class="paginate_button next"
+                                               ng-click="nextPage()">&rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /test plan ui grid -->
+                            </div>
+                        </div>
+                        <!-- /test case list -->
+                    </div>
+                    <!-- /Test Case list -->
+
+                    <!-- Schedule & Report display area -->
+                    <div class="col-lg-6">
+
+                        <!-- A div to show the test plan reports -->
+                        <div class="col-lg-12 display_test_plan_reports" ng-show="testPlanView">
+
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title">Test Plan Details</h5>
+                                </div>
+                                <div class="panel-body">
+                                    <!-- Top Stats row -->
+                                    <div class="row">
+                                        <!-- Total Runs -->
+                                        <div class="col-md-12">
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <button class="btn bg-blue btn-block btn-float btn-float-lg"
+                                                            type="button">
+                                                        <i class="icon-stats-bars"></i>
+                                                        <span>{{testRunCountForTestPlan}} Test Runs</span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button class="btn bg-pink btn-block btn-float btn-float-lg"
+                                                            type="button">
+                                                        <i class="icon-screen3"></i>
+                                                        <span>{{testRunDeviceAllocatedCount}} Devices</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- /Total Runs -->
+
+                                    </div>
+                                    <!-- /Top Stats row -->
+                                    <img class="loading loading-imgac" src="images/loading_new.gif"
+                                         ng-show="dataLoadingForTestPlanView"></img>
+                                    <!-- Bottom Tasks Row -->
+                                    <div class="row task_groups_div"
+                                         style='min-height: 383px; max-height: 383px; overflow: auto;'
+                                         ng-show="testCaseDetails">
+                                        <h5>Test Case List</h5>
+                                        <hr/>
+                                        <div class="col-md-4" ng-repeat="testPlanDetail in testPlanViewDetails">
+                                            <div class="panel border-left-lg border-left-primary">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h6 class="no-margin-top"><a href
+                                                                                         ng-click="viewCommands(testPlanDetail.node,testPlanDetail.commandCount)"
+                                                                                         class='task_detailed_view'>{{testPlanDetail.testCaseName}}</a>
+                                                            </h6>
+                                                            <p class="mb-15"><i class="text-primary icon-code"></i>&nbsp;
+                                                                {{testPlanDetail.commandGroupCount}} Command Groups</p>
+                                                            <p class="mb-15"><i class="text-primary icon-embed2"></i>&nbsp;
+                                                                {{testPlanDetail.commandCount}} Commands</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel-footer">
+                                                    <ul>
+                                                        <li>Commands: <span class="text-semibold">{{testPlanDetail.commandCount}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /Bottom Tasks Row -->
+
+                                    <!-- Bottom Commands Row -->
+                                    <div class="row commands_div"
+                                         style='min-height: 383px; max-height: 383px; overflow: auto; margin-top: 15px;'
+                                         ng-show="commandsDetails">
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading">
+                                                <h6 class="panel-title"><span class='text-muted'>({{totalCommandsCount}} Commands)</span>
+                                                </h6>
+                                                <div class="heading-elements">
+                                                    <ul class="icons-list">
+                                                        <li><span class='label label-primary close_commands_div'
+                                                                  ng-click="backToTestCaseGroup()">Back to Test Case Groups</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel-body">
+                                                <table class="table" style="table-layout:fixed;">
+                                                    <thead>
+                                                    <th>Loop</th>
+                                                    <th>Name</th>
+                                                    <th>Command</th>
+                                                    <th>Loop</th>
+                                                    <th>Params</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="listOfCommand in listOfCommands track by $index">
+                                                        <td>{{listOfCommand.commandGroupLoop}}</td>
+                                                        <td>{{listOfCommand.commandGroupName}}</td>
+                                                        <td>{{listOfCommand.CommandName}}</td>
+                                                        <td>{{listOfCommand.commandLoop}}</td>
+                                                        <td style="word-wrap: break-word;">
+                                                            {{listOfCommand.commandParams}}
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Bottom Commands Row -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /A div to show the test plan reports -->
+                    </div>
+                    <!-- /Schedule & Report display area -->
+                </div>
+            </div>
+            <!-- /top row for the test plan details -->
+
+            <!-- Test Runs Area -->
+            <div class="col-lg-12 test_runs_div">
+                <div class="panel panel-white">
+                    <div class="panel-heading"><h5>Test Runs</h5></div>
+                    <div class="panel-body">
+                        <div class="tabbable tab-content-bordered">
+                            <ul class="nav nav-tabs nav-tabs-bottom nav-justified bg-primary">
+                                <li ng-class="{'active': isSet(1)  }"><a href ng-click="setTab(1)" data-toggle="tab">Create
+                                    New Test Run</a></li>
+                                <li ng-show="editTestPlanTab" ng-class="{ active: isSet(2) }"><a href
+                                                                                                 ng-click="setTab(2)"
+                                                                                                 data-toggle="tab">Edit
+                                    Test Plan</a></li>
+                                <li ng-class="{ active: isSet(3) }"><a href ng-click="setTab(3)" data-toggle="tab">Existing
+                                    Test Runs</a></li>
+                                <li ng-class="{ active: isSet(4) }"><a href ng-click="setTab(4)" data-toggle="tab">Quick
+                                    Run</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <!-- Create new test run -->
+                                <div class="tab-pane" ng-class="{ active: isSet(1) }" ng-show="createNewTestRunTab">
+                                    <div class="col-lg-12" style=" max-height: 800px; overflow: auto;">
+                                        <!-- Commands listing div -->
+                                        <div class="col-lg-4"
+                                             style='min-height: 700px; max-height: 700px; overflow: auto; margin-top: 10px;'>
+                                            <div class="row">
+                                                <!-- if it is not VQT -->
+                                                <div class="form-group" ng-show="showOnlyDeviceProfile">
+                                                    <div class="col-md-3" style="padding-top:6px;">Device Profiles:
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class='form-control'
+                                                                ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
+                                                                ng-model="selectedOption"
+                                                                ng-change="changeDeviceProfile()"></select>
+                                                    </div>
+                                                    <span class="error_msg" ng-show="deviceProfileListError">Please select Device from devices List *</span>
+                                                </div>
+                                                <!--/ if it is not VQT -->
+
+                                                <!-- if it is VQT -->
+                                                <div class="form-group" ng-show="showOnlyDeviceProfileAndPhoneNo">
+                                                    <div class="col-md-3" style="padding-top:6px;">Device Profiles:
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select class='form-control'
+                                                                ng-options="option.deviceProfileName for option in deviceProfileList track by option.deviceId"
+                                                                ng-model="selectedOption"
+                                                                ng-change="changeDeviceProfile()"></select>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control" id="phoneNo"
+                                                               name="phoneNo" ng-model="phoneNo"
+                                                               placeholder="Phone no.">
+                                                        <span class="error_msg" ng-show="errorForPhoneNo">Phone no is required*</span>
+                                                    </div>
+                                                </div>
+                                                <!-- if it is VQT -->
+                                            </div>
+
+                                            <!-- <div class="datatable-header"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><span>Filter:</span>
+                                                 <input type="type" class="" ng-change="singleFilterForRealDevices()" ng-model="searchTextForRealDevices" placeholder="Type to filter..." ></label>
+                                                 </div>
+                                              </div> -->
+                                            <!-- test runs ui grid -->
+
+
+                                            <!-- real devices -->
+                                            <div class="panel panel-white" style="margin-top:10px;">
+                                                <div class="datatable-header">
+                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                        <label><span>Filter:</span>
+                                                            <input type="type" class=""
+                                                                   ng-change="singleFilterForRealDevices()"
+                                                                   ng-model="searchTextForRealDevices"
+                                                                   placeholder="Type to filter..."></label>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body"
+                                                     style='min-height: 490px; max-height: 490px; overflow: auto; '>
+                                                    <div id="RealDevicesOptions" ui-grid="RealDevicesOptions"
+                                                         ui-grid-selection ui-grid-cellNav ui-grid-auto-resize
+                                                         class="table text-nowrap table-hover grid"
+                                                         style="overflow: hidden;height: 450px;">
+                                                        <img class="loading loading-imgac" src="images/loading_new.gif"
+                                                             ng-show="dataLoading"></img>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+
+                                                </div>
+                                            </div>
+                                            <!-- /real devices -->
+
+                                            <!-- <div class="col-md-1 arrow_center">
+                                          <div class="ot-toggle toggle-margin">
+                                              <div class="Absolute-Center">
+                                                  <button type="button" class=""
+                                                      ng-click="addVirtualDevices();addRealDevices();">
+                                                      &gt;</button><br />
+                                                  <button type="button" class="" ng-click="removeMappings();">
+                                                      &lt;</button>
+                                              </div>
+
+                                          </div>
+                                      </div> -->
+
+
+                                        </div>
+                                        <!-- /Commands listing div -->
+
+
+                                        <!-- forword & backword button -->
+                                        <div class="col-sm-1" style="padding:0; margin-top:15%;">
+                                            <div class="ot-toggle toggle-margin">
+                                                <div class="Absolute-Center">
+                                                    <button type="button" class=""
+                                                            ng-click="addVirtualDevices();addRealDevices();">
+                                                        <i class="icon-forward3"></i></button>
+                                                    <br/>
+                                                    <button type="button" class="" ng-click="removeMappings();">
+                                                        <i class="icon-backward2"></i></button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- /forword & backword button -->
+
+                                        <!-- devices & Schedule div -->
+                                        <div class="col-lg-4" id='devices_div' style="border-right: 5px double #ccc;">
+                                            <form class="form-horizontal ng-pristine ng-valid" name="form" role="form">
+                                                <div class="row" style="height:58px;">
+                                                    <span class="error_msg" ng-show="errorMsgForRealVirtualMapping">Please map device profile from Devices..</span>
+                                                    <span class="error_msg" ng-show="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span>
+                                                    <span ng-show="successMsgForSchedule" class="success_msg">{{successMsgForScheduleModel}}</span>
+                                                </div>
+
+                                                <!-- devices panel -->
+                                                <div class="panel panel-white" id="mappingDataTable">
+                                                    <div class="datatable-header"
+                                                         style="padding-top:18px; padding-bottom:12px;">
+                                                        <div id="DataTables_Table_0_filter"><label><span>Mapping </span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body"
+                                                         style='min-height: 490px; max-height: 490px; overflow: auto; '>
+                                                        <div id="DeviceMapping" ui-grid="DeviceMapping"
+                                                             ui-grid-selection ui-grid-cellNav ui-grid-auto-resize
+                                                             class="table text-nowrap table-hover grid"
+                                                             style="overflow:hidden;height: 450px;"></div>
+
+                                                    </div>
+                                                    <div class="panel-footer">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel panel-white" id="testRunDeviceDataTable"
+                                                     style="display:none;">
+                                                    <div class="datatable-header">
+                                                        <div id="DataTables_Table_0_filter"><label><span>  Please select devices to schedule or Run it now.. </span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body"
+                                                         style='min-height: 490px; max-height: 490px; overflow: auto; '>
+                                                        <div id="CreateTestRunRealDeviceOptions"
+                                                             ui-grid="CreateTestRunRealDeviceOptions" ui-grid-selection
+                                                             ui-grid-cellNav ui-grid-auto-resize
+                                                             class="table text-nowrap table-hover grid"
+                                                             style="overflow:hidden;height: 450px;"></div>
+
+                                                    </div>
+                                                    <div class="panel-footer">
+
+                                                    </div>
+                                                </div>
+                                                <!-- /devices panel -->
+
+                                                <!-- scheduling div -->
+                                                <div class="col-lg-12  col-md-12" style="padding-left: 0px;">
+                                                    <div class="col-lg-12  col-md-12" style="padding-left: 0px;">
+                                                        <ul class="icons-list">
+                                                            <li ng-show="checkBoxMonitor"><input type="checkbox"
+                                                                                                 ng-model="isEnableMonitor">Enable
+                                                                Monitoring</input></li>
+                                                            <li>
+                                                                <button class="btn btn-success btn-xs save"
+                                                                        type="button" ng-click="CreateTestrun()">Save
+                                                                    Test Run
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <!--   <button class="btn btn-success btn-xs schedule"
+                                                                           type="button" ng-click="startnow();" disabled>
+                                                                       Run it now
+                                                                   </button>
+                                                               -->
+                                                            </li>
+                                                        </ul>
+                                                        <span ng-show="waitMsgForSchedule" class="error_msg">Please wait a while...</span>
+                                                    </div>
+                                                    <div>
+                                                        <hr/>
+                                                    </div>
+                                                    <div class="col-lg-12  col-md-12" style="padding-left: 0px;">
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <div class="input-group"><span class="input-group-addon"><i
+                                                                    class="icon-calendar22"></i></span>
+                                                                <input type="text" class="form-control daterange-left"
+                                                                       ng-model="Datendtime"
+                                                                       style="background-color: #FFFFFF"
+                                                                       datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
+                                                                       name="Datendtime" placeholder="start date"
+                                                                       required>
+                                                            </div>
+                                                            <span style="color:red"
+                                                                  ng-show="form.Datendtime.$dirty && form.Datendtime.$error.required"
+                                                                  class="help-block">*Please Select Start Date and Time</span>
+                                                        </div>
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i
+                                                                        class="icon-calendar22"></i></span>
+                                                                <input type="text" class="form-control daterange-left"
+                                                                       ng-model="EndDate"
+                                                                       style="background-color: #FFFFFF" datetime-picker
+                                                                       date-format="yyyy-MM-dd" name="EndDate"
+                                                                       placeholder="end date" required>
+                                                            </div>
+                                                            <span style="color:red"
+                                                                  ng-show="form.EndDate.$dirty && form.EndDate.$error.required"
+                                                                  class="help-block">*Please Select End Time</span>
+
+                                                        </div>
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <select class="form-control input_width" id="sel2"
+                                                                    style="background-color: #FFFFFF;"
+                                                                    ng-model="recurrence" ng-change="change()"
+                                                                    name="recurrence" required>
+                                                                <option value="None">None</option>
+                                                                <option value="Daily">Daily</option>
+                                                            </select>
+                                                            <div ng-show="form.$submitted || form.recurrence.$touched">
+                                                                <div ng-show="form.recurrence.$dirty && form.recurrence.$error.required"
+                                                                     style="color: red">**Please Select Recurrence
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 col-md-12"
+                                                             style="padding-left: 0px; margin-top:10px;">
+                                                            <button class="btn btn-success btn-xs schedule pull-left"
+                                                                    type="submit" disabled ng-click="schedule();">
+                                                                Schedule it
+                                                            </button>
+                                                            <span ng-show="waitMsgForSchedule1" class="error_msg">Please wait a while...</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- /scheduling div -->
+
+
+                                            </form>
+
+                                        </div>
+                                        <!-- /devices & Schedule div -->
+
+                                        <!-- tree view -->
+                                        <div class="col-lg-3" id='commands_div'>
+                                            <table class="table" id="tableForTaskAndCommandGroup"
+                                                   style="table-layout:fixed; width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th width="45%"><h6>Command</h6></th>
+                                                    <th width="20%"><h6>Loop</h6></th>
+                                                    <th width="25%"><h6>Sequence</h6></th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="3"><h6>Params</h6></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- / tree view -->
+
+                                    </div>
+                                </div>
+                                <!-- /Create new test run -->
+
+                                <!-- edit test plan -->
+                                <div class="tab-pane" ng-class="{ active: isSet(2) }" ng-show="editTestPlanTab">
+                                    <div class="col-md-12">
+                                        <!-- Table tree -->
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading">
+                                                <h6 class="panel-title">Add Device Profile <span class="pull-right"
+                                                                                                 ng-show="errMessageEditTestPlanId"
+                                                                                                 style="font-size: 14px; color:red;">{{errMessageEditTestPlan}}</span><span
+                                                        class="pull-right" ng-show="successMessageEditTestPlanId"
+                                                        style="font-size: 14px; color:green;">{{successMessageEditTestPlan}}</span>
+                                                </h6>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="col-lg-3">
+                                                    <div class="col-lg-12"
+                                                         style="padding-bottom: 10px; border-bottom: 3px double #ccc;">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4">Profile Name</label>
+                                                            <div class="col-lg-8">
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control"
+                                                                           id="device_name_to_plan"
+                                                                           ng-change="deviceProvileName()"
+                                                                           ng-model="deviceProfileName"
+                                                                           placeholder="Device Profile Name">
+                                                                    <span ng-if="isDeviceProfileEdit"
+                                                                          class="input-group-addon"
+                                                                          id="add_device_to_plan_button"
+                                                                          style="cursor: pointer;" ng-click="addTab()">Add</span>
+                                                                    <span ng-if="isDeviceProfileAdd"
+                                                                          class="input-group-addon"
+                                                                          id="add_device_to_plan_button"
+                                                                          style="cursor: pointer;"
+                                                                          ng-click="addTabForDeviceProfile()">Add</span>
+                                                                </div>
+                                                                <span style="color:red" ng-show="err"
+                                                                      class="help-block">{{addProfileErrorMsg}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <table class="table table-condensed">
+                                                            <thead>
+                                                            <tr>
+                                                                <th style="width: 70%;">Profile Name</th>
+                                                                <th style="width: 15%;">View</th>
+                                                                <th style="width: 15%;">Remove</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="devices_table_body">
+
+                                                            <tr ng-repeat="mapping in deviceProfileListForEdit">
+                                                                <td ng-model="mapping.deviceProfileName">
+                                                                    {{mapping.deviceProfileName}}
+                                                                </td>
+                                                                <td class="template_viewer_click"
+                                                                    ng-class="{active : activeProfile === mapping.index}"
+                                                                    ng-click="veiwFancyTree(mapping)"><a>View</a></td>
+                                                                <td class="device_remover_click"
+                                                                    ng-click="removeFancyTree(mapping)"><a>Remove</a>
+                                                                </td>
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-9 borderLeft" id="params_template_div">
+
+
+                                                    <ul class="command_lister_ul"
+                                                        style="list-style: none; padding: 10px;">
+                                                        <li>
+                                                            <div class="col-lg-4 col-sm-4">Title</div>
+                                                            <div class="col-lg-4 col-sm-4">Command Params</div>
+                                                            <div class="col-lg-2 col-sm-2">Loop</div>
+                                                            <div class="col-lg-2 col-sm-2">Sequence</div>
+                                                        </li>
+                                                        <li>
+                                                            <hr/>
+                                                        </li>
+                                                        <span ui-tree>
+														<ol ui-tree-nodes="" ng-model="tree2"
+                                                            class="device_attachment_tree"
+                                                            ng-class="{hidden: collapsed}">
+														<li ng-repeat="node in tree2" ui-tree-node data-nodrag
+                                                            ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol>
+													</span>
+                                                    </ul>
+                                                    <img class="loading loaderandwait" src="images/please_wait.gif"
+                                                         ng-show="dataProcessingForEditTestPlan"></img>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="panel-footer" id="test_script_panel_footer">
+
+                                                <ul>
+                                                    <li><!-- <span id="jobIsExitsError" class="errors animate-show"
+													style="margin-left: 24%; margin-top:11%;"
+													ng-show="jobIsExitsError" ng-model="command-border">Error</span>
+												<span id="jobIsExitsSuccess" class="successOtClass animate-show"
+													style="margin-left: 24%; margin-top:11%;"
+													ng-show="jobIsExitsSuccess" ng-model="command-border">Error</span> --></li>
+                                                </ul>
+                                                <ul class="pull-right">
+                                                    <li>
+                                                        <button type="button" ng-show="update_btn"
+                                                                class="btn btn-xs btn-primary editTestPlan"
+                                                                ng-click="update();">Update
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- /table tree -->
+
+                                    </div>
+                                </div>
+                                <!-- /edit test plan -->
+
+                                <!-- Saved Test Runs -->
+                                <div class="tab-pane" ng-class="{ active: isSet(3) }">
+
+                                    <div class="col-md-12">
+
+                                        <!-- Test runs list -->
+                                        <div class="col-md-6"
+                                             style='min-height: 600px; max-height: 600px; overflow: auto;'>
+                                            <!-- test runs ui grid -->
+                                            <div class="datatable-header" ng-show="hideFilter">
+                                                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                    <label><span>Filter:</span>
+                                                        <input type="type" class=""
+                                                               ng-change="singleFilterForTestRuns()"
+                                                               ng-model="searchTextForTestRuns"
+                                                               placeholder="Type to filter..."></label>
+                                                    <span class="error_msg"
+                                                          ng-show="errorMsg">Please Select Test Run.. </span>
+                                                    <span ng-show="deleteMsg" class="success_msg">{{testPlanDeleteMsgSucc}}</span>
+                                                    <span class="error_msg" ng-show="deleteMsgerr">{{testPlanDeleteMsgFel}}</span>
+
+                                                    <a ng-click="refreshAllTestRuns()"
+                                                       class="btn bg-green-300 pull-right"
+                                                       style="margin-bottom: 10px;"><i
+                                                            class="icon-database-refresh position-left"></i> Refresh</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="datatable-header" ng-show="loadAllTestRuns">
+                                                <div><a ng-click="viewAllTestRuns()" class="btn bg-indigo-300 pull-left"
+                                                        style="margin-bottom: 10px;"><i
+                                                        class="icon-statistics position-left"></i> View All Test
+                                                    Runs</a>
+
+                                                    <a ng-click="refreshTestRuns()" class="btn bg-green-300 pull-right"
+                                                       style="margin-bottom: 10px;"><i
+                                                            class="icon-database-refresh position-left"></i> Refresh</a>
+
+                                                    <span class="error_msg"
+                                                          ng-show="errorMsg">Please Select Test Run.. </span>
+                                                </div>
+                                            </div>
+                                            <!-- test runs ui grid -->
+                                            <div id="allTestRuns" ui-grid="allTestRuns" ui-grid-selection
+                                                 ui-grid-cellNav ui-grid-auto-resize
+                                                 class="table text-nowrap table-hover grid"
+                                                 style="overflow:hidden;height: 450px;">
+                                            </div>
+
+                                            <div class="col-md-12" style="margin-top: 20px; ">
+                                                <div class="row pull-right" style="margin-top: -2px;">
+                                                    <!-- <span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span> -->
+                                                    <ul class="icons-list">
+                                                        <li>
+                                                            <button class="btn btn-success btn-xs runbtn"
+                                                                    ng-show="deleteTestRun" type="button"
+                                                                    ng-click="deActivateTestRun()">Delete Test Run
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <!-- /test runs ui grid -->
+                                        </div>
+                                        <!-- /Test runs list -->
+
+
+                                        <!-- Devices list -->
+                                        <div class="col-md-6"
+                                             style='border-left: 5px double #ccc; min-height:600px; max-height:600px;'>
+                                            <div class="col-md-12"
+                                                 style='min-height:530px; max-height:530px; overflow: auto; '>
+
+                                                <!-- test run devices ui grid -->
+                                                <div class="datatable-header">
+                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                        <label><span>Filter:</span>
+                                                            <input type="type" class=""
+                                                                   ng-change="singleFilterForTestRunMappedDevice()"
+                                                                   ng-model="searchTextForTestRunMappedDevice"
+                                                                   placeholder="Type to filter..."></label>
+                                                        <span class="error_msg"
+                                                              ng-show="errorMsgForDevice">{{msg}}</span>
+                                                        <span class="scheduleError_msg" ng-show="errorMsgForDevice">{{msg3}}</span>
+                                                        <span ng-show="successMsg" class="success_msg">{{msg1}}</span>
+                                                        <span ng-show="scheduleMsg1" class="success_msg">{{msg2}}</span>
+                                                        <a ng-click="refreshTestRunMappedDevice()"
+                                                           class="btn bg-green-300 pull-right"
+                                                           style="margin-bottom: 10px;"><i
+                                                                class="icon-database-refresh position-left"></i> Refresh</a>
+                                                    </div>
+
+                                                </div>
+                                                <div id="testRunMappedDevices" ui-grid="testRunMappedDevices"
+                                                     ui-grid-selection ui-grid-cellNav ui-grid-auto-resize
+                                                     class="table text-nowrap table-hover grid">
+                                                    <img class="loading loaderandwait" src="images/please_wait.gif"
+                                                         ng-show="dataProcessingOfAllTestRuns"></img>
+                                                </div>
+
+                                                <!-- /test run devices ui grid -->
+                                            </div>
+
+
+                                            <div class="col-md-12" style="margin-top: 20px; ">
+                                                <div id="scheduleparam" class="row pull-left"
+                                                     style="display: none; width:50%;">
+                                                    <div class="col-lg-12  col-md-12" style="padding-left: 0px;">
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <div class="input-group"><span class="input-group-addon"><i
+                                                                    class="icon-calendar22"></i></span>
+                                                                <input type="text" class="form-control daterange-left"
+                                                                       ng-model="Datendtime"
+                                                                       style="background-color: #FFFFFF"
+                                                                       datetime-picker date-format="yyyy-MM-dd HH:mm:ss"
+                                                                       name="Datendtime" placeholder="start date"
+                                                                       required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i
+                                                                        class="icon-calendar22"></i></span>
+                                                                <input type="text" class="form-control daterange-left"
+                                                                       ng-model="EndDate"
+                                                                       style="background-color: #FFFFFF" datetime-picker
+                                                                       date-format="yyyy-MM-dd" name="EndDate"
+                                                                       placeholder="end date" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4  col-md-4" style="padding-left: 0px;">
+                                                            <select class="form-control input_width" id="sel2"
+                                                                    style="background-color: #FFFFFF;width: 80px; "
+                                                                    ng-model="recurrence" ng-change="change()"
+                                                                    name="recurrence" required>
+                                                                <option value="None">None</option>
+                                                                <option value="Daily">Daily</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row pull-right" style="margin-top: -2px;">
+                                                    <!-- <span  class="error_msg"  ng-show ="errorMsgForSchedule">{{errorMsgForScheduleModel}}</span> -->
+                                                    <ul class="icons-list">
+                                                        <li>
+                                                            <button id="Scheduleone"
+                                                                    class="btn btn-success btn-xs runbtn" type="button"
+                                                                    ng-click="schedule($event)">Schedule
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <!--   <button class="btn btn-success btn-xs runbtn" type="button"
+                                                                       ng-click="startJob()">Run it now
+                                                               </button>
+                                                           -->
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn btn-success btn-xs runbtn" type="button"
+                                                                    ng-click="stopJob()">Stop
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="btn btn-success btn-xs runbtn" type="button"
+                                                                    ng-click="reStartJob()">Re-Start
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                        <!-- /Devices list -->
+
+                                    </div>
+                                </div>
+                                <!-- /Saved Test Runs -->
+
+                                <!-- Flight history -->
+                                <div class="tab-pane" ng-class="{ active: isSet(4) }">
+
+
+                                    <div class="col-md-12">
+
+
+                                        <div class="col-md-6"
+                                             style="min-height: 600px; max-height: 600px; overflow: auto; ">
+                                            <div class="table-responsive">
+                                                <h6>Test Plan List </h6>
+                                                <hr/>
+                                                <div class="datatable-header">
+                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                        <label><span>Filter:</span>
+                                                            <input type="type" class=""
+                                                                   ng-change="singleFilterQuickRun()"
+                                                                   ng-model="searchTextQuick"
+                                                                   placeholder="Type to filter..."></label>
+                                                        <span class="error_msg" ng-show="errorMsg">{{Message}}</span>
+                                                    </div>
+                                                </div>
+                                                <div id="TestPlanQuickRun" ui-grid="TestPlanQuickRun" ui-grid-selection
+                                                     ui-grid-cellNav ui-grid-auto-resize
+                                                     class="table text-nowrap table-hover grid"
+                                                     style="overflow:hidden;height: 450px;"></div>
+                                            </div>
+                                        </div>
+                                        <!-- /Flight history table -->
+                                        <!-- <div class="col-md-2" style="min-height: 600px; border-left: 5px double #ccc; max-height: 600px; overflow: auto;">
+                                            Test run commands
+                                            <div class="table-responsive">
+                                            <h6>
+                                                    Device Profile <span class="text-muted">({{deviceGroupLength}}
+                                                        Device Profiles)</span>
+                                                </h6>
+                                                <hr />
+                                                <div>
+                                                    <div class="hierarchy-wrap">
+
+                                                        <div ng-show="!emptyData" ui-tree="options"
+                                                            data-drag-enabled="false">
+                                                            <ol id="demoTree" ui-tree-nodes="" ng-model="quickTree">
+                                                                <li ng-repeat="node in quickTree track by $index"
+                                                                    ui-tree-node collapsed="false"
+                                                                    ng-include="'nodrop_nodes_renderer2_Quick.html'"></li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                /Test run commands
+
+                                                /Commands Div
+                                            </div>
+                                            /devices and commands section
+                                        </div> -->
+                                        <!-- devices and commands section -->
+                                        <div class="col-md-6" style='border-left: 5px double #ccc; min-height:500px;'>
+                                            <!-- Devices Table -->
+                                            <div class="table-responsive">
+                                                <h6>
+                                                    Device List
+                                                </h6>
+                                                <hr/>
+
+                                                <div class="datatable-header">
+                                                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                                        <label><span>Filter:</span>
+                                                            <input type="type" class=""
+                                                                   ng-change="singleFilterForQuickRunRealDevices()"
+                                                                   ng-model="searchTextForQuickRunRealDevices"
+                                                                   placeholder="Type to filter..."></label>
+                                                        <span class="error_msg"
+                                                              ng-show="errorMsgForDevice">{{msg}}</span>
+                                                        <span ng-show="successMsg" class="success_msg">{{msg1}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body"
+                                                     style='min-height: 300px; max-height: 420px; overflow: auto; padding-top:0px;'>
+                                                    <div id="RealDevicesOptions" ui-grid="RealDevicesOptionsForQuickRun"
+                                                         ui-grid-selection ui-grid-cellNav ui-grid-auto-resize
+                                                         class="table text-nowrap table-hover grid"
+                                                         style="overflow: hidden;height: 380px;">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12" style="margin-top: 5px; ">
+                                                    <div class="row pull-right">
+                                                        <ul class="icons-list">
+                                                            <li>
+                                                                <button class="btn btn-success btn-xs quickRun"
+                                                                        type="button" ng-click="CreateQuickTestrun()">
+                                                                    Quick Run
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /Devices Table -->
+                                        </div>
+
+
+                                    </div>
+                                    <!-- /Flight history -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /Test Runs Area -->
+
+
+            </div>
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+        <!-- footer  -->
+        <div ng-include="'app/views/footer/footer.html'"></div>
+        <!-- /footer  -->
+    </div>
+    <!-- /page container -->
+
+    <!-- Device_List -->
+    <div id="Device_List" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{header}}</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+
+                            <li><a ng-click="showDeviceLogDetailsRefresh(this);" data-action="reload"></a></li>
+                            <li><a data-dismiss="modal" data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+                    <p style="text-align:center" ng-show="deviceLogList.deviceLogList.length <= 0 && !dataLoadingPopup">
+                        No Data Found</p>
+
+                    <div id="deviceLogListGridOptions" ui-grid="deviceLogListGridOptions" ui-grid-pagination
+                         ui-grid-cellNav ui-grid-auto-resize
+                         ng-show="deviceLogList.deviceLogList.length > 0 && !dataLoadingPopup"
+                         class="table table-hover grid" style="overflow:hidden;height: 500px;">
+                    </div>
+
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Device_List -->
+
+    <!-- DeviceTestStatus_List -->
+    <div id="DeviceTestStatus_List" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{header}}</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a ng-click="showDeviceTestStatusLogDetailsRefresh(this);" data-action="reload"></a>
+                            </li>
+                            <li><a data-dismiss="modal" data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+                    <p style="text-align:center"
+                       ng-show="deviceTestStatusLogList.deviceTestStatusLogList.length <= 0 && !dataLoadingPopup">No
+                        Data Found</p>
+
+                    <div id="deviceTestStatusLogListGridOptions" ui-grid="deviceTestStatusLogListGridOptions"
+                         ui-grid-pagination ui-grid-cellNav ui-grid-auto-resize
+                         ng-show="deviceTestStatusLogList.deviceStausLogList.length > 0 && !dataLoadingPopup"
+                         class="table table-hover grid" style="overflow:hidden;height:500px;">
+                    </div>
+
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /DeviceTestStatus_List -->
+
+    <!-- DeviceNotification_List -->
+    <div id="DeviceNotification_List" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{header}}</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+
+                            <li><a ng-click="showDeviceNotificationLogDetailsRefresh(this);" data-action="reload"></a>
+                            </li>
+                            <li><a data-dismiss="modal" data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <img src="images/loading.gif" style="position:relative;left:42%;" ng-show="dataLoadingPopup"></img>
+                    <p style="text-align:center"
+                       ng-show="deviceNotificationLogList.deviceNotificationLogList.length <= 0 && !dataLoadingPopup">No
+                        Data Found</p>
+
+                    <div id="deviceNotificationLogListGridOptions" ui-grid="deviceNotificationLogListGridOptions"
+                         ui-grid-pagination ui-grid-cellNav ui-grid-auto-resize
+                         ng-show="deviceNotificationLogList.deviceNotificationLogList.length > 0 && !dataLoadingPopup"
+                         class="table table-hover grid" style="height: 500px;">
+                    </div>
+
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /DeviceNotification_List -->
+
+    <!-- DeviceNotification_List -->
+    <div id="jobStatus" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{header}}</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+
+                            <!-- <li><a ng-click="showDeviceStatusRefresh(this);" data-action="reload"></a></li> -->
+                            <li><a data-dismiss="modal" data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 margin_top">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Test Run Id</th>
+                                    <th>Device Id</th>
+                                    <th>Distinct Command Size</th>
+                                    <th>Scheduled Commands Count</th>
+                                    <th>Test Run Name</th>
+                                    <th>Test Run Start Date</th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-weight:normal;">
+                                <tr>
+                                    <td>
+                                        {{testRunID}}
+                                    </td>
+                                    <td>
+                                        {{deviceID}}
+                                    </td>
+                                    <td>
+                                        {{distinctCommandSize}}
+                                    </td>
+                                    <td>
+                                        {{scheduledCommandsCount}}
+                                    </td>
+                                    <td>
+                                        {{testRunName}}
+                                    </td>
+                                    <td>
+                                        {{jobStartDate}}
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="images/loading.gif" style="position:relative;left:42%;"
+                                 ng-show="dataLoadingPopup"></img>
+                            <p style="text-align: center"
+                               ng-show="commandInfoList.length <= 0 && !dataLoadingPopup">No
+                                Data Found</p>
+
+                            <div id="jobStatusList" ui-grid="jobStatusList" ui-grid-pagination ui-grid-cellNav
+                                 ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ui-grid-resize-columns
+                                 ng-show="commandInfoList.length > 0 && !dataLoadingPopup"
+                                 class="table table-hover grid" style="height: 500px;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- /DeviceNotification_List -->
+
+    <!-- Test Plan Info -->
+    <div id="TestPlanQuickView" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-dismiss="modal" data-action="close"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="command_lister_ul" style="list-style: none; padding: 10px;">
+                                <li>
+                                    <div class="col-lg-3 col-sm-3">Title</div>
+                                    <div class="col-lg-5 col-sm-5">Command Params</div>
+                                    <div class="col-lg-2 col-sm-2" style="text-align:right; padding-right: 21px;">Loop
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2" style="text-align:center;">Sequence</div>
+                                </li>
+                                <li>
+                                    <hr/>
+                                </li>
+                                <img src="images/loading.gif" style="position:relative;left:42%;"
+                                     ng-show="dataLoadingForQuickArea"></img>
+                                <span ui-tree>
+														<ol ui-tree-nodes="" ng-model="testPlanView"
+                                                            class="device_attachment_tree">
+														<li ng-repeat="node in testPlanView" ui-tree-node data-nodrag
+                                                            ng-include="'nodrop_nodes_renderer2.html'"></li>
+														</ol>
+													</span>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Test Plan info -->
+
+    <div class="popover fade top in editable-container editable-popup"
+         role="tooltip" id="popovercommand" ng-show="showPopover"
+         style="left:50.5%; -webkit-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); -moz-box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5); box-shadow: 0px 0px 20px 2px rgba(191,191,191,0.5);">
+        <div class="arrow" style="left: 50%;"></div>
+        <h3 class="popover-title">Edit Command Parameters</h3>
+        <div class="popover-content">
+            <div>
+                <!-- <div class="editableform-loading" ></div> -->
+                <form class="editableform" style="">
+                    <div class="control-group form-group">
+                        <!-- dynamic append -->
+                        <div class="editable-input">
+
+
+                        </div>
+                        <!-- end dynamic append -->
+                        <div class="editable-buttons editable-buttons-bottom">
+                            <button type="button" ng-click="addField('updateCommandParametersForm');"
+                                    class="btn btn-primary btn-icon editable-submit">
+                                <i class="icon-plus3"></i>
+                            </button>
+                            <button type="button"
+                                    ng-click="updateCommandParametersAction('updateCommandParametersForm');"
+                                    class="btn btn-primary btn-icon editable-submit">
+                                <i class="icon-check"></i>
+                            </button>
+                            <button type="button" ng-click="updateCommandParametersClose();"
+                                    class="btn btn-default btn-icon editable-cancel">
+                                <i class="icon-x"></i>
+                            </button>
+                        </div>
+                        <div class="editable-error-block help-block" style="display: none;"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
