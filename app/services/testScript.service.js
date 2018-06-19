@@ -559,6 +559,29 @@ oTech.service('testScriptService',
             });
             return deferred.promise;
         }
+
+        service.getAllBatchRuns = function (token,userId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/getAllBatchRuns",
+                type: "POST",
+                data: {token: token, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
         service.getTestRunDependantData = function (token, TestRunName, userId) {
             var deferred = $q.defer();
             $.ajax({

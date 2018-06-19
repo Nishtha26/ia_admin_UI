@@ -682,6 +682,41 @@ oApp.config = {
         }
         }
     ],
+    columnDefsUDPCmdLogs: [
+        // this row just shows the row index, doesn't use any data from the row
+        {
+            headerName: "ID", field: "udpID", cellTooltip: function (row, col) {
+            return '' + row.entity.udpID + '';
+        }
+        },
+        {headerName: "Device Id", field: "deviceID", pinnedLeft: true},
+        {headerName: "Job ID", field: "jobID"},
+        {
+            headerName: "UTC Time", field: "utcTime", cellTooltip: function (row, col) {
+            return '' + row.entity.utcTime + '';
+        }
+        },
+        {
+            displayName: "Local Time", field: "deviceLocalTime", cellTooltip: function (row, col) {
+            return '' + row.entity.deviceLocalTime + '';
+        }
+        },
+        {
+            headerName: "UDP Command", field: "udpCommand", cellTooltip: function (row, col) {
+            return '' + row.entity.udpCommand + '';
+        }
+        },
+        {
+            displayName: "Target IP", field: "udpIP", cellTooltip: function (row, col) {
+            return '' + row.entity.udpIP + '';
+        }
+        },
+        {
+            displayName: "Target Port", field: "udpPort", cellTooltip: function (row, col) {
+            return '' + row.entity.udpPort + '';
+        }
+        }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
