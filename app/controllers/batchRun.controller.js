@@ -1,4 +1,4 @@
-oTech.controller('testPlanTestRunAdministration',
+oTech.controller('batchRun',
     function ($scope, $rootScope, $timeout, $location, AppServices, GraphServices, GraphMaximizeServices, $stateParams, testScriptService, $q, uiGridConstants, $cookieStore, $filter, $templateCache, toastr, messages) {
         var userId = sessionStorage.getItem("userId");
         var token = sessionStorage.getItem("token");
@@ -74,7 +74,7 @@ oTech.controller('testPlanTestRunAdministration',
         }
 
 
-        $scope.TestPlanOptions = {
+        $scope.BatchRunOptions = {
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -89,28 +89,28 @@ oTech.controller('testPlanTestRunAdministration',
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {name: 'Id', field: 'testplanId', enableCellEdit: false, width: '10%'},
+                {name: 'Id', field: 'id', enableCellEdit: false, width: '10%'},
                 {
-                    name: 'Name',
-                    field: 'testplanName',
-                    width: '25%',
+                    name: 'BatchRun Name',
+                    field: 'batchRunName',
+                    width: '20%',
                     enableCellEdit: true,
                     enableCellEditOnFocus: true,
                     cellTooltip: function (row, col) {
-                        return '' + row.entity.testplanName + '';
+                        return '' + row.entity.batchRunName + '';
                     }
                 },
                 {
-                    name: 'Use Case',
-                    field: 'useCaseName',
+                    name: 'Description',
+                    field: 'batchRunDesc',
                     enableCellEdit: false,
-                    width: '20%',
+                    width: '25%',
                     cellTooltip: function (row, col) {
                         return '' + row.entity.useCaseName + '';
                     }
                 },
-                {name: 'Created Date', field: 'createdDate', enableCellEdit: false, width: '20%'},
-                {name: 'Created By', field: 'createdByName', enableCellEdit: false, width: '10%'},
+                {name: 'Created Date', field: 'batchRunCreatedTime', enableCellEdit: false, width: '20%'},
+                {name: 'Created By', field: 'createdBy', enableCellEdit: false, width: '10%'},
                 {
                     name: 'Actions',
                     enableRowSelection: false,
@@ -127,14 +127,12 @@ oTech.controller('testPlanTestRunAdministration',
                     '<i class="icon-menu9"></i>' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
-                    '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
-                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
-                    '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
-                    '<li ng-click="grid.appScope.copyTestPlan(row);"><a><i class="icon-copy4 text-primary"></i> Copy Test Plan</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Test Plan</a></li>' +
+                    '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
+                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Batch Run</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -144,7 +142,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         };
 
-        $scope.TestPlanOptions.onRegisterApi = function (gridApi) {
+        $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
             $scope.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, $scope.saveRow, this);
@@ -296,26 +294,15 @@ oTech.controller('testPlanTestRunAdministration',
         };
 
         //Test plan table Service
-        promise = testScriptService.FetchingTestService(userId, token);
+        promise = testScriptService.getAllBatchRuns(token, userId);
         promise.then(
             function (data) {
+                data = data.batchRunsForTestPlan;
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+                $scope.BatchRunOptions.data = data.slice(0, $scope.itemsPerPage);
 
-            },
-            function (err) {
-                console.log(err);
-            }
-        );
-
-        //Test plan table Service
-        promise = testScriptService.FetchingTestPlanTemplateService(userId, token);
-        promise.then(
-            function (data) {
-                $scope.allOfTheDataForQuickRun = data;
-                $scope.TestPlanQuickRun.data = data;
             },
             function (err) {
                 console.log(err);
@@ -328,8 +315,8 @@ oTech.controller('testPlanTestRunAdministration',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.TestPlanOptions.data.length;
-            gridHeight = ($scope.TestPlanOptions.data.length * rowHeight + headerHeight + footerPage);
+            var dataCount = $scope.BatchRunOptions.data.length;
+            gridHeight = ($scope.BatchRunOptions.data.length * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
             return {
@@ -339,12 +326,12 @@ oTech.controller('testPlanTestRunAdministration',
 
 
         $scope.createNewDatasource = function () {
-            $scope.TestPlanOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
+            $scope.BatchRunOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
         }
 
         $scope.singleFilter = function () {
-            $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
+            $scope.BatchRunOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+            $scope.BatchRunOptions.data = $scope.BatchRunOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -467,7 +454,7 @@ oTech.controller('testPlanTestRunAdministration',
             }
         }
 
-        $scope.refreshAllTestRuns = function(){
+        $scope.refreshAllTestRuns = function () {
             console.log("Refresh All test runs");
             promise = testScriptService.getAllTestRunsForSchedule(token, userId);
             promise.then(
@@ -485,10 +472,10 @@ oTech.controller('testPlanTestRunAdministration',
             );
         }
 
-        $scope.refreshTestRunMappedDevice = function(){
+        $scope.refreshTestRunMappedDevice = function () {
             console.log("Refresh TestRunMappedDevice");
             $scope.dataProcessingOfAllTestRuns = true;
-            promise = testScriptService.ViewTestRunDeviceService(userId, token,$rootScope.jobId);
+            promise = testScriptService.ViewTestRunDeviceService(userId, token, $rootScope.jobId);
             promise.then(
                 function (data) {
                     $scope.dataProcessingOfAllTestRuns = false;
@@ -583,8 +570,8 @@ oTech.controller('testPlanTestRunAdministration',
                 function (data) {
                     $scope.totalRecords = data.length;
                     allOfTheData = data;
-                    $scope.TestPlanOptions.data = [];
-                    $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+                    $scope.BatchRunOptions.data = [];
+                    $scope.BatchRunOptions.data = data.slice(0, $scope.itemsPerPage);
                     $scope.dataProcessingTestPlan = false;
                 },
                 function (err) {
@@ -2076,17 +2063,18 @@ oTech.controller('testPlanTestRunAdministration',
                 $(".schedule").removeAttr("disabled");
                 return false;
             }
+
             function getUTCTime(dateString) {
-                Number.prototype.padLeft = function(base,chr){
-                    var  len = (String(base || 10).length - String(this).length)+1;
-                    return len > 0? new Array(len).join(chr || '0')+this : this;
+                Number.prototype.padLeft = function (base, chr) {
+                    var len = (String(base || 10).length - String(this).length) + 1;
+                    return len > 0 ? new Array(len).join(chr || '0') + this : this;
                 }
                 var date = new Date()
                 var timeZoneOffset = date.getTimezoneOffset() * 60 * 1000;
                 var timeStamp = new Date(dateString).getTime();
                 var utcTimeStamp = timeStamp + timeZoneOffset;
                 var utcDate = new Date(utcTimeStamp);
-                var str = utcDate.getFullYear() + "-" + (utcDate.getMonth() + 1).padLeft() + "-" + utcDate.getDate().padLeft() + " " +  utcDate.getHours().padLeft() + ":" + utcDate.getMinutes().padLeft() + ":" + utcDate.getSeconds().padLeft();
+                var str = utcDate.getFullYear() + "-" + (utcDate.getMonth() + 1).padLeft() + "-" + utcDate.getDate().padLeft() + " " + utcDate.getHours().padLeft() + ":" + utcDate.getMinutes().padLeft() + ":" + utcDate.getSeconds().padLeft();
                 return str;
             }
 
@@ -2320,8 +2308,8 @@ oTech.controller('testPlanTestRunAdministration',
             promise.then(
                 function (data) {
                     if (data.status == "success") {
-                        var index = $scope.TestPlanOptions.data.indexOf(row.entity);
-                        $scope.TestPlanOptions.data.splice(index, 1);
+                        var index = $scope.BatchRunOptions.data.indexOf(row.entity);
+                        $scope.BatchRunOptions.data.splice(index, 1);
                         toastr.success('Test Plan Deleted !', 'Success!')
                     } else {
                         toastr.error('Cannot able to delete !', 'Error!')
