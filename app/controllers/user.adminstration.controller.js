@@ -604,10 +604,10 @@ oTech.controller('userAdminstrationController',
             var roleName = $("#role").val();
             var companyName;
             if ($rootScope.role == "ROLE_OTADMIN") {
-                companyName = $("#customer-8").val();
+                companyName = $("#customer-8").val().trim();
             }
             else {
-                companyName = $("#customer-8").val();
+                companyName = $("#customer-8").val().trim();
             }
             var userGroupName = $scope.selectedUserGroup;
 

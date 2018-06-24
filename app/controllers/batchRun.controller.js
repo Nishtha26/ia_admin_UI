@@ -6,6 +6,8 @@ oTech.controller('batchRun',
         $rootScope.role = sessionStorage.getItem("role");
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
+        $scope.selectedBatchRun = {};
+        $scope.selectedBatchRunDetails = {};
         var sendCreateData = {};
         $scope.testRunIdForDelete = "";
         $scope.update_btn = false;
@@ -127,7 +129,7 @@ oTech.controller('batchRun',
                     '<i class="icon-menu9"></i>' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
-                    '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.viewBatchRun(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
@@ -141,6 +143,54 @@ oTech.controller('batchRun',
             ],
 
         };
+
+        $scope.BatchRunDetailsOptions = {
+            enableSorting: true,
+            enableFilter: true,
+            enableColResize: true,
+            enableRowSelection: false,
+            enableCellEdit: false,// for selection
+            enableColumnMenus: false, //to hide ascending and descending column menu names
+            enableRowHeaderSelection: false, // this is for check box to appear on grid options
+            enableFiltering: false,
+            enableGridMenu: false,		// for searching
+            multiSelect: false,
+            enableScrollbars: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            columnDefs: [
+                {name: 'Id', field: 'jobId', enableCellEdit: false, width: '10%'},
+                {
+                    name: 'TestRunName',
+                    field: 'jobName',
+                    width: '20%',
+                    enableCellEdit: true,
+                    enableCellEditOnFocus: true,
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobName + '';
+                    }
+                },
+                {
+                    name: 'Devices',
+                    field: 'deviceList.toString()',
+                    enableCellEdit: false,
+                    width: '20%',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.deviceList.toString() + '';
+                    }
+                },
+                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '20%'},
+                {name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false, width: '20%'},
+                {
+                    name: 'Status',
+                    field: 'status',
+                    enableCellEdit: false,
+                    width: '10%'
+                },
+            ],
+
+        };
+
 
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
@@ -2670,49 +2720,25 @@ oTech.controller('batchRun',
         /* end edit test plan*/
 
         /* view test plan */
-        $scope.viewTestPlan = function (row) {
+        $scope.viewBatchRun = function (row) {
             $scope.testPlanView = true;
-            $scope.dataLoadingForTestPlanView = true;
+            $scope.dataLoadingForTestRunDetailsView = true;
             $scope.testPlanViewDetails = [];
-            promise = testScriptService.getTestplan(token, userId, row.entity.testplanId);
+            $scope.selectedBatchRun = row.entity;
+            var testRunsObj = row.entity.testRuns;
+            var testRuns = [];
+            angular.forEach(testRunsObj, function (value, key) {
+                testRuns.push(value.testrunId)
+            });
+            console.log(JSON.stringify(testRuns));
+            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
             promise.then(
                 function (data) {
-                    $scope.dataLoadingForTestPlanView = false;
+                    console.log(data);
+                    $scope.selectedBatchRunDetails = data;
+                    $scope.dataLoadingForTestRunDetailsView = false;
+                    $scope.BatchRunDetailsOptions.data = data.batchRunsList;
 
-                    $scope.testCaseDetails = true;
-                    $scope.commandsDetails = false;
-                    $scope.testPlanView = data.jobVO[0];
-                    $scope.testRunCountForTestPlan = data.isMappedTestPlanTestRun[0].testRunCountForTestPlan;
-                    $scope.testRunDeviceAllocatedCount = data.isMappedTestPlanTestRun[0].testRunDeviceAllocatedCount;
-                    angular.forEach($scope.testPlanView.nodes, function (children) {
-                        var temp = {};
-                        var i = 0;
-                        $scope.testPlanViewCommandDetails = [];
-                        angular.forEach(children.nodes, function (childNode) {
-
-                            angular.forEach(childNode.nodes, function (childOfChildNode) {
-                                var tempArrayForCommandGroupAndCommand = {};
-                                tempArrayForCommandGroupAndCommand['commandGroupLoop'] = childNode.loop;
-                                tempArrayForCommandGroupAndCommand['commandGroupName'] = childNode.title;
-                                tempArrayForCommandGroupAndCommand['CommandName'] = childOfChildNode.title;
-                                tempArrayForCommandGroupAndCommand['commandLoop'] = childOfChildNode.loop;
-                                tempArrayForCommandGroupAndCommand['commandParams'] = childOfChildNode.commandParams;
-                                tempArrayForCommandGroupAndCommand['index'] = i;
-                                i++;
-                                $scope.testPlanViewCommandDetails.push(tempArrayForCommandGroupAndCommand);
-                            });
-
-
-                        });
-
-                        temp['node'] = $scope.testPlanViewCommandDetails;
-                        temp['testCaseName'] = children.title;
-                        temp['commandGroupCount'] = children.nodes.length;
-                        temp['commandGroupName'] = "Command Groups";
-                        temp['commandCount'] = i;
-                        temp['commands'] = "Commands";
-                        $scope.testPlanViewDetails.push(temp);
-                    });
                 },
                 function (err) {
                     console.log(err);

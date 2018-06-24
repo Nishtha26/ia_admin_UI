@@ -35,6 +35,7 @@ oTech
                         
             } else {
                 messages.splice(0, 1);
+                $location.path('/dashboard/testPlanTestRunAdministration');
             }
 
             $scope.setErrorMessage = function (errorMessage) {
