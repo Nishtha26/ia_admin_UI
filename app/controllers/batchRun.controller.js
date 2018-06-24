@@ -181,7 +181,12 @@ oTech.controller('batchRun',
                 },
                 {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '20%'},
                 {name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false, width: '20%'},
-                {name: 'Status', field: 'status', enableCellEdit: false, width: '10%'},
+                {
+                    name: 'Status',
+                    field: 'status',
+                    enableCellEdit: false,
+                    width: '10%'
+                },
             ],
 
         };
@@ -2719,7 +2724,7 @@ oTech.controller('batchRun',
             $scope.testPlanView = true;
             $scope.dataLoadingForTestRunDetailsView = true;
             $scope.testPlanViewDetails = [];
-            $scope.selectedBatchRun= row.entity;
+            $scope.selectedBatchRun = row.entity;
             var testRunsObj = row.entity.testRuns;
             var testRuns = [];
             angular.forEach(testRunsObj, function (value, key) {
@@ -2730,7 +2735,7 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(data);
-                    $scope.selectedBatchRunDetails= data;
+                    $scope.selectedBatchRunDetails = data;
                     $scope.dataLoadingForTestRunDetailsView = false;
                     $scope.BatchRunDetailsOptions.data = data.batchRunsList;
 
