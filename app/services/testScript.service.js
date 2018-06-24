@@ -389,6 +389,31 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+        service.getTestRunsDetails = function (token,userId,json) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/getTestRunDetails?userId="+userId,
+                type: "POST",
+                data:JSON.stringify(json),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                    'userId': userId,
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
         service.delTestplan = function (token,userId, testplanId) {
             var deferred = $q.defer();
             $.ajax({
