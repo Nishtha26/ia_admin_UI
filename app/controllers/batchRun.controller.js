@@ -6,6 +6,8 @@ oTech.controller('batchRun',
         $rootScope.role = sessionStorage.getItem("role");
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
+        $scope.selectedBatchRun = {};
+        $scope.selectedBatchRunDetails = {};
         var sendCreateData = {};
         $scope.testRunIdForDelete = "";
         $scope.update_btn = false;
@@ -141,6 +143,49 @@ oTech.controller('batchRun',
             ],
 
         };
+
+        $scope.BatchRunDetailsOptions = {
+            enableSorting: true,
+            enableFilter: true,
+            enableColResize: true,
+            enableRowSelection: false,
+            enableCellEdit: false,// for selection
+            enableColumnMenus: false, //to hide ascending and descending column menu names
+            enableRowHeaderSelection: false, // this is for check box to appear on grid options
+            enableFiltering: false,
+            enableGridMenu: false,		// for searching
+            multiSelect: false,
+            enableScrollbars: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            columnDefs: [
+                {name: 'Id', field: 'jobId', enableCellEdit: false, width: '10%'},
+                {
+                    name: 'TestRunName',
+                    field: 'jobName',
+                    width: '20%',
+                    enableCellEdit: true,
+                    enableCellEditOnFocus: true,
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobName + '';
+                    }
+                },
+                {
+                    name: 'Devices',
+                    field: 'deviceList.toString()',
+                    enableCellEdit: false,
+                    width: '20%',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.deviceList.toString() + '';
+                    }
+                },
+                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '20%'},
+                {name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false, width: '20%'},
+                {name: 'Status', field: 'status', enableCellEdit: false, width: '10%'},
+            ],
+
+        };
+
 
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
@@ -2672,19 +2717,22 @@ oTech.controller('batchRun',
         /* view test plan */
         $scope.viewBatchRun = function (row) {
             $scope.testPlanView = true;
-            $scope.dataLoadingForTestPlanView = true;
+            $scope.dataLoadingForTestRunDetailsView = true;
             $scope.testPlanViewDetails = [];
+            $scope.selectedBatchRun= row.entity;
             var testRunsObj = row.entity.testRuns;
             var testRuns = [];
-            angular.forEach(testRunsObj, function(value, key) {
+            angular.forEach(testRunsObj, function (value, key) {
                 testRuns.push(value.testrunId)
             });
             console.log(JSON.stringify(testRuns));
-            promise = testScriptService.getTestRunsDetails(token, userId,testRuns);
+            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
             promise.then(
                 function (data) {
                     console.log(data);
-                    $scope.dataLoadingForTestPlanView = false;
+                    $scope.selectedBatchRunDetails= data;
+                    $scope.dataLoadingForTestRunDetailsView = false;
+                    $scope.BatchRunDetailsOptions.data = data.batchRunsList;
 
                 },
                 function (err) {

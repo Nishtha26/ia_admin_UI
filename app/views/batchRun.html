@@ -438,20 +438,20 @@
                                                     <button class="btn bg-blue btn-block btn-float btn-float-lg"
                                                             type="button">
                                                         <i class="icon-stats-bars"></i>
-                                                        <span> Test Runs</span>
+                                                        <span>{{selectedBatchRun.testRuns.length}} Test Runs</span>
                                                     </button>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button class="btn bg-pink btn-block btn-float btn-float-lg"
                                                             type="button">
                                                         <i class="icon-screen3"></i>
-                                                        <span>Devices</span>
+                                                        <span>{{selectedBatchRunDetails.totalDevices}} Devices</span>
                                                     </button>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button class="btn bg-orange btn-block btn-float btn-float-lg"
                                                             type="button">
-                                                        <i class="icon-screen3"></i>
+                                                        <i class="icon-play"></i>
                                                         <span>Running</span>
                                                     </button>
                                                 </div>
@@ -463,7 +463,7 @@
                                     </div>
                                     <!-- /Top Stats row -->
                                     <img class="loading loading-imgac" src="images/loading_new.gif"
-                                         ng-show="dataLoadingForTestPlanView"></img>
+                                         ng-show="dataLoadingForTestRunDetailsView"></img>
                                     <!-- Bottom Tasks Row -->
                                     <div class="row task_groups_div"
                                          style='min-height: 383px; max-height: 383px; overflow: auto;'
@@ -501,44 +501,13 @@
                                     <!-- /Bottom Tasks Row -->
 
                                     <!-- Bottom Commands Row -->
-                                    <div class="row commands_div"
-                                         style='min-height: 383px; max-height: 383px; overflow: auto; margin-top: 15px;'
-                                         ng-show="commandsDetails">
+                                    <div class="row commands_div" style='min-height: 120px; max-height: 383px; overflow: auto; margin-top: 15px;'>
                                         <div class="panel panel-white">
-                                            <div class="panel-heading">
-                                                <h6 class="panel-title"><span class='text-muted'>({{totalCommandsCount}} Commands)</span>
-                                                </h6>
-                                                <div class="heading-elements">
-                                                    <ul class="icons-list">
-                                                        <li><span class='label label-primary close_commands_div'
-                                                                  ng-click="backToTestCaseGroup()">Back to Test Case Groups</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-
                                             <div class="panel-body">
-                                                <table class="table" style="table-layout:fixed;">
-                                                    <thead>
-                                                    <th>Loop</th>
-                                                    <th>Name</th>
-                                                    <th>Command</th>
-                                                    <th>Loop</th>
-                                                    <th>Params</th>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr ng-repeat="listOfCommand in listOfCommands track by $index">
-                                                        <td>{{listOfCommand.commandGroupLoop}}</td>
-                                                        <td>{{listOfCommand.commandGroupName}}</td>
-                                                        <td>{{listOfCommand.CommandName}}</td>
-                                                        <td>{{listOfCommand.commandLoop}}</td>
-                                                        <td style="word-wrap: break-word;">
-                                                            {{listOfCommand.commandParams}}
-                                                        </td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
+                                                <div  ui-grid="BatchRunDetailsOptions" ui-grid-selection ui-grid-cellNav
+                                                     ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
+                                                     class="table table-hover grid">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
