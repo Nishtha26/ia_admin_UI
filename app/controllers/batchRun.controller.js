@@ -166,7 +166,7 @@ oTech.controller('batchRun',
                     name: 'TestRunName',
                     field: 'jobName',
                     width: '20%',
-                    enableCellEdit: true,
+                    enableCellEdit: false,
                     enableCellEditOnFocus: true,
                     cellTooltip: function (row, col) {
                         return '' + row.entity.jobName + '';
@@ -198,7 +198,7 @@ oTech.controller('batchRun',
             enableFilter: true,
             enableColResize: true,
             enableRowSelection: false,
-            enableCellEdit: false,// for selection
+            //enableCellEdit: false,// for selection
             enableColumnMenus: false, //to hide ascending and descending column menu names
             enableRowHeaderSelection: false, // this is for check box to appear on grid options
             enableFiltering: false,
@@ -222,24 +222,36 @@ oTech.controller('batchRun',
                 {
                     name: 'Devices',
                     field: 'deviceList.toString()',
-                    enableCellEdit: false,
+                    enableCellEdit: true,
                     width: '20%',
                     cellTooltip: function (row, col) {
                         return '' + row.entity.deviceList.toString() + '';
                     }
                 },
-                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '15%'},
-                {name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false, width: '15%'},
+                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: true, width: '15%', cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
+                    editableCellTemplate: '<div><form name="inputForm"><div ui-grid-edit-datepicker ng-class="\'colt\' + col.uid"></div></form></div>'
+                },
                 {
-                    name: 'Status',
-                    field: 'status',
-                    enableCellEdit: false,
-                    width: '10%'
+                    width: '15%',
+                    name: 'End Date',
+                    field: 'date',
+                    enableCellEdit: true,
+                    cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
+                    editableCellTemplate: '<div><form name="inputForm"><div ui-grid-edit-datepicker ng-class="\'colt\' + col.uid"></div></form></div>'
+                },
+                {
+                    name: 'Status',field: 'status', width: '10%', enableCellEdit: true,
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownOptionsArray: [
+                        {id: 'Enabled', status: 'Enabled'},
+                        {id: 'Disabled', status: 'Disabled'}
+                    ],
+                    editDropdownIdLabel: 'id',
+                    editDropdownValueLabel: 'status'
                 },
             ],
 
         };
-
 
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
