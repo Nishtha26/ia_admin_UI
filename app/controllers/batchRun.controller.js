@@ -208,7 +208,7 @@ oTech.controller('batchRun',
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {name: 'TestPlan Id', field: 'jobId', enableCellEdit: false, width: '10%'},
+                {name: 'TestPlan Id', field: 'jobId', enableCellEdit: false, width: '8%'},
                 {
                     name: 'TestRunName',
                     field: 'jobName',
@@ -223,24 +223,25 @@ oTech.controller('batchRun',
                     name: 'Devices',
                     field: 'deviceList.toString()',
                     enableCellEdit: true,
-                    width: '20%',
+                    width: '18%',
                     cellTooltip: function (row, col) {
                         return '' + row.entity.deviceList.toString() + '';
                     }
                 },
-                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: true, width: '15%', cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
-                    editableCellTemplate: '<div><form name="inputForm"><div ui-grid-edit-datepicker ng-class="\'colt\' + col.uid"></div></form></div>'
+                {
+                    name: 'Start Time',
+                    field: 'jobStartDateTime',
+                    enableCellEdit: false,
+                    width: '15%'
                 },
                 {
                     width: '15%',
                     name: 'End Date',
                     field: 'date',
-                    enableCellEdit: true,
-                    cellFilter: 'date:"yyyy-MM-dd HH:mm:ss"',
-                    editableCellTemplate: '<div><form name="inputForm"><div ui-grid-edit-datepicker ng-class="\'colt\' + col.uid"></div></form></div>'
+                    enableCellEdit: false,
                 },
                 {
-                    name: 'Status',field: 'status', width: '10%', enableCellEdit: true,
+                    name: 'Status', field: 'status', width: '8%', enableCellEdit: true,
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownOptionsArray: [
                         {id: 'Enabled', status: 'Enabled'},
@@ -248,6 +249,27 @@ oTech.controller('batchRun',
                     ],
                     editDropdownIdLabel: 'id',
                     editDropdownValueLabel: 'status'
+                },
+                {
+                    name: 'Actions',
+                    enableRowSelection: false,
+                    enableCellEdit: false,
+                    headerCellClass: 'header-grid-cell-button',
+                    enableFiltering: false,
+                    width: '6%',
+                    cellClass: 'ui-grid-cell-button',
+                    enableColumnMenu: false,
+                    enableSorting: false,
+                    cellTemplate: '<ul class="icons-list">' +
+                    '<li class="dropdown">' +
+                    '<a  class="dropdown-toggle" data-toggle="dropdown">' +
+                    '<i class="icon-menu9"></i>' +
+                    '</a>' +
+                    '<ul class="dropdown-menu dropdown-menu-right">' +
+                    '<li ng-click="grid.appScope.editTestRun(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
+                    '</ul>' +
+                    '</li>' +
+                    '</ul>'
                 },
             ],
 

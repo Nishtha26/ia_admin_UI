@@ -499,7 +499,6 @@
 
                                     </div>
                                     <!-- /Bottom Tasks Row -->
-
                                     <!-- Bottom Commands Row -->
                                     <div class="row commands_div"
                                          style='min-height: 120px; max-height: 383px; overflow: auto; margin-top: 15px;'>
@@ -516,7 +515,6 @@
                                     <!-- /Bottom Commands Row -->
                                 </div>
                             </div>
-
                         </div>
                         <!-- /A div to show the test plan reports -->
                     </div>
@@ -542,15 +540,15 @@
                              ng-show="dataLoadingForTestRunDetailsForEditView"></img>
                     </div>
                 </div>
+                <div class="row">
+                    <button type="button" class='btn btn-success pull-right'>Add TestRun</button>
+                </div>
                 <!-- /Test Runs Area -->
             </div>
             <!-- /main content -->
 
         </div>
         <!-- /page content -->
-        <!-- footer  -->
-        <div ng-include="'app/views/footer/footer.html'"></div>
-        <!-- /footer  -->
     </div>
     <!-- /page container -->
 
@@ -826,3 +824,9 @@
             </div>
         </div>
     </div>
+
+    <!-- footer  -->
+    <div ng-include="'app/views/footer/footer.html'"></div>
+    <!-- /footer  -->
+
+</div>
