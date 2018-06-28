@@ -7,7 +7,9 @@ oTech.controller('batchRun',
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
         $scope.selectedBatchRun = {};
+        $scope.selectedBatchRunForEdit = {};
         $scope.selectedBatchRunDetails = {};
+        $scope.selectedBatchRunForEditDetails = {};
         var sendCreateData = {};
         $scope.testRunIdForDelete = "";
         $scope.update_btn = false;
@@ -130,7 +132,7 @@ oTech.controller('batchRun',
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewBatchRun(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.editBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
@@ -164,7 +166,7 @@ oTech.controller('batchRun',
                     name: 'TestRunName',
                     field: 'jobName',
                     width: '20%',
-                    enableCellEdit: true,
+                    enableCellEdit: false,
                     enableCellEditOnFocus: true,
                     cellTooltip: function (row, col) {
                         return '' + row.entity.jobName + '';
@@ -191,6 +193,87 @@ oTech.controller('batchRun',
 
         };
 
+        $scope.BatchRunDetailsEditOptions = {
+            enableSorting: true,
+            enableFilter: true,
+            enableColResize: true,
+            enableRowSelection: false,
+            //enableCellEdit: false,// for selection
+            enableColumnMenus: false, //to hide ascending and descending column menu names
+            enableRowHeaderSelection: false, // this is for check box to appear on grid options
+            enableFiltering: false,
+            enableGridMenu: false,		// for searching
+            multiSelect: false,
+            enableScrollbars: false,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            columnDefs: [
+                {name: 'TestPlan Id', field: 'jobId', enableCellEdit: false, width: '8%'},
+                {
+                    name: 'TestRunName',
+                    field: 'jobName',
+                    width: '30%',
+                    enableCellEdit: true,
+                    enableCellEditOnFocus: true,
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobName + '';
+                    }
+                },
+                {
+                    name: 'Devices',
+                    field: 'deviceList.toString()',
+                    enableCellEdit: true,
+                    width: '18%',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.deviceList.toString() + '';
+                    }
+                },
+                {
+                    name: 'Start Time',
+                    field: 'jobStartDateTime',
+                    enableCellEdit: false,
+                    width: '15%'
+                },
+                {
+                    width: '15%',
+                    name: 'End Date',
+                    field: 'date',
+                    enableCellEdit: false,
+                },
+                {
+                    name: 'Status', field: 'status', width: '8%', enableCellEdit: true,
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownOptionsArray: [
+                        {id: 'Enabled', status: 'Enabled'},
+                        {id: 'Disabled', status: 'Disabled'}
+                    ],
+                    editDropdownIdLabel: 'id',
+                    editDropdownValueLabel: 'status'
+                },
+                {
+                    name: 'Actions',
+                    enableRowSelection: false,
+                    enableCellEdit: false,
+                    headerCellClass: 'header-grid-cell-button',
+                    enableFiltering: false,
+                    width: '6%',
+                    cellClass: 'ui-grid-cell-button',
+                    enableColumnMenu: false,
+                    enableSorting: false,
+                    cellTemplate: '<ul class="icons-list">' +
+                    '<li class="dropdown">' +
+                    '<a  class="dropdown-toggle" data-toggle="dropdown">' +
+                    '<i class="icon-menu9"></i>' +
+                    '</a>' +
+                    '<ul class="dropdown-menu dropdown-menu-right">' +
+                    '<li ng-click="grid.appScope.editTestRun(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
+                    '</ul>' +
+                    '</li>' +
+                    '</ul>'
+                },
+            ],
+
+        };
 
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
@@ -2719,17 +2802,22 @@ oTech.controller('batchRun',
         }
         /* end edit test plan*/
 
-        /* view test plan */
+        /* view test run */
         $scope.viewBatchRun = function (row) {
-            $scope.testPlanView = true;
-            $scope.dataLoadingForTestRunDetailsView = true;
-            $scope.testPlanViewDetails = [];
-            $scope.selectedBatchRun = row.entity;
             var testRunsObj = row.entity.testRuns;
             var testRuns = [];
             angular.forEach(testRunsObj, function (value, key) {
                 testRuns.push(value.testrunId)
             });
+            if (testRuns.length == 0) {
+                toastr.error('No test run exists for this batch run', 'Error')
+                return;
+            }
+
+            $scope.testPlanView = true;
+            $scope.dataLoadingForTestRunDetailsView = true;
+            $scope.testPlanViewDetails = [];
+            $scope.selectedBatchRun = row.entity;
             console.log(JSON.stringify(testRuns));
             promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
             promise.then(
@@ -2746,6 +2834,35 @@ oTech.controller('batchRun',
             );
         }
 
+        /* view test plan */
+        $scope.editBatchRun = function (row) {
+            var testRunsObj = row.entity.testRuns;
+            var testRuns = [];
+            angular.forEach(testRunsObj, function (value, key) {
+                testRuns.push(value.testrunId)
+            });
+            if (testRuns.length == 0) {
+                toastr.error('No test run exists for this batch run', 'Error')
+                return;
+            }
+            $scope.testRunEditView = true;
+            $scope.dataLoadingForTestRunDetailsForEditView = true;
+            $scope.selectedBatchRunForEdit = row.entity;
+            console.log(JSON.stringify(testRuns));
+            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.selectedBatchRunForEditDetails = data;
+                    $scope.dataLoadingForTestRunDetailsForEditView = false;
+                    $scope.BatchRunDetailsEditOptions.data = data.batchRunsList;
+
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
 
         $scope.viewCommands = function (listOfCommandsTemp, totalCommandsCountTemp) {
             $scope.testCaseDetails = false;
