@@ -133,10 +133,10 @@ oTech.controller('batchRun',
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewBatchRun(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
                     '<li ng-click="grid.appScope.editBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
-                    '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
-                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
-                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.cloneBatchRun(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
+                    '<li ng-click="grid.appScope.startBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.stopBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.delBatchRun(row);"><a><i class="icon-box-remove text-primary"></i> Delete Batch Run</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -1681,7 +1681,7 @@ oTech.controller('batchRun',
                     }
                     console.log($scope.deviceProfileList);
                     if ($scope.deviceProfileList.length == 0) {
-                        toastr.error('Create Device Profile First', 'Device Profile not Found!')
+                        toastr.error('Create Device Profile First', 'Device Profile not Found!');
                         console.log("No Device Profile Found !");
                         $scope.dataLoading = false;
                     }
@@ -2802,7 +2802,7 @@ oTech.controller('batchRun',
         }
         /* end edit test plan*/
 
-        /* view test run */
+        /* view batch run */
         $scope.viewBatchRun = function (row) {
             var testRunsObj = row.entity.testRuns;
             var testRuns = [];
@@ -2830,6 +2830,72 @@ oTech.controller('batchRun',
                 },
                 function (err) {
                     console.log(err);
+                }
+            );
+        }
+
+        /* clone batch run */
+        $scope.cloneBatchRun = function (row) {
+            console.log("Inside CloneBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.cloneBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.dataProcessingBatchRun = false;
+                    $scope.BatchRunOptions.data.unshift(data.batchRun);
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
+        /* start batch run */
+        $scope.startBatchRun = function (row) {
+            console.log("Inside StartBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.startBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    if (data.batchRunStarted) {
+                        toastr.success('Success', 'Test Run Started');
+                    }else{
+                        toastr.error('Error', 'Unable to stop Stoped');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
+        /* stop batch run */
+        $scope.stopBatchRun = function (row) {
+            console.log("Inside StopBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.stopBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    if (data.batchRunStoped) {
+                        toastr.success('Success', 'Test Run Stoped');
+                    }else{
+                        toastr.error('Error', 'Unable to stop TestRun');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
                 }
             );
         }
