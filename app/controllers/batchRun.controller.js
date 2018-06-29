@@ -2863,10 +2863,11 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(data);
+                    $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStarted) {
-                        toastr.success('Success', 'Test Run Started');
+                        toastr.success('Test Run Started','Success');
                     }else{
-                        toastr.error('Error', 'Unable to stop Stoped');
+                        toastr.error('Unable to stop Stoped','Error');
                     }
 
                 },
@@ -2886,10 +2887,11 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(data);
+                    $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStoped) {
-                        toastr.success('Success', 'Test Run Stoped');
+                        toastr.success('Test Run Stoped','Success');
                     }else{
-                        toastr.error('Error', 'Unable to stop TestRun');
+                        toastr.error('Unable to stop TestRun','Error');
                     }
 
                 },
