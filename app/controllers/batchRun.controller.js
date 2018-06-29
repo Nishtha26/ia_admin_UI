@@ -2866,6 +2866,9 @@ oTech.controller('batchRun',
                     $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStarted) {
                         toastr.success('Test Run Started','Success');
+                        if(batchRunObj.id == $scope.selectedBatchRun.id){
+                            $scope.selectedBatchRun.executionStatus =1;
+                        }
                     }else{
                         toastr.error('Unable to stop Stoped','Error');
                     }
@@ -2890,6 +2893,9 @@ oTech.controller('batchRun',
                     $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStoped) {
                         toastr.success('Test Run Stoped','Success');
+                        if(batchRunObj.id == $scope.selectedBatchRun.id){
+                            $scope.selectedBatchRun.executionStatus =0;
+                        }
                     }else{
                         toastr.error('Unable to stop TestRun','Error');
                     }

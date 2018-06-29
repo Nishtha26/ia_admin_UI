@@ -452,7 +452,7 @@
                                                     <button class="btn bg-orange btn-block btn-float btn-float-lg"
                                                             type="button">
                                                         <i class="icon-play"></i>
-                                                        <span>Running</span>
+                                                        <span>{{((selectedBatchRun.executionStatus ==1)?"Running" : "Idle")}}</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -540,7 +540,9 @@
                              ng-show="dataLoadingForTestRunDetailsForEditView"></img>
                     </div>
                     <div class="panel-footer" style="padding-top: 8px;padding-bottom: 8px;">
-                        <button type="button" data-toggle="modal" data-target="#add_test_run" class='btn btn-success pull-right'>Add TestRun</button>
+                        <button type="button" data-toggle="modal" data-target="#add_test_run"
+                                class='btn btn-success pull-right'>Add TestRun
+                        </button>
                     </div>
                 </div>
                 <!-- /Test Runs Area -->
