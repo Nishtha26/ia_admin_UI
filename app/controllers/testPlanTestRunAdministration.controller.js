@@ -2004,25 +2004,24 @@ oTech.controller('testPlanTestRunAdministration',
                                 console.log(err);
                             }
                         );
+                        promise = testScriptService.FetchingTestService(userId, token);
+                        promise.then(
+                            function (data) {
+                                console.log(data);
+                                $scope.totalRecords = data.length;
+                                allOfTheData = data;
+                                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
 
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
                     },
                     function (err) {
                         console.log(err);
                     }
-                );
-                promise = testScriptService.FetchingTestService(userId, token);
-                promise.then(
-                    function (data) {
-                        console.log(data);
-                        $scope.totalRecords = data.length;
-                        allOfTheData = data;
-                        $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
-
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
+                );                
             }
         }
 
