@@ -414,6 +414,30 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+        service.cloneBatchRun = function (token,userId,batchRunId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/cloneBatchRun",
+                type: "POST",
+                data: {token: token, batchRunId: batchRunId, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data)
+                {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err)
+                {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
         service.delTestplan = function (token,userId, testplanId) {
             var deferred = $q.defer();
             $.ajax({

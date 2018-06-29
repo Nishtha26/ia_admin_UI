@@ -133,10 +133,10 @@ oTech.controller('batchRun',
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewBatchRun(row)"><a><i class="icon-file-eye2 text-primary"></i> View Batch Run</a></li>' +
                     '<li ng-click="grid.appScope.editBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Batch Run</a></li>' +
-                    '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
-                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
-                    '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.delTestPlan(row);"><a><i class="icon-box-remove text-primary"></i> Delete Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.cloneBatchRun(row);"><a><i class="icon-copy4 text-primary"></i> Clone Batch Plan</a></li>' +
+                    '<li ng-click="grid.appScope.startBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Start Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.stopBatchRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Stop Batch Run</a></li>' +
+                    '<li ng-click="grid.appScope.delBatchRun(row);"><a><i class="icon-box-remove text-primary"></i> Delete Batch Run</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
@@ -2802,7 +2802,7 @@ oTech.controller('batchRun',
         }
         /* end edit test plan*/
 
-        /* view test run */
+        /* view batch run */
         $scope.viewBatchRun = function (row) {
             var testRunsObj = row.entity.testRuns;
             var testRuns = [];
@@ -2826,6 +2826,23 @@ oTech.controller('batchRun',
                     $scope.selectedBatchRunDetails = data;
                     $scope.dataLoadingForTestRunDetailsView = false;
                     $scope.BatchRunDetailsOptions.data = data.batchRunsList;
+
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
+
+        /* clone batch run */
+        $scope.cloneBatchRun = function (row) {
+            console.log("Inside CloneBatchRun");
+            var batchRunObj = row.entity;
+            promise = testScriptService.cloneBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.BatchRunOptions.data.unshift(data.batchRun);
 
                 },
                 function (err) {
