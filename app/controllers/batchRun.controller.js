@@ -2838,15 +2838,18 @@ oTech.controller('batchRun',
         $scope.cloneBatchRun = function (row) {
             console.log("Inside CloneBatchRun");
             var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
             promise = testScriptService.cloneBatchRun(token, userId, batchRunObj.id);
             promise.then(
                 function (data) {
                     console.log(data);
+                    $scope.dataProcessingBatchRun = false;
                     $scope.BatchRunOptions.data.unshift(data.batchRun);
 
                 },
                 function (err) {
                     console.log(err);
+                    $scope.dataProcessingBatchRun = false;
                 }
             );
         }
