@@ -1681,7 +1681,7 @@ oTech.controller('batchRun',
                     }
                     console.log($scope.deviceProfileList);
                     if ($scope.deviceProfileList.length == 0) {
-                        toastr.error('Create Device Profile First', 'Device Profile not Found!')
+                        toastr.error('Create Device Profile First', 'Device Profile not Found!');
                         console.log("No Device Profile Found !");
                         $scope.dataLoading = false;
                     }
@@ -2845,6 +2845,52 @@ oTech.controller('batchRun',
                     console.log(data);
                     $scope.dataProcessingBatchRun = false;
                     $scope.BatchRunOptions.data.unshift(data.batchRun);
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
+        /* start batch run */
+        $scope.startBatchRun = function (row) {
+            console.log("Inside StartBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.startBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    if (data.batchRunStarted) {
+                        toastr.success('Success', 'Test Run Started');
+                    }else{
+                        toastr.error('Error', 'Unable to stop Stoped');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
+        /* stop batch run */
+        $scope.stopBatchRun = function (row) {
+            console.log("Inside StopBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.stopBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    if (data.batchRunStoped) {
+                        toastr.success('Success', 'Test Run Stoped');
+                    }else{
+                        toastr.error('Error', 'Unable to stop TestRun');
+                    }
 
                 },
                 function (err) {
