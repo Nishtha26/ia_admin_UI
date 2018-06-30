@@ -7,6 +7,7 @@ oTech.controller('batchRun',
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
         $scope.selectedBatchRun = {};
+        $scope.selectedTestRun = {};
         $scope.selectedBatchRunForEdit = {};
         $scope.selectedBatchRunDetails = {};
         $scope.selectedBatchRunForEditDetails = {};
@@ -303,6 +304,26 @@ oTech.controller('batchRun',
 
         };
 
+        $scope.BatchRunDetailsEditOptions.onRegisterApi = function (gridApi) {
+
+            gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                var isActive = rowEntity.active;
+                var batchRunId = $scope.selectedBatchRunForEdit.id;
+                var oldValue = oldValue;
+                var newValue = newValue;
+                console.log("BatchRunId ::"+ JSON.stringify(batchRunId));
+                promise = testScriptService.replaceTestRunFromBatchRun(token,userId,batchRunId,oldValue,newValue,isActive);
+                promise.then(
+                    function (data) {
+                      console.log(JSON.stringify(data));
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+                $scope.$apply();
+            });
+        };
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
             $scope.gridApi = gridApi;
@@ -483,6 +504,11 @@ oTech.controller('batchRun',
             $scope.currentPage = n;
         };
 
+
+        $scope.addTestRunInBatchRun = function (testRun) {
+            console.log("SelectedTestRunScope :: " + $scope.selectedTestRun);
+            $('#add_test_run').modal('toggle');
+        }
 
         /* pagination code  end ***********************/
 
@@ -851,7 +877,8 @@ oTech.controller('batchRun',
         }
 
 
-    });
+    }
+);
 
 	
 		
