@@ -110,7 +110,7 @@ oTech.controller('batchRun',
                     enableCellEdit: false,
                     width: '25%',
                     cellTooltip: function (row, col) {
-                        return '' + row.entity.useCaseName + '';
+                        return '' + row.entity.batchRunDesc + '';
                     }
                 },
                 {name: 'Created Date', field: 'batchRunCreatedTime', enableCellEdit: false, width: '20%'},
@@ -161,7 +161,13 @@ oTech.controller('batchRun',
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {name: 'Id', field: 'jobId', enableCellEdit: false, width: '10%'},
+                {
+                    name: 'Id',
+                    field: 'jobId', enableCellEdit: false, width: '10%',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobId + '';
+                    }
+                },
                 {
                     name: 'TestRunName',
                     field: 'jobName',
@@ -181,11 +187,25 @@ oTech.controller('batchRun',
                         return '' + row.entity.deviceList.toString() + '';
                     }
                 },
-                {name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '20%'},
-                {name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false, width: '20%'},
+                {
+                    name: 'Start Time', field: 'jobStartDateTime', enableCellEdit: false, width: '20%',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobStartDateTime + '';
+                    }
+                },
+                {
+                    name: 'End Time', field: 'jobEndDateTime', enableCellEdit: false,
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.jobEndDateTime + '';
+                    },
+                    width: '20%'
+                },
                 {
                     name: 'Status',
                     field: 'status',
+                    cellTooltip: function (row, col) {
+                        return '' + row.entity.status + '';
+                    },
                     enableCellEdit: false,
                     width: '10%'
                 },
@@ -208,12 +228,12 @@ oTech.controller('batchRun',
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {name: 'TestPlan Id', field: 'jobId', enableCellEdit: false, width: '8%'},
+                {name: 'TestPlan Id', field: 'jobId', enableCellEdit: true, width: '8%'},
                 {
                     name: 'TestRunName',
                     field: 'jobName',
                     width: '30%',
-                    enableCellEdit: true,
+                    enableCellEdit: false,
                     enableCellEditOnFocus: true,
                     cellTooltip: function (row, col) {
                         return '' + row.entity.jobName + '';
@@ -2865,12 +2885,12 @@ oTech.controller('batchRun',
                     console.log(data);
                     $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStarted) {
-                        toastr.success('Test Run Started','Success');
-                        if(batchRunObj.id == $scope.selectedBatchRun.id){
-                            $scope.selectedBatchRun.executionStatus =1;
+                        toastr.success('Test Run Started', 'Success');
+                        if (batchRunObj.id == $scope.selectedBatchRun.id) {
+                            $scope.selectedBatchRun.executionStatus = 1;
                         }
-                    }else{
-                        toastr.error('Unable to stop Stoped','Error');
+                    } else {
+                        toastr.error('Unable to stop Stoped', 'Error');
                     }
 
                 },
@@ -2892,12 +2912,12 @@ oTech.controller('batchRun',
                     console.log(data);
                     $scope.dataProcessingBatchRun = false;
                     if (data.batchRunStoped) {
-                        toastr.success('Test Run Stoped','Success');
-                        if(batchRunObj.id == $scope.selectedBatchRun.id){
-                            $scope.selectedBatchRun.executionStatus =0;
+                        toastr.success('Test Run Stoped', 'Success');
+                        if (batchRunObj.id == $scope.selectedBatchRun.id) {
+                            $scope.selectedBatchRun.executionStatus = 0;
                         }
-                    }else{
-                        toastr.error('Unable to stop TestRun','Error');
+                    } else {
+                        toastr.error('Unable to stop TestRun', 'Error');
                     }
 
                 },
