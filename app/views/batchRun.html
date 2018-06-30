@@ -581,7 +581,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add TestRun</h5>
+                    <h5 class="modal-title">Select a TestRun for adding in batchrun</h5>
                     <div class="heading-elements">
                         <ul class="icons-list">
                             <li><a data-dismiss="modal" data-action="close"></a></li>
@@ -589,11 +589,17 @@
                     </div>
                 </div>
                 <div class="modal-body">
-
+                    <div>
+                        <br/>
+                        <select name="test-run">
+                            <option value="">--Select a TestRun--</option>
+                            <option ng-repeat="testRun in allTestRuns" value="{{testRun.testrunId}}">({{testRun.testrunId}}){{testRun.testrunName}}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>
