@@ -834,6 +834,57 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+        service.addTestRunToBatchRun = function (token, userId, batchRunId, testRunId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/addTestRunToBatchRun",
+                type: "POST",
+                data: {
+                    token: token,
+                    userId: userId,
+                    batchRunId: batchRunId,
+                    testRunId: testRunId
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data) {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
+        service.removeTestRunFromBatchRun = function (token, userId, batchRunId, testRunId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/removeTestRunFromBatchRun",
+                type: "POST",
+                data: {
+                    token: token,
+                    userId: userId,
+                    batchRunId: batchRunId,
+                    testRunId: testRunId
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data) {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
         service.getTestRuns = function (token, TestPlanId, userId) {
             var deferred = $q.defer();
             $.ajax({
