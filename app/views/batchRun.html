@@ -591,15 +591,14 @@
                 <div class="modal-body">
                     <div>
                         <br/>
-                        <select name="test-run">
-                            <option value="">--Select a TestRun--</option>
+                        <select name="test-run" ng-model="selectedTestRun" >
                             <option ng-repeat="testRun in allTestRuns" value="{{testRun.testrunId}}">({{testRun.testrunId}}){{testRun.testrunName}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button type="button" ng-click="addTestRunInBatchRun(selectedTestRun)" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>

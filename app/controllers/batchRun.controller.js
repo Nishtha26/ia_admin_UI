@@ -7,6 +7,7 @@ oTech.controller('batchRun',
         console.log('Role: ' + $rootScope.role)
         $scope.createTestPlan = {};
         $scope.selectedBatchRun = {};
+        $scope.selectedTestRun = {};
         $scope.selectedBatchRunForEdit = {};
         $scope.selectedBatchRunDetails = {};
         $scope.selectedBatchRunForEditDetails = {};
@@ -303,6 +304,28 @@ oTech.controller('batchRun',
 
         };
 
+        $scope.BatchRunDetailsEditOptions.onRegisterApi = function (gridApi) {
+
+            gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                var isActive = rowEntity.active;
+                var batchRunId = $scope.selectedBatchRunForEdit.id;
+                var oldValue = oldValue;
+                var newValue = newValue;
+                console.log("BatchRunId ::" + JSON.stringify(batchRunId));
+                promise = testScriptService.replaceTestRunFromBatchRun(token, userId, batchRunId, oldValue, newValue, isActive);
+                promise.then(
+                    function (data) {
+                        console.log(JSON.stringify(data));
+                        toastr.success('TestRun Changed', 'Success')
+                    },
+                    function (err) {
+                        console.log(err);
+                        toastr.error('Something , try again!', 'Error')
+                    }
+                );
+                $scope.$apply();
+            });
+        };
         $scope.BatchRunOptions.onRegisterApi = function (gridApi) {
             //set gridApi on scope
             $scope.gridApi = gridApi;
@@ -484,6 +507,42 @@ oTech.controller('batchRun',
         };
 
 
+        $scope.addTestRunInBatchRun = function (testRunId) {
+            var batchRunId = $scope.selectedBatchRun.id;
+            console.log("batchRunId :: " + batchRunId);
+            console.log("testRunId :: " + testRunId);
+            $('#add_test_run').modal('toggle');
+            promise = testScriptService.addTestRunToBatchRun(token, userId, batchRunId, testRunId);
+            promise.then(
+                function (data) {
+                    console.log(JSON.stringify(data));
+                    toastr.success('TestRun Changed', 'Success')
+                },
+                function (err) {
+                    console.log(err);
+                    toastr.error('Something Wrong , try again!', 'Error')
+                }
+            );
+
+        }
+
+        $scope.removeTestRunFromBatchRun = function (row) {
+            var batchRunId = $scope.selectedBatchRun.id;
+            var testRunId = row.entity.jobId;
+            promise = testScriptService.removeTestRunFromBatchRun(token, userId, batchRunId, testRunId);
+            promise.then(
+                function (data) {
+                    console.log(JSON.stringify(data));
+                    toastr.success('TestRun Removed', 'Success')
+                },
+                function (err) {
+                    console.log(err);
+                    toastr.error('Something Wrong , try again!', 'Error')
+                }
+            );
+        }
+
+
         /* pagination code  end ***********************/
 
         promise = testScriptService.getAllTestRunsForSchedule(token, userId);
@@ -495,222 +554,6 @@ oTech.controller('batchRun',
                 console.log(err);
             }
         );
-
-
-        /*/test Run code started***/
-
-        $scope.startJob = function () {
-            $(".btn").addClass("disabled");
-            $scope.dataProcessingOfAllTestRuns = true;
-
-            if ($rootScope.jobId == undefined || $rootScope.jobId == "") {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsg = true;
-                $timeout(function () {
-                    $scope.errorMsg = false;
-                }, 3000);
-                $(".btn").removeClass("disabled");
-                return false;
-            }
-            if (Devices.length <= 0) {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsgForDevice = true;
-                $scope.msg = "Please select Device..";
-                $timeout(function () {
-                    $scope.errorMsgForDevice = false;
-                }, 3000);
-                $(".btn").removeClass("disabled");
-
-                return false;
-            }
-            var ScheduleData = JSON.stringify({
-                "jobId": $rootScope.jobId,
-                "deviceList": Devices,
-                "notificationTypes": notificationTypes,
-                "operation": "trigger_job",
-            })
-            promise = testScriptService.commonServiceForJobSheduling(ScheduleData, userId, token);
-            promise.then(
-                function (data) {
-
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $scope.successMsg = true;
-                    $rootScope.msg1 = "";
-                    $rootScope.msg1 = " " + data.message;
-                    $timeout(function () {
-                        $scope.successMsg = false;
-                    }, 3000);
-                    $(".btn").removeClass("disabled");
-
-                    //Get devices service
-                    $scope.dataLoading1 = true;
-                    Devices = [];
-                    notificationTypes = [];
-                    promise = testScriptService.ViewTestRunDeviceService(userId, token, $rootScope.jobId);
-                    promise.then(
-                        function (data) {
-                            $scope.testRunMappedDevices.data = [];
-                            console.log(JSON.stringify(data.testRunDeviceData));
-                            $scope.testRunMappedDevices.data = data.testRunDeviceData;
-
-                            $timeout(function () {
-                                $scope.refreshCallForJobProgress(userId, token, $rootScope.jobId);
-                            }, 5000);
-
-                        },
-                        function (err) {
-                            console.log(err);
-                        }
-                    );
-                },
-                function (err) {
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $(".btn").removeClass("disabled");
-                    console.log(err);
-                }
-            );
-        }
-
-
-        $scope.stopJob = function () {
-            $(".btn").addClass("disabled");
-            $scope.dataProcessingOfAllTestRuns = true;
-
-            if ($rootScope.jobId == undefined || $rootScope.jobId == "") {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsg = true;
-                $timeout(function () {
-                    $scope.errorMsg = false;
-                }, 3000);
-                $(".btn").removeClass("disabled");
-                return false;
-            }
-
-            if (Devices.length <= 0) {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsgForDevice = true;
-                $rootScope.msg = "Please select device.. ";
-                $timeout(function () {
-                    $scope.errorMsgForDevice = false;
-                }, 3000);
-                $(".btn").removeClass("disabled");
-
-                return false;
-            }
-            var ScheduleData = JSON.stringify({
-                "jobId": $rootScope.jobId,
-                "deviceList": Devices,
-                "notificationTypes": notificationTypes,
-                "operation": "stop_job",
-            })
-            promise = testScriptService.commonServiceForJobSheduling(ScheduleData, userId, token);
-            promise.then(
-                function (data) {
-
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $(".btn").removeClass("disabled");
-                    $scope.successMsg = true;
-                    $rootScope.msg1 = "";
-                    $rootScope.msg1 = " " + data.message;
-                    $timeout(function () {
-                        $scope.successMsg = false;
-                    }, 3000);
-                    //Get devices service
-                    Devices = [];
-                    notificationTypes = [];
-                    promise = testScriptService.ViewTestRunDeviceService(userId, token, $rootScope.jobId);
-                    promise.then(
-                        function (data) {
-                            $scope.testRunMappedDevices.data = [];
-                            console.log(JSON.stringify(data.testRunDeviceData));
-                            $scope.testRunMappedDevices.data = data.testRunDeviceData;
-
-                        },
-                        function (err) {
-                            console.log(err);
-                        }
-                    );
-                },
-                function (err) {
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $(".btn").removeClass("disabled");
-                    console.log(err);
-                }
-            );
-        }
-
-
-        $scope.reStartJob = function () {
-            $(".btn").addClass("disabled");
-            $scope.dataProcessingOfAllTestRuns = true;
-
-            if ($rootScope.jobId == undefined || $rootScope.jobId == "") {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsg = true;
-                $timeout(function () {
-                    $scope.errorMsg = false;
-                }, 3000);
-                return false;
-            }
-            if (Devices.length <= 0) {
-                $scope.dataProcessingOfAllTestRuns = false;
-                $scope.errorMsgForDevice = true;
-                $rootScope.msg = "Please select device.. ";
-                $timeout(function () {
-                    $scope.errorMsgForDevice = false;
-                }, 3000);
-                $(".btn").removeClass("disabled");
-                return false;
-            }
-
-            var ScheduleData = JSON.stringify({
-                "jobId": $rootScope.jobId,
-                "deviceList": Devices,
-                "notificationTypes": notificationTypes,
-                "operation": "trigger_restart_job",
-            })
-            promise = testScriptService.commonServiceForJobSheduling(ScheduleData, userId, token);
-            promise.then(
-                function (data) {
-
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $scope.successMsg = true;
-                    $rootScope.msg1 = "";
-                    $rootScope.msg1 = " " + data.message;
-                    $timeout(function () {
-                        $scope.successMsg = false;
-                    }, 3000);
-                    $(".btn").removeClass("disabled");
-
-                    //Get devices service
-                    $scope.dataLoading1 = true;
-                    Devices = [];
-                    notificationTypes = [];
-                    promise = testScriptService.ViewTestRunDeviceService(userId, token, $rootScope.jobId);
-                    promise.then(
-                        function (data) {
-                            $scope.testRunMappedDevices.data = [];
-                            console.log(JSON.stringify(data.testRunDeviceData));
-                            $scope.testRunMappedDevices.data = data.testRunDeviceData;
-
-                            $timeout(function () {
-                                $scope.refreshCallForJobProgress(userId, token, $rootScope.jobId);
-                            }, 5000);
-
-                        },
-                        function (err) {
-                            console.log(err);
-                        }
-                    );
-
-                },
-                function (err) {
-                    $scope.dataProcessingOfAllTestRuns = false;
-                    $(".btn").removeClass("disabled");
-                    console.log(err);
-                }
-            );
-        }
 
 
         /* view batch run */
@@ -851,7 +694,8 @@ oTech.controller('batchRun',
         }
 
 
-    });
+    }
+);
 
 	
 		
