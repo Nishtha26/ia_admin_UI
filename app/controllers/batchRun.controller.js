@@ -286,7 +286,8 @@ oTech.controller('batchRun',
                     '<i class="icon-menu9"></i>' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
-                    '<li ng-click="grid.appScope.editTestRun(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
+                    '<li ng-click="grid.appScope.editTestRunStartTime(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
+                    '<li ng-click="grid.appScope.removeTestRunFromBatchRun(row);"><a ><i class="icon-box-remove text-primary user_editor_link"></i>Delete TestRun</a></li>' +
                     '</ul>' +
                     '</li>' +
                     '</ul>'
