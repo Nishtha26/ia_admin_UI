@@ -75,6 +75,8 @@ oTech.controller('testPlanTestRunAdministration',
 
 
         $scope.TestPlanOptions = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -302,7 +304,7 @@ oTech.controller('testPlanTestRunAdministration',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+                $scope.TestPlanOptions.data = data;
 
             },
             function (err) {
@@ -328,7 +330,7 @@ oTech.controller('testPlanTestRunAdministration',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.TestPlanOptions.data.length;
+            var dataCount = 10;
             gridHeight = ($scope.TestPlanOptions.data.length * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
@@ -344,7 +346,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         $scope.singleFilter = function () {
             $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
+            //$scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -827,6 +829,8 @@ oTech.controller('testPlanTestRunAdministration',
         };
 
         $scope.testRunMappedDevices = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
