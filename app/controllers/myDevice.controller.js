@@ -146,8 +146,8 @@ oTech.controller('MyDevicesController',
 								    if(datalen<$scope.endLimit){
 								    	limit=datalen;
 								    }
-								    $scope.myDevicesGridOptions.data = $scope.myDevicesGridOptions.data.slice( 0,limit);
-								 
+								   // $scope.myDevicesGridOptions.data = $scope.myDevicesGridOptions.data.slice( 0,limit);
+
 								   
 								};
 	/* pagination end*/

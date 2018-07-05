@@ -48,7 +48,7 @@ oTech.controller('ReportConfigController',
         };
         $scope.singleFilterForDM = function () {
             $scope.devicesMeasurementGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.devicesMeasurementGridOptions.data = $scope.devicesMeasurementGridOptions.data.slice(0, $scope.endLimit);
+            //$scope.devicesMeasurementGridOptions.data = $scope.devicesMeasurementGridOptions.data.slice(0, $scope.endLimit);
         }
 
         //Set Tables List Here

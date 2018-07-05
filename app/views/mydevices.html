@@ -6,22 +6,28 @@
         padding-top: 7px;
         padding-right: 27px;
     }
-    
-    .error_msg{
-    float: right;
-    
-    color: red;
-    font-size: 14px;
-    padding-top: 7px;
-    padding-right: 27px;
-}
-.success_msg{
-	float: right;
-    color: #48A64C;
-    font-size: 14px;
-    padding-top: 7px;
-    padding-right: 27px;
-}
+
+    .error_msg {
+        float: right;
+
+        color: red;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .success_msg {
+        float: right;
+        color: #48A64C;
+        font-size: 14px;
+        padding-top: 7px;
+        padding-right: 27px;
+    }
+
+    .ui-grid-pager-panel {
+        padding-bottom: 2px !important;
+    }
+
 </style>
 <!--  <div ng-include="'app/views/header.html'"></div> -->
 <!-- Header Start -->
@@ -83,9 +89,9 @@
                                         <label><span>Filter:</span>
                                             <input type="type" class="" ng-change="singleFilter()" ng-model="searchText"
                                                    placeholder="Type to filter..."></label>
-                                                   <span class="error_msg" ng-show ="errorMsg" >{{Message}}</span>
-							 			<span ng-show ="deviceInfo" class="success_msg">{{deviceInfoMsg}}</span>
-                                                   </div>
+                                        <span class="error_msg" ng-show="errorMsg">{{Message}}</span>
+                                        <span ng-show="deviceInfo" class="success_msg">{{deviceInfoMsg}}</span>
+                                    </div>
                                     <!--
                                      <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
                                       <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
@@ -100,41 +106,13 @@
                                 <div class="table table-hover grid datatable-basic grid"
                                      id="myDevicesGridOptions" ui-grid="myDevicesGridOptions" ui-grid-edit
                                      ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
-                                     ui-grid-move-columns ui-grid-pinning ng-style="getTableHeight()">
+                                     ui-grid-move-columns ui-grid-pinning  ui-grid-pagination >
 
                                 </div>
                                 <img class="loading loading-imgac" src="images/loading_new.gif"
                                      ng-show="dataLoading"/>
                                 <div class="loadingErr loadingErrMsg" ng-show="err">No
                                     Data Found
-                                </div>
-
-
-                                <div class="row" style="padding-top:5px;">
-                                    <div class="col-sm-5">
-                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
-                                             role="alert" aria-live="polite" aria-relevant="all">Showing
-                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-
-                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
-                                               ng-click="prevPage()">&larr;</a>
-											
-											<span>
-											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
-                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
-											</span>
-
-                                            <a ng-class="DisableNextPage()" class="paginate_button next"
-                                               ng-click="nextPage()">&rarr;</a>
-
-
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
 
