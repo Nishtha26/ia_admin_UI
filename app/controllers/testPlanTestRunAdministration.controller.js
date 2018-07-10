@@ -20,7 +20,7 @@ oTech.controller('testPlanTestRunAdministration',
         var VirtualDevicelist = [];
         var notificationTypes = [];
         $scope.dataProcessing = false;
-
+        var selectedRowsOfTestPlan = []
 
         $rootScope.slideContent();
 
@@ -1666,7 +1666,10 @@ oTech.controller('testPlanTestRunAdministration',
                 $scope.showOnlyDeviceProfileAndPhoneNo = false;
                 $scope.showOnlyDeviceProfile = true;
             }
-
+            for(rowIndex in selectedRowsOfTestPlan){
+                selectedRowsOfTestPlan[rowIndex].isSelected = false;
+            }
+            selectedRowsOfTestPlan = [];
             $scope.renderHtmlForTask($scope.taskTableArray);
         }
 
@@ -1745,6 +1748,15 @@ oTech.controller('testPlanTestRunAdministration',
                         $scope.errorForPhoneNo = false;
                     }, 3000);
                     return false;
+                }
+                if (row.isSelected){
+                    selectedRowsOfTestPlan.push(row);
+                }
+                else{
+                    let index = selectedRowsOfTestPlan.indexOf(row);
+                    if (index > -1) {
+                        selectedRowsOfTestPlan.splice(index, 1);
+                    } 
                 }
                 var RealDeviceName = row.entity.deviceName;
                 var RealDeviceId = row.entity.deviceId;
