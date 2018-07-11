@@ -1,5 +1,5 @@
 oTech.controller('ReportConfigController',
-    function ($scope, $rootScope, $location, AppServices, $stateParams, $uibModal, $log) {
+    function ($scope, $rootScope, $location, AppServices, $stateParams,$filter,$uibModal, $log) {
         //Controller Initialization
         var token = sessionStorage.token;
         var userId = sessionStorage.userId;
@@ -165,6 +165,7 @@ oTech.controller('ReportConfigController',
                 $scope.err = false;
                 $scope.totalRecords = data.totalRecords;
                 $scope.reportConfigGridOptions.data = data.records;
+                allOfTheData = data.records;
                 //Hide page Loader
                 $("#dataLoadingDM").hide();
             }, function (err) {
