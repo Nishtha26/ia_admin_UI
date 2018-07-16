@@ -429,6 +429,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-lg-12" style='padding-top: 20px;' ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3" style="padding:0px;">
+                                                            <label class="text-semibold">Assign To Customer:</label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <select selectBoxPreSelected class='form-control'
+                                                                    multiple="true"
+                                                                    name="customersValue"
+                                                                    ng-options="customer.customerName for customer in customers track by customer.customerId"
+                                                                    data-ng-model="customersValue"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="col-lg-6">

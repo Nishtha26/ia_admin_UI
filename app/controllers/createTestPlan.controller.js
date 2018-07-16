@@ -13,6 +13,7 @@ oTech
             $scope.commandError = false;
             $scope.createTestPlan = {};
             var sendCreateData = {};
+            var customerListArray = [];
             if (messages.length == 1 && $rootScope.isTestPlanToEdit) {
                 for (var i = 0; i < messages[0].length; i++) {
                     if (messages[0][i].key == "testPlanName")
@@ -23,6 +24,8 @@ oTech
                         $scope.tree2 = messages[0][i].value;
                     if (messages[0][i].key == "usecase")
                         $scope.usecaseVal = messages[0][i].value;
+                    if (messages[0][i].key == "customers")
+                        $scope.customersValue = messages[0][i].value;
 
                 }
             } else {
@@ -312,6 +315,29 @@ oTech
             $("#mySel").select2({});
 
 
+            // fetching customer lists
+            if (userId == -2) {
+                promise = AppServices.GetcustomerList(userId, token);
+                promise.then(function (data) {
+                    $scope.dataLoading = true;
+                    $(".btn-info").addClass("disabled");
+                    $scope.customerListArray = [];
+                    $.map(data.customerDetails, function (item, index) {
+                        var temp = {};
+                        temp['customerId'] = item.customerId;
+                        temp['customerName'] = item.customerName;
+                        $scope.customerListArray.push(temp);
+                    });
+                    $scope.customers = $scope.customerListArray;
+                    $scope.dataLoading = false;
+                    $(".btn-info").removeClass("disabled");
+                },
+                function (err) {
+                    $scope.dataLoading = false;
+                    console.log(err);
+                });
+            }
+
             //feching usecase list
             promise = testScriptService.fetchingUseCaseService(userId,
                 token);
@@ -380,6 +406,7 @@ oTech
                 $scope.shareData.push({'key': 'testPlanName', 'value': $scope.testPlanName});
                 $scope.shareData.push({'key': 'testPlanDescription', 'value': $scope.testPlanDescription});
                 $scope.shareData.push({'key': 'usecase', 'value': $scope.usecaseVal});
+                $scope.shareData.push({'key': 'customers', 'value': $scope.customersValue});
                 if (messages.length == 1) {
                     messages.splice(0, 1);
                 }
@@ -465,6 +492,8 @@ oTech
                             $scope.uiTreeJSON = messages[0][i].value;
                         if (messages[0][i].key == "usecase")
                             $scope.usecaseVal = messages[0][i].value.id;
+                        if (messages[0][i].key == "customers")
+                            $scope.customersValue = messages[0][i].value.id;
                     }
                 }
 
@@ -513,8 +542,15 @@ oTech
                 sendCreateData.taskVOList[0].useCaseId = $scope.usecaseVal;
                 $rootScope.usecaseId = $scope.usecaseVal;
 
+                let customerListId = [];
+                for(let i = 0; i < $scope.customers.length; i++){
+                    customerListId.push(parseInt($scope.customers[i].customerId));
+                }
+                sendCreateData.customerListId = customerListId;
                 sendCreateData.taskVOList[0].taskCreatedBy = userId;
                 sendCreateData.taskVOList[0].taskExecutorVOList = [];
+
+                console.log(sendCreateData);
 
                 var superParentObjectKeys = Object.keys(superParentObject);
 
