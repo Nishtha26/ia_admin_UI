@@ -20,7 +20,7 @@ oTech.controller('testPlanTestRunAdministration',
         var VirtualDevicelist = [];
         var notificationTypes = [];
         $scope.dataProcessing = false;
-
+        var selectedRowsOfTestPlan = []
 
         $rootScope.slideContent();
 
@@ -75,6 +75,8 @@ oTech.controller('testPlanTestRunAdministration',
 
 
         $scope.TestPlanOptions = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -129,7 +131,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
+                    '<li ng-if="row.entity.isExitTestRuns == 0 || row.entity.isExistOneTestRun == 1" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
@@ -302,7 +304,7 @@ oTech.controller('testPlanTestRunAdministration',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+                $scope.TestPlanOptions.data = data;
 
             },
             function (err) {
@@ -328,7 +330,7 @@ oTech.controller('testPlanTestRunAdministration',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.TestPlanOptions.data.length;
+            var dataCount = 10;
             gridHeight = ($scope.TestPlanOptions.data.length * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
@@ -344,7 +346,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         $scope.singleFilter = function () {
             $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
+            //$scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -788,6 +790,19 @@ oTech.controller('testPlanTestRunAdministration',
                                     console.log(err);
                                 }
                             );
+                            promise = testScriptService.FetchingTestService(userId, token);
+                            promise.then(
+                                function (data) {
+                                    console.log(data);
+                                    $scope.totalRecords = data.length;
+                                    allOfTheData = data;
+                                    $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+
+                                },
+                                function (err) {
+                                    console.log(err);
+                                }
+                            );
                         }
                         else {
 
@@ -814,6 +829,8 @@ oTech.controller('testPlanTestRunAdministration',
         };
 
         $scope.testRunMappedDevices = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -1649,7 +1666,10 @@ oTech.controller('testPlanTestRunAdministration',
                 $scope.showOnlyDeviceProfileAndPhoneNo = false;
                 $scope.showOnlyDeviceProfile = true;
             }
-
+            for(rowIndex in selectedRowsOfTestPlan){
+                selectedRowsOfTestPlan[rowIndex].isSelected = false;
+            }
+            selectedRowsOfTestPlan = [];
             $scope.renderHtmlForTask($scope.taskTableArray);
         }
 
@@ -1728,6 +1748,15 @@ oTech.controller('testPlanTestRunAdministration',
                         $scope.errorForPhoneNo = false;
                     }, 3000);
                     return false;
+                }
+                if (row.isSelected){
+                    selectedRowsOfTestPlan.push(row);
+                }
+                else{
+                    let index = selectedRowsOfTestPlan.indexOf(row);
+                    if (index > -1) {
+                        selectedRowsOfTestPlan.splice(index, 1);
+                    } 
                 }
                 var RealDeviceName = row.entity.deviceName;
                 var RealDeviceId = row.entity.deviceId;
@@ -1991,12 +2020,24 @@ oTech.controller('testPlanTestRunAdministration',
                                 console.log(err);
                             }
                         );
+                        promise = testScriptService.FetchingTestService(userId, token);
+                        promise.then(
+                            function (data) {
+                                console.log(data);
+                                $scope.totalRecords = data.length;
+                                allOfTheData = data;
+                                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
 
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
                     },
                     function (err) {
                         console.log(err);
                     }
-                );
+                );                
             }
         }
 
@@ -2076,13 +2117,28 @@ oTech.controller('testPlanTestRunAdministration',
                 $(".schedule").removeAttr("disabled");
                 return false;
             }
+            function getUTCTime(dateString) {
+                Number.prototype.padLeft = function(base,chr){
+                    var  len = (String(base || 10).length - String(this).length)+1;
+                    return len > 0? new Array(len).join(chr || '0')+this : this;
+                }
+                var date = new Date()
+                var timeZoneOffset = date.getTimezoneOffset() * 60 * 1000;
+                var timeStamp = new Date(dateString).getTime();
+                var utcTimeStamp = timeStamp + timeZoneOffset;
+                var utcDate = new Date(utcTimeStamp);
+                var str = utcDate.getFullYear() + "-" + (utcDate.getMonth() + 1).padLeft() + "-" + utcDate.getDate().padLeft() + " " +  utcDate.getHours().padLeft() + ":" + utcDate.getMinutes().padLeft() + ":" + utcDate.getSeconds().padLeft();
+                return str;
+            }
+
             var ScheduleData = JSON.stringify({
                 "jobId": $scope.testRunIdShcedule,
                 "jobName": jName,
                 "jobDescription": $scope.jobTemplateDescription,
                 "jobCreatedBy": userId,
                 "jobStartDate": "2016-02-08",
-                "jobStartDateTime": $scope.Datendtime,
+                //"jobStartDateTime": $scope.Datendtime,
+                "jobStartDateTime": getUTCTime($scope.Datendtime),
 //	                    "jobStartDate": $scope.StartDate,
                 "jobEndDate": $scope.EndDate,
                 "recurrence": $scope.recurrence,

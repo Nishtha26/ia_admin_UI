@@ -180,7 +180,6 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapn;
                 else if (link == 'Applications')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsapplications;
-
                 else if (link == 'IPAddress')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsipaddress;
                 else if (link == 'L1LOG')
@@ -231,6 +230,10 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsNECommands;
                 else if (link == 'RemoteControl')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsRemoteControl;
+                else if (link == 'SpeechRecord')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsSpeechRecord;
+                else if (link == 'UDPCmdLogs')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsUDPCmdLogs;
                 if (startLimit == 1) {
                     startLimit = 0;
                 }
