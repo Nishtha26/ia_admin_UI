@@ -3,7 +3,7 @@ oApp.constant = {
     GRID_DATE_TIME_FORMAT: 'MM/dd/yy h:mm:ss a'
 }
 oApp.config = {
-    IAAVersion: "7.1.2",
+    IAAVersion: "7.2.1",
     programmingSkills: [
         {
             value: 20,
