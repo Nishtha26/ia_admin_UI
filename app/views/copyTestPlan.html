@@ -390,10 +390,11 @@
                                                             <input type="text" class="form-control" id="testPlanName"
                                                                    name="testPlanName" ng-model="testPlanName"
                                                                    ng-change="copyToTestPlanName()"
+                                                                   ng-minlength="3" ng-maxlength="99"
                                                                    placeholder="Test Plan Name" required>
                                                             <span style="color:red"
                                                                   ng-show="form.testPlanName.$dirty && form.testPlanName.$error.required"
-                                                                  class="help-block">Test Plan Name is required*</span>
+                                                                  class="help-block">Test Plan Name with length >2 and <100 characters is required*</span>
                                                         </div>
                                                     </div>
                                                 </div>
