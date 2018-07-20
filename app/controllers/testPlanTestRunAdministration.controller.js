@@ -2808,6 +2808,7 @@ oTech.controller('testPlanTestRunAdministration',
                 if (updateCommandParameters.indexOf("=") >= 0) {
 
                     var commandParam = updateCommandParameters.split('=');
+                    commandParam[1] = commandParam[1].replace('"','\''); 
                     console.log("commandParam: " + commandParam);
                     $(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="' + commandParam[0] + '" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="' + commandParam[1] + '" class="form-control"/></div></div>');
 
@@ -2837,7 +2838,7 @@ oTech.controller('testPlanTestRunAdministration',
              );*/
             for (var index = 0; index <= commandIndex; index++) {
                 if ($("input[name='commandLabel[" + index + "].Name']").val() != undefined && $("input[name='commandLabel[" + index + "].Name']").val() != '' && $("input[name='command[" + index + "].Name']").val() != undefined && $("input[name='command[" + index + "].Name']").val() != '')
-                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val() + ",";
+                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val().replace('\'','\"') + ",";
             }
             //	console.log("updatedParametrs"+updatedParametrs);
             if (overrideNode.commandParams != updatedParametrs.substring(0, updatedParametrs.length - 1)) {
