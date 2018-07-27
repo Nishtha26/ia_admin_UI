@@ -389,11 +389,12 @@
                                                         <div class="col-lg-9">
                                                             <input type="text" class="form-control" id="testPlanName"
                                                                    name="testPlanName" ng-model="testPlanName"
-                                                                   ng-change="copyToTestPlanName()"
+                                                                   ng-change="copyToTestPlanName()" 
+                                                                   ng-minlength="3" ng-maxlength="99"
                                                                    placeholder="Test Plan Name" required>
                                                             <span style="color:red"
                                                                   ng-show="form.testPlanName.$dirty && form.testPlanName.$error.required"
-                                                                  class="help-block">Test Plan Name is required*</span>
+                                                                  class="help-block">Test Plan Name with length >2 and <100 characters is required*</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -426,6 +427,21 @@
       <option ng-repeat="option in usecases"   ng-model="usecaseVal">{{option.name}}</option>
       </span>
     </select> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12" style='padding-top: 20px;' ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3" style="padding:0px;">
+                                                            <label class="text-semibold">Assign To Customer:</label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <select selectBoxPreSelected class='form-control'
+                                                                    multiple="true"
+                                                                    name="customersValue"
+                                                                    ng-options="customer.customerName for customer in customers track by customer.customerId"
+                                                                    data-ng-model="customersValue"></select>
                                                         </div>
                                                     </div>
                                                 </div>

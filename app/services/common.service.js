@@ -1204,6 +1204,33 @@ oTech.service('AppServices',
             });
             return deferred.promise;
         }
+
+        /*
+         customer list in user administration
+         */
+        service.GetCustomerListOfTestPlan = function (testPlanId, token) {
+
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/customer/getCustomerOfTestPlan",
+                type: "POST",
+                data: {testPlanId: testPlanId, token: token},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data) {
+                    //console.log(data);
+                    //	console.log(data);
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    //alert("error");
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
         /* function for creating new customer in user administration */
 
 

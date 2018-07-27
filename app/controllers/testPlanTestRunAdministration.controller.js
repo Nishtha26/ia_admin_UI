@@ -2285,6 +2285,8 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.deviceProfileCounter = 0;
             cloneCopyOfJobDevice = "";
             $scope.tree2 = 0;
+            var customerListArray = [];
+            var selectedCustomersList = [];
             //load all virtual device
 
             promise2 = testScriptService.fetchVirtualDevices(token, userId);
@@ -2296,6 +2298,38 @@ oTech.controller('testPlanTestRunAdministration',
                     console.log(err);
                 }
             );
+
+            // fetching customer lists
+            if (userId == -2) {
+                promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
+                promise2.then(
+                    function (data) {
+                        $scope.selectedCustomersList = data.customerList;
+                        console.log($scope.selectedCustomersList);
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+                promise2 = AppServices.GetcustomerList(userId, token);
+                promise2.then(function (data) {
+                    $(".btn-info").addClass("disabled");
+                    $scope.customerListArray = [];
+                    $.map(data.customerDetails, function (item, index) {
+                        var temp = {};
+                        temp['customerId'] = item.customerId;
+                        temp['customerName'] = item.customerName;
+                        $scope.customerListArray.push(temp);
+                    });
+                    $scope.customers = $scope.customerListArray;
+                    $scope.dataLoading = false;
+                    $(".btn-info").removeClass("disabled");
+                },
+                function (err) {
+                    $scope.dataLoading = false;
+                    console.log(err);
+                });
+            }
             // virtual device loaded
             $scope.editTestPlanTab = true;
             // load test plan
@@ -2641,7 +2675,6 @@ oTech.controller('testPlanTestRunAdministration',
                     sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorId = superParentObject[j].taskExecutorId;
                     sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].jobDeviceTaskExecutorId = superParentObject[j].jobDeviceTaskExecutorId;
 
-
                 }
 
                 var parentObjectKeys = Object.keys(parentObject);
@@ -2680,7 +2713,11 @@ oTech.controller('testPlanTestRunAdministration',
 
 
             }
-
+            let customerListId = [];
+            for (let i = 0; i < $scope.customersValue.length; i++) {
+                customerListId.push(parseInt($scope.customersValue[i]));
+            }
+            sendCreateData.customerListId = customerListId;
 
             var jsonData = JSON.stringify(sendCreateData);
             var jobDeviceId = "";
@@ -2808,6 +2845,7 @@ oTech.controller('testPlanTestRunAdministration',
                 if (updateCommandParameters.indexOf("=") >= 0) {
 
                     var commandParam = updateCommandParameters.split('=');
+                    commandParam[1] = commandParam[1].replace('"','\''); 
                     console.log("commandParam: " + commandParam);
                     $(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="' + commandParam[0] + '" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="' + commandParam[1] + '" class="form-control"/></div></div>');
 
@@ -2837,7 +2875,7 @@ oTech.controller('testPlanTestRunAdministration',
              );*/
             for (var index = 0; index <= commandIndex; index++) {
                 if ($("input[name='commandLabel[" + index + "].Name']").val() != undefined && $("input[name='commandLabel[" + index + "].Name']").val() != '' && $("input[name='command[" + index + "].Name']").val() != undefined && $("input[name='command[" + index + "].Name']").val() != '')
-                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val() + ",";
+                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val().replace('\'','\"') + ",";
             }
             //	console.log("updatedParametrs"+updatedParametrs);
             if (overrideNode.commandParams != updatedParametrs.substring(0, updatedParametrs.length - 1)) {
