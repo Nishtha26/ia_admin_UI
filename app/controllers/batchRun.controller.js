@@ -516,6 +516,7 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    $scope.editBatchRun($scope.selectedBatchRun);
                     toastr.success('TestRun Changed', 'Success')
                 },
                 function (err) {
@@ -533,6 +534,8 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var index = $scope.BatchRunDetailsEditOptions.data.indexOf(row.entity);
+                    $scope.BatchRunDetailsEditOptions.data.splice(index, 1);
                     toastr.success('TestRun Removed', 'Success')
                 },
                 function (err) {
