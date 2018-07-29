@@ -662,6 +662,33 @@ oTech.controller('batchRun',
             );
         }
 
+
+        /* delete batch run */
+        $scope.delBatchRun = function (row) {
+            console.log("Inside DelBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.delBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.dataProcessingBatchRun = false;
+                    if (data.batchRunDeleted) {
+                        toastr.success('BatchRun Deleted', 'Success');
+                        var index = $scope.BatchRunOptions.data.indexOf(row.entity);
+                        $scope.BatchRunOptions.data.splice(index, 1);
+                    } else {
+                        toastr.error('Unable to delete batchRun', 'Error');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
         /* view test plan */
         $scope.editBatchRun = function (row) {
             var testRunsObj = row.entity.testRuns;
