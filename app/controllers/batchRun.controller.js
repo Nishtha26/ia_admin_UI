@@ -82,6 +82,8 @@ oTech.controller('batchRun',
 
         $scope.BatchRunOptions = {
             enableSorting: true,
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableFilter: true,
             enableColResize: true,
             enableRowSelection: false,
@@ -374,8 +376,7 @@ oTech.controller('batchRun',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.BatchRunOptions.data = data.slice(0, $scope.itemsPerPage);
-
+                $scope.BatchRunOptions.data = data ;
             },
             function (err) {
                 console.log(err);
@@ -388,8 +389,8 @@ oTech.controller('batchRun',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.BatchRunOptions.data.length;
-            gridHeight = ($scope.BatchRunOptions.data.length * rowHeight + headerHeight + footerPage);
+            var dataCount = 10;
+            gridHeight = (10 * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
             return {
@@ -399,12 +400,11 @@ oTech.controller('batchRun',
 
 
         $scope.createNewDatasource = function () {
-            $scope.BatchRunOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
+            $scope.BatchRunOptions.data = allOfTheData;
         }
 
         $scope.singleFilter = function () {
             $scope.BatchRunOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.BatchRunOptions.data = $scope.BatchRunOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -516,6 +516,7 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    $scope.editBatchRun($scope.selectedBatchRun);
                     toastr.success('TestRun Changed', 'Success')
                 },
                 function (err) {
@@ -533,6 +534,8 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var index = $scope.BatchRunDetailsEditOptions.data.indexOf(row.entity);
+                    $scope.BatchRunDetailsEditOptions.data.splice(index, 1);
                     toastr.success('TestRun Removed', 'Success')
                 },
                 function (err) {
@@ -676,7 +679,8 @@ oTech.controller('batchRun',
                     if (data.batchRunDeleted) {
                         toastr.success('BatchRun Deleted', 'Success');
                         var index = $scope.BatchRunOptions.data.indexOf(row.entity);
-                        $scope.BatchRunOptions.data.splice(index, 1);
+                        allOfTheData.splice(index, 1);
+                        $scope.BatchRunOptions.data = allOfTheData;
                     } else {
                         toastr.error('Unable to delete batchRun', 'Error');
                     }
