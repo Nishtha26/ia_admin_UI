@@ -82,6 +82,8 @@ oTech.controller('batchRun',
 
         $scope.BatchRunOptions = {
             enableSorting: true,
+            paginationPageSizes: [10, 20, 30, 50],
+            paginationPageSize: 10,
             enableFilter: true,
             enableColResize: true,
             enableRowSelection: false,
@@ -374,13 +376,29 @@ oTech.controller('batchRun',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.BatchRunOptions.data = data.slice(0, $scope.itemsPerPage);
-
+                $scope.BatchRunOptions.data = data;
             },
             function (err) {
                 console.log(err);
             }
         );
+
+        $scope.refreshBatchRuns = function () {
+            //Test plan table Service
+            promise = testScriptService.getAllBatchRuns(token, userId);
+            promise.then(
+                function (data) {
+                    data = data.batchRunsForTestPlan;
+                    console.log(data);
+                    $scope.totalRecords = data.length;
+                    allOfTheData = data;
+                    $scope.BatchRunOptions.data = data;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
 
 
         $scope.getTableHeight = function () {
@@ -388,8 +406,8 @@ oTech.controller('batchRun',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.BatchRunOptions.data.length;
-            gridHeight = ($scope.BatchRunOptions.data.length * rowHeight + headerHeight + footerPage);
+            var dataCount = 10;
+            gridHeight = (10 * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
             return {
@@ -399,12 +417,11 @@ oTech.controller('batchRun',
 
 
         $scope.createNewDatasource = function () {
-            $scope.BatchRunOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
+            $scope.BatchRunOptions.data = allOfTheData;
         }
 
         $scope.singleFilter = function () {
             $scope.BatchRunOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.BatchRunOptions.data = $scope.BatchRunOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -500,7 +517,6 @@ oTech.controller('batchRun',
                     $scope.endLimit = $scope.endLimit - ($scope.itemsPerPage - reminder);
                 }
             }
-
             startLimit = ($scope.itemsPerPage * (n));
             $scope.createNewDatasource();
             $scope.currentPage = n;
@@ -509,13 +525,16 @@ oTech.controller('batchRun',
 
         $scope.addTestRunInBatchRun = function (testRunId) {
             var batchRunId = $scope.selectedBatchRun.id;
-            console.log("batchRunId :: " + batchRunId);
-            console.log("testRunId :: " + testRunId);
             $('#add_test_run').modal('toggle');
             promise = testScriptService.addTestRunToBatchRun(token, userId, batchRunId, testRunId);
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var batchRun = $scope.selectedBatchRun;
+                    batchRun.testRuns.push({"testrunId": testRunId})
+                    var row = {entity: batchRun}
+                    $scope.editBatchRun(row);
+                    $scope.refreshBatchRuns();
                     toastr.success('TestRun Changed', 'Success')
                 },
                 function (err) {
@@ -533,6 +552,8 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var index = $scope.BatchRunDetailsEditOptions.data.indexOf(row.entity);
+                    $scope.BatchRunDetailsEditOptions.data.splice(index, 1);
                     toastr.success('TestRun Removed', 'Success')
                 },
                 function (err) {
@@ -662,6 +683,34 @@ oTech.controller('batchRun',
             );
         }
 
+
+        /* delete batch run */
+        $scope.delBatchRun = function (row) {
+            console.log("Inside DelBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.delBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.dataProcessingBatchRun = false;
+                    if (data.batchRunDeleted) {
+                        toastr.success('BatchRun Deleted', 'Success');
+                        var index = $scope.BatchRunOptions.data.indexOf(row.entity);
+                        allOfTheData.splice(index, 1);
+                        $scope.BatchRunOptions.data = allOfTheData;
+                    } else {
+                        toastr.error('Unable to delete batchRun', 'Error');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
         /* view test plan */
         $scope.editBatchRun = function (row) {
             var testRunsObj = row.entity.testRuns;
@@ -669,11 +718,13 @@ oTech.controller('batchRun',
             angular.forEach(testRunsObj, function (value, key) {
                 testRuns.push(value.testrunId)
             });
-            if (testRuns.length == 0) {
+            /*if (testRuns.length == 0) {
                 toastr.error('No test run exists for this batch run', 'Error')
                 return;
-            }
+            }*/
             $scope.testRunEditView = true;
+            $scope.selectedBatchRun = row.entity;
+            console.log("editbatch plan method :: " + $scope.selectedBatchRun);
             $scope.dataLoadingForTestRunDetailsForEditView = true;
             $scope.selectedBatchRunForEdit = row.entity;
             console.log(JSON.stringify(testRuns));
