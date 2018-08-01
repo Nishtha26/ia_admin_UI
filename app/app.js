@@ -1,4 +1,4 @@
-var oTech = angular.module("oTech", ['toastr', 'ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
+var oTech = angular.module("oTech", ['toastr', 'ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages', 'rzModule', 'ui.bootstrap', 'nvd3']).filter('oTech', function () {
 });
 
 
@@ -178,6 +178,11 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
             label: 'Test Plan'
         }
        })
+       .state("mobileperformance", {
+        url: "/dashboard/mobilePerformance",
+        templateUrl: "app/views/mobilePerformance.html",
+        controller: 'MobilePerformanceController'
+        })
         .state("myDevices", {
             url: "/dashboard/myDevices",
             templateUrl: "app/views/mydevices.html",
