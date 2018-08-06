@@ -317,6 +317,15 @@ oTech
 
             // fetching customer lists
             if (userId == -2) {
+                $scope.customersValue = [];
+                $scope.customerSettings = {
+                    scrollableHeight: '200px',
+                    scrollable: true,
+                    enableSearch: true
+                };
+                $scope.example2settings = {
+                    displayProp: 'customerId'
+                };
                 promise = AppServices.GetcustomerList(userId, token);
                 promise.then(function (data) {
                     $scope.dataLoading = true;
@@ -543,8 +552,10 @@ oTech
                 $rootScope.usecaseId = $scope.usecaseVal;
 
                 let customerListId = [];
-                for(let i = 0; i < $scope.customers.length; i++){
-                    customerListId.push(parseInt($scope.customers[i].customerId));
+                if ($scope.customers != undefined && $scope.customers.length > 0) {
+                    for(let i = 0; i < $scope.customers.length; i++){
+                        customerListId.push(parseInt($scope.customers[i].customerId));
+                    }
                 }
                 sendCreateData.customerListId = customerListId;
                 sendCreateData.taskVOList[0].taskCreatedBy = userId;
