@@ -437,11 +437,12 @@
                                                             <label class="text-semibold">Assign To Customer:</label>
                                                         </div>
                                                         <div class="col-lg-9">
-                                                            <select selectBoxPreSelected class='form-control'
+                                                            <!-- <select selectBoxPreSelected class='form-control'
                                                                     multiple="true"
                                                                     name="customersValue"
                                                                     ng-options="customer.customerName for customer in customers track by customer.customerId"
-                                                                    data-ng-model="customersValue"></select>
+                                                                    data-ng-model="customersValue"></select> -->
+                                                            <div ng-dropdown-multiselect="" options="customers" selected-model="customersValue" checkboxes="true" extra-settings="customerSettings"></div>
                                                         </div>
                                                     </div>
                                                 </div>
