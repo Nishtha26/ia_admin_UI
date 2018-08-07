@@ -5,6 +5,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     var market;
     var kpislider;
     var dataPerformanceList;
+    var coordinateDetailsList;
+    var centerInfo;
     var metricsTableData = [];
     var newDateList = [];
     window.onresize = function (event) {
@@ -48,13 +50,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         //console.log(sliderId, 'has changed with ', $scope.slider.value + " " + $scope.slider.minValue + " " + $scope.slider.maxValue);
         $scope.newDateList = updateDateSliderList($scope.slider.value, $scope.slider.maxValue)
         $scope.newDateList = $scope.newDateList
-                    .map(function (date) { return date.getTime() })
-                    .filter(function (date, i, array) {
-                        return array.indexOf(date) === i;
-                    })
-                    .map(function (time) { return new Date(time); });
-        console.log("new date list "+$scope.newDateList)
+            .map(function (date) { return date.getTime() })
+            .filter(function (date, i, array) {
+                return array.indexOf(date) === i;
+            })
+            .map(function (time) { return new Date(time); });
+        console.log("new date list " + $scope.newDateList)
         updateChart($scope.newDateList);
+        updateMapData($scope.newDateList, $scope.coordinateDetailsList, $scope.dataPerformanceList)
     };
 
     Array.prototype.contains = function (obj) {
@@ -68,8 +71,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function isInArray(array, value) {
-        return !!array.find(item => {return item.getTime() == value.getTime()});
-      }
+        return !!array.find(item => { return item.getTime() == value.getTime() });
+    }
 
     function updateChart(dateList) {
         var datavalues = {
@@ -81,8 +84,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             if (item.fulldate != null &&
                 !tempArray.contains(item.fulldate + " " + item.signalStrength)
             ) {
-               var date = new Date(item.fulldate)
-               date = new Date(date.getTime())
+                var date = new Date(item.fulldate)
+                date = new Date(date.getTime())
                 //console.log("date obj " + date)
                 if (isInArray(dateList, date)) {
                     //console.log(" matched date obj " + date)
@@ -165,6 +168,30 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         };
     }
 
+    function updateMapData(newDateList, coordinateDetails, mobilePerformanceDataList) {
+        var updateCoordinateList = [];
+        var updatedPerformanceDataList = [];
+        var tempArray = [];
+        for (var i in mobilePerformanceDataList) {
+            var item = mobilePerformanceDataList[i];
+            if (item.fulldate != null && coordinateDetails[i] != null &&
+                !tempArray.contains(item.fulldate + " " + coordinateDetails[i].latitude + " " + coordinateDetails[i].longitude)
+            ) {
+                var date = new Date(item.fulldate)
+                date = new Date(date.getTime())
+                if (isInArray(newDateList, date)) {
+                    tempArray.push(item.fulldate + " " + coordinateDetails[i].latitude + " " + coordinateDetails[i].longitude)
+                    updateCoordinateList.push(coordinateDetails[i])
+                    updatedPerformanceDataList.push(item)
+                }
+            }
+        }
+        console.log("Updated Coordinates are " + updateCoordinateList[0].latitude + "  " + updateCoordinateList[0].longitude)
+        //updateCoordinateList = filterDuplicateArray(updateCoordinateList)
+        //updatedPerformanceDataList = filterDuplicateArray(updatedPerformanceDataList)
+        MobilePerformanceService.showMobilePerformanceMap($scope.centerInfo, updateCoordinateList, updatedPerformanceDataList);
+    }
+
     /*
 		To get device availability data
 	*/
@@ -177,8 +204,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 //$scope.DeviceAvailabilityData = data;
                 var val1 = JSON.stringify(data)
                 $scope.dataPerformanceList = data.mobilePerformanceDataList.slice()
+                $scope.coordinateDetailsList = data.coordinateDetails.slice()
+                $scope.centerInfo = data.centerInfo
                 //console.log("JSON STRINGIFY " + val1)
-                MobilePerformanceService.showMobilePerformanceMap(data.centerInfo, data.coordinateDetails, data.mobilePerformanceDataList);
+                MobilePerformanceService.showMobilePerformanceMap($scope.centerInfo, data.coordinateDetails, data.mobilePerformanceDataList);
 
                 var locationarray = [];
                 var kpinamearray = [];
