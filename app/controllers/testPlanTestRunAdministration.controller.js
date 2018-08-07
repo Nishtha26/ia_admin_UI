@@ -23,7 +23,15 @@ oTech.controller('testPlanTestRunAdministration',
         var selectedRowsOfTestPlan = []
 
         $rootScope.slideContent();
-
+        $scope.selectedCustomersList = [];
+        $scope.customerSettings = {
+            scrollableHeight: '200px',
+            scrollable: true,
+            enableSearch: true
+        };
+        $scope.example2settings = {
+            displayProp: 'customerId'
+        };
 
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -2286,7 +2294,6 @@ oTech.controller('testPlanTestRunAdministration',
             cloneCopyOfJobDevice = "";
             $scope.tree2 = 0;
             var customerListArray = [];
-            var selectedCustomersList = [];
             //load all virtual device
 
             promise2 = testScriptService.fetchVirtualDevices(token, userId);
@@ -2301,16 +2308,6 @@ oTech.controller('testPlanTestRunAdministration',
 
             // fetching customer lists
             if (userId == -2) {
-                promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
-                promise2.then(
-                    function (data) {
-                        $scope.selectedCustomersList = data.customerList;
-                        console.log($scope.selectedCustomersList);
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
                 promise2 = AppServices.GetcustomerList(userId, token);
                 promise2.then(function (data) {
                     $(".btn-info").addClass("disabled");
@@ -2329,6 +2326,15 @@ oTech.controller('testPlanTestRunAdministration',
                     $scope.dataLoading = false;
                     console.log(err);
                 });
+                promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
+                promise2.then(
+                    function (data) {
+                        $scope.selectedCustomersList = data.customerList;
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
             }
             // virtual device loaded
             $scope.editTestPlanTab = true;
@@ -2714,8 +2720,10 @@ oTech.controller('testPlanTestRunAdministration',
 
             }
             let customerListId = [];
-            for (let i = 0; i < $scope.customersValue.length; i++) {
-                customerListId.push(parseInt($scope.customersValue[i]));
+            if ($scope.customersValue != undefined && $scope.customersValue.length > 0) {
+                for (let i = 0; i < $scope.customersValue.length; i++) {
+                    customerListId.push(parseInt($scope.customersValue[i]));
+                }   
             }
             sendCreateData.customerListId = customerListId;
 
