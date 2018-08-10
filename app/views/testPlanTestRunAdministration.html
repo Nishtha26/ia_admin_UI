@@ -942,9 +942,7 @@
                                                             <label class="text-semibold">Assign To Customer:</label>
                                                         </div>
                                                         <div class="col-lg-9">
-                                                            <select selectBoxPreSelected class='form-control' multiple="true" name="customersValue" data-ng-model="customersValue">
-                                                                <option ng-repeat="customer in customers" value="{{customer.customerId}}" ng-selected="selectedCustomersList.includes(customer.customerId)">{{customer.customerName}}</option>
-                                                            </select>
+                                                            <div ng-dropdown-multiselect="" options="customers" selected-model="selectedCustomersList" checkboxes="true" extra-settings="customerSettings"></div>
                                                         </div>
                                                     </div>
                                                 </div>
