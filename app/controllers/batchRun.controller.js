@@ -732,9 +732,15 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(data);
-                    $scope.selectedBatchRunForEditDetails = data;
+                    if (data.status === "No TestRunDetails Exists") {
+                        console.log("No TestRunDetails Exists");
+                        $scope.selectedBatchRunForEditDetails = {};
+                        $scope.BatchRunDetailsEditOptions.data = [];
+                    } else {
+                        $scope.selectedBatchRunForEditDetails = data;
+                        $scope.BatchRunDetailsEditOptions.data = data.batchRunsList;
+                    }
                     $scope.dataLoadingForTestRunDetailsForEditView = false;
-                    $scope.BatchRunDetailsEditOptions.data = data.batchRunsList;
                     $scope.BatchRunDetailsEditOptions.columnDefs[0].editDropdownOptionsArray = $scope.allTestRuns;
 
                 },
