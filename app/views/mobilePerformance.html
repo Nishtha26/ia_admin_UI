@@ -69,43 +69,46 @@
                     </div>
                     <img id="mapDataLoading" align="middle" ng-show="mapDataLoading" class="loading" src="images/please_wait.gif" style="position:absolute;top: 34%;z-index: 1;left: 46%"></img>
                     <section>
-                        <div id="DefaultReplayMap" ng-show="DefaultReplayMap" class="map-container" style="   width: 80%;display: block;position: relative;float: left;height: 560px;margin-right: 10px;"></div>
+                        <div id="DefaultReplayMap" ng-show="DefaultReplayMap" class="map-container" style="   width: 80%;float: left;height: 560px;margin-right: 10px;"></div>
                         <br>
-                        <div class="divTable" style="border: 1px solid #000;">
-                            <div><h4 style="text-align: center; background-color: rgba(238, 238, 238, 0.692); clear: both; position: relative;">Summary Data</h4></div>
-                            <table class="table table-bordered">
-                                <tbody>
+                        <div style="width: 19%;float: left;">
+                            <div class="divTable" style="border: 1px solid #000;">
+                                <table class="table table-bordered" style="table-layout: fixed; width: 100%">
                                     <tr>
-                                        <td ng-class="content-wrapper"># of SSID</td>
-                                        <td class="align-right">{{ssidList.length}}</td>
+                                            <thead><th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Summary Data</th></thead>
                                     </tr>
-                                    <tr>
-                                        <td ng-class="content-wrapper"># of BSSID</td>
-                                        <td class="align-right">{{bssidList.length}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <br>
-                       
-                        <div class="divTable" style="border: 1px solid #000;">
-                                <table class="table table-bordered">
+                                    <tbody> 
+                                        <tr>
+                                            <td ng-class="content-wrapper"># of SSID</td>
+                                            <td class="text-center">{{ssidList.length}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-class="content-wrapper"># of BSSID</td>
+                                            <td class="text-center">{{bssidList.length}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <div class="table-wrapper">
+                                <table class="table table-bordered" style="table-layout: fixed;">
                                     <thead>
-                                    <tr>
-                                      <th style="	background-color: rgba(238, 238, 238, 0.692);">KPI Name</th>
-                                      <th class="align-right" style="	background-color: rgba(238, 238, 238, 0.692);">Avg Value</th> 
-                                    </tr>
+                                        <tr>
+                                            <th style="	background-color: rgba(238, 238, 238, 0.692);">KPI Name</th>
+                                            <th class="text-center" style="	background-color: rgba(238, 238, 238, 0.692);">Avg Value</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="item in metricsTableData">
-                                      <td ng-class="nowrap">{{item.kpiName}}</td>
-                                      <td class="align-right">{{item.kpiAvg}}</td>
-                                    </tr>
+                                        <tr ng-repeat="item in metricsTableData">
+                                            <td ng-class="content-wrapper">{{item.name}}</td>
+                                            <td ng-class="content-wrapper">{{item.average}}</td>
+                                        </tr>
                                     </tbody>
-                                  </table>
-                                </div>
+                                </table>
+                            </div>
+                        </div>
                         <br />
-                        <nvd3 style=" width:99%;position:relative;position:relative;" options='options1' data='data1'></nvd3>
+                       
                         <!-- <div style=" width:99%;position:relative;height: 560px;  position:relative;" ng-include="'app/views/chart.html'"></div> -->
                     </section>
                 </div>
@@ -160,7 +163,7 @@
 
                                 <div class="form-group">
                                     <label>Location</label>
-                                    <select id="locationType" name="locationType" class="select" ng-model="locationType" ng-change="" required>
+                                    <select id="locationType" name="locationType" class="select" ng-model="locationType" ng-change="updateDashboard()" required>
                                         <option value="">Select </option>
                                         <option ng-repeat="locationType in locationTypeList" ng-selected="device.selected">{{locationType}}</option>
                                     </select>
@@ -174,7 +177,7 @@
 
                                     <div class="form-group">
                                         <label>SSID</label>
-                                        <select id="ssid" name="ssid" class="select" ng-model="ssid" ng-change="" required>
+                                        <select id="ssid" name="ssid" class="select" ng-model="ssid" ng-change="updateDashboard()" required>
                                             <option value="">Select </option>
                                             <option ng-repeat="ssid in ssidList" ng-selected="device.selected">{{ssid}}</option>
                                         </select>
@@ -188,7 +191,7 @@
 
                                         <div class="form-group">
                                             <label>BSSID</label>
-                                            <select id="bssid" name="bssid" class="select" ng-model="bssid" ng-change="" required>
+                                            <select id="bssid" name="bssid" class="select" ng-model="bssid" ng-change="updateDashboard()" required>
                                                 <option value="">Select </option>
                                                 <option ng-repeat="bssid in bssidList" ng-selected="device.selected">{{bssid}}</option>
                                             </select>
@@ -204,7 +207,7 @@
 
                                         <div class="form-group">
                                             <label>KPI Name</label>
-                                            <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" required>
+                                            <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
                                                 <option value="">Select </option>
                                                 <option ng-repeat="kpiname in kpinameList" ng-selected="device.selected" ng-model="kpiname">{{kpiname}}</option>
                                             </select>
@@ -233,7 +236,7 @@
 
                                         <div class="form-group">
                                             <label>Device ID</label>
-                                            <select id="deviceId" name="deviceId" class="select" ng-model="deviceId" required>
+                                            <select id="deviceId" name="deviceId" class="select" ng-model="deviceId" ng-change="updateDashboard()" required>
                                                 <option value="">Select </option>
                                                 <option ng-repeat="deviceId in deviceList" ng-selected="device.selected" ng-model="deviceId">{{deviceId}}</option>
                                             </select>
@@ -340,6 +343,7 @@
             <!-- /page container -->
             <!-- Footer -->
             <div ng-include="'app/views/footer/footer.html'"></div>
+                    <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
             <!-- /footer -->
             <script type="text/javascript">
                 $(document).ready(function () {

@@ -2,6 +2,8 @@
    /* DivTable.com */
 .divTable{
 	display: table;
+	overflow: auto;
+	table-layout: fixed
 }
 .divTableRow {
 	display: table-row;
@@ -27,4 +29,117 @@
 }
 .divTableBody {
 	display: table-row-group;
+	height: 30px;
+	overflow:auto;
 }
+
+.scrollable-area {
+	margin: auto;
+	  width: 100%;
+	  z-index: 999;
+	  height: 380px;
+	  border: 1px solid #ccc;
+	  overflow-y: auto; /* <-- here is what is important*/
+  }
+
+  .table-wrapper
+{
+    border: 1px solid yellowgreen;
+    height: 380px;
+    overflow-y: auto;
+}
+div.verticalScroll {
+    width: 100%;
+	height: 380px;
+	z-index: 999;
+    overflow: auto;
+}
+.table {
+    display: table;
+    table-layout: fixed;
+	width: 100%;
+    overflow: auto;
+}
+.th
+{
+	border: 1px solid black;
+	display: table-header-group;
+	height: 30px;
+	background-color: #fff;
+	text-align: center;
+}
+.td
+{
+	border: 1px solid black;
+	display: table-cell;
+	height: 30px;
+	text-align: center;
+    background-color: #fff;
+}
+.tr {
+    width: 100%;
+    display: table-row-group;
+    background: #e3e3e3;
+    text-align: center;
+}
+.tr:nth-child(2n+2)
+{
+    background: #d1d1d1;
+}
+
+table
+{
+	border: 1px solid black;
+    border-spacing:0;
+	table-layout:fixed;
+	border-radius: 5px 5px 0 0;
+}
+
+th, td
+{
+	border: 0px solid red;
+	height: 30px;
+	border-radius: 5px 5px 0 0;
+	width: 100%;
+	background-color: #fff;	
+    vertical-align: middle;
+}
+table td.key {
+    font-weight: normal;
+}
+
+table td.key.total {
+    font-weight: bold;
+}
+
+table td.value {
+    text-align: right;
+    font-weight: bold;
+}
+
+table td.percent {
+    color: darkgray;
+}
+
+table tr.highlight td {
+    padding: 1px 9px 1px 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+table td.legend-color-guide div {
+    width: 8px;
+    height: 8px;
+    vertical-align: middle;
+}
+
+table td.legend-color-guide div {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #999;
+}
+tbody:nth-child(2n+2){background-color: #f2f2f2}
+  
+  
