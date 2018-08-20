@@ -44,7 +44,7 @@
 
   .table-wrapper
 {
-    border: 1px solid yellowgreen;
+    border: 1px solid black;
     height: 380px;
     overflow-y: auto;
 }
@@ -87,21 +87,27 @@ div.verticalScroll {
     background: #d1d1d1;
 }
 
-table
-{
-	border: 1px solid black;
-    border-spacing:0;
-	table-layout:fixed;
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+	border-color: inherit;
 	border-radius: 5px 5px 0 0;
 }
 
-th, td
+table
 {
-	border: 0px solid red;
+	border: 1px solid black;
+	table-layout:fixed;
+    border-spacing:0;
+}
+
+td
+{
+	border: 0px;
 	height: 30px;
+	margin: 0px;
 	border-radius: 5px 5px 0 0;
 	width: 100%;
-	background-color: #fff;	
     vertical-align: middle;
 }
 table td.key {
@@ -109,12 +115,14 @@ table td.key {
 }
 
 table td.key.total {
-    font-weight: bold;
+	font-weight: bold;
+	margin: 5px;
 }
 
 table td.value {
     text-align: right;
-    font-weight: bold;
+	font-weight: bold;
+	margin-left: 20px;
 }
 
 table td.percent {
@@ -122,7 +130,7 @@ table td.percent {
 }
 
 table tr.highlight td {
-    padding: 1px 9px 1px 0;
+    padding: 5px 9px 5px 9px;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-top-style: solid;
@@ -140,6 +148,13 @@ table td.legend-color-guide div {
     height: 12px;
     border: 1px solid #999;
 }
-tbody:nth-child(2n+2){background-color: #f2f2f2}
+.even {
+    background-color: white;
+  }
+  
+  .odd {
+    background-color: lightcyan;
+  }
+  
   
   

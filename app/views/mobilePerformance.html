@@ -99,7 +99,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in metricsTableData">
+                                        <tr ng-repeat="item in metricsTableData" ng-class="$index % 2 == 0 ? 'even' : 'odd'">
                                             <td ng-class="content-wrapper">{{item.name}}</td>
                                             <td ng-class="content-wrapper">{{item.average}}</td>
                                         </tr>
@@ -114,11 +114,14 @@
                 </div>
             </div>
             <!-- /circle shapes -->
+            <div class="panel panel-white">
+            <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+        </div>
             <!-- /main area -->
         </div>
         <!-- /main content -->
 
-
+        
 
         <!-- Secondary sidebar -->
         <div class="sidebar sidebar-secondary sidebar-default">
@@ -343,7 +346,7 @@
             <!-- /page container -->
             <!-- Footer -->
             <div ng-include="'app/views/footer/footer.html'"></div>
-                    <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+                   
             <!-- /footer -->
             <script type="text/javascript">
                 $(document).ready(function () {
@@ -391,3 +394,4 @@
                     });
                 });
             </script>
+            

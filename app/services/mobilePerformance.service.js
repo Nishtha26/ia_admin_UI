@@ -170,7 +170,7 @@ oTech.service('MobilePerformanceService',
         return deferred.promise; 
     }
 
-service.showMobilePerformanceMap = function(centerInfo,coordinateDetails, mobilePerformanceDataList)
+service.showMobilePerformanceMap = function(centerInfo, mobilePerformanceDataList)
 {
     var markers = [];
     /*for(i =0 ;i < lat.length ;i++)
@@ -193,8 +193,9 @@ service.showMobilePerformanceMap = function(centerInfo,coordinateDetails, mobile
            var infoWindow = new google.maps.InfoWindow();
            var lat_lng = new Array();
            var latlngbounds = new google.maps.LatLngBounds();
-           for (var index = 0; index < coordinateDetails.length; index++) {
-            var point = new google.maps.LatLng(coordinateDetails[index].latitude,coordinateDetails[index].longitude);
+           console.log("new map points length "+mobilePerformanceDataList.length)
+           for (var index = 0; index < mobilePerformanceDataList.length; index++) {
+            var point = new google.maps.LatLng(mobilePerformanceDataList[index].latitude,mobilePerformanceDataList[index].longitude);
             var img = ""
             if(img==""){
                 img='images/red.png';
