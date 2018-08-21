@@ -60,9 +60,69 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 return array.indexOf(date) === i;
             })
             .map(function (time) { return new Date(time); });
-        console.log("new date list " + $scope.newDateList)
-        updateChart($scope.newDateList);
-        updateMapData($scope.newDateList, $scope.coordinateDetailsList, $scope.dataPerformanceList)
+        //console.log("new date list " + $scope.newDateList)
+        var updatedPerformanceDataList = [];
+        var datavalues = {
+            values: []
+        };
+        var tempArray = [];
+        var mapTempArray = [];
+        for (var i = 0; i < $scope.dataPerformanceList.length - 1; i++) {
+            var item = $scope.dataPerformanceList[i];
+            if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
+                && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
+                && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
+                && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
+                && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
+                if (item.latitude != 0 && item.longitude != 0) {
+                    if (item.fulldate != null && !tempArray.contains(item.fulldate + " " + item.signalStrength)) {
+                        var date = new Date(item.fulldate)
+                        date = new Date(date.getTime())
+                        //console.log("date obj " + date)
+                        if (isInArray($scope.newDateList, date)) {
+                            //console.log(" matched date obj " + date)
+                            tempArray.push(item.fulldate + " " + item.signalStrength)
+                            datavalues.values.push({
+                                "label": item.fulldate, "value": item.signalStrength,
+                            });
+                        }
+                    }
+                    mapTempArray.push(item.latitude + " " + item.longitude)
+                    //updateCoordinateList.push(mobilePerformanceDataList[i])
+                    updatedPerformanceDataList.push(item)
+
+                    if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
+                        // console.log("KPI NAME "+item.kpiname)
+                        //console.log("KPI VALUE "+item.kpivalue)
+                        var kpi_name = item.kpiname
+                        var kpi_value = parseFloat(item.kpivalue)
+                        if ((!(typeof (kpi_name) === 'undefined'))) {
+                            $scope.metricsTableData.push(
+                                {
+                                    [kpi_name]: kpi_value
+                                }
+                            )
+                        }
+                    }
+                }
+
+            }
+        }
+        // console.log(" Before Avg " + JSON.stringify($scope.metricsTableData))
+        $scope.metricsTableData = Array.from($scope.metricsTableData.reduce(
+            (acc, obj) => Object.keys(obj).reduce(
+                (acc, key) => typeof obj[key] == "number"
+                    ? acc.set(key, (acc.get(key) || []).concat(obj[key]))
+                    : acc,
+                acc),
+            new Map()),
+            ([name, values]) =>
+                ({ name, average: (values.reduce((a, b) => a + b) / values.length).toFixed(2) })
+        );
+
+        //console.log(" After Avg " + JSON.stringify($scope.metricsTableData))
+        updateChart(datavalues);
+        updateMapData(updatedPerformanceDataList)
     }
     Array.prototype.contains = function (obj) {
         var i = this.length;
@@ -78,35 +138,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         return !!array.find(item => { return item.getTime() == value.getTime() });
     }
 
-    function updateChart(dateList) {
-        var datavalues = {
-            values: []
-        };
-        var tempArray = [];
-        for(var i = 0; i < $scope.dataPerformanceList.length-1; i++) {
-            var item = $scope.dataPerformanceList[i];
-            if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
-                && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
-                    && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
-                        && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
-                            && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
-                if (item.fulldate != null && $scope.dataPerformanceList.latitude != 0 && $scope.dataPerformanceList.longitude != 0 &&
-                    !tempArray.contains(item.fulldate + " " + item.signalStrength)
-                ) {
-                    var date = new Date(item.fulldate)
-                    date = new Date(date.getTime())
-                    //console.log("date obj " + date)
-                    if (isInArray(dateList, date)) {
-                        //console.log(" matched date obj " + date)
-                        tempArray.push(item.fulldate + " " + item.signalStrength)
-                        datavalues.values.push({
-                            "label": item.fulldate, "value": item.signalStrength,
-                        });
-                    }
-                }
-            }
-        }
-        console.log("updated graph list "+datavalues.values.length)
+    function updateChart(datavalues) {
+        console.log("updated graph list " + datavalues.values.length)
         $scope.options1 = {
             chart: {
                 type: 'discreteBarChart',
@@ -162,6 +195,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         var sorted = $scope.dateList.sort(sortDates);
         var minDate = sorted[0];
         var maxDate = sorted[sorted.length - 1];
+        console.log(minDate + " " + maxDate)
         $scope.slider = {
             minValue: minDate,
             maxValue: maxDate,
@@ -195,42 +229,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         updateDashboardContent()
     }
 
-    function updateMapData(newDateList, coordinateDetails, mobilePerformanceDataList) {
-        var updateCoordinateList = [];
-        var updatedPerformanceDataList = [];
-        var tempArray = [];
-      //  console.log(mobilePerformanceDataList)
-        console.log("Updated values are deviceId " + $scope.deviceId + " kpiname " + $scope.kpiname + " bssid " + $scope.bssid + " ssid " + $scope.ssid + " locationType " + $scope.locationType)
-        for(var i = 0; i < mobilePerformanceDataList.length-1; i++) {
-            var item = mobilePerformanceDataList[i];
-          //  console.log(item.wifiBSSID)
-           if(!(typeof ($scope.locationType) === 'undefined') && item.locationType.toLowerCase() == $scope.locationType.toLowerCase())
-            {
-                console.log("Match Found "+$scope.locationType+" "+item.locationType)
-            }
-            if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
-                && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
-                    && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
-                        && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
-                            && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
-                if (mobilePerformanceDataList[i].latitude != 0 && mobilePerformanceDataList[i].longitude != 0 
-                ) 
-                {
-                    // var date = new Date(item.fulldate)
-                    // date = new Date(date.getTime())
-                    // if (isInArray(newDateList, date)) {
-                        //console.log(" Location Type "+i)
-                       // console.log("Updated Coordinates are " + mobilePerformanceDataList[i].latitude + "  " + mobilePerformanceDataList[i].longitude)
-                        tempArray.push(mobilePerformanceDataList[i].latitude + " " + mobilePerformanceDataList[i].longitude)
-                        //updateCoordinateList.push(mobilePerformanceDataList[i])
-                        updatedPerformanceDataList.push(item)
-                  //  }
-                }
-            }
-        }
-        
-        //updateCoordinateList = filterDuplicateArray(updateCoordinateList)
-        //updatedPerformanceDataList = filterDuplicateArray(updatedPerformanceDataList)
+    function updateMapData(updatedPerformanceDataList) {
         MobilePerformanceService.showMobilePerformanceMap($scope.centerInfo, updatedPerformanceDataList);
     }
 
@@ -246,7 +245,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 //$scope.DeviceAvailabilityData = data;
                 var val1 = JSON.stringify(data)
                 $scope.dataPerformanceList = data.mobilePerformanceDataList.slice()
-               // console.log($scope.dataPerformanceList)
+                // console.log($scope.dataPerformanceList)
                 //$scope.coordinateDetailsList = data.coordinateDetails.slice()
                 $scope.centerInfo = data.centerInfo
                 //console.log("JSON STRINGIFY " + val1)
@@ -298,34 +297,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                             "label": item.fulldate, "value": item.signalStrength,
                         });
                     }
-                    if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
-                        // console.log("KPI NAME "+item.kpiname)
-                        //console.log("KPI VALUE "+item.kpivalue)
-                        var kpi_name = item.kpiname
-                        var kpi_value = parseFloat(item.kpivalue)
-                        if ((!(typeof (kpi_name) === 'undefined'))) {
-                            $scope.metricsTableData.push(
-                                {
-                                    [kpi_name]: kpi_value
-                                }
-                            )
-                        }
-                    }
                 }
-               // console.log(" Before Avg " + JSON.stringify($scope.metricsTableData))
-                $scope.metricsTableData = Array.from($scope.metricsTableData.reduce(
-                    (acc, obj) => Object.keys(obj).reduce(
-                        (acc, key) => typeof obj[key] == "number"
-                            ? acc.set(key, (acc.get(key) || []).concat(obj[key]))
-                            : acc,
-                        acc),
-                    new Map()),
-                    ([name, values]) =>
-                        ({ name, average: (values.reduce((a, b) => a + b) / values.length).toFixed(2) })
-                );
-
-                //console.log(" After Avg " + JSON.stringify($scope.metricsTableData))
-
                 locationarray = filterDuplicateArray(locationarray)
                 kpinamearray = filterDuplicateArray(kpinamearray)
                 deviceIdarray = filterDuplicateArray(deviceIdarray)
@@ -352,7 +324,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 // console.log($scope.kpivalueList);
                 //  console.log($scope.ssidList);
                 // console.log($scope.bssidList);
-               // console.log($scope.dateList);
+                console.log($scope.dateList);
                 //console.log(JSON.stringify(datavalues.values))
                 //  console.log(Math.min.apply(Math, kpivaluearray));
                 //  console.log(Math.max.apply(Math, kpivaluearray));
