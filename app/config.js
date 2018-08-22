@@ -132,8 +132,7 @@ oApp.config = {
             type: "Network Performance"
         }
     ],
-    BASE_URL: 'http://test.orchestratec.net:8080/IAPORTAL/',
-    //BASE_URL: 'http://127.0.0.1:8080/IAPORTAL/',
+    BASE_URL: 'http://localhost:8080/IAPORTAL/',
     MEASUREMENT_URL: 'http://test.orchestratec.net:8080/IAPORTAL/rest/measurement/',
     REPORT_HOST_URL: 'http://iareport.orchestratec.net/',
     REPORT_NAME: 'ConsolidatedKPI5_13/HomePage',
