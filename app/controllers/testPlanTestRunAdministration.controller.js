@@ -2308,37 +2308,37 @@ oTech.controller('testPlanTestRunAdministration',
             );
 
             // fetching customer lists
-            if (userId == -2) {
-                promise2 = AppServices.GetcustomerList(userId, token);
-                promise2.then(function (data) {
-                    $(".btn-info").addClass("disabled");
-                    $scope.customerListArray = [];
-                    $.map(data.customerDetails, function (item, index) {
-                        var temp = {};
-                        temp['customerId'] = item.customerId;
-                        temp['customerName'] = item.customerName;
-                        $scope.customerListArray.push(temp);
-                    });
-                    $scope.customers = $scope.customerListArray;
-                    $scope.dataLoading = false;
-                    $(".btn-info").removeClass("disabled");
-                },
-                function (err) {
-                    $scope.dataLoading = false;
-                    console.log(err);
-                });
-                promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
+            // if (userId == -2) {
+            //     promise2 = AppServices.GetcustomerList(userId, token);
+            //     promise2.then(function (data) {
+            //         $(".btn-info").addClass("disabled");
+            //         $scope.customerListArray = [];
+            //         $.map(data.customerDetails, function (item, index) {
+            //             var temp = {};
+            //             temp['customerId'] = item.customerId;
+            //             temp['customerName'] = item.customerName;
+            //             $scope.customerListArray.push(temp);
+            //         });
+            //         $scope.customers = $scope.customerListArray;
+            //         $scope.dataLoading = false;
+            //         $(".btn-info").removeClass("disabled");
+            //     },
+            //     function (err) {
+            //         $scope.dataLoading = false;
+            //         console.log(err);
+            //     });
+            //     promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
 
-                promise2.then(
-                    function (data) {
-                        console.log(JSON.stringify(data));
-                        $scope.selectedCustomersList = data.customerList;
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-            }
+            //     promise2.then(
+            //         function (data) {
+            //             console.log(JSON.stringify(data));
+            //             $scope.selectedCustomersList = data.customerList;
+            //         },
+            //         function (err) {
+            //             console.log(err);
+            //         }
+            //     );
+            // }
             // virtual device loaded
             $scope.editTestPlanTab = true;
             // load test plan
