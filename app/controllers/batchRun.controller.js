@@ -261,13 +261,15 @@ oTech.controller('batchRun',
                 {
                     name: 'Start Time',
                     field: 'jobStartDateTime',
-                    enableCellEdit: false,
+                    cellFilter: 'date:"yyyy-MM-dd hh:mm:ss"',
+                    enableCellEdit: true,
                     width: '15%'
                 },
                 {
                     width: '15%',
                     name: 'End Date',
-                    field: 'date',
+                    cellFilter: 'date:"yyyy-MM-dd hh:mm:ss"',
+                    field: 'jobEndDateTime',
                     enableCellEdit: false,
                 },
                 {
@@ -313,18 +315,39 @@ oTech.controller('batchRun',
                 var batchRunId = $scope.selectedBatchRunForEdit.id;
                 var oldValue = oldValue;
                 var newValue = newValue;
+                console.log("Row Entity ::" + JSON.stringify(rowEntity));
+                console.log("ColDef ::" + JSON.stringify(colDef));
                 console.log("BatchRunId ::" + JSON.stringify(batchRunId));
-                promise = testScriptService.replaceTestRunFromBatchRun(token, userId, batchRunId, oldValue, newValue, isActive);
-                promise.then(
-                    function (data) {
-                        console.log(JSON.stringify(data));
-                        toastr.success('TestRun Changed', 'Success')
-                    },
-                    function (err) {
-                        console.log(err);
-                        toastr.error('Something , try again!', 'Error')
-                    }
-                );
+                if (colDef.field == "jobStartDateTime") {
+                    var testRunId = rowEntity.jobId;
+                    var startDateTime = newValue;
+                    promise = testScriptService.editTestRunStartTime(token, userId, batchRunId,testRunId,startDateTime);
+                    promise.then(
+                        function (data) {
+                            console.log(JSON.stringify(data));
+                            rowEntity.jobEndDateTime = data;
+                            toastr.success('TestRun StartTime Updated', 'Success')
+                        },
+                        function (err) {
+                            console.log(err);
+                            toastr.error('Something , try again!', 'Error')
+                            rowEntity[colDef.name] = oldValue;
+                        }
+                    );
+                } else {
+                    promise = testScriptService.replaceTestRunFromBatchRun(token, userId, batchRunId, oldValue, newValue, isActive);
+                    promise.then(
+                        function (data) {
+                            console.log(JSON.stringify(data));
+                            toastr.success('TestRun Changed', 'Success')
+                        },
+                        function (err) {
+                            console.log(err);
+                            toastr.error('Something , try again!', 'Error')
+                            rowEntity[colDef.name] = oldValue;
+                        }
+                    );
+                }
                 $scope.$apply();
             });
         };
@@ -594,7 +617,7 @@ oTech.controller('batchRun',
             $scope.testPlanViewDetails = [];
             $scope.selectedBatchRun = row.entity;
             console.log(JSON.stringify(testRuns));
-            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
+            promise = testScriptService.getTestRunsDetails(token, userId, $scope.selectedBatchRun.id, testRuns);
             promise.then(
                 function (data) {
                     console.log(data);
@@ -728,7 +751,7 @@ oTech.controller('batchRun',
             $scope.dataLoadingForTestRunDetailsForEditView = true;
             $scope.selectedBatchRunForEdit = row.entity;
             console.log(JSON.stringify(testRuns));
-            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
+            promise = testScriptService.getTestRunsDetails(token, userId, $scope.selectedBatchRun.id, testRuns);
             promise.then(
                 function (data) {
                     console.log(data);

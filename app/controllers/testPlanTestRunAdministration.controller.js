@@ -2276,6 +2276,7 @@ oTech.controller('testPlanTestRunAdministration',
         }
 
         /* edit test plan */
+        $scope.selectedCustomersList = [];
         var editVirtualDevice = [];
         $scope.deviceProfileListForEdit = [];
         var deepCopyObjectForEditTestPlan = "";
@@ -2327,8 +2328,10 @@ oTech.controller('testPlanTestRunAdministration',
                     console.log(err);
                 });
                 promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
+
                 promise2.then(
                     function (data) {
+                        console.log(JSON.stringify(data));
                         $scope.selectedCustomersList = data.customerList;
                     },
                     function (err) {
