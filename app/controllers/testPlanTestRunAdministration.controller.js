@@ -2722,13 +2722,13 @@ oTech.controller('testPlanTestRunAdministration',
 
 
             }
-            let customerListId = [];
-            if ($scope.customersValue != undefined && $scope.customersValue.length > 0) {
-                for (let i = 0; i < $scope.customersValue.length; i++) {
-                    customerListId.push(parseInt($scope.customersValue[i]));
-                }   
-            }
-            sendCreateData.customerListId = customerListId;
+            // let customerListId = [];
+            // if ($scope.customersValue != undefined && $scope.customersValue.length > 0) {
+            //     for (let i = 0; i < $scope.customersValue.length; i++) {
+            //         customerListId.push(parseInt($scope.customersValue[i]));
+            //     }   
+            // }
+            // sendCreateData.customerListId = customerListId;
 
             var jsonData = JSON.stringify(sendCreateData);
             var jobDeviceId = "";
