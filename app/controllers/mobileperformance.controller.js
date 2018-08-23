@@ -45,6 +45,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $scope.onSliderChange = function (sliderId) {
         console.log(sliderId, 'has changed with ', $scope.rangeSlider.value);
         $scope.kpislider = $scope.rangeSlider.value;
+        updateDashboardContent()
     };
 
     $scope.onDateSliderChange = function (sliderId) {
@@ -52,7 +53,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         updateDashboardContent()
     };
 
+    function between(x, min, max) {
+        var isthere = x >= min && x <= max
+        //console.log(isthere)
+        return isthere;
+    }
+
     function updateDashboardContent() {
+        console.log('has changed with ' + $scope.rangeSlider.value + " Max Value " + $scope.rangeSlider.maxValue);
         $scope.newDateList = updateDateSliderList($scope.slider.value, $scope.slider.maxValue)
         $scope.newDateList = $scope.newDateList
             .map(function (date) { return date.getTime() })
@@ -67,30 +75,44 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         };
         var tempArray = [];
         var mapTempArray = [];
-        for (var i = 0; i < $scope.dataPerformanceList.length - 1; i++) {
+        //var ssidarray = [];
+        //var bssidarray = [];
+        var mncarray = [];
+        var cellarray = [];
+        for (var i = 0; i < $scope.dataPerformanceList.length; ++i) {
             var item = $scope.dataPerformanceList[i];
             if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
                 && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
-                && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
-                && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
+                //  && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
+                //  && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
+                // && ((typeof ($scope.rangeSlider.value) === 'undefined') ? item.kpivalue != null : (item.kpivalue != null && parseFloat(item.kpivalue) == $scope.rangeSlider.value))
                 && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
-                if (item.latitude != 0 && item.longitude != 0) {
-                    if (item.fulldate != null && !tempArray.contains(item.fulldate + " " + item.signalStrength)) {
-                        var date = new Date(item.fulldate)
-                        date = new Date(date.getTime())
-                        //console.log("date obj " + date)
-                        if (isInArray($scope.newDateList, date)) {
-                            //console.log(" matched date obj " + date)
-                            tempArray.push(item.fulldate + " " + item.signalStrength)
-                            datavalues.values.push({
-                                "label": item.fulldate, "value": item.signalStrength,
-                            });
-                        }
-                    }
-                    mapTempArray.push(item.latitude + " " + item.longitude)
-                    //updateCoordinateList.push(mobilePerformanceDataList[i])
-                    updatedPerformanceDataList.push(item)
+                if ((typeof ($scope.kpiname) === 'undefined') ? (item.kpivalue != null || item.kpivalue != "") : between(item.kpivalue, $scope.rangeSlider.value, $scope.rangeSlider.maxValue)) {
+                        if (item.latitude != 0 && item.longitude != 0) {
+                            if (item.fulldate != null) {
+                                var date = new Date(item.fulldate)
+                                date = new Date(date.getTime())
+                                //console.log("date obj " + date)
+                                if (isInArray($scope.newDateList, date)) {
+                                    if (!mapTempArray.contains(item.latitude + " " + item.longitude)) {
+                                        mapTempArray.push(item.latitude + " " + item.longitude)
+                                        //updateCoordinateList.push(mobilePerformanceDataList[i])
+                                        updatedPerformanceDataList.push(item)
+                                    }
+                                    if (!tempArray.contains(item.fulldate + " " + item.signalStrength)) {
+                                        tempArray.push(item.fulldate + " " + item.signalStrength)
+                                        if (item.signalStrength != 0) {
+                                            datavalues.values.push({
+                                                "label": item.fulldate, "value": item.signalStrength,
+                                            });
+                                        }
+                                    }
 
+
+                                }
+                            }
+                        }
+                    
                     if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
                         // console.log("KPI NAME "+item.kpiname)
                         //console.log("KPI VALUE "+item.kpivalue)
@@ -104,10 +126,22 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                             )
                         }
                     }
+                    //ssidarray.push(item.wifiSSID);
+                    //bssidarray.push(item.wifiBSSID);
+                    if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
+                    if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
                 }
 
             }
         }
+
+        // $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
+        // $scope.bssidCount = (filterDuplicateArray(bssidarray)).length
+        console.log("Updated mnc list " + filterDuplicateArray(mncarray))
+        console.log("Updated mnc list " + filterDuplicateArray(cellarray))
+        $scope.cellCount = (filterDuplicateArray(cellarray)).length
+        $scope.mncCount = (filterDuplicateArray(mncarray)).length
+
         // console.log(" Before Avg " + JSON.stringify($scope.metricsTableData))
         $scope.metricsTableData = Array.from($scope.metricsTableData.reduce(
             (acc, obj) => Object.keys(obj).reduce(
@@ -139,13 +173,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateChart(datavalues) {
-        console.log("updated graph list " + datavalues.values.length)
+        // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        console.log("updated graph length " + datavalues.values.length)
         $scope.options1 = {
             chart: {
                 type: 'discreteBarChart',
-                height: 400,
+                height: 450,
                 margin: {
-                    top: 20,
+                    top: 40,
                     right: 20,
                     bottom: 60,
                     left: 55
@@ -158,10 +193,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'Full Date'
+                    axisLabel: 'X Axis'
                 },
                 yAxis: {
-                    axisLabel: 'Signal Strength (dbm)',
+                    axisLabel: 'Y Axis',
                     axisLabelDistance: -10
                 }
             }
@@ -170,6 +205,19 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             key: "Cumulative Return",
             values: datavalues.values
         }];
+    }
+
+    var colorCategory = d3.scale.category20b()
+    $scope.colorFunction = function () {
+        return function (d, i) {
+            return colorCategory(i);
+        };
+    }
+
+    $scope.xAxisTickFormatFunction = function () {
+        return function (d) {
+            return d3.time.format('%b')(new Date(d));
+        }
     }
 
     function sortDates(a, b) {
@@ -216,12 +264,11 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $scope.updateDashboard = function () {
         var deviceId = $scope.deviceId
         var kpiname = $scope.kpiname
-        var bssid = $scope.bssid
-        var ssid = $scope.ssid
+        //var bssid = $scope.bssid
+        //  var ssid = $scope.ssid
         var locationType = $scope.locationType
 
-        if (typeof (kpiname) === 'undefined' && typeof (deviceId) === 'undefined' && typeof (bssid) === 'undefined'
-            && typeof (ssid) === 'undefined' && typeof (locationType) === 'undefined') {
+        if (typeof (kpiname) === 'undefined' && typeof (deviceId) === 'undefined' && typeof (locationType) === 'undefined') {
             //return;
         }
 
@@ -242,21 +289,15 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         promise = MobilePerformanceService.mobilePerformance(userId, token);
         promise.then(
             function (data) {
-                //$scope.DeviceAvailabilityData = data;
                 var val1 = JSON.stringify(data)
-                $scope.dataPerformanceList = data.mobilePerformanceDataList.slice()
-                // console.log($scope.dataPerformanceList)
-                //$scope.coordinateDetailsList = data.coordinateDetails.slice()
+                $scope.dataPerformanceList = data.mobilePerformanceDataList
                 $scope.centerInfo = data.centerInfo
-                //console.log("JSON STRINGIFY " + val1)
-                // MobilePerformanceService.showMobilePerformanceMap($scope.centerInfo, data.coordinateDetails, data.mobilePerformanceDataList);
-
                 var locationarray = [];
                 var kpinamearray = [];
                 var deviceIdarray = [];
                 var kpivaluearray = [];
-                var ssidarray = [];
-                var bssidarray = [];
+                //var ssidarray = [];
+                //var bssidarray = [];
                 var fulldatearray = [];
                 var datavalues = {
                     values: []
@@ -277,12 +318,12 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     if (data.mobilePerformanceDataList[i].kpivalue != null) {
                         kpivaluearray.push(parseFloat(data.mobilePerformanceDataList[i].kpivalue));
                     }
-                    if (data.mobilePerformanceDataList[i].wifiSSID != null) {
-                        ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
-                    }
-                    if (data.mobilePerformanceDataList[i].wifiBSSID != null) {
-                        bssidarray.push(data.mobilePerformanceDataList[i].wifiBSSID);
-                    }
+                    // if (data.mobilePerformanceDataList[i].wifiSSID != null) {
+                    //     ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
+                    // }
+                    // if (data.mobilePerformanceDataList[i].wifiBSSID != null) {
+                    //     bssidarray.push(data.mobilePerformanceDataList[i].wifiBSSID);
+                    // }
                     if (item.signalStrength == null) {
                         item.signalStrength = "0"
                     }
@@ -298,37 +339,21 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                         });
                     }
                 }
-                locationarray = filterDuplicateArray(locationarray)
-                kpinamearray = filterDuplicateArray(kpinamearray)
-                deviceIdarray = filterDuplicateArray(deviceIdarray)
-                kpivaluearray = filterDuplicateArray(kpivaluearray)
-                ssidarray = filterDuplicateArray(ssidarray)
-                bssidarray = filterDuplicateArray(bssidarray)
-                fulldatearray = fulldatearray
+                $scope.locationTypeList = filterDuplicateArray(locationarray)
+                $scope.kpinameList = filterDuplicateArray(kpinamearray)
+                $scope.deviceList = filterDuplicateArray(deviceIdarray)
+                $scope.kpivalueList = filterDuplicateArray(kpivaluearray)
+                // $scope.ssidList = filterDuplicateArray(ssidarray)
+                // $scope.bssidList = filterDuplicateArray(bssidarray)
+                // $scope.ssidCount = $scope.ssidList.length
+                // $scope.bssidCount = $scope.bssidList.length
+                $scope.dateList = fulldatearray
                     .map(function (date) { return date.getTime() })
                     .filter(function (date, i, array) {
                         return array.indexOf(date) === i;
                     })
                     .map(function (time) { return new Date(time); });
-
-                $scope.locationTypeList = locationarray
-                $scope.kpinameList = kpinamearray
-                $scope.deviceList = deviceIdarray
-                $scope.kpivalueList = kpivaluearray
-                $scope.ssidList = ssidarray
-                $scope.bssidList = bssidarray
-                $scope.dateList = fulldatearray
-                //  console.log($scope.locationTypeList);
-                // console.log($scope.kpinameList);
-                //  console.log($scope.deviceList);
-                // console.log($scope.kpivalueList);
-                //  console.log($scope.ssidList);
-                // console.log($scope.bssidList);
-                console.log($scope.dateList);
-                //console.log(JSON.stringify(datavalues.values))
-                //  console.log(Math.min.apply(Math, kpivaluearray));
-                //  console.log(Math.max.apply(Math, kpivaluearray));
-
+                // console.log($scope.dateList);
                 updateDateSlider();
                 $scope.rangeSlider = {
                     minValue: Math.min.apply(Math, kpivaluearray),
@@ -375,7 +400,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     //    discrete Bar Chart
     $scope.options2 = {
         chart: {
-            type: 'discreteBarChart',
+            type: 'multiBarChart',
             height: 450,
             margin: {
                 top: 20,
@@ -385,7 +410,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             },
             x: function (d) { return d.label; },
             y: function (d) { return d.value; },
-            showValues: true,
+            showValues: false,
             valueFormat: function (d) {
                 return d3.format(',.4f')(d);
             },
@@ -403,6 +428,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         key: "Cumulative Return",
         values: [
             { "label": "A", "value": -29.765957771107 },
+            { "label": "A", "value": -19.765957771107 },
+            { "label": "A", "value": -9.765957771107 },
+            { "label": "A", "value": 29.765957771107 },
+            { "label": "A", "value": -39.765957771107 },
             { "label": "B", "value": 0 },
             { "label": "C", "value": 32.807804682612 },
             { "label": "D", "value": 196.45946739256 },

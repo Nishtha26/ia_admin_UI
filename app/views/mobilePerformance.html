@@ -79,12 +79,12 @@
                                     </tr>
                                     <tbody> 
                                         <tr>
-                                            <td ng-class="content-wrapper"># of SSID</td>
-                                            <td class="text-center">{{ssidList.length}}</td>
+                                            <td ng-class="content-wrapper"># of MNCs</td>
+                                            <td class="text-center">{{mncCount}}</td>
                                         </tr>
                                         <tr>
-                                            <td ng-class="content-wrapper"># of BSSID</td>
-                                            <td class="text-center">{{bssidList.length}}</td>
+                                            <td ng-class="content-wrapper"># of Cells</td>
+                                            <td class="text-center">{{cellCount}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,6 +116,17 @@
             <!-- /circle shapes -->
             <div class="panel panel-white">
             <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+            <!-- <nvd3-discrete-bar-chart
+            data="exampleData"
+            id="exampleId"
+            width="600"
+            height="450"
+            tooltips="true"
+            showXAxis="true"
+            showYAxis="true"
+            showValues="true">
+        <svg></svg>
+    </nvd3-discrete-bar-chart> -->
         </div>
             <!-- /main area -->
         </div>
@@ -177,7 +188,7 @@
                                         <div ng-message="required">**Location type is required</div>
                                     </div>
                                     <br/>
-
+<!-- This will be for WiFi Performance
                                     <div class="form-group">
                                         <label>SSID</label>
                                         <select id="ssid" name="ssid" class="select" ng-model="ssid" ng-change="updateDashboard()" required>
@@ -207,7 +218,7 @@
                                             </div>
                                             <br/>
                                         </div>
-
+-->
                                         <div class="form-group">
                                             <label>KPI Name</label>
                                             <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
