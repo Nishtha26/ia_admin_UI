@@ -2343,6 +2343,24 @@ oApp.config = {
                     return '' + row.entity.msisdn + '';
                 }
             },
+            {
+                displayName: 'ADBID',
+                field: 'adbid',
+                width: "15%",
+                enableCellEdit: true,
+                cellTooltip: function (row, col) {
+                    return '' + row.entity.adbid + '';
+                }
+            },
+            {
+                displayName: 'Port',
+                field: 'port',
+                width: "15%",
+                enableCellEdit: true,
+                cellTooltip: function (row, col) {
+                    return '' + row.entity.port + '';
+                }
+            },            
             {name: 'networkType', width: "15%", enableCellEdit: false},
             {
                 name: 'region', width: "15%", cellTooltip: function (row, col) {

@@ -167,7 +167,7 @@ oTech.controller('MyDevicesController',
         $scope.saveRow = function (rowEntity) {
             $scope.dataLoading = true;
 
-            promise = AppServices.deviceInfo(token, rowEntity.deviceId, rowEntity.deviceName, rowEntity.imei, rowEntity.msisdn);
+			promise = AppServices.deviceInfo(token, rowEntity.deviceId, rowEntity.deviceName, rowEntity.imei, rowEntity.msisdn, rowEntity.adbid, rowEntity.port);
             promise.then(
                 function (data) {
                     if (data.status == "success") {

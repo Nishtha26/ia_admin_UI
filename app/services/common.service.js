@@ -1656,7 +1656,7 @@ oTech.service('AppServices',
             return deferred.promise;
         }
 
-        service.deviceInfo = function (token, selectDeviceId, deviceName, deviceIMIE, deviceMSISDN) {
+        service.deviceInfo = function (token, selectDeviceId, deviceName, deviceIMIE, deviceMSISDN, deviceADBID, devicePort) {
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/devices/deviceInfo",
@@ -1666,7 +1666,9 @@ oTech.service('AppServices',
                     deviceId: selectDeviceId,
                     deviceName: deviceName,
                     deviceIMIE: deviceIMIE,
-                    deviceMSISDN: deviceMSISDN
+                    deviceMSISDN: deviceMSISDN,
+                    deviceADBID: deviceADBID,
+                    devicePort: devicePort
                 },
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
