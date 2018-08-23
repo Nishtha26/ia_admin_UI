@@ -263,6 +263,9 @@
         padding: 2px 6px;
     }
 
+    .myGrid {
+        height: 450px;
+    }
 
 </style>
 
@@ -384,32 +387,12 @@
                                     </div>
 
                                 </div>
-                                <div id="BatchRunOptions" ui-grid="BatchRunOptions" ui-grid-selection ui-grid-cellNav
+                                <div id="BatchRunOptions" ui-grid="BatchRunOptions" ui-grid-selection ui-grid-cellNav ui-grid-pagination
                                      ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
                                      class="table table-hover grid">
                                 </div>
                                 <img class="loading loaderandwait" src="images/please_wait.gif"
                                      ng-show="dataProcessingBatchRun">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
-                                             role="alert" aria-live="polite" aria-relevant="all">Showing
-                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
-                                               ng-click="prevPage()">&larr;</a>
-                                            <span>
-												  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
-                                                     ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
-												</span>
-                                            <a ng-class="DisableNextPage()" class="paginate_button next"
-                                               ng-click="nextPage()">&rarr;</a>
-                                        </div>
-                                    </div>
-                                </div>
                                 <!-- /test plan ui grid -->
                             </div>
                         </div>
@@ -543,6 +526,9 @@
                         <button type="button" data-toggle="modal" data-target="#add_test_run"
                                 class='btn btn-success pull-right'>Add TestRun
                         </button>
+                        <button type="button" ng-click="startBatchRun(selectedBatchRunForEdit)"
+                                class='btn btn-success pull-right'>Start batchRun
+                        </button>
                     </div>
                 </div>
                 <!-- /Test Runs Area -->
@@ -581,7 +567,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add TestRun</h5>
+                    <h5 class="modal-title">Select a TestRun for adding in batchrun</h5>
                     <div class="heading-elements">
                         <ul class="icons-list">
                             <li><a data-dismiss="modal" data-action="close"></a></li>
@@ -589,11 +575,16 @@
                     </div>
                 </div>
                 <div class="modal-body">
-
+                    <div>
+                        <br/>
+                        <select name="test-run" ng-model="selectedTestRun" >
+                            <option ng-repeat="testRun in allTestRuns" value="{{testRun.testrunId}}">({{testRun.testrunId}}){{testRun.testrunName}}</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" ng-click="addTestRunInBatchRun(selectedTestRun)" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>

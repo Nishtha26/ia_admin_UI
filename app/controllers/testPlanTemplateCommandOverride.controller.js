@@ -27,7 +27,8 @@ oTech.controller('testPlanTemplateCommandOverride',
                     $scope.uiTreeJSON = messagesTemplate[0][i].value;
                 if (messagesTemplate[0][i].key == "usecase")
                     $scope.usecaseVal = messagesTemplate[0][i].value.id;
-
+                if (messagesTemplate[0][i].key == "customers")
+                    $scope.customers = messagesTemplate[0][i].value;
             }
         }
 
@@ -505,8 +506,15 @@ oTech.controller('testPlanTemplateCommandOverride',
             sendCreateData.taskVOList[0].useCaseId = $scope.usecaseVal;
             $rootScope.usecaseId = $scope.usecaseVal;
 
+            let customerListId = [];
+                for(let i = 0; i < $scope.customers.length; i++){
+                    customerListId.push(parseInt($scope.customers[i].customerId));
+                }
+            sendCreateData.customerListId = customerListId;
+
             sendCreateData.taskVOList[0].taskCreatedBy = userId;
             sendCreateData.taskVOList[0].taskExecutorVOList = [];
+            console.log(sendCreateData);
 
             var superParentObjectKeys = Object.keys(superParentObject);
 

@@ -29,6 +29,10 @@
         -webkit-overflow-scrolling: touch;
 
     }
+
+    .ui-grid-pager-panel {
+        padding-bottom: 2px !important;
+    }
 </style>
 
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css">
@@ -115,50 +119,13 @@
                                         <input type="type" class="" ng-change="singleFilterUserGroup()"
                                                ng-model="searchTextUserGroup" placeholder="Type to filter..."></label>
                                     </div>
-                                    <!--
-                                     <div class="dataTables_length" id="DataTables_Table_0_length"><label><span>Show:</span>
-                                      <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                      <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
-                                      <span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection">
-                                      <span aria-expanded="false" aria-haspopup="true" role="combobox" class="select2-selection select2-selection--single" tabindex="0" aria-labelledby="select2-DataTables_Table_0_length-c0-container"><span class="select2-selection__rendered" id="select2-DataTables_Table_0_length-c0-container" title="10">10</span>
-                                      <span role="presentation" class="select2-selection__arrow"><b role="presentation"></b></span></span></span>
-                                      <span aria-hidden="true" class="dropdown-wrapper"></span></span></label>
-                                      </div>
-                                      -->
+
                                 </div>
                                 <div id="addUsergroupsGridOptions" ui-grid="addUsergroupsGridOptions" ui-grid-selection
-                                     ui-grid-cellNav ui-grid-resize-columns ui-grid-auto-resize
-                                     ng-style="getTableHeightUserGroup()" class="table table-hover grid">
+                                     ui-grid-cellNav ui-grid-resize-columns ui-grid-auto-resize ui-grid-pagination
+                                     class="table table-hover grid">
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
-                                             role="alert" aria-live="polite" aria-relevant="all">Showing
-                                            {{(itemsPerPageUG*currentPageUG+1)}} to {{endLimitUG}} of {{totalRecordsUG}}
-                                            entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-
-                                            <a ng-class="DisablePrevPageUG()" class="paginate_button previous"
-                                               ng-click="prevPageUG()">&larr;</a>
-
-                                            <span>
-											  <a ng-repeat="n in rangeUG()" ng-class="{current: n == currentPageUG}"
-                                                 ng-click="setPageUG(n)" class="paginate_button">{{n+1}}</a>
-											</span>
-
-                                            <a ng-class="DisableNextPageUG()" class="paginate_button next"
-                                               ng-click="nextPageUG()">&rarr;</a>
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
 
                             </DIV>
 
@@ -253,7 +220,7 @@
                                                                         <div id="allusersgroupGridOptions"
                                                                              ui-grid="allusersgroupGridOptions"
                                                                              ui-grid-selection ui-grid-cellNav
-                                                                             ui-grid-auto-resize
+                                                                             ui-grid-auto-resize ui-grid-pagination=""
                                                                              class="table text-nowrap table-hover grid"
                                                                              style="overflow:hidden; height: 432px; border:1px solid #1f8ee7;">
 
@@ -393,94 +360,10 @@
                                       -->
                                 </div>
                                 <div id="userTableGridOptions" ui-grid="userTableGridOptions" ui-grid-selection
-                                     ui-grid-resize-columns ui-grid-auto-resize ng-style="getTableHeight()"
+                                     ui-grid-resize-columns ui-grid-auto-resize ui-grid-pagination
                                      class="table table-hover grid">
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
-                                             role="alert" aria-live="polite" aria-relevant="all">Showing
-                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-
-                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
-                                               ng-click="prevPage()">&larr;</a>
-
-                                            <span>
-											  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
-                                                 ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
-											</span>
-
-                                            <a ng-class="DisableNextPage()" class="paginate_button next"
-                                               ng-click="nextPage()">&rarr;</a>
-
-
-                                        </div>
-                                    </div>
-
                                 </div>
 
-                                <!-- 	<table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Groups</th>
-                                                <th>Created By</th>
-                                                <th>Created On</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Sam Bobbins</td>
-                                                <td>AdminGroup, SetupGroup</td>
-                                                <td>admin</td>
-                                                <td>09/09/2015</td>
-                                                <td class="text-center">
-                                                    <ul class="icons-list">
-                                                        <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i class="icon-menu9"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                                <li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
-                                                                <li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
-                                                                <li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Anthony Carrell</td>
-                                                <td>myNewGroup, maintenance group</td>
-                                                <td>admin</td>
-                                                <td>09/15/2015</td>
-                                                <td class="text-center">
-                                                    <ul class="icons-list">
-                                                        <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i class="icon-menu9"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                                <li class='delete_user'><a href="#"><i class="icon-backspace2 text-warning-800"></i> Delete User</a></li>
-                                                                <li class="edit_user"><a href="#"><i class="icon-wrench2 text-primary"></i> Edit User</a></li>
-                                                                <li class="show_user"><a href="#"><i class="icon-users4 text-green-800"></i> Show Details</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table> -->
                             </DIV>
                             <!-- /group list div -->
 
@@ -1104,7 +987,7 @@
         <h3 class="modal-title"><i class="fa fa-table fa-lg" aria-hidden="true"></i> {{modal.title}}</h3>
     </div>
     <div class="modal-body">
-        <form  id="addRowForm" class="form-horizontal" role="form">
+        <form id="addRowForm" class="form-horizontal" role="form">
             <fieldset>
                 <!-- Text input-->
                 <div class="form-group" style="margin-bottom:4px;">
@@ -1116,7 +999,8 @@
                 <div class="form-group" style="margin-bottom:4px;">
                     <label class="col-sm-3 control-label">Confirm Password</label>
                     <div class="col-sm-9">
-                        <input type="password" id="matchingPwd" name="matchingPwd" placeholder="password" class="form-control input-sm">
+                        <input type="password" id="matchingPwd" name="matchingPwd" placeholder="password"
+                               class="form-control input-sm">
                     </div>
                 </div>
             </fieldset>
