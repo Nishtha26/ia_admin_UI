@@ -132,7 +132,7 @@ oApp.config = {
             type: "Network Performance"
         }
     ],
-    BASE_URL: 'http://localhost:8080/IAPORTAL/',
+    BASE_URL: 'http://test.orchestratec.net:8080/IAPORTAL/',
     MEASUREMENT_URL: 'http://test.orchestratec.net:8080/IAPORTAL/rest/measurement/',
     REPORT_HOST_URL: 'http://iareport.orchestratec.net/',
     REPORT_NAME: 'ConsolidatedKPI5_13/HomePage',
@@ -723,6 +723,55 @@ oApp.config = {
         {
             displayName: "Target Port", field: "udpPort", cellTooltip: function (row, col) {
                 return '' + row.entity.udpPort + '';
+            }
+        }
+    ],
+    columnDefsVideoCallLogs: [
+        // this row just shows the row index, doesn't use any data from the row
+        {displayName: "JIAC ID", field: "ia_device_id", pinnedLeft: true},
+        {
+            displayName: "ID", field: "ia_video_call_seq_number", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_seq_number + '';
+            }
+        },
+        {
+            displayName: "ADB ID", field: "ia_device_adb_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_adb_id + '';
+            }
+        },
+        {
+            displayName: "Job ID", field: "ia_job_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_job_id + '';
+            }
+        },
+        {
+            displayName: "Calling MSISDN", field: "ia_CallingPartyNumber", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_CallingPartyNumber + '';
+            }
+        },
+        {
+            displayName: "Called MSISDN", field: "ia_CalledPartyNumber", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_CalledPartyNumber + '';
+            }
+        },
+        {
+            displayName: "Local Time", field: "ia_video_call_device_localtime", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_device_localtime + '';
+            }
+        },
+        {
+            displayName: "UTC Time", field: "ia_video_call_UTC_time", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_UTC_time + '';
+            }
+        },
+        {
+            displayName: "Event", field: "ia_event_type", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_event_type + '';
+            }
+        },
+        {
+            displayName: "Device ID", field: "ia_device_IAC_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_IAC_id + '';
             }
         }
     ],
