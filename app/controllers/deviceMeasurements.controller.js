@@ -234,6 +234,8 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsSpeechRecord;
                 else if (link == 'UDPCmdLogs')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsUDPCmdLogs;
+                else if (link == 'VideoCall')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsVideoCallLogs;
                 if (startLimit == 1) {
                     startLimit = 0;
                 }
