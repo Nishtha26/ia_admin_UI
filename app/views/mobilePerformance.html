@@ -75,9 +75,11 @@
                             <div class="divTable" style="border: 1px solid #000;">
                                 <table class="table table-bordered" style="table-layout: fixed; width: 100%">
                                     <tr>
-                                            <thead><th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Summary Data</th></thead>
+                                        <thead>
+                                            <th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Summary Data</th>
+                                        </thead>
                                     </tr>
-                                    <tbody> 
+                                    <tbody>
                                         <tr>
                                             <td ng-class="content-wrapper"># of MNCs</td>
                                             <td class="text-center">{{mncCount}}</td>
@@ -92,6 +94,11 @@
                             <br>
                             <div class="table-wrapper">
                                 <table class="table table-bordered" style="table-layout: fixed;">
+                                    <tr>
+                                        <thead>
+                                            <th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Performance Summary</th>
+                                        </thead>
+                                    </tr>
                                     <thead>
                                         <tr>
                                             <th style="	background-color: rgba(238, 238, 238, 0.692);">KPI Name</th>
@@ -108,15 +115,15 @@
                             </div>
                         </div>
                         <br />
-                       
+
                         <!-- <div style=" width:99%;position:relative;height: 560px;  position:relative;" ng-include="'app/views/chart.html'"></div> -->
                     </section>
                 </div>
             </div>
             <!-- /circle shapes -->
             <div class="panel panel-white">
-            <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
-            <!-- <nvd3-discrete-bar-chart
+                <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+                <!-- <nvd3-discrete-bar-chart
             data="exampleData"
             id="exampleId"
             width="600"
@@ -127,12 +134,12 @@
             showValues="true">
         <svg></svg>
     </nvd3-discrete-bar-chart> -->
-        </div>
+            </div>
             <!-- /main area -->
         </div>
         <!-- /main content -->
 
-        
+
 
         <!-- Secondary sidebar -->
         <div class="sidebar sidebar-secondary sidebar-default">
@@ -188,7 +195,7 @@
                                         <div ng-message="required">**Location type is required</div>
                                     </div>
                                     <br/>
-<!-- This will be for WiFi Performance
+                                    <!-- This will be for WiFi Performance
                                     <div class="form-group">
                                         <label>SSID</label>
                                         <select id="ssid" name="ssid" class="select" ng-model="ssid" ng-change="updateDashboard()" required>
@@ -219,49 +226,86 @@
                                             <br/>
                                         </div>
 -->
-                                        <div class="form-group">
-                                            <label>KPI Name</label>
-                                            <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
-                                                <option value="">Select </option>
-                                                <option ng-repeat="kpiname in kpinameList" ng-selected="device.selected" ng-model="kpiname">{{kpiname}}</option>
-                                            </select>
-                                            <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
-                                                style="top: 35%;"></img>
-                                            <div class="clear"></div>
-                                            <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
-                                                <div ng-message="required">**KPI Name is required</div>
-                                            </div>
-                                            <br />
+                                    <div class="form-group">
+                                        <label>KPI Name</label>
+                                        <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
+                                            <option value="">Select </option>
+                                            <option ng-repeat="kpiname in kpinameList" ng-selected="device.selected" ng-model="kpiname">{{kpiname}}</option>
+                                        </select>
+                                        <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
+                                            style="top: 35%;"></img>
+                                        <div class="clear"></div>
+                                        <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
+                                            <div ng-message="required">**KPI Name is required</div>
                                         </div>
+                                        <br />
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label>KPI Range</label>
+                                    <div class="form-group">
+                                        <label>KPI Range</label>
+                                        <div>
+                                            <article>
+                                                <rzslider class="custom-slider" data-rz-slider-model="rangeSlider.value" data-rz-slider-high="rangeSlider.maxValue" data-rz-slider-options="rangeSlider.options">
+                                                </rzslider>
+                                            </article>
                                             <div>
-                                                <article>
-                                                    <rzslider class="custom-slider" data-rz-slider-model="rangeSlider.value" data-rz-slider-high="rangeSlider.maxValue" data-rz-slider-options="rangeSlider.options">
-                                                    </rzslider>
-                                                </article>
-                                                <div>
 
-                                                </div>
                                             </div>
-                                            <div class="clear"></div>
                                         </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Test Type</label>
+                                        <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
+                                            <option value="">Select </option>
+                                            <option ng-repeat="kpiname in kpinameList" ng-selected="device.selected" ng-model="kpiname">{{kpiname}}</option>
+                                        </select>
+                                        <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
+                                            style="top: 35%;"></img>
+                                        <div class="clear"></div>
+                                        <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
+                                            <div ng-message="required">**KPI Name is required</div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="radioButtonMaterial">
+                                            <label>Location Method</label>
+                                            <md-radio-group ng-model="locationData.group" ng-required="true" ng-change="radioChanged(c)">
+                                                <md-radio-button value="Tagged" class="md-primary">Tagged</md-radio-button>
+                                                <md-radio-button value="Network" class="md-primary"> GPS/Network </md-radio-button>
+                                            </md-radio-group>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Exclude Frequency</label>
+                                        <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
+                                            <option value="">Select </option>
+                                            <option ng-repeat="kpiname in kpinameList" ng-selected="device.selected" ng-model="kpiname">{{kpiname}}</option>
+                                        </select>
+                                        <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
+                                            style="top: 35%;"></img>
+                                        <div class="clear"></div>
+                                        <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
+                                            <div ng-message="required">**KPI Name is required</div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Device ID</label>
+                                        <select id="deviceId" name="deviceId" class="select" ng-model="deviceId" ng-change="updateDashboard()" required>
+                                            <option value="">Select </option>
+                                            <option ng-repeat="deviceId in deviceList" ng-selected="device.selected" ng-model="deviceId">{{deviceId}}</option>
+                                        </select>
+                                        <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
+                                            style="top: 35%;"></img>
+                                        <div class="clear"></div>
+                                        <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
+                                            <div ng-message="required">**Device is required</div>
+                                        </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label>Device ID</label>
-                                            <select id="deviceId" name="deviceId" class="select" ng-model="deviceId" ng-change="updateDashboard()" required>
-                                                <option value="">Select </option>
-                                                <option ng-repeat="deviceId in deviceList" ng-selected="device.selected" ng-model="deviceId">{{deviceId}}</option>
-                                            </select>
-                                            <img id="deviceDataLoading" align="middle" ng-show="deviceDataLoading" class="loading loading-imgac img-loading-small" src="{{loadingImageName}}"
-                                                style="top: 35%;"></img>
-                                            <div class="clear"></div>
-                                            <div ng-show="heatmap_form.deviceId.$touched || heatmap_form.$submitted" ng-messages="heatmap_form.deviceId.$error" class="errors ">
-                                                <div ng-message="required">**Device is required</div>
-                                            </div>
-
-                                            <!-- <div class="form-group">
+                                    <!-- <div class="form-group">
                                                 <label>From  </label>
                                                     <div class="input-group">
                                                     <span class="input-group-addon">
@@ -272,7 +316,7 @@
                                                                       
                                                                     </div>
                                                                             <div class="clear"></div> -->
-                                            <!-- <div
+                                    <!-- <div
                                                 ng-show="heatmap_form.fromDate.$touched || heatmap_form.$submitted"
                                                 ng-messages="heatmap_form.fromDate.$error"
                                                 class="errors ">
@@ -308,7 +352,7 @@
                                             <br />
                                             </div>
          -->
-                                            <!-- <div class="form-group">
+                                    <!-- <div class="form-group">
                                                 <div class="checkbox checkbox-switchery switchery-sm col-lg-6">
                                                     <label>
                                                      
@@ -345,64 +389,63 @@
                             </form>
                             </div>
                             <!-- /End of heat maps form -->
-                            </div>
-                            </div>
-                            <!-- /sidebar search -->
                         </div>
                     </div>
-                    <!-- /secondary sidebar -->
+                    <!-- /sidebar search -->
                 </div>
-                <!-- /page content -->
             </div>
-            <!-- /page container -->
-            <!-- Footer -->
-            <div ng-include="'app/views/footer/footer.html'"></div>
-                   
-            <!-- /footer -->
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('.select').select2({
-                        minimumResultsForSearch: Infinity
-                    });
-                    $("#marketName").change(function () {
-                        var view_selected = $(this).val();
-                        if (view_selected === 'heat_maps') {
-                            $("#heat_maps_form").show();
-                            $("#device_view_form").hide();
-                            $("#summary_view_form").hide();
-                            $("#timeline_form").hide();
-                        }
-                        else if (view_selected === 'heat_maps') {
-                            $("#heat_maps_form").show();
-                            $("#device_view_form").hide();
-                            $("#summary_view_form").hide();
-                            $("#timeline_form").hide();
-                        }
-                        else if (view_selected === 'device_view') {
-                            $("#heat_maps_form").hide();
-                            $("#device_view_form").show();
-                            $("#summary_view_form").hide();
-                            $("#timeline_form").hide();
-                        }
-                        else if (view_selected === 'summary_view') {
-                            $("#heat_maps_form").hide();
-                            $("#device_view_form").hide();
-                            $("#summary_view_form").show();
-                            $("#timeline_form").hide();
-                        }
-                        else if (view_selected === 'timeline_view') {
-                            $("#heat_maps_form").hide();
-                            $("#device_view_form").hide();
-                            $("#summary_view_form").hide();
-                            $("#timeline_form").show();
-                        }
-                        else {
-                            $("#timeline_form").hide();
-                            $("#device_view_form").hide();
-                            $("#summary_view_form").hide();
-                            $("#timeline_form").hide();
-                        }
-                    });
-                });
-            </script>
-            
+            <!-- /secondary sidebar -->
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+    <!-- Footer -->
+    <div ng-include="'app/views/footer/footer.html'"></div>
+
+    <!-- /footer -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select').select2({
+                minimumResultsForSearch: Infinity
+            });
+            $("#marketName").change(function () {
+                var view_selected = $(this).val();
+                if (view_selected === 'heat_maps') {
+                    $("#heat_maps_form").show();
+                    $("#device_view_form").hide();
+                    $("#summary_view_form").hide();
+                    $("#timeline_form").hide();
+                }
+                else if (view_selected === 'heat_maps') {
+                    $("#heat_maps_form").show();
+                    $("#device_view_form").hide();
+                    $("#summary_view_form").hide();
+                    $("#timeline_form").hide();
+                }
+                else if (view_selected === 'device_view') {
+                    $("#heat_maps_form").hide();
+                    $("#device_view_form").show();
+                    $("#summary_view_form").hide();
+                    $("#timeline_form").hide();
+                }
+                else if (view_selected === 'summary_view') {
+                    $("#heat_maps_form").hide();
+                    $("#device_view_form").hide();
+                    $("#summary_view_form").show();
+                    $("#timeline_form").hide();
+                }
+                else if (view_selected === 'timeline_view') {
+                    $("#heat_maps_form").hide();
+                    $("#device_view_form").hide();
+                    $("#summary_view_form").hide();
+                    $("#timeline_form").show();
+                }
+                else {
+                    $("#timeline_form").hide();
+                    $("#device_view_form").hide();
+                    $("#summary_view_form").hide();
+                    $("#timeline_form").hide();
+                }
+            });
+        });
+    </script>

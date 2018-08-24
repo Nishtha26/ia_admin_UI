@@ -18,7 +18,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $rootScope.role = sessionStorage.role;
     $scope.dataLoading3 = true;
     $scope.loadingImageName = oApp.config.loadingImageName;
-
+    $scope.mapDataLoading = true;
     var date1 = new Date(2017, 3, 1);
     var date2 = new Date();
     var day;
@@ -42,6 +42,15 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         }
     };
 
+    $scope.locationData = {
+        group: 'Network',
+    };
+
+    $scope.radioChanged = function () {
+        console.log($scope.locationData.group);
+        updateDashboardContent()
+    };
+
     $scope.onSliderChange = function (sliderId) {
         console.log(sliderId, 'has changed with ', $scope.rangeSlider.value);
         $scope.kpislider = $scope.rangeSlider.value;
@@ -60,6 +69,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateDashboardContent() {
+        $scope.mapDataLoading = true;
         console.log('has changed with ' + $scope.rangeSlider.value + " Max Value " + $scope.rangeSlider.maxValue);
         $scope.newDateList = updateDateSliderList($scope.slider.value, $scope.slider.maxValue)
         $scope.newDateList = $scope.newDateList
@@ -79,7 +89,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         //var bssidarray = [];
         var mncarray = [];
         var cellarray = [];
-        for (var i = 0; i < $scope.dataPerformanceList.length; ++i) {
+        for (var i in $scope.dataPerformanceList) {
             var item = $scope.dataPerformanceList[i];
             if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
                 && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
@@ -88,34 +98,40 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 // && ((typeof ($scope.rangeSlider.value) === 'undefined') ? item.kpivalue != null : (item.kpivalue != null && parseFloat(item.kpivalue) == $scope.rangeSlider.value))
                 && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
                 if ((typeof ($scope.kpiname) === 'undefined') ? (item.kpivalue != null || item.kpivalue != "") : between(item.kpivalue, $scope.rangeSlider.value, $scope.rangeSlider.maxValue)) {
-                        if (item.latitude != 0 && item.longitude != 0) {
-                            if (item.fulldate != null) {
-                                var date = new Date(item.fulldate)
-                                date = new Date(date.getTime())
-                                //console.log("date obj " + date)
-                                if (isInArray($scope.newDateList, date)) {
+                    if (item.fulldate != null) {
+                        var date = new Date(item.fulldate)
+                        date = new Date(date.getTime())
+                        //console.log("date obj " + date)
+                        if (isInArray($scope.newDateList, date)) {
+                            //GPS/Network
+                            if ($scope.locationData.group == "Network") {
+                                if (item.latitude != 0 && item.longitude != 0) {
                                     if (!mapTempArray.contains(item.latitude + " " + item.longitude)) {
                                         mapTempArray.push(item.latitude + " " + item.longitude)
                                         //updateCoordinateList.push(mobilePerformanceDataList[i])
                                         updatedPerformanceDataList.push(item)
                                     }
-                                    if (!tempArray.contains(item.fulldate + " " + item.signalStrength)) {
-                                        tempArray.push(item.fulldate + " " + item.signalStrength)
-                                        if (item.signalStrength != 0) {
-                                            datavalues.values.push({
-                                                "label": item.fulldate, "value": item.signalStrength,
-                                            });
-                                        }
+                                }//Tagged/Indoor
+                            } else if ($scope.locationData.group == "Tagged") {
+                                if (item.indoorLatitude != 0 && item.indoorLongitude != 0) {
+                                    if (!mapTempArray.contains(item.indoorLatitude + " " + item.indoorLongitude)) {
+                                        mapTempArray.push(item.indoorLatitude + " " + item.indoorLongitude)
+                                        //updateCoordinateList.push(mobilePerformanceDataList[i])
+                                        updatedPerformanceDataList.push(item)
                                     }
-
-
+                                }
+                            }
+                            if (!tempArray.contains(item.fulldate + " " + item.signalStrength)) {
+                                tempArray.push(item.fulldate + " " + item.signalStrength)
+                                if (item.signalStrength != 0) {
+                                    datavalues.values.push({
+                                        "label": item.fulldate, "value": item.signalStrength,
+                                    });
                                 }
                             }
                         }
-                    
+                    }
                     if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
-                        // console.log("KPI NAME "+item.kpiname)
-                        //console.log("KPI VALUE "+item.kpivalue)
                         var kpi_name = item.kpiname
                         var kpi_value = parseFloat(item.kpivalue)
                         if ((!(typeof (kpi_name) === 'undefined'))) {
@@ -137,8 +153,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
 
         // $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
         // $scope.bssidCount = (filterDuplicateArray(bssidarray)).length
-        console.log("Updated mnc list " + filterDuplicateArray(mncarray))
-        console.log("Updated mnc list " + filterDuplicateArray(cellarray))
+        //console.log("Updated mnc list " + filterDuplicateArray(mncarray))
+        //console.log("Updated mnc list " + filterDuplicateArray(cellarray))
         $scope.cellCount = (filterDuplicateArray(cellarray)).length
         $scope.mncCount = (filterDuplicateArray(mncarray)).length
 
@@ -157,6 +173,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         //console.log(" After Avg " + JSON.stringify($scope.metricsTableData))
         updateChart(datavalues);
         updateMapData(updatedPerformanceDataList)
+        $scope.mapDataLoading = false;
     }
     Array.prototype.contains = function (obj) {
         var i = this.length;
@@ -173,7 +190,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateChart(datavalues) {
-        // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        console.log("updated graph list " + JSON.stringify(datavalues.values))
         console.log("updated graph length " + datavalues.values.length)
         $scope.options1 = {
             chart: {
@@ -285,7 +302,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
 	*/
     $scope.mobilePerformance = function () {
         // alert('hi')
-        $scope.marketDataLoading = true;
+        //$scope.marketDataLoading = true;
         promise = MobilePerformanceService.mobilePerformance(userId, token);
         promise.then(
             function (data) {
@@ -334,9 +351,9 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                         fulldatearray.push(new Date(data.mobilePerformanceDataList[i].fulldate))
                         // console.log("full date "+item.fulldate)
                         //console.log("signal strength "+item.signalStrength)
-                        datavalues.values.push({
-                            "label": item.fulldate, "value": item.signalStrength,
-                        });
+                        // datavalues.values.push({
+                        //     "label": item.fulldate, "value": item.signalStrength,
+                        // });
                     }
                 }
                 $scope.locationTypeList = filterDuplicateArray(locationarray)
@@ -368,10 +385,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     },
                 }
                 updateDashboardContent()
-                $scope.marketDataLoading = false;
+                //$scope.marketDataLoading = false;
             },
             function (err) {
-                $scope.marketDataLoading = false;
+                $scope.mapDataLoading = false;
             }
         );
     }
