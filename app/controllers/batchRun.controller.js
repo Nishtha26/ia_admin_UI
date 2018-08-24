@@ -298,7 +298,6 @@ oTech.controller('batchRun',
                     '<i class="icon-menu9"></i>' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
-                    '<li ng-click="grid.appScope.editTestRunStartTime(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
                     '<li ng-click="grid.appScope.removeTestRunFromBatchRun(row);"><a ><i class="icon-box-remove text-primary user_editor_link"></i>Delete TestRun</a></li>' +
                     '</ul>' +
                     '</li>' +
@@ -330,7 +329,7 @@ oTech.controller('batchRun',
                         },
                         function (err) {
                             console.log(err);
-                            toastr.error('Something , try again!', 'Error')
+                            toastr.error('Something wrong , try again!', 'Error')
                             rowEntity[colDef.name] = oldValue;
                         }
                     );
@@ -668,7 +667,7 @@ oTech.controller('batchRun',
                             $scope.selectedBatchRun.executionStatus = 1;
                         }
                     } else {
-                        toastr.error('Unable to stop Stoped', 'Error');
+                        toastr.error(data.message, 'Error');
                     }
 
                 },
