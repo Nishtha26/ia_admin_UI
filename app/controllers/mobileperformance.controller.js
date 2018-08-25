@@ -371,7 +371,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $scope.mobilePerformance = function () {
         // alert('hi')
         //$scope.marketDataLoading = true;
-        promise = MobilePerformanceService.mobilePerformance(userId, token);
+        promise = MobilePerformanceService.mobilePerformance(userId, 1);
         promise.then(
             function (data) {
                 var val1 = JSON.stringify(data)
