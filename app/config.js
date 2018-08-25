@@ -775,6 +775,40 @@ oApp.config = {
             }
         }
     ],
+    columnDefsGenericCommandsLogs: [
+        // this row just shows the row index, doesn't use any data from the row
+        {displayName: "ID", field: "ia_collect_gen_id", pinnedLeft: true},
+        {
+            displayName: "JOB ID", field: "ia_job_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_job_id + '';
+            }
+        },
+        {
+            displayName: "Device ID", field: "ia_device_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_id + '';
+            }
+        },
+        {
+            displayName: "UTC Time", field: "ia_UTC_time", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_UTC_time + '';
+            }
+        },
+        {
+            displayName: "Local Time", field: "ia_device_localtime", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_localtime + '';
+            }
+        },
+        {
+            displayName: "Command", field: "ia_gencommand", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_gencommand + '';
+            }
+        },
+        {
+            displayName: "Output", field: "ia_command_output", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_command_output + '';
+            }
+        }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
