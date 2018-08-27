@@ -10,6 +10,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     var metricsTableData = [];
     var tableData = [];
     var newDateList = [];
+    var listCount = 0
+    var pageIndex = 1
     window.onresize = function (event) {
         $rootScope.slideContent();
     }
@@ -70,7 +72,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
 
     function updateDashboardContent(isFirstPull) {
         $scope.mapDataLoading = true;
-        console.log('has changed with ' + $scope.rangeSlider.value + " Max Value " + $scope.rangeSlider.maxValue);
+        //console.log('has changed with ' + $scope.rangeSlider.value + " Max Value " + $scope.rangeSlider.maxValue);
         if (!isFirstPull) {
             $scope.newDateList = updateDateSliderList($scope.slider.value, $scope.slider.maxValue)
             $scope.newDateList = $scope.newDateList
@@ -237,8 +239,12 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             ([name, values]) =>
                 ({ name, average: (values.reduce((a, b) => a + b) / values.length).toFixed(2) })
         );
-
-        //console.log(" After Avg " + JSON.stringify($scope.metricsTableData))
+        console.log("Date Count "+$scope.dateList.length)
+        console.log("Market Count "+$scope.locationTypeList.length)
+        console.log("KPIName Count "+$scope.kpinameList.length)
+        console.log("Device Count "+$scope.deviceList.length)
+        console.log("KPI Value Count "+$scope.kpivalueList.length)
+        console.log(" KPI Table" + $scope.metricsTableData.length+" Cell Count "+ $scope.cellCount+" mncCount "+$scope.mncCount)
         updateChart(datavalues);
         updateMapData(updatedPerformanceDataList)
         $scope.mapDataLoading = false;
@@ -258,7 +264,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateChart(datavalues) {
-        console.log("updated graph list " + JSON.stringify(datavalues.values))
+       // console.log("updated graph list " + JSON.stringify(datavalues.values))
         console.log("updated graph length " + datavalues.values.length)
         $scope.options1 = {
             chart: {
@@ -270,7 +276,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     bottom: 60,
                     left: 55
                 },
-                x: function (d) { return d.label; },
+                x: function (d) { return d.label },
                 y: function (d) { return d.value; },
                 showValues: false,
                 valueFormat: function (d) {
@@ -278,10 +284,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'X Axis'
+                    axisLabel: 'Date'
                 },
                 yAxis: {
-                    axisLabel: 'Y Axis',
+                    axisLabel: 'Signal Strength (dbm)',
                     axisLabelDistance: -10
                 }
             }
@@ -371,14 +377,26 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $scope.mobilePerformance = function () {
         // alert('hi')
         //$scope.marketDataLoading = true;
-        promise = MobilePerformanceService.mobilePerformance(userId, 1);
+        promise = MobilePerformanceService.mobilePerformance(userId, pageIndex);
         promise.then(
             function (data) {
                 var val1 = JSON.stringify(data)
-                $scope.dataPerformanceList = data.mobilePerformanceDataList
+                if (typeof($scope.dataPerformanceList) === 'undefined') {
+                    $scope.dataPerformanceList = data.mobilePerformanceDataList
+                } else {
+                    $scope.dataPerformanceList = $scope.dataPerformanceList.concat(data.mobilePerformanceDataList)
+                }
                 $scope.centerInfo = data.centerInfo
+                listCount = data.records
                 updateDashboardContent(true)
+                console.log("before Page Index is " + pageIndex + " Total Count " + parseInt(listCount / 10000))
                 //$scope.marketDataLoading = false;
+                if (parseInt(listCount / 10000) >= pageIndex) {
+                    pageIndex++
+                    console.log("after Page Index is " + pageIndex)
+                    $scope.mobilePerformance();
+                }
+
             },
             function (err) {
                 $scope.mapDataLoading = false;
