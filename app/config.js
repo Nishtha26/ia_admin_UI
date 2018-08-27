@@ -726,6 +726,89 @@ oApp.config = {
             }
         }
     ],
+    columnDefsVideoCallLogs: [
+        // this row just shows the row index, doesn't use any data from the row
+        {displayName: "JIAC ID", field: "ia_device_id", pinnedLeft: true},
+        {
+            displayName: "ID", field: "ia_video_call_seq_number", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_seq_number + '';
+            }
+        },
+        {
+            displayName: "ADB ID", field: "ia_device_adb_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_adb_id + '';
+            }
+        },
+        {
+            displayName: "Job ID", field: "ia_job_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_job_id + '';
+            }
+        },
+        {
+            displayName: "Calling MSISDN", field: "ia_CallingPartyNumber", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_CallingPartyNumber + '';
+            }
+        },
+        {
+            displayName: "Called MSISDN", field: "ia_CalledPartyNumber", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_CalledPartyNumber + '';
+            }
+        },
+        {
+            displayName: "Local Time", field: "ia_video_call_device_localtime", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_device_localtime + '';
+            }
+        },
+        {
+            displayName: "UTC Time", field: "ia_video_call_UTC_time", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_video_call_UTC_time + '';
+            }
+        },
+        {
+            displayName: "Event", field: "ia_event_type", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_event_type + '';
+            }
+        },
+        {
+            displayName: "Device ID", field: "ia_device_IAC_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_IAC_id + '';
+            }
+        }
+    ],
+    columnDefsGenericCommandsLogs: [
+        // this row just shows the row index, doesn't use any data from the row
+        {displayName: "ID", field: "ia_collect_gen_id", pinnedLeft: true},
+        {
+            displayName: "JOB ID", field: "ia_job_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_job_id + '';
+            }
+        },
+        {
+            displayName: "Device ID", field: "ia_device_id", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_id + '';
+            }
+        },
+        {
+            displayName: "UTC Time", field: "ia_UTC_time", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_UTC_time + '';
+            }
+        },
+        {
+            displayName: "Local Time", field: "ia_device_localtime", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_device_localtime + '';
+            }
+        },
+        {
+            displayName: "Command", field: "ia_gencommand", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_gencommand + '';
+            }
+        },
+        {
+            displayName: "Output", field: "ia_command_output", cellTooltip: function (row, col) {
+                return '' + row.entity.ia_command_output + '';
+            }
+        }
+    ],
     columnDefslocation: [
         // this row just shows the row index, doesn't use any data from the row
 
@@ -2294,6 +2377,24 @@ oApp.config = {
                     return '' + row.entity.msisdn + '';
                 }
             },
+            {
+                displayName: 'ADBID',
+                field: 'adbid',
+                width: "15%",
+                enableCellEdit: true,
+                cellTooltip: function (row, col) {
+                    return '' + row.entity.adbid + '';
+                }
+            },
+            {
+                displayName: 'Port',
+                field: 'port',
+                width: "15%",
+                enableCellEdit: true,
+                cellTooltip: function (row, col) {
+                    return '' + row.entity.port + '';
+                }
+            },            
             {name: 'networkType', width: "15%", enableCellEdit: false},
             {
                 name: 'region', width: "15%", cellTooltip: function (row, col) {

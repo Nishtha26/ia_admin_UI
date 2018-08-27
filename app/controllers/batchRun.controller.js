@@ -82,6 +82,8 @@ oTech.controller('batchRun',
 
         $scope.BatchRunOptions = {
             enableSorting: true,
+            paginationPageSizes: [10, 20, 30, 50],
+            paginationPageSize: 10,
             enableFilter: true,
             enableColResize: true,
             enableRowSelection: false,
@@ -259,13 +261,15 @@ oTech.controller('batchRun',
                 {
                     name: 'Start Time',
                     field: 'jobStartDateTime',
-                    enableCellEdit: false,
+                    cellFilter: 'date:"yyyy-MM-dd hh:mm:ss"',
+                    enableCellEdit: true,
                     width: '15%'
                 },
                 {
                     width: '15%',
                     name: 'End Date',
-                    field: 'date',
+                    cellFilter: 'date:"yyyy-MM-dd hh:mm:ss"',
+                    field: 'jobEndDateTime',
                     enableCellEdit: false,
                 },
                 {
@@ -294,7 +298,6 @@ oTech.controller('batchRun',
                     '<i class="icon-menu9"></i>' +
                     '</a>' +
                     '<ul class="dropdown-menu dropdown-menu-right">' +
-                    '<li ng-click="grid.appScope.editTestRunStartTime(row);"><a ><i class="icon-file-text2 text-primary user_editor_link"></i> Edit StartTime</a></li>' +
                     '<li ng-click="grid.appScope.removeTestRunFromBatchRun(row);"><a ><i class="icon-box-remove text-primary user_editor_link"></i>Delete TestRun</a></li>' +
                     '</ul>' +
                     '</li>' +
@@ -311,18 +314,39 @@ oTech.controller('batchRun',
                 var batchRunId = $scope.selectedBatchRunForEdit.id;
                 var oldValue = oldValue;
                 var newValue = newValue;
+                console.log("Row Entity ::" + JSON.stringify(rowEntity));
+                console.log("ColDef ::" + JSON.stringify(colDef));
                 console.log("BatchRunId ::" + JSON.stringify(batchRunId));
-                promise = testScriptService.replaceTestRunFromBatchRun(token, userId, batchRunId, oldValue, newValue, isActive);
-                promise.then(
-                    function (data) {
-                        console.log(JSON.stringify(data));
-                        toastr.success('TestRun Changed', 'Success')
-                    },
-                    function (err) {
-                        console.log(err);
-                        toastr.error('Something , try again!', 'Error')
-                    }
-                );
+                if (colDef.field == "jobStartDateTime") {
+                    var testRunId = rowEntity.jobId;
+                    var startDateTime = newValue;
+                    promise = testScriptService.editTestRunStartTime(token, userId, batchRunId,testRunId,startDateTime);
+                    promise.then(
+                        function (data) {
+                            console.log(JSON.stringify(data));
+                            rowEntity.jobEndDateTime = data;
+                            toastr.success('TestRun StartTime Updated', 'Success')
+                        },
+                        function (err) {
+                            console.log(err);
+                            toastr.error('Something wrong , try again!', 'Error')
+                            rowEntity[colDef.name] = oldValue;
+                        }
+                    );
+                } else {
+                    promise = testScriptService.replaceTestRunFromBatchRun(token, userId, batchRunId, oldValue, newValue, isActive);
+                    promise.then(
+                        function (data) {
+                            console.log(JSON.stringify(data));
+                            toastr.success('TestRun Changed', 'Success')
+                        },
+                        function (err) {
+                            console.log(err);
+                            toastr.error('Something , try again!', 'Error')
+                            rowEntity[colDef.name] = oldValue;
+                        }
+                    );
+                }
                 $scope.$apply();
             });
         };
@@ -374,13 +398,29 @@ oTech.controller('batchRun',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.BatchRunOptions.data = data.slice(0, $scope.itemsPerPage);
-
+                $scope.BatchRunOptions.data = data;
             },
             function (err) {
                 console.log(err);
             }
         );
+
+        $scope.refreshBatchRuns = function () {
+            //Test plan table Service
+            promise = testScriptService.getAllBatchRuns(token, userId);
+            promise.then(
+                function (data) {
+                    data = data.batchRunsForTestPlan;
+                    console.log(data);
+                    $scope.totalRecords = data.length;
+                    allOfTheData = data;
+                    $scope.BatchRunOptions.data = data;
+                },
+                function (err) {
+                    console.log(err);
+                }
+            );
+        }
 
 
         $scope.getTableHeight = function () {
@@ -388,8 +428,8 @@ oTech.controller('batchRun',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.BatchRunOptions.data.length;
-            gridHeight = ($scope.BatchRunOptions.data.length * rowHeight + headerHeight + footerPage);
+            var dataCount = 10;
+            gridHeight = (10 * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
             return {
@@ -399,12 +439,11 @@ oTech.controller('batchRun',
 
 
         $scope.createNewDatasource = function () {
-            $scope.BatchRunOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
+            $scope.BatchRunOptions.data = allOfTheData;
         }
 
         $scope.singleFilter = function () {
             $scope.BatchRunOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.BatchRunOptions.data = $scope.BatchRunOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -500,7 +539,6 @@ oTech.controller('batchRun',
                     $scope.endLimit = $scope.endLimit - ($scope.itemsPerPage - reminder);
                 }
             }
-
             startLimit = ($scope.itemsPerPage * (n));
             $scope.createNewDatasource();
             $scope.currentPage = n;
@@ -509,13 +547,16 @@ oTech.controller('batchRun',
 
         $scope.addTestRunInBatchRun = function (testRunId) {
             var batchRunId = $scope.selectedBatchRun.id;
-            console.log("batchRunId :: " + batchRunId);
-            console.log("testRunId :: " + testRunId);
             $('#add_test_run').modal('toggle');
             promise = testScriptService.addTestRunToBatchRun(token, userId, batchRunId, testRunId);
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var batchRun = $scope.selectedBatchRun;
+                    batchRun.testRuns.push({"testrunId": testRunId})
+                    var row = {entity: batchRun}
+                    $scope.editBatchRun(row);
+                    $scope.refreshBatchRuns();
                     toastr.success('TestRun Changed', 'Success')
                 },
                 function (err) {
@@ -533,6 +574,8 @@ oTech.controller('batchRun',
             promise.then(
                 function (data) {
                     console.log(JSON.stringify(data));
+                    var index = $scope.BatchRunDetailsEditOptions.data.indexOf(row.entity);
+                    $scope.BatchRunDetailsEditOptions.data.splice(index, 1);
                     toastr.success('TestRun Removed', 'Success')
                 },
                 function (err) {
@@ -573,7 +616,7 @@ oTech.controller('batchRun',
             $scope.testPlanViewDetails = [];
             $scope.selectedBatchRun = row.entity;
             console.log(JSON.stringify(testRuns));
-            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
+            promise = testScriptService.getTestRunsDetails(token, userId, $scope.selectedBatchRun.id, testRuns);
             promise.then(
                 function (data) {
                     console.log(data);
@@ -624,7 +667,7 @@ oTech.controller('batchRun',
                             $scope.selectedBatchRun.executionStatus = 1;
                         }
                     } else {
-                        toastr.error('Unable to stop Stoped', 'Error');
+                        toastr.error(data.message, 'Error');
                     }
 
                 },
@@ -662,6 +705,34 @@ oTech.controller('batchRun',
             );
         }
 
+
+        /* delete batch run */
+        $scope.delBatchRun = function (row) {
+            console.log("Inside DelBatchRun");
+            var batchRunObj = row.entity;
+            $scope.dataProcessingBatchRun = true;
+            promise = testScriptService.delBatchRun(token, userId, batchRunObj.id);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.dataProcessingBatchRun = false;
+                    if (data.batchRunDeleted) {
+                        toastr.success('BatchRun Deleted', 'Success');
+                        var index = $scope.BatchRunOptions.data.indexOf(row.entity);
+                        allOfTheData.splice(index, 1);
+                        $scope.BatchRunOptions.data = allOfTheData;
+                    } else {
+                        toastr.error('Unable to delete batchRun', 'Error');
+                    }
+
+                },
+                function (err) {
+                    console.log(err);
+                    $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
         /* view test plan */
         $scope.editBatchRun = function (row) {
             var testRunsObj = row.entity.testRuns;
@@ -669,21 +740,29 @@ oTech.controller('batchRun',
             angular.forEach(testRunsObj, function (value, key) {
                 testRuns.push(value.testrunId)
             });
-            if (testRuns.length == 0) {
+            /*if (testRuns.length == 0) {
                 toastr.error('No test run exists for this batch run', 'Error')
                 return;
-            }
+            }*/
             $scope.testRunEditView = true;
+            $scope.selectedBatchRun = row.entity;
+            console.log("editbatch plan method :: " + $scope.selectedBatchRun);
             $scope.dataLoadingForTestRunDetailsForEditView = true;
             $scope.selectedBatchRunForEdit = row.entity;
             console.log(JSON.stringify(testRuns));
-            promise = testScriptService.getTestRunsDetails(token, userId, testRuns);
+            promise = testScriptService.getTestRunsDetails(token, userId, $scope.selectedBatchRun.id, testRuns);
             promise.then(
                 function (data) {
                     console.log(data);
-                    $scope.selectedBatchRunForEditDetails = data;
+                    if (data.status === "No TestRunDetails Exists") {
+                        console.log("No TestRunDetails Exists");
+                        $scope.selectedBatchRunForEditDetails = {};
+                        $scope.BatchRunDetailsEditOptions.data = [];
+                    } else {
+                        $scope.selectedBatchRunForEditDetails = data;
+                        $scope.BatchRunDetailsEditOptions.data = data.batchRunsList;
+                    }
                     $scope.dataLoadingForTestRunDetailsForEditView = false;
-                    $scope.BatchRunDetailsEditOptions.data = data.batchRunsList;
                     $scope.BatchRunDetailsEditOptions.columnDefs[0].editDropdownOptionsArray = $scope.allTestRuns;
 
                 },

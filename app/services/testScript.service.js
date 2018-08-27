@@ -361,10 +361,10 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
-        service.getTestRunsDetails = function (token, userId, json) {
+        service.getTestRunsDetails = function (token, userId, batchRunId, json) {
             var deferred = $q.defer();
             $.ajax({
-                url: oApp.config.BASE_URL + "rest/batchRun/getTestRunDetails?userId=" + userId,
+                url: oApp.config.BASE_URL + "rest/batchRun/getTestRunDetails?userId=" + userId + "&batchRunId=" + batchRunId,
                 type: "POST",
                 data: JSON.stringify(json),
                 headers: {
@@ -432,6 +432,28 @@ oTech.service('testScriptService',
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.BASE_URL + "rest/batchRun/stopBatchRun",
+                type: "POST",
+                data: {token: token, batchRunId: batchRunId, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data) {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
+        service.delBatchRun = function (token, userId, batchRunId) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/deleteBatchRun",
                 type: "POST",
                 data: {token: token, batchRunId: batchRunId, userId: userId},
                 headers: {
@@ -818,6 +840,33 @@ oTech.service('testScriptService',
                     oldTestRunId: oldTestRunId,
                     newTestRunId: newTestRunId,
                     active: active
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                success: function (data) {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
+        service.editTestRunStartTime = function (token, userId, batchRunId, testRunId, startDateTime) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/editTestRunStartTime",
+                type: "POST",
+                data: {
+                    token: token,
+                    userId: userId,
+                    batchRunId: batchRunId,
+                    testRunId: testRunId,
+                    startDateTime: startDateTime,
                 },
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

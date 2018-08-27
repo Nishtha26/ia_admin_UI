@@ -176,6 +176,18 @@ oTech.controller('ReportConfigController',
             });
         };
 
+        $scope.getPlaceHolderForField = function(field) {
+            if (field.field == "startTime" || field.field == "endTime"){
+                return "yyyy-MM-dd HH:mm:ss";
+            }
+            else if (field.field == "timeZoneOffset"){
+                return "timeZoneOffset EX -5 or 9"
+            }
+            else{
+                return field.field;
+            }
+        }
+
         //Table Pagination
 
         $scope.itemsPerPage = 10;
