@@ -103,9 +103,12 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         var datavalues = {
             values: []
         };
+        var tempDatavalues = {
+            values: []
+        };
         var newTempArray = [];
         var kpiTableArray = [];
-        for (var i in $scope.dataPerformanceList) {
+        for (var i = 0, len = $scope.dataPerformanceList.length; i < len; ++i) {
             var item = $scope.dataPerformanceList[i];
             if (isFirstPull) {
                 if (item.locationType != null) {
@@ -174,7 +177,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                             if (!tempArray.contains(item.fulldate + " " + item.signalStrength)) {
                                 tempArray.push(item.fulldate + " " + item.signalStrength)
                                 if (item.signalStrength != 0) {
-                                    datavalues.values.push({
+                                    tempDatavalues.values.push({
                                         "label": item.fulldate, "value": item.signalStrength,
                                     });
                                 }
@@ -239,14 +242,16 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             ([name, values]) =>
                 ({ name, average: (values.reduce((a, b) => a + b) / values.length).toFixed(2) })
         );
-        console.log("Date Count "+$scope.dateList.length)
-        console.log("Market Count "+$scope.locationTypeList.length)
-        console.log("KPIName Count "+$scope.kpinameList.length)
-        console.log("Device Count "+$scope.deviceList.length)
-        console.log("KPI Value Count "+$scope.kpivalueList.length)
-        console.log(" KPI Table" + $scope.metricsTableData.length+" Cell Count "+ $scope.cellCount+" mncCount "+$scope.mncCount)
+        datavalues = tempDatavalues
+        var mapData = updatedPerformanceDataList
+        console.log("Date Count " + $scope.dateList.length)
+        console.log("Market Count " + $scope.locationTypeList.length)
+        console.log("KPIName Count " + $scope.kpinameList.length)
+        console.log("Device Count " + $scope.deviceList.length)
+        console.log("KPI Value Count " + $scope.kpivalueList.length)
+        console.log(" KPI Table" + $scope.metricsTableData.length + " Cell Count " + $scope.cellCount + " mncCount " + $scope.mncCount)
         updateChart(datavalues);
-        updateMapData(updatedPerformanceDataList)
+        updateMapData(mapData)
         $scope.mapDataLoading = false;
     }
     Array.prototype.contains = function (obj) {
@@ -264,7 +269,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateChart(datavalues) {
-       // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        // console.log("updated graph list " + JSON.stringify(datavalues.values))
         console.log("updated graph length " + datavalues.values.length)
         $scope.options1 = {
             chart: {
@@ -277,14 +282,20 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     left: 55
                 },
                 x: function (d) { return d.label },
-                y: function (d) { return d.value; },
+                y: function (d) { return d.value },
                 showValues: false,
                 valueFormat: function (d) {
                     return d3.format(',.4f')(d);
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'Date'
+                    axisLabel: 'Date',
+                    margin: {
+                        top: 0,
+                        right: 10,
+                        bottom: 0,
+                        left: 10
+                    }
                 },
                 yAxis: {
                     axisLabel: 'Signal Strength (dbm)',
@@ -353,18 +364,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     $scope.updateDashboard = function () {
-        var deviceId = $scope.deviceId
-        var kpiname = $scope.kpiname
-        //var bssid = $scope.bssid
-        //  var ssid = $scope.ssid
-        var locationType = $scope.locationType
-
-        if (typeof (kpiname) === 'undefined' && typeof (deviceId) === 'undefined' && typeof (locationType) === 'undefined') {
-            //return;
-        }
-
-        //alert("Updated values are deviceId " + deviceId + " kpiname " + kpiname + " bssid " + bssid + " ssid " + ssid + " locationType " + locationType)
-        updateDashboardContent(false)
+        updateDashboardContent(false) 
     }
 
     function updateMapData(updatedPerformanceDataList) {
@@ -381,7 +381,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         promise.then(
             function (data) {
                 var val1 = JSON.stringify(data)
-                if (typeof($scope.dataPerformanceList) === 'undefined') {
+                if (typeof ($scope.dataPerformanceList) === 'undefined') {
                     $scope.dataPerformanceList = data.mobilePerformanceDataList
                 } else {
                     $scope.dataPerformanceList = $scope.dataPerformanceList.concat(data.mobilePerformanceDataList)

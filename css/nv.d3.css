@@ -521,7 +521,7 @@ svg.nvd3-svg {
     display: block;
 
     font-family: Arial, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     text-align: left;
     pointer-events: none;
 
@@ -539,7 +539,7 @@ svg.nvd3-svg {
 .nvtooltip {
     background: rgba(255,255,255, 0.8);
     border: 1px solid rgba(0,0,0,0.5);
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 /*Give tooltips that old fade in transition by
@@ -548,7 +548,7 @@ svg.nvd3-svg {
 .nvtooltip.with-transitions, .with-transitions .nvtooltip {
     transition: opacity 50ms linear;
 
-    transition-delay: 200ms;
+    transition-delay: 150ms;
 }
 
 .nvtooltip.x-nvtooltip,
@@ -582,13 +582,12 @@ svg.nvd3-svg {
 }
 
 .nvtooltip table {
-    margin: 6px;
     border-spacing:0;
 }
 
 
 .nvtooltip table td {
-    padding: 2px 9px 2px 0;
+    padding: 2px 9px 2px 9px;
     vertical-align: middle;
 }
 

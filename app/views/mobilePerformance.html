@@ -92,19 +92,21 @@
                                 </table>
                             </div>
                             <br>
-                            <div class="table-wrapper">
-                                <table class="table table-bordered" style="table-layout: fixed;">
-                                    <tr>
-                                        <thead>
-                                            <th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Performance Summary</th>
-                                        </thead>
-                                    </tr>
+                            <div class="table-header">
+                                <table class="table table-bordered" style="table-layout: fixed">
                                     <thead>
                                         <tr>
-                                            <th style="	background-color: rgba(238, 238, 238, 0.692);">KPI Name</th>
-                                            <th class="text-center" style="	background-color: rgba(238, 238, 238, 0.692);">Avg Value</th>
+                                            <th class="text-center" style="background-color: rgba(238, 238, 238, 0.692);" colspan="2">Performance Summary</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center" style="	background-color: rgba(238, 238, 238, 0.692);width: 40%">KPI Name</th>
+                                            <th class="text-center" style="	background-color: rgba(238, 238, 238, 0.692);width: 60%">Avg Value</th>
                                         </tr>
                                     </thead>
+                                </table>
+                            </div>
+                            <div class="table-wrapper" style="width:100%; height: 295px">
+                                <table class="table table-bordered" style="table-layout: fixed;">
                                     <tbody>
                                         <tr ng-repeat="item in metricsTableData" ng-class="$index % 2 == 0 ? 'even' : 'odd'">
                                             <td ng-class="content-wrapper">{{item.name}}</td>
