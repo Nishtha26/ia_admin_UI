@@ -250,7 +250,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         console.log("Device Count " + $scope.deviceList.length)
         console.log("KPI Value Count " + $scope.kpivalueList.length)
         console.log(" KPI Table" + $scope.metricsTableData.length + " Cell Count " + $scope.cellCount + " mncCount " + $scope.mncCount)
-        updateChart(datavalues);
+        updateLineChart(datavalues);
         updateMapData(mapData)
         $scope.mapDataLoading = false;
     }
@@ -320,6 +320,83 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         $scope.data1 = [{
             key: "Mobile Performance",
             values: datavalues.values
+        }];
+    }
+
+    function updateLineChart(datavalues) {
+        // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        console.log("updated graph length " + datavalues.values.length)
+        var arr = [];
+        var lineChartArray = [];
+        for (var i=0;i< datavalues.values.length;i++)
+        {
+            arr.push(parseFloat(datavalues.values[i].value))
+            lineChartArray.push({x:new Date(datavalues.values[i].label), y: datavalues.values[i].value})
+        }
+        var min = Math.min.apply(Math, arr)
+        var max = Math.max.apply(Math, arr)
+        console.log(parseFloat(min)+" "+parseFloat(max))
+        //clearChart();
+        $scope.options1 = {
+            chart: {
+                type: 'lineChart',
+                height: 450,
+                margin: {
+                    top: 40,
+                    right: 20,
+                    bottom: 60,
+                    left: 55
+                },
+               x: function(d){ return d.x; },
+               y: function(d){ return d.y; },
+               isArea:false,
+               clipVoronoi: true,
+               interpolate: "monotone",
+                useInteractiveGuideline: true,
+               // showControls: true,
+               // showValues: false,
+               // staggerLabels: false,
+                 showLegend: true,
+                // valueFormat: function (d) {
+                //     return d3.format(',.4f')(d);
+                // },
+                forceY: [min, max],
+                transitionDuration: 500,
+                xAxis: {
+                    showMaxMin: false,
+                    axisLabel: 'Date',
+                    axisLabelDistance: 10,
+                    rotateLabels: -45,
+                    tickFormat : function(d) {
+                        return d3.time.format('%Y-%m-%d')(new Date(d))
+                    },
+                },
+                //xScale: d3.time.scale(),
+                yAxis: {
+                    axisLabel: 'Signal Strength (dbm)',
+                    tickFormat: function(d){
+                        return d3.format('.02f')(d);
+                    },
+                    axisLabelDistance: -10
+                }
+            },
+            title: {
+                enable: true,
+                text: 'Title for Line Chart'
+            },
+            subtitle: {
+                enable: true,
+                text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
+                css: {
+                    'text-align': 'center',
+                    'margin': '10px 13px 0px 7px'
+                }
+            },
+        };
+        $scope.data1 = [{
+            key: 'Mobile Performance',
+            values: lineChartArray,
+            color: '#ff7f0e'
         }];
     }
 
@@ -399,7 +476,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         promise = MobilePerformanceService.mobilePerformance(userId, pageIndex);
         promise.then(
             function (data) {
-                var val1 = JSON.stringify(data)
+               var val1 = JSON.stringify(data)
+               //console.log(val1)
                 if (typeof ($scope.dataPerformanceList) === 'undefined') {
                     $scope.dataPerformanceList = data.mobilePerformanceDataList
                 } else {
