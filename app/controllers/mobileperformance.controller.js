@@ -12,6 +12,10 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     var newDateList = [];
     var listCount = 0
     var pageIndex = 1
+    var graphType = "Bar"
+    var datavalues = {
+        values: []
+    };
     window.onresize = function (event) {
         $rootScope.slideContent();
     }
@@ -48,10 +52,19 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         group: 'Network',
     };
 
+    $scope.graph = {
+        type: 'Bar',
+    };
+
     $scope.radioChanged = function () {
         console.log($scope.locationData.group);
         updateDashboardContent(false)
     };
+
+    $scope.graphChanged = function(){
+        graphType = $scope.graph.type
+        updateChart(datavalues)
+    }
 
     $scope.onSliderChange = function (sliderId) {
         console.log(sliderId, 'has changed with ', $scope.rangeSlider.value);
@@ -84,9 +97,6 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         }
         //console.log("new date list " + $scope.newDateList)
         var updatedPerformanceDataList = [];
-        var datavalues = {
-            values: []
-        };
         var tempArray = [];
         var mapTempArray = [];
         //var ssidarray = [];
@@ -100,9 +110,6 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         //var ssidarray = [];
         //var bssidarray = [];
         var fulldatearray = [];
-        var datavalues = {
-            values: []
-        };
         var tempDatavalues = {
             values: []
         };
@@ -250,7 +257,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         console.log("Device Count " + $scope.deviceList.length)
         console.log("KPI Value Count " + $scope.kpivalueList.length)
         console.log(" KPI Table" + $scope.metricsTableData.length + " Cell Count " + $scope.cellCount + " mncCount " + $scope.mncCount)
-        updateLineChart(datavalues);
+        updateChart(datavalues);
         updateMapData(mapData)
         $scope.mapDataLoading = false;
     }
@@ -270,6 +277,11 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
 
     function updateChart(datavalues) {
         // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        if(graphType == "Line")
+        {
+            updateLineChart(datavalues)
+            return;
+        }
         console.log("updated graph length " + datavalues.values.length)
         var arr = [];
         for (var i=0;i< datavalues.values.length;i++)
@@ -285,7 +297,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 type: 'discreteBarChart',
                 height: 450,
                 margin: {
-                    top: 40,
+                    top: 0,
                     right: 20,
                     bottom: 60,
                     left: 55
@@ -342,7 +354,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 type: 'lineChart',
                 height: 450,
                 margin: {
-                    top: 40,
+                    top: 0,
                     right: 20,
                     bottom: 60,
                     left: 55
@@ -381,11 +393,11 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 }
             },
             title: {
-                enable: true,
+                enable: false,
                 text: 'Title for Line Chart'
             },
             subtitle: {
-                enable: true,
+                enable: false,
                 text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
                 css: {
                     'text-align': 'center',
