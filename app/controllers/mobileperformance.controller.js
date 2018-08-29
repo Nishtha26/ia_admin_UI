@@ -182,23 +182,23 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                                     });
                                 }
                             }
-                        }
-                    }
-                    if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
-                        var kpi_name = item.kpiname
-                        var kpi_value = parseFloat(item.kpivalue)
-                        if ((!(typeof (kpi_name) === 'undefined'))) {
-                            kpiTableArray.push(
-                                {
-                                    [kpi_name]: kpi_value
+                            if ((item.kpiname != null && item.kpivalue != null) || (item.kpiname != "" && item.kpivalue != "")) {
+                                var kpi_name = item.kpiname
+                                var kpi_value = parseFloat(item.kpivalue)
+                                if ((!(typeof (kpi_name) === 'undefined'))) {
+                                    kpiTableArray.push(
+                                        {
+                                            [kpi_name]: kpi_value
+                                        }
+                                    )
                                 }
-                            )
+                            }
+                            //ssidarray.push(item.wifiSSID);
+                            //bssidarray.push(item.wifiBSSID);
+                            if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
+                            if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
                         }
                     }
-                    //ssidarray.push(item.wifiSSID);
-                    //bssidarray.push(item.wifiBSSID);
-                    if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
-                    if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
                 }
 
             }
@@ -271,6 +271,15 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     function updateChart(datavalues) {
         // console.log("updated graph list " + JSON.stringify(datavalues.values))
         console.log("updated graph length " + datavalues.values.length)
+        var arr = [];
+        for (var i=0;i< datavalues.values.length;i++)
+        {
+        	arr.push(parseFloat(datavalues.values[i].value))
+        }
+        var min = Math.min.apply(Math, arr)
+        var max = Math.max.apply(Math, arr)
+        console.log(parseFloat(min)+" "+parseFloat(max))
+        //clearChart();
         $scope.options1 = {
             chart: {
                 type: 'discreteBarChart',
@@ -283,13 +292,18 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 },
                 x: function (d) { return d.label },
                 y: function (d) { return d.value },
+                showControls: true,
                 showValues: false,
+                staggerLabels: false,
+                showLegend: true,
                 valueFormat: function (d) {
                     return d3.format(',.4f')(d);
                 },
+                forceY: [min-20, max],
                 transitionDuration: 500,
                 xAxis: {
                     axisLabel: 'Date',
+                    rotateLabels: -45,
                     margin: {
                         top: 0,
                         right: 10,
@@ -304,9 +318,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             }
         };
         $scope.data1 = [{
-            key: "Cumulative Return",
+            key: "Mobile Performance",
             values: datavalues.values
         }];
+    }
+
+    var clearChart = function () {
+        var svg = d3.select("#chart svg");
+        svg.selectAll("*").remove();
     }
 
     var colorCategory = d3.scale.category20b()
@@ -345,7 +364,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         var sorted = $scope.dateList.sort(sortDates);
         var minDate = sorted[0];
         var maxDate = sorted[sorted.length - 1];
-        console.log(minDate + " " + maxDate)
+      //  console.log(minDate + " " + maxDate)
         $scope.slider = {
             minValue: minDate,
             maxValue: maxDate,
@@ -364,7 +383,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     $scope.updateDashboard = function () {
-        updateDashboardContent(false) 
+        updateDashboardContent(false)
     }
 
     function updateMapData(updatedPerformanceDataList) {
@@ -391,7 +410,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 updateDashboardContent(true)
                 console.log("before Page Index is " + pageIndex + " Total Count " + parseInt(listCount / 10000))
                 //$scope.marketDataLoading = false;
-                if (parseInt(listCount / 10000) >= pageIndex) {
+                if (parseInt(listCount / 10000)  >= pageIndex) {
                     pageIndex++
                     console.log("after Page Index is " + pageIndex)
                     $scope.mobilePerformance();

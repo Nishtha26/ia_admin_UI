@@ -189,5 +189,9 @@ td
 		position: relative;
 		padding: 10px 25px 10px 25px;
 	}
+
+	/* .nvd3 .nv-axis .tick.zero text {
+		transform: rotate(-35deg);
+  } */
   
   
