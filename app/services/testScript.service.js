@@ -406,6 +406,29 @@ oTech.service('testScriptService',
             return deferred.promise;
         }
 
+
+        service.createBatchRun = function (token, userId, batchRunName,batchRunDesc) {
+            var deferred = $q.defer();
+            $.ajax({
+                url: oApp.config.BASE_URL + "rest/batchRun/createBatchRun",
+                type: "POST",
+                data: {token: token, batchRunName: batchRunName,batchRunDesc:batchRunDesc, userId: userId},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+
+                },
+                success: function (data) {
+                    //alert("success");
+                    deferred.resolve(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                    deferred.reject(err);
+                }
+            });
+            return deferred.promise;
+        }
+
         service.startBatchRun = function (token, userId, batchRunId) {
             var deferred = $q.defer();
             $.ajax({

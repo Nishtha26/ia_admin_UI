@@ -384,10 +384,14 @@
                                                    placeholder="Type to filter..."></label>
                                         <span class="error_msg" ng-show="errorMsg">{{Message}}</span>
                                         <span ng-show="testPlanName" class="success_msg">{{testPlanNameMsg}}</span>
+                                        <button type="button" data-toggle="modal" data-target="#add-batch-run"
+                                                class='btn btn-success pull-right'>Add batchRun
+                                        </button>
                                     </div>
 
                                 </div>
-                                <div id="BatchRunOptions" ui-grid="BatchRunOptions" ui-grid-selection ui-grid-cellNav ui-grid-pagination
+                                <div id="BatchRunOptions" ui-grid="BatchRunOptions" ui-grid-selection ui-grid-cellNav
+                                     ui-grid-pagination
                                      ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
                                      class="table table-hover grid">
                                 </div>
@@ -577,20 +581,55 @@
                 <div class="modal-body">
                     <div>
                         <br/>
-                        <select name="test-run" ng-model="selectedTestRun" >
-                            <option ng-repeat="testRun in allTestRuns" value="{{testRun.testrunId}}">({{testRun.testrunId}}){{testRun.testrunName}}</option>
+                        <select name="test-run" ng-model="selectedTestRun">
+                            <option ng-repeat="testRun in allTestRuns" value="{{testRun.testrunId}}">
+                                ({{testRun.testrunId}}){{testRun.testrunName}}
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    <button type="button" ng-click="addTestRunInBatchRun(selectedTestRun)" class="btn btn-primary">Add</button>
+                    <button type="button" ng-click="addTestRunInBatchRun(selectedTestRun)" class="btn btn-primary">Add
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!---  Add batch Run dialog------>
+
+<div id="add-batch-run" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New BatchRun</h5>
+                <div class="heading-elements">
+                    <ul class="icons-list">
+                        <li><a data-dismiss="modal" data-action="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="batch-run-name">BatchRun Name</label>
+                    <input type="text" class="form-control" id="batch-run-name"  data-ng-model="newBatchRun.batchRunName">
+                </div>
+                <div class="form-group">
+                    <label for="batch-run-name">BatchRun Description</label>
+                    <input type="text" class="form-control" id="batch-run-description" data-ng-model="newBatchRun.batchRunDesc">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" ng-click="createBatchRun()" class="btn btn-primary">Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 <!-- Device_List -->
 <div id="Device_List" class="modal fade" role="dialog" data-backdrop="static">
