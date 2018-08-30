@@ -26,8 +26,7 @@ oTech.controller('batchRun',
         var VirtualDevicelist = [];
         var notificationTypes = [];
         $scope.dataProcessing = false;
-
-
+        $scope.newBatchRun = {};
         $rootScope.slideContent();
 
 
@@ -320,7 +319,7 @@ oTech.controller('batchRun',
                 if (colDef.field == "jobStartDateTime") {
                     var testRunId = rowEntity.jobId;
                     var startDateTime = newValue;
-                    promise = testScriptService.editTestRunStartTime(token, userId, batchRunId,testRunId,startDateTime);
+                    promise = testScriptService.editTestRunStartTime(token, userId, batchRunId, testRunId, startDateTime);
                     promise.then(
                         function (data) {
                             console.log(JSON.stringify(data));
@@ -647,6 +646,28 @@ oTech.controller('batchRun',
                 function (err) {
                     console.log(err);
                     $scope.dataProcessingBatchRun = false;
+                }
+            );
+        }
+
+        /* ceatebatch run */
+        $scope.createBatchRun = function () {
+            console.log("Inside CreateBatchRun");
+            $('#add-batch-run').modal('toggle');
+            var batchRunName = $scope.newBatchRun.batchRunName;
+            var batchRunDesc = $scope.newBatchRun.batchRunDesc;
+            promise = testScriptService.createBatchRun(token, userId, batchRunName,batchRunDesc);
+            promise.then(
+                function (data) {
+                    console.log(data);
+                    $scope.dataProcessingBatchRun = false;
+                    $scope.BatchRunOptions.data.unshift(data.batchRun);
+                    toastr.success('batchRun Added', 'Success')
+
+                },
+                function (err) {
+                    console.log(err);
+                    toastr.error('Something Wrong , try again!', 'Error')
                 }
             );
         }
