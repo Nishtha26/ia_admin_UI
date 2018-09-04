@@ -243,7 +243,7 @@ oTech
                 }
                 $('.ui-grid-viewport').css("display", "none");
                 promise = AppServices.GetMeasurementsapnData(userId,
-                    token, $scope.itemsPerPage, startLimit, link);
+                    token, $scope.itemsPerPage, startLimit, link,searchText);
                 promise.then(function (data) {
 //							$scope.dataLoadingDM = true;
                     $scope.err = false;
