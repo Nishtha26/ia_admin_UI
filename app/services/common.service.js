@@ -465,12 +465,12 @@ oTech.service('AppServices',
         }
 
         /* all data */
-        service.GetMeasurementsapnData = function (userId, token, displayLength, startLimit, link) {
+        service.GetMeasurementsapnData = function (userId, token, displayLength, startLimit, link, searchText) {
             var deferred = $q.defer();
             $.ajax({
                 url: oApp.config.MEASUREMENT_URL + link,
                 type: "POST",
-                data: {token: token, userId: userId, startLimit: startLimit, displayLength: displayLength},
+                data: {token: token, userId: userId, startLimit: startLimit, displayLength: displayLength, searchText:searchText},
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
