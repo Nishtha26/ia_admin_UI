@@ -3,6 +3,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     $scope.name = sessionStorage.getItem("username");
     $rootScope.slideContent();
     var market;
+    $scope.options1 = { /* see examples */ };
+    $scope.data1 = []; //can leave empty
     var kpislider;
     var dataPerformanceList;
     var coordinateDetailsList;
@@ -10,12 +12,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     var metricsTableData = [];
     var tableData = [];
     var newDateList = [];
+    var fulldatearray = [];
     var listCount = 0
     var pageIndex = 1
     var graphType = "Bar"
     var datavalues = {
         values: []
     };
+    var dateTimeMap = new Map();
     window.onresize = function (event) {
         $rootScope.slideContent();
     }
@@ -109,7 +113,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         var kpivaluearray = [];
         //var ssidarray = [];
         //var bssidarray = [];
-        var fulldatearray = [];
+        fulldatearray.length = 0
         var tempDatavalues = {
             values: []
         };
@@ -129,6 +133,12 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 }
                 if (item.kpivalue != null) {
                     kpivaluearray.push(parseFloat(item.kpivalue));
+                }
+                if(item.timeStamp != null && item.signalStrength != null)
+                {
+                    //console.log(item.timeStamp)
+                   // if(!dateTimeMap.has(item.timeStamp).has(item.signalStrength))
+                    dateTimeMap.set(item.timeStamp, item.signalStrength)
                 }
                 // if (data.mobilePerformanceDataList[i].wifiSSID != null) {
                 //     ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
@@ -276,7 +286,9 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     }
 
     function updateChart(datavalues) {
-        // console.log("updated graph list " + JSON.stringify(datavalues.values))
+        $scope.options1 = { /* see examples */ };
+        $scope.data1 = []; //can leave empty
+        console.log("updated graph list " + JSON.stringify(datavalues.values))
         if(graphType == "Line")
         {
             updateLineChart(datavalues)
@@ -302,6 +314,24 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     bottom: 60,
                     left: 55
                 },
+                dispatch: {
+                    tooltipShow: function(e){ },
+                    tooltipHide: function(e){},
+                    beforeUpdate: function(e){ }
+                  },
+                  discretebar: {
+                    dispatch: {
+                      //chartClick: function(e) {console.log("! chart Click !")},
+                     // elementClick: function(e) {console.log("! element Click !")},
+                      elementDblClick: function(e) {
+                          console.log(e.data.label)
+                          updateGraphView(e.data.label)
+                        },
+                      elementMouseout: function(e) {},
+                      elementMouseover: function(e) {}
+                    }
+                  },
+                  callback: function(e){console.log('! callback !')},
                 x: function (d) { return d.label },
                 y: function (d) { return d.value },
                 showControls: true,
@@ -333,6 +363,31 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             key: "Mobile Performance",
             values: datavalues.values
         }];
+        $timeout(function () {
+            window.dispatchEvent(new Event('resize'));
+        }, 0);
+    }
+
+    function updateGraphView(label)
+    {
+        var tempDatavalues = {
+            values: []
+        };
+        for (let [key, value] of dateTimeMap) {
+           // console.log(key + " - " + value);
+            var date = key.split(' ');
+            if(date[0] == label && value != 0)
+            {
+                //console.log("Map Found")
+               // console.log("Time "+date[1]+" Value "+value);
+                    tempDatavalues.values.push({
+                        "label": date[1], "value": value,
+                    });
+                }
+            
+          }
+          updateChart(tempDatavalues)
+       
     }
 
     function updateLineChart(datavalues) {

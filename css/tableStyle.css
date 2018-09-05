@@ -139,7 +139,8 @@ td
     vertical-align: middle;
 }
 
-
+div.outer { overflow-x: auto; }
+div.outer .inner { width: 100%; }
 .even {
     background-color: white;
   }
