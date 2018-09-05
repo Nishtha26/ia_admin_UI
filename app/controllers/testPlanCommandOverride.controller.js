@@ -509,9 +509,11 @@ oTech.controller('testPlanCommandOverride',
             $rootScope.usecaseId = $scope.usecaseVal;
 
             let customerListId = [];
+            if($scope.customers) {
                 for(let i = 0; i < $scope.customers.length; i++){
                     customerListId.push(parseInt($scope.customers[i].customerId));
                 }
+            }    
             sendCreateData.customerListId = customerListId;
             sendCreateData.taskVOList[0].taskCreatedBy = userId;
             sendCreateData.taskVOList[0].taskExecutorVOList = [];
