@@ -186,6 +186,7 @@ oTech.service('MobilePerformanceService',
             var latlngbounds = new google.maps.LatLngBounds();
             console.log("new map points length " + mobilePerformanceDataList.length)
             for (var index = 0; index < mobilePerformanceDataList.length; index++) {
+                var mobileData = mobilePerformanceDataList[index];
                 var point = new google.maps.LatLng(mobilePerformanceDataList[index].latitude, mobilePerformanceDataList[index].longitude);
                 var img = ""
                 if (img == "") {
@@ -210,7 +211,17 @@ oTech.service('MobilePerformanceService',
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (results[1]) {
                                     //	      								var address = results[1].formatted_address;
-                                    infoWindow.setContent("<h4>this is temp message</h4>");
+                                    infoWindow.setContent(infoDetailBox(mobileData.latitude, 
+                                        mobileData.longitude,
+                                        mobileData.fulldate,
+                                        mobileData.mcc,
+                                        mobileData.mnc,
+                                        mobileData.lac,
+                                        mobileData.cellId,
+                                        mobileData.kpiname,
+                                        mobileData.kpivalue
+
+                            ));
                                     infoWindow.open(map, marker);
                                 }
                             }
@@ -607,14 +618,53 @@ oTech.service('MobilePerformanceService',
             }
             return strImage;
         }
-        function infoDetailBox(mobilePerformanceDataList) {
+        function infoDetailBox(lat, lon, dateTime, mcc, mnc, lac, cellId, kpiName, kpiValue) {
             var boxText = document.createElement("div");
             boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);width:100%;border-bottom:1px solid #26ADE4; ";
-            deviceDataHTML = deviceDetailContent(kpi, device, startDate, endDate, deviceDetail);
+            deviceDataHTML = mobilePerformanceDetailContent(lat, lon, dateTime, mcc, mnc, lac, cellId, kpiName, kpiValue);
             boxText.innerHTML = deviceDataHTML;
             return boxText;
 
         }
+
+        function mobilePerformanceDetailContent(lat, lon, dateTime, mcc, mnc, lac, cellId, kpiName, kpiValue)
+        {
+            var str = 
+        "<style type='text/css'>"+
+        ".tg  {border-collapse:collapse;border-spacing:0;border-color:#999;margin:0px auto;}"+
+        ".tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#444;background-color:#F7FDFA;}"+
+        ".tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#fff;background-color:#26ADE4;}"+
+        ".tg .tg-imv0{font-size:10px;font-family:Tahoma, Geneva, sans-serif !important;;border-color:#000000;text-align:center}"+
+        ".tg .tg-6zdh{font-size:10px;font-family:Tahoma, Geneva, sans-serif !important;;border-color:#000000;text-align:center;vertical-align:top}"+
+        "</style>"+
+        "<table class='tg'>"+
+          "<tr>"+
+          "<th class='tg-6zdh'>Lat</th>"+
+            "<th class='tg-6zdh'>Lon</th>"+
+            "<th class='tg-6zdh'>Date Time</th>"+
+            "<th class='tg-6zdh'>mcc</th>"+
+            "<th class='tg-6zdh'>mnc</th>"+
+            "<th class='tg-6zdh'>lac</th>"+
+            "<th class='tg-6zdh'>cellId</th>"+
+            "<th class='tg-6zdh'>KPIName</th>"+
+            "<th class='tg-6zdh'>KPIValue</th>"+
+            "</tr>"+
+          "<tr>"+
+          " <td class='tg-imv0'>"+lat+"</td>"+
+            " <td class='tg-imv0'>"+lon+"</td>"+
+            " <td class='tg-imv0'>"+dateTime+"</td>"+
+            " <td class='tg-imv0'>"+mcc+"</td>"+
+            " <td class='tg-imv0'>"+mnc+"</td>"+
+            " <td class='tg-6zdh'>"+lac+"</td>"+
+            " <td class='tg-6zdh'>"+cellId+"</td>"+
+            " <td class='tg-6zdh'>"+kpiName+"</td>"+
+            " <td class='tg-6zdh'>"+kpiValue+"</td>"+
+            "</tr>"+
+        "</table>"
+
+        return str;
+        }
+
         function deviceDetailBox(deviceDetail, device, kpi, startDate, endDate) {
             var boxText = document.createElement("div");
             boxText.style.cssText = "background-color: #fff; border-radius: 2px; box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);width:100%;border-bottom:1px solid #26ADE4; ";
