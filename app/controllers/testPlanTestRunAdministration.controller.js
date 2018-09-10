@@ -1696,12 +1696,20 @@ oTech.controller('testPlanTestRunAdministration',
             enableVerticalScrollbar: 3,
             enableHorizontalScrollbar: 0,
             columnDefs: [
-                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader, width: "20%"},
+                {
+                	field: 'deviceId', 
+                	name: 'Id',
+                	headerCellClass: $scope.highlightFilteredHeader,
+                	width: "30%",
+                	cellTooltip: function (row, col) {
+                        return '' + row.entity.deviceId + '';
+                    }	
+                },
                 {
                     field: 'deviceName',
                     name: 'Name',
                     headerCellClass: $scope.highlightFilteredHeader,
-                    width: "20%",
+                    width: "30%",
                     cellTooltip: function (row, col) {
                         return '' + row.entity.deviceName + '';
                     }
@@ -1722,7 +1730,7 @@ oTech.controller('testPlanTestRunAdministration',
                     field: 'manufacturer',
                     name: 'manufacturer',
                     headerCellClass: $scope.highlightFilteredHeader,
-                    width: "25%",
+                    width: "30%",
                     cellTooltip: function (row, col) {
                         return '' + row.entity.manufacturer + '';
                     }
