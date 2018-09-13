@@ -23,6 +23,9 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
     window.onresize = function (event) {
         $rootScope.slideContent();
     }
+$("#backButton").hide();
+$("#radioGroup").hide();
+
     var token = sessionStorage.token;
     var userId = sessionStorage.userId;
     $rootScope.role = sessionStorage.role;
@@ -65,7 +68,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         updateDashboardContent(false)
     };
 
-    $scope.graphChanged = function(){
+    $scope.graphChanged = function () {
         graphType = $scope.graph.type
         updateChart(datavalues)
     }
@@ -134,10 +137,9 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 if (item.kpivalue != null) {
                     kpivaluearray.push(parseFloat(item.kpivalue));
                 }
-                if(item.timeStamp != null && item.signalStrength != null)
-                {
+                if (item.timeStamp != null && item.signalStrength != null) {
                     //console.log(item.timeStamp)
-                   // if(!dateTimeMap.has(item.timeStamp).has(item.signalStrength))
+                    // if(!dateTimeMap.has(item.timeStamp).has(item.signalStrength))
                     dateTimeMap.set(item.timeStamp, item.signalStrength)
                 }
                 // if (data.mobilePerformanceDataList[i].wifiSSID != null) {
@@ -285,24 +287,22 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         return !!array.find(item => { return item.getTime() == value.getTime() });
     }
 
-    function updateChart(datavalues) {
+    function updateChart(datavalues, isDateTime) {
         $scope.options1 = { /* see examples */ };
         $scope.data1 = []; //can leave empty
         console.log("updated graph list " + JSON.stringify(datavalues.values))
-        if(graphType == "Line")
-        {
+        if (graphType == "Line") {
             updateLineChart(datavalues)
             return;
         }
         console.log("updated graph length " + datavalues.values.length)
         var arr = [];
-        for (var i=0;i< datavalues.values.length;i++)
-        {
-        	arr.push(parseFloat(datavalues.values[i].value))
+        for (var i = 0; i < datavalues.values.length; i++) {
+            arr.push(parseFloat(datavalues.values[i].value))
         }
         var min = Math.min.apply(Math, arr)
         var max = Math.max.apply(Math, arr)
-        console.log(parseFloat(min)+" "+parseFloat(max))
+        console.log(parseFloat(min) + " " + parseFloat(max))
         //clearChart();
         $scope.options1 = {
             chart: {
@@ -315,23 +315,23 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     left: 55
                 },
                 dispatch: {
-                    tooltipShow: function(e){ },
-                    tooltipHide: function(e){},
-                    beforeUpdate: function(e){ }
-                  },
-                  discretebar: {
+                    tooltipShow: function (e) { },
+                    tooltipHide: function (e) { },
+                    beforeUpdate: function (e) { }
+                },
+                discretebar: {
                     dispatch: {
-                      //chartClick: function(e) {console.log("! chart Click !")},
-                     // elementClick: function(e) {console.log("! element Click !")},
-                      elementDblClick: function(e) {
-                          console.log(e.data.label)
-                          updateGraphView(e.data.label)
+                        //chartClick: function(e) {console.log("! chart Click !")},
+                        // elementClick: function(e) {console.log("! element Click !")},
+                        elementDblClick: function (e) {
+                            console.log(e.data.label)
+                            updateGraphView(e.data.label)
                         },
-                      elementMouseout: function(e) {},
-                      elementMouseover: function(e) {}
+                        elementMouseout: function (e) { },
+                        elementMouseover: function (e) { }
                     }
-                  },
-                  callback: function(e){console.log('! callback !')},
+                },
+                callback: function (e) { console.log('! callback !') },
                 x: function (d) { return d.label },
                 y: function (d) { return d.value },
                 showControls: true,
@@ -341,7 +341,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 valueFormat: function (d) {
                     return d3.format(',.4f')(d);
                 },
-                forceY: [min-20, max],
+                forceY: [min - 20, max],
                 transitionDuration: 500,
                 xAxis: {
                     axisLabel: 'Date',
@@ -363,31 +363,47 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
             key: "Mobile Performance",
             values: datavalues.values
         }];
-        $timeout(function () {
-            window.dispatchEvent(new Event('resize'));
-        }, 0);
+        if (isDateTime) {
+            $("div.outer").css({"overflow-x": "auto"});
+            $("div.outer .inner").css({"width": "1000%"});
+            $timeout(function () {
+                window.dispatchEvent(new Event('resize'));
+            }, 0);
+        }else 
+        {
+            $("div.outer").css({"overflow-x": "auto"});
+            $("div.outer .inner").css({"width": "100%"});
+        }
     }
 
-    function updateGraphView(label)
-    {
+    $scope.clicked = function () {
+        $("#backButton").hide();
+    //     $('#backButton').fadeOut('slow', function() {
+    //         $(this).css({"visibility":"hidden"});
+    //         $(this).css({"display":"block"});
+    //   });
+      updateChart(datavalues);
+    };
+
+    function updateGraphView(label) {
         var tempDatavalues = {
             values: []
         };
+        $("#backButton").show();
         for (let [key, value] of dateTimeMap) {
-           // console.log(key + " - " + value);
+            // console.log(key + " - " + value);
             var date = key.split(' ');
-            if(date[0] == label && value != 0)
-            {
+            if (date[0] == label && value != 0) {
                 //console.log("Map Found")
-               // console.log("Time "+date[1]+" Value "+value);
-                    tempDatavalues.values.push({
-                        "label": date[1], "value": value,
-                    });
-                }
-            
-          }
-          updateChart(tempDatavalues)
-       
+                // console.log("Time "+date[1]+" Value "+value);
+                tempDatavalues.values.push({
+                    "label": date[1], "value": value,
+                });
+            }
+
+        }
+        updateChart(tempDatavalues, true)
+
     }
 
     function updateLineChart(datavalues) {
@@ -395,14 +411,13 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         console.log("updated graph length " + datavalues.values.length)
         var arr = [];
         var lineChartArray = [];
-        for (var i=0;i< datavalues.values.length;i++)
-        {
+        for (var i = 0; i < datavalues.values.length; i++) {
             arr.push(parseFloat(datavalues.values[i].value))
-            lineChartArray.push({x:new Date(datavalues.values[i].label), y: datavalues.values[i].value})
+            lineChartArray.push({ x: new Date(datavalues.values[i].label), y: datavalues.values[i].value })
         }
         var min = Math.min.apply(Math, arr)
         var max = Math.max.apply(Math, arr)
-        console.log(parseFloat(min)+" "+parseFloat(max))
+        console.log(parseFloat(min) + " " + parseFloat(max))
         //clearChart();
         $scope.options1 = {
             chart: {
@@ -414,16 +429,16 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     bottom: 60,
                     left: 55
                 },
-               x: function(d){ return d.x; },
-               y: function(d){ return d.y; },
-               isArea:false,
-               clipVoronoi: true,
-               interpolate: "monotone",
+                x: function (d) { return d.x; },
+                y: function (d) { return d.y; },
+                isArea: false,
+                clipVoronoi: true,
+                interpolate: "monotone",
                 useInteractiveGuideline: true,
-               // showControls: true,
-               // showValues: false,
-               // staggerLabels: false,
-                 showLegend: true,
+                // showControls: true,
+                // showValues: false,
+                // staggerLabels: false,
+                showLegend: true,
                 // valueFormat: function (d) {
                 //     return d3.format(',.4f')(d);
                 // },
@@ -434,14 +449,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                     axisLabel: 'Date',
                     axisLabelDistance: 10,
                     rotateLabels: -45,
-                    tickFormat : function(d) {
+                    tickFormat: function (d) {
                         return d3.time.format('%Y-%m-%d')(new Date(d))
                     },
                 },
                 //xScale: d3.time.scale(),
                 yAxis: {
                     axisLabel: 'Signal Strength (dbm)',
-                    tickFormat: function(d){
+                    tickFormat: function (d) {
                         return d3.format('.02f')(d);
                     },
                     axisLabelDistance: -10
@@ -508,7 +523,7 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         var sorted = $scope.dateList.sort(sortDates);
         var minDate = sorted[0];
         var maxDate = sorted[sorted.length - 1];
-      //  console.log(minDate + " " + maxDate)
+        //  console.log(minDate + " " + maxDate)
         $scope.slider = {
             minValue: minDate,
             maxValue: maxDate,
@@ -543,8 +558,8 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
         promise = MobilePerformanceService.mobilePerformance(userId, pageIndex);
         promise.then(
             function (data) {
-               var val1 = JSON.stringify(data)
-               //console.log(val1)
+                var val1 = JSON.stringify(data)
+                //console.log(val1)
                 if (typeof ($scope.dataPerformanceList) === 'undefined') {
                     $scope.dataPerformanceList = data.mobilePerformanceDataList
                 } else {
@@ -552,13 +567,14 @@ oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $l
                 }
                 $scope.centerInfo = data.centerInfo
                 listCount = data.records
+                $("#radioGroup").show();
                 updateDashboardContent(true)
                 console.log("before Page Index is " + pageIndex + " Total Count " + parseInt(listCount / 10000))
                 //$scope.marketDataLoading = false;
-                if (parseInt(listCount / 10000)  >= pageIndex) {
+                if (parseInt(listCount / 10000) >= pageIndex) {
                     pageIndex++
                     console.log("after Page Index is " + pageIndex)
-                    $scope.mobilePerformance();
+                   // $scope.mobilePerformance();
                 }
 
             },

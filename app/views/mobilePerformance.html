@@ -123,17 +123,20 @@
                 </div>
             </div>
             <!-- /circle shapes -->
-            <div class="panel panel-white">
-                    <div class="radioButtonMaterial" style="margin-top: 10px;margin-left: 10px;margin-bottom: -15px;">
-                            <md-radio-group ng-model="graph.type" ng-required="true" ng-change="graphChanged(c)">
-                                <md-radio-button value="Bar" class="md-primary">Bar Graph</md-radio-button>
-                                <md-radio-button value="Line" class="md-primary"> Line Graph </md-radio-button>
-                            </md-radio-group>
-                        </div>
-                        <div class="outer">
-                            <div class="inner">
-                <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+            <div class="panel panel-white" style="float:none;">
+                <div id="radioGroup" class="radioButtonMaterial" style="float:left;margin-top: 10px;margin-left: 10px;margin-bottom: -15px;">
+                    <md-radio-group ng-model="graph.type" ng-required="true" ng-change="graphChanged(c)">
+                        <md-radio-button value="Bar" class="md-primary">Bar Graph</md-radio-button>
+                        <md-radio-button value="Line" class="md-primary"> Line Graph </md-radio-button>
+                    </md-radio-group>
                 </div>
+                <div id="backButton" style="float: right;">
+                <md-button ng-click=clicked() ng-disabled="false" class="md-raised md-cornered">Back to Date View</md-button>
+            </div>
+                <div class="outer">
+                    <div class="inner">
+                        <nvd3 style="width: 100%;height: 560px;margin-right: 10px;" options='options1' data='data1'></nvd3>
+                    </div>
                 </div>
                 <!-- <nvd3-discrete-bar-chart
             data="exampleData"
