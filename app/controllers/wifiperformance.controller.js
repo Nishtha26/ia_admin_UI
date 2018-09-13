@@ -1,5 +1,5 @@
 'use strict';
-oTech.controller('MobilePerformanceController', function ($scope, $rootScope, $location, AppServices, MobilePerformanceService, $stateParams, $timeout, $uibModal, $element) {
+oTech.controller('WifiPerformanceController', function ($scope, $rootScope, $location, AppServices, WiFiPerformanceService, $stateParams, $timeout, $uibModal, $element) {
     $scope.name = sessionStorage.getItem("username");
     $rootScope.slideContent();
     var market;
@@ -114,8 +114,8 @@ $("#radioGroup").hide();
         var kpinamearray = [];
         var deviceIdarray = [];
         var kpivaluearray = [];
-        //var ssidarray = [];
-        //var bssidarray = [];
+        var ssidarray = [];
+        var bssidarray = [];
         fulldatearray.length = 0
         var tempDatavalues = {
             values: []
@@ -142,12 +142,12 @@ $("#radioGroup").hide();
                     // if(!dateTimeMap.has(item.timeStamp).has(item.signalStrength))
                     dateTimeMap.set(item.timeStamp, item.signalStrength)
                 }
-                // if (data.mobilePerformanceDataList[i].wifiSSID != null) {
-                //     ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
-                // }
-                // if (data.mobilePerformanceDataList[i].wifiBSSID != null) {
-                //     bssidarray.push(data.mobilePerformanceDataList[i].wifiBSSID);
-                // }
+                if (data.mobilePerformanceDataList[i].wifiSSID != null) {
+                    ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
+                }
+                if (data.mobilePerformanceDataList[i].wifiBSSID != null) {
+                    bssidarray.push(data.mobilePerformanceDataList[i].wifiBSSID);
+                }
                 if (item.signalStrength == null) {
                     item.signalStrength = "0"
                 }
@@ -165,8 +165,8 @@ $("#radioGroup").hide();
             }
             if (((typeof ($scope.deviceId) === 'undefined') ? item.deviceId != null : item.deviceId == $scope.deviceId)
                 && ((typeof ($scope.locationType) === 'undefined') ? item.locationType != null : (item.locationType != null && item.locationType.toLowerCase() == $scope.locationType.toLowerCase()))
-                //  && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
-                //  && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
+                  && ((typeof ($scope.bssid) === 'undefined') ? item.wifiBSSID != null : (item.wifiBSSID != null && item.wifiBSSID.toLowerCase() == $scope.bssid.toLowerCase()))
+                  && ((typeof ($scope.ssid) === 'undefined') ? item.wifiSSID != null : (item.wifiSSID != null && item.wifiSSID.toLowerCase() == $scope.ssid.toLowerCase()))
                 // && ((typeof ($scope.rangeSlider.value) === 'undefined') ? item.kpivalue != null : (item.kpivalue != null && parseFloat(item.kpivalue) == $scope.rangeSlider.value))
                 && ((typeof ($scope.kpiname) === 'undefined') ? item.kpiname != null : (item.kpiname != null && item.kpiname.toLowerCase() == $scope.kpiname.toLowerCase()))) {
                 if ((typeof ($scope.kpiname) === 'undefined') ? (item.kpivalue != null || item.kpivalue != "") : between(item.kpivalue, $scope.rangeSlider.value, $scope.rangeSlider.maxValue)) {
@@ -212,10 +212,10 @@ $("#radioGroup").hide();
                                     )
                                 }
                             }
-                            //ssidarray.push(item.wifiSSID);
-                            //bssidarray.push(item.wifiBSSID);
-                            if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
-                            if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
+                            ssidarray.push(item.wifiSSID);
+                            bssidarray.push(item.wifiBSSID);
+                            // if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
+                            // if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
                         }
                     }
                 }
@@ -228,10 +228,10 @@ $("#radioGroup").hide();
             $scope.kpinameList = filterDuplicateArray(kpinamearray)
             $scope.deviceList = filterDuplicateArray(deviceIdarray)
             $scope.kpivalueList = filterDuplicateArray(kpivaluearray)
-            // $scope.ssidList = filterDuplicateArray(ssidarray)
-            // $scope.bssidList = filterDuplicateArray(bssidarray)
-            // $scope.ssidCount = $scope.ssidList.length
-            // $scope.bssidCount = $scope.bssidList.length
+            $scope.ssidList = filterDuplicateArray(ssidarray)
+            $scope.bssidList = filterDuplicateArray(bssidarray)
+            $scope.ssidCount = $scope.ssidList.length
+            $scope.bssidCount = $scope.bssidList.length
             $scope.dateList = fulldatearray
                 .map(function (date) { return date.getTime() })
                 .filter(function (date, i, array) {
@@ -243,12 +243,12 @@ $("#radioGroup").hide();
             updateKPIValueArray()
         }
 
-        // $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
-        // $scope.bssidCount = (filterDuplicateArray(bssidarray)).length
+        $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
+        $scope.bssidCount = (filterDuplicateArray(bssidarray)).length
         //console.log("Updated mnc list " + filterDuplicateArray(mncarray))
         //console.log("Updated mnc list " + filterDuplicateArray(cellarray))
-        $scope.cellCount = (filterDuplicateArray(cellarray)).length
-        $scope.mncCount = (filterDuplicateArray(mncarray)).length
+       // $scope.cellCount = (filterDuplicateArray(cellarray)).length
+       // $scope.mncCount = (filterDuplicateArray(mncarray)).length
 
         // console.log(" Before Avg " + JSON.stringify($scope.metricsTableData))
         $scope.metricsTableData = Array.from(kpiTableArray.reduce(
@@ -360,7 +360,7 @@ $("#radioGroup").hide();
             }
         };
         $scope.data1 = [{
-            key: "Mobile Performance",
+            key: "WiFi Performance",
             values: datavalues.values
         }];
         if (isDateTime) {
@@ -546,20 +546,20 @@ $("#radioGroup").hide();
     }
 
     function updateMapData(updatedPerformanceDataList) {
-        MobilePerformanceService.showMobilePerformanceMap($scope.centerInfo, updatedPerformanceDataList);
+        WiFiPerformanceService.showWiFiPerformanceMap($scope.centerInfo, updatedPerformanceDataList);
     }
 
     /*
 		To get device availability data
 	*/
-    $scope.mobilePerformance = function () {
+    $scope.wifiPerformance = function () {
         // alert('hi')
         //$scope.marketDataLoading = true;
-        promise = MobilePerformanceService.mobilePerformance(userId, pageIndex);
+        promise = WiFiPerformanceService.wifiPerformance(userId, pageIndex);
         promise.then(
             function (data) {
                 var val1 = JSON.stringify(data)
-                //console.log(val1)
+                console.log(val1)
                 if (typeof ($scope.dataPerformanceList) === 'undefined') {
                     $scope.dataPerformanceList = data.mobilePerformanceDataList
                 } else {
@@ -567,6 +567,11 @@ $("#radioGroup").hide();
                 }
                 $scope.centerInfo = data.centerInfo
                 listCount = data.records
+                if(listCount == 0)
+                {
+                    $scope.mapDataLoading = false;
+                    return;
+                }
                 $("#radioGroup").show();
                 updateDashboardContent(true)
                 console.log("before Page Index is " + pageIndex + " Total Count " + parseInt(listCount / 10000))
@@ -574,7 +579,7 @@ $("#radioGroup").hide();
                 if (parseInt(listCount / 10000) >= pageIndex) {
                     pageIndex++
                     console.log("after Page Index is " + pageIndex)
-                    $scope.mobilePerformance();
+                    $scope.wifiPerformance();
                 }
 
             },
@@ -604,22 +609,6 @@ $("#radioGroup").hide();
             },
         }
     }
-
-    // /*
-	// 	To get device availability data
-	// */
-    // $scope.wifiPerformance = function () {
-    //     promise = MobilePerformanceService.wifiPerformance(userId, token);
-    //     promise.then(
-    //         function (data) {
-    //             var val1 = JSON.stringify(data)
-    //             console.log("JSON STRINGIFY " + val1)
-    //         },
-    //         function (err) {
-
-    //         }
-    //     );
-    // }
     //    discrete Bar Chart
     $scope.options2 = {
         chart: {
@@ -776,8 +765,8 @@ $("#radioGroup").hide();
         }
     }
     $scope.getDashBoardMenu();
-    $scope.mobilePerformance();
-    //$scope.wifiPerformance();
+  //  $scope.mobilePerformance();
+    $scope.wifiPerformance();
     //                                    			$scope.getFavouriteReports();
 
     /*repaly from to date for date picker */
@@ -877,11 +866,11 @@ $("#radioGroup").hide();
 
     /* Default Replay Map */
 
-    MobilePerformanceService.defaultHeatMap();
+    WiFiPerformanceService.defaultHeatMap();
     $scope.showMarketList = function () {
         $scope.marketDataLoading = true;
         //	$scope.dataLoading = true;
-        promise = MobilePerformanceService.GetMarketData(userId, token);
+        promise = WiFiPerformanceService.GetMarketData(userId, token);
         promise.then(
             function (data) {
                 $scope.marketList = data;
@@ -905,7 +894,7 @@ $("#radioGroup").hide();
         $scope.deviceGroupDiv = false;
         $scope.errdiv = false;
         $scope.deviceDataLoading = true;
-        promise = MobilePerformanceService.GetDeviceListForMarket(userId, token, market);
+        promise = WiFiPerformanceService.GetDeviceListForMarket(userId, token, market);
         promise.then(
             function (data) {
                 if (data.length > 0) {
@@ -936,7 +925,7 @@ $("#radioGroup").hide();
 
     $scope.showHeatMapCategory = function () {
         $scope.dataLoading = true;
-        promise = MobilePerformanceService.getHeatMapCalgories(userId, token);
+        promise = WiFiPerformanceService.getHeatMapCalgories(userId, token);
         promise.then(
             function (data) {
                 $scope.heatMapCateogoryList = data;
@@ -1002,7 +991,7 @@ $("#radioGroup").hide();
             //     $scope.one =false;
             //     $scope.two =true;
 
-            promise = MobilePerformanceService.populateMap(token, data);
+            promise = WiFiPerformanceService.populateMap(token, data);
             promise.then(
                 function (data) {
                     /*	console.log("centerInfo"+data.centerInfo);
@@ -1025,19 +1014,19 @@ $("#radioGroup").hide();
                             $("#panel").hide();
                         }
                         if (data.deviceInformation.length > 0) {
-                            MobilePerformanceService.showHeatMap(heatMapInput, data.centerInfo, data.coordinateDetails, data.deviceInformation);
+                            WiFiPerformanceService.showHeatMap(heatMapInput, data.centerInfo, data.coordinateDetails, data.deviceInformation);
                         }
                         else {
                             //	alert('No Records Was Found')
                             $scope.showErrorMessage("heat_map_error", "No Records Was Found");
 
-                            MobilePerformanceService.defaultHeatMap();
+                            WiFiPerformanceService.defaultHeatMap();
                         }
                     }
                     else {
                         // alert('No Records Was Found')
                         $scope.showErrorMessage("heat_map_error", "No Records Was Found");
-                        MobilePerformanceService.defaultHeatMap();
+                        WiFiPerformanceService.defaultHeatMap();
                         $scope.mapDataLoading = false;
                     }
 

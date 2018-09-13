@@ -183,6 +183,11 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
         templateUrl: "app/views/mobilePerformance.html",
         controller: 'MobilePerformanceController'
         })
+        .state("wifiperformance", {
+            url: "/dashboard/wifiPerformance",
+            templateUrl: "app/views/wifiPerformance.html",
+            controller: 'WifiPerformanceController'
+            })
         .state("myDevices", {
             url: "/dashboard/myDevices",
             templateUrl: "app/views/mydevices.html",
