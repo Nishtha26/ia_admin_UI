@@ -142,11 +142,11 @@ $("#radioGroup").hide();
                     // if(!dateTimeMap.has(item.timeStamp).has(item.signalStrength))
                     dateTimeMap.set(item.timeStamp, item.signalStrength)
                 }
-                if (data.mobilePerformanceDataList[i].wifiSSID != null) {
-                    ssidarray.push(data.mobilePerformanceDataList[i].wifiSSID);
+                if (item.wifiSSID != null) {
+                    ssidarray.push(item.wifiSSID);
                 }
-                if (data.mobilePerformanceDataList[i].wifiBSSID != null) {
-                    bssidarray.push(data.mobilePerformanceDataList[i].wifiBSSID);
+                if (item.wifiBSSID != null) {
+                    bssidarray.push(item.wifiBSSID);
                 }
                 if (item.signalStrength == null) {
                     item.signalStrength = "0"
@@ -180,7 +180,7 @@ $("#radioGroup").hide();
                                 if (item.latitude != 0 && item.longitude != 0) {
                                     if (!mapTempArray.contains(item.latitude + " " + item.longitude)) {
                                         mapTempArray.push(item.latitude + " " + item.longitude)
-                                        //updateCoordinateList.push(mobilePerformanceDataList[i])
+                                        //updateCoordinateList.push(wifiPerformanceDataList[i])
                                         updatedPerformanceDataList.push(item)
                                     }
                                 }//Tagged/Indoor
@@ -188,7 +188,7 @@ $("#radioGroup").hide();
                                 if (item.indoorLatitude != 0 && item.indoorLongitude != 0) {
                                     if (!mapTempArray.contains(item.indoorLatitude + " " + item.indoorLongitude)) {
                                         mapTempArray.push(item.indoorLatitude + " " + item.indoorLongitude)
-                                        //updateCoordinateList.push(mobilePerformanceDataList[i])
+                                        //updateCoordinateList.push(wifiPerformanceDataList[i])
                                         updatedPerformanceDataList.push(item)
                                     }
                                 }
@@ -212,10 +212,10 @@ $("#radioGroup").hide();
                                     )
                                 }
                             }
-                            ssidarray.push(item.wifiSSID);
-                            bssidarray.push(item.wifiBSSID);
-                            // if (item.mnc != null && item.mnc != 0 && item.mnc != -1) mncarray.push(item.mnc)
-                            // if (item.cellId != null && item.cellId != 0 && item.cellId != -1) cellarray.push(item.cellId)
+                           // ssidarray.push(item.wifiSSID);
+                           // bssidarray.push(item.wifiBSSID);
+                             if (item.wifiSSID != null && item.wifiSSID != 0 && item.wifiSSID != -1) ssidarray.push(item.wifiSSID)
+                             if (item.wifiBSSID != null && item.wifiBSSID != 0 && item.wifiBSSID != -1) bssidarray.push(item.wifiBSSID)
                         }
                     }
                 }
@@ -243,8 +243,8 @@ $("#radioGroup").hide();
             updateKPIValueArray()
         }
 
-        $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
-        $scope.bssidCount = (filterDuplicateArray(bssidarray)).length
+       // $scope.ssidCount = (filterDuplicateArray(ssidarray)).length
+        //$scope.bssidCount = (filterDuplicateArray(bssidarray)).length
         //console.log("Updated mnc list " + filterDuplicateArray(mncarray))
         //console.log("Updated mnc list " + filterDuplicateArray(cellarray))
        // $scope.cellCount = (filterDuplicateArray(cellarray)).length
@@ -354,7 +354,7 @@ $("#radioGroup").hide();
                     }
                 },
                 yAxis: {
-                    axisLabel: 'Signal Strength (dbm)',
+                    axisLabel: 'WiFi RSSI (dbm)',
                     axisLabelDistance: -10
                 }
             }
@@ -561,9 +561,9 @@ $("#radioGroup").hide();
                 var val1 = JSON.stringify(data)
                 console.log(val1)
                 if (typeof ($scope.dataPerformanceList) === 'undefined') {
-                    $scope.dataPerformanceList = data.mobilePerformanceDataList
+                    $scope.dataPerformanceList = data.wifiPerformanceDataList
                 } else {
-                    $scope.dataPerformanceList = $scope.dataPerformanceList.concat(data.mobilePerformanceDataList)
+                    $scope.dataPerformanceList = $scope.dataPerformanceList.concat(data.wifiPerformanceDataList)
                 }
                 $scope.centerInfo = data.centerInfo
                 listCount = data.records

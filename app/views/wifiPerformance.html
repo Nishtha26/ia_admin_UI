@@ -81,12 +81,12 @@
                                     </tr>
                                     <tbody>
                                         <tr>
-                                            <td ng-class="content-wrapper"># of MNCs</td>
-                                            <td class="text-center">{{mncCount}}</td>
+                                            <td ng-class="content-wrapper"># of SSID</td>
+                                            <td class="text-center">{{ssidCount}}</td>
                                         </tr>
                                         <tr>
-                                            <td ng-class="content-wrapper"># of Cells</td>
-                                            <td class="text-center">{{cellCount}}</td>
+                                            <td ng-class="content-wrapper"># of BSSID</td>
+                                            <td class="text-center">{{bssidCount}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -210,7 +210,7 @@
                                         <div ng-message="required">**Location type is required</div>
                                     </div>
                                     <br/>
-                                    <!-- This will be for WiFi Performance
+                                    <!-- This will be for WiFi Performance -->
                                     <div class="form-group">
                                         <label>SSID</label>
                                         <select id="ssid" name="ssid" class="select" ng-model="ssid" ng-change="updateDashboard()" required>
@@ -240,7 +240,7 @@
                                             </div>
                                             <br/>
                                         </div>
--->
+
                                     <div class="form-group">
                                         <label>KPI Name</label>
                                         <select id="kpiname" name="kpiname" class="select" ng-model="kpiname" ng-change="updateDashboard()" required>
