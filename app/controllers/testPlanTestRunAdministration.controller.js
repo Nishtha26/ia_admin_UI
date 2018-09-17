@@ -20,10 +20,18 @@ oTech.controller('testPlanTestRunAdministration',
         var VirtualDevicelist = [];
         var notificationTypes = [];
         $scope.dataProcessing = false;
-
+        var selectedRowsOfTestPlan = []
 
         $rootScope.slideContent();
-
+        $scope.selectedCustomersList = [];
+        $scope.customerSettings = {
+            scrollableHeight: '200px',
+            scrollable: true,
+            enableSearch: true
+        };
+        $scope.example2settings = {
+            displayProp: 'customerId'
+        };
 
         window.onresize = function (event) {
             $rootScope.slideContent();
@@ -75,6 +83,8 @@ oTech.controller('testPlanTestRunAdministration',
 
 
         $scope.TestPlanOptions = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -129,7 +139,7 @@ oTech.controller('testPlanTestRunAdministration',
                     '<ul class="dropdown-menu dropdown-menu-right">' +
                     '<li ng-click="grid.appScope.viewTestPlan(row)"><a><i class="icon-file-eye2 text-primary"></i> View Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.viewTestRuns(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> View Test Runs</a></li>' +
-                    '<li ng-if="row.entity.isExitTestRuns == 0" ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
+                    '<li ng-click="grid.appScope.editTestPlan(row);"><a  class="scrollSetToTestRun"><i class="icon-file-text2 text-primary user_editor_link"></i> Edit Test Plan</a></li>' +
                     '<li ng-if="row.entity.isExitTestRuns == 1" ng-click="grid.appScope.addDeviceProfileToTestPlan(row)"><a   class="scrollSetToTestRun"><i class="icon-file-stats text-primary"></i> Add Device Profile</a></li>' +
                     '<li ng-click="grid.appScope.createTestRun(row);"><a class="scrollSetToTestRun"><i class="icon-pen-plus text-primary"></i> Create Test Run</a></li>' +
                     '<li ng-click="grid.appScope.clone(row);"><a><i class="icon-copy4 text-primary"></i> Clone Test Plan</a></li>' +
@@ -302,7 +312,7 @@ oTech.controller('testPlanTestRunAdministration',
                 console.log(data);
                 $scope.totalRecords = data.length;
                 allOfTheData = data;
-                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+                $scope.TestPlanOptions.data = data;
 
             },
             function (err) {
@@ -328,7 +338,7 @@ oTech.controller('testPlanTestRunAdministration',
             var headerHeight = 44; // your header height
             var footerPage = 15;
             var gridHeight = 0;
-            var dataCount = $scope.TestPlanOptions.data.length;
+            var dataCount = 10;
             gridHeight = ($scope.TestPlanOptions.data.length * rowHeight + headerHeight + footerPage);
             //$(".ui-grid-viewport").css("height",gridHeight-headerHeight);
             //$(".")
@@ -344,7 +354,7 @@ oTech.controller('testPlanTestRunAdministration',
 
         $scope.singleFilter = function () {
             $scope.TestPlanOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-            $scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
+            //$scope.TestPlanOptions.data = $scope.TestPlanOptions.data.slice(0, $scope.endLimit);
 
         };
 
@@ -788,6 +798,19 @@ oTech.controller('testPlanTestRunAdministration',
                                     console.log(err);
                                 }
                             );
+                            promise = testScriptService.FetchingTestService(userId, token);
+                            promise.then(
+                                function (data) {
+                                    console.log(data);
+                                    $scope.totalRecords = data.length;
+                                    allOfTheData = data;
+                                    $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
+
+                                },
+                                function (err) {
+                                    console.log(err);
+                                }
+                            );
                         }
                         else {
 
@@ -814,6 +837,8 @@ oTech.controller('testPlanTestRunAdministration',
         };
 
         $scope.testRunMappedDevices = {
+            paginationPageSizes: [10,20,30,50],
+            paginationPageSize: 10,
             enableSorting: true,
             enableFilter: true,
             enableColResize: true,
@@ -1511,7 +1536,7 @@ oTech.controller('testPlanTestRunAdministration',
                                                 if (node.commandParams != undefined && node.commandParams != null && node.commandParams.toLowerCase().indexOf("phonenumber=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'AnswerVoiceCall') {
                                                     $scope.answerVioceCallPhoneNo = true;
                                                 }
-                                                if (node.commandParams != undefined && node.commandParams != null && node.commandParams.toLowerCase().indexOf("phoneno=") >= 0 && node.commandParams.toLowerCase().indexOf("phoneno") >= 0 && node.title == 'SendSMS') {
+                                                if (node.commandParams != undefined && node.commandParams != null && node.commandParams.toLowerCase().indexOf("phoneno=phoneno") >= 0 && node.title == 'SendSMS') {
                                                     $scope.sendSms = true;
                                                 }
                                             });
@@ -1649,7 +1674,10 @@ oTech.controller('testPlanTestRunAdministration',
                 $scope.showOnlyDeviceProfileAndPhoneNo = false;
                 $scope.showOnlyDeviceProfile = true;
             }
-
+            for(rowIndex in selectedRowsOfTestPlan){
+                selectedRowsOfTestPlan[rowIndex].isSelected = false;
+            }
+            selectedRowsOfTestPlan = [];
             $scope.renderHtmlForTask($scope.taskTableArray);
         }
 
@@ -1668,12 +1696,20 @@ oTech.controller('testPlanTestRunAdministration',
             enableVerticalScrollbar: 3,
             enableHorizontalScrollbar: 0,
             columnDefs: [
-                {field: 'deviceId', name: 'Id', headerCellClass: $scope.highlightFilteredHeader, width: "20%"},
+                {
+                	field: 'deviceId', 
+                	name: 'Id',
+                	headerCellClass: $scope.highlightFilteredHeader,
+                	width: "30%",
+                	cellTooltip: function (row, col) {
+                        return '' + row.entity.deviceId + '';
+                    }	
+                },
                 {
                     field: 'deviceName',
                     name: 'Name',
                     headerCellClass: $scope.highlightFilteredHeader,
-                    width: "20%",
+                    width: "30%",
                     cellTooltip: function (row, col) {
                         return '' + row.entity.deviceName + '';
                     }
@@ -1694,7 +1730,7 @@ oTech.controller('testPlanTestRunAdministration',
                     field: 'manufacturer',
                     name: 'manufacturer',
                     headerCellClass: $scope.highlightFilteredHeader,
-                    width: "25%",
+                    width: "30%",
                     cellTooltip: function (row, col) {
                         return '' + row.entity.manufacturer + '';
                     }
@@ -1728,6 +1764,15 @@ oTech.controller('testPlanTestRunAdministration',
                         $scope.errorForPhoneNo = false;
                     }, 3000);
                     return false;
+                }
+                if (row.isSelected){
+                    selectedRowsOfTestPlan.push(row);
+                }
+                else{
+                    let index = selectedRowsOfTestPlan.indexOf(row);
+                    if (index > -1) {
+                        selectedRowsOfTestPlan.splice(index, 1);
+                    } 
                 }
                 var RealDeviceName = row.entity.deviceName;
                 var RealDeviceId = row.entity.deviceId;
@@ -1991,12 +2036,24 @@ oTech.controller('testPlanTestRunAdministration',
                                 console.log(err);
                             }
                         );
+                        promise = testScriptService.FetchingTestService(userId, token);
+                        promise.then(
+                            function (data) {
+                                console.log(data);
+                                $scope.totalRecords = data.length;
+                                allOfTheData = data;
+                                $scope.TestPlanOptions.data = data.slice(0, $scope.itemsPerPage);
 
+                            },
+                            function (err) {
+                                console.log(err);
+                            }
+                        );
                     },
                     function (err) {
                         console.log(err);
                     }
-                );
+                );                
             }
         }
 
@@ -2227,6 +2284,7 @@ oTech.controller('testPlanTestRunAdministration',
         }
 
         /* edit test plan */
+        $scope.selectedCustomersList = [];
         var editVirtualDevice = [];
         $scope.deviceProfileListForEdit = [];
         var deepCopyObjectForEditTestPlan = "";
@@ -2244,6 +2302,7 @@ oTech.controller('testPlanTestRunAdministration',
             $scope.deviceProfileCounter = 0;
             cloneCopyOfJobDevice = "";
             $scope.tree2 = 0;
+            var customerListArray = [];
             //load all virtual device
 
             promise2 = testScriptService.fetchVirtualDevices(token, userId);
@@ -2255,6 +2314,39 @@ oTech.controller('testPlanTestRunAdministration',
                     console.log(err);
                 }
             );
+
+            // fetching customer lists
+            // if (userId == -2) {
+            //     promise2 = AppServices.GetcustomerList(userId, token);
+            //     promise2.then(function (data) {
+            //         $(".btn-info").addClass("disabled");
+            //         $scope.customerListArray = [];
+            //         $.map(data.customerDetails, function (item, index) {
+            //             var temp = {};
+            //             temp['customerId'] = item.customerId;
+            //             temp['customerName'] = item.customerName;
+            //             $scope.customerListArray.push(temp);
+            //         });
+            //         $scope.customers = $scope.customerListArray;
+            //         $scope.dataLoading = false;
+            //         $(".btn-info").removeClass("disabled");
+            //     },
+            //     function (err) {
+            //         $scope.dataLoading = false;
+            //         console.log(err);
+            //     });
+            //     promise2 = AppServices.GetCustomerListOfTestPlan(row.entity.testplanId, token);
+
+            //     promise2.then(
+            //         function (data) {
+            //             console.log(JSON.stringify(data));
+            //             $scope.selectedCustomersList = data.customerList;
+            //         },
+            //         function (err) {
+            //             console.log(err);
+            //         }
+            //     );
+            // }
             // virtual device loaded
             $scope.editTestPlanTab = true;
             // load test plan
@@ -2600,7 +2692,6 @@ oTech.controller('testPlanTestRunAdministration',
                     sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].taskExecutorId = superParentObject[j].taskExecutorId;
                     sendCreateData.jobDeviceVOList[i].jobDeviceTaskExecutorVOList[j].jobDeviceTaskExecutorId = superParentObject[j].jobDeviceTaskExecutorId;
 
-
                 }
 
                 var parentObjectKeys = Object.keys(parentObject);
@@ -2639,7 +2730,13 @@ oTech.controller('testPlanTestRunAdministration',
 
 
             }
-
+            // let customerListId = [];
+            // if ($scope.customersValue != undefined && $scope.customersValue.length > 0) {
+            //     for (let i = 0; i < $scope.customersValue.length; i++) {
+            //         customerListId.push(parseInt($scope.customersValue[i]));
+            //     }   
+            // }
+            // sendCreateData.customerListId = customerListId;
 
             var jsonData = JSON.stringify(sendCreateData);
             var jobDeviceId = "";
@@ -2767,6 +2864,7 @@ oTech.controller('testPlanTestRunAdministration',
                 if (updateCommandParameters.indexOf("=") >= 0) {
 
                     var commandParam = updateCommandParameters.split('=');
+                    commandParam[1] = commandParam[1].replace('"','\''); 
                     console.log("commandParam: " + commandParam);
                     $(".editable-input").append('<div class="editable-address form-group col-md-12"><div class="col-md-6"><input name="commandLabel[' + i + '].Name" type="text" value="' + commandParam[0] + '" class="form-control  form-control-label"/></div><div class="col-md-6"><input name="command[' + i + '].Name" type="text" value="' + commandParam[1] + '" class="form-control"/></div></div>');
 
@@ -2796,7 +2894,7 @@ oTech.controller('testPlanTestRunAdministration',
              );*/
             for (var index = 0; index <= commandIndex; index++) {
                 if ($("input[name='commandLabel[" + index + "].Name']").val() != undefined && $("input[name='commandLabel[" + index + "].Name']").val() != '' && $("input[name='command[" + index + "].Name']").val() != undefined && $("input[name='command[" + index + "].Name']").val() != '')
-                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val() + ",";
+                    updatedParametrs += $("input[name='commandLabel[" + index + "].Name']").val() + "=" + $("input[name='command[" + index + "].Name']").val().replace('\'','\"') + ",";
             }
             //	console.log("updatedParametrs"+updatedParametrs);
             if (overrideNode.commandParams != updatedParametrs.substring(0, updatedParametrs.length - 1)) {

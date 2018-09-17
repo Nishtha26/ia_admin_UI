@@ -114,6 +114,10 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch
     }
+
+    .ui-grid-pager-panel {
+        padding-bottom: 2px !important;
+    }
 </style>
 <script>
 
@@ -150,7 +154,7 @@
                         </div>
                         <div class="table table-hover datatable-highlight myGrid" id="reportConfigGridOptions"
                              ui-grid="reportConfigGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-selection
-                             ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning>
+                             ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-pagination>
                             <div class="error loadingErrMsg" ng-show="err"> Error</div>
                         </div>
                         <br/>
@@ -176,7 +180,7 @@
                          style="margin-bottom:4px;">
                         <label class="col-sm-3 control-label">{{field.displayName}}</label>
                         <div class="col-sm-9">
-                            <input type="text" id="{{field.field}}" name="{{field.field}}" placeholder="{{field.displayName}}" class="form-control input-sm">
+                            <input type="text" id="{{field.field}}" name="{{field.field}}" placeholder="{{getPlaceHolderForField(field)}}" class="form-control input-sm">
                         </div>
                     </div>
                 </fieldset>

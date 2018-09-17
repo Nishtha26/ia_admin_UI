@@ -462,23 +462,7 @@ oTech.controller('userAdminstrationController',
 
             }
             $scope.userTableGridOptions.data = $filter('filter')(allOfTheData, filterType, $scope.searchText);
-            $scope.userTableGridOptions.data = $scope.userTableGridOptions.data.slice(0, $scope.endLimit);
-            // allOfTheData=$scope.userTableGridOptions.data;
-            // $scope.createNewDatasource();
-
-            /*var matcher = new RegExp($scope.searchText);
-              renderableRows.forEach( function( row ) {
-                var match = false;
-                [ 'username', 'status', 'firstName', 'email', 'roleName', 'companyName' ].forEach(function( field ){
-                  if ( row.entity[field].match(matcher) ){
-                    match = true;
-                  }
-                });
-                if ( !match ){
-                  row.visible = false;
-                }
-              });
-              return renderableRows;*/
+            //$scope.userTableGridOptions.data = $scope.userTableGridOptions.data.slice(0, $scope.endLimit);
 
         };
         $scope.cancelUserCreate = function () {
@@ -604,10 +588,10 @@ oTech.controller('userAdminstrationController',
             var roleName = $("#role").val();
             var companyName;
             if ($rootScope.role == "ROLE_OTADMIN") {
-                companyName = $("#customer-8").val();
+                companyName = $("#customer-8").val().trim();
             }
             else {
-                companyName = $("#customer-8").val();
+                companyName = $("#customer-8").val().trim();
             }
             var userGroupName = $scope.selectedUserGroup;
 
@@ -704,7 +688,7 @@ oTech.controller('userAdminstrationController',
                     //	allOfTheData = data;
                     $scope.userTableGridOptions.data = data;
                     allOfTheData = $scope.userTableGridOptions.data;
-                    $scope.userTableGridOptions.data = data.slice(0, $scope.itemsPerPage);
+                   // $scope.userTableGridOptions.data = data.slice(0, $scope.itemsPerPage);
                     //console.log($scope.serverSettingsGridOptions.data[0]);
                     $scope.gridApi.selection.selectRow($scope.userTableGridOptions.data[0]); //extra code
                     $scope.dataLoading = false;
@@ -724,7 +708,7 @@ oTech.controller('userAdminstrationController',
         };
         $scope.createNewDatasource = function () {
             $scope.dataLoading = true;
-            $scope.userTableGridOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
+            //$scope.userTableGridOptions.data = allOfTheData.slice(startLimit, $scope.endLimit);
             $scope.dataLoading = false;
         }
         $scope.cancel = function () {
@@ -1260,15 +1244,15 @@ oTech.controller('userAdminstrationController',
 
         $scope.singleFilterUserGroup = function () {
             $scope.addUsergroupsGridOptions.data = $filter('filter')(allOfTheDataUG, $scope.searchTextUserGroup, undefined);
-            $scope.addUsergroupsGridOptions.data = $scope.addUsergroupsGridOptions.data.slice(0, $scope.endLimit);
+           // $scope.addUsergroupsGridOptions.data = $scope.addUsergroupsGridOptions.data.slice(0, $scope.endLimit);
         }
         $scope.singleFilterForAllUser = function () {
             $scope.allusersgroupGridOptions.data = $filter('filter')($scope.allusersgroupGrid, $scope.searchTextForAlluser, undefined);
-            $scope.allusersgroupGridOptions.data = $scope.allusersgroupGridOptions.data.slice(0, $scope.endLimit);
+           // $scope.allusersgroupGridOptions.data = $scope.allusersgroupGridOptions.data.slice(0, $scope.endLimit);
         }
         $scope.singleFilterForExistUser = function () {
             $scope.existingusersGridOptions.data = $filter('filter')($scope.existingusersGridData, $scope.searchTextForExistuser, undefined);
-            $scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice(0, $scope.endLimit);
+            //$scope.existingusersGridOptions.data = $scope.existingusersGridOptions.data.slice(0, $scope.endLimit);
         }
         $scope.singleFilterForAllDevice = function () {
             filterType = "";
@@ -1281,7 +1265,7 @@ oTech.controller('userAdminstrationController',
 
             }
             $scope.allDeviceGridOptions.data = $filter('filter')($scope.allDeviceGrid, filterType, searchText);
-            $scope.allDeviceGridOptions.data = $scope.allDeviceGridOptions.data.slice(0, $scope.endLimit);
+            //$scope.allDeviceGridOptions.data = $scope.allDeviceGridOptions.data.slice(0, $scope.endLimit);
         }
         $scope.singleFilterForSelectedDevice = function () {
 
@@ -1296,12 +1280,12 @@ oTech.controller('userAdminstrationController',
             }
 
             $scope.selectedDeviceGridOptions.data = $filter('filter')($scope.selectedDeviceGrid, filterType, searchText);
-            $scope.selectedDeviceGridOptions.data = $scope.selectedDeviceGridOptions.data.slice(0, $scope.endLimit);
+           // $scope.selectedDeviceGridOptions.data = $scope.selectedDeviceGridOptions.data.slice(0, $scope.endLimit);
         }
 
         $scope.createNewDatasourceUG = function () {
             $scope.dataLoading = true;
-            $scope.addUsergroupsGridOptions.data = allOfTheDataUG.slice(startLimitUG, $scope.endLimitUG);
+            //$scope.addUsergroupsGridOptions.data = allOfTheDataUG.slice(startLimitUG, $scope.endLimitUG);
             $scope.dataLoading = false;
         }
         var deletePopupMsg = "Are you want to delete this user group?";
@@ -1351,7 +1335,7 @@ oTech.controller('userAdminstrationController',
                     $scope.totalRecordsUG = data.length;
                     $scope.addUsergroupsGridOptions.data = data;
                     allOfTheDataUG = data;
-                    $scope.addUsergroupsGridOptions.data = data.slice(0, $scope.itemsPerPage);
+                   // $scope.addUsergroupsGridOptions.data = data.slice(0, $scope.itemsPerPage);
                     $scope.gridApi.selection.selectRow($scope.addUsergroupsGridOptions.data[0]);
                     $scope.userDataLoading = false;
                 },

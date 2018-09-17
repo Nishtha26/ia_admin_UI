@@ -148,9 +148,12 @@ oTech
                 $scope.currentPage = n;
             };
 
+            $scope.currentLink = {};
+
             $scope.singleFilterForDM = function () {
-                $scope.devicesMeasurementGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
-                $scope.devicesMeasurementGridOptions.data = $scope.devicesMeasurementGridOptions.data.slice(0, $scope.endLimit);
+                // $scope.devicesMeasurementGridOptions.data = $filter('filter')(allOfTheData, $scope.searchText, undefined);
+                //$scope.devicesMeasurementGridOptions.data = $scope.devicesMeasurementGridOptions.data.slice(0, $scope.endLimit);
+                $scope.showDeviceList($scope.currentLink);
             }
 
 
@@ -170,6 +173,7 @@ oTech
             };
 
             $scope.devicesMeasurementGridOptions = oApp.config.deviceListGridOptionsapn;
+
             /* measurement list apn */
             $scope.showDeviceList = function (link) {
 //						$scope.dataLoadingDM = true;
@@ -232,12 +236,24 @@ oTech
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsRemoteControl;
                 else if (link == 'SpeechRecord')
                     $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsSpeechRecord;
+                else if (link == 'UDPCmdLogs')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsUDPCmdLogs;
+                else if (link == 'VideoCall')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsVideoCallLogs;
+                else if (link == 'GenericCommands')
+                    $scope.devicesMeasurementGridOptions.columnDefs = oApp.config.columnDefsGenericCommandsLogs;
                 if (startLimit == 1) {
                     startLimit = 0;
                 }
                 $('.ui-grid-viewport').css("display", "none");
+                $scope.currentLink = link;
+                var searchText = $scope.searchText;
+                if (searchText === undefined) {
+                    searchText = '';
+                }
+                console.log("Search text is :: " + searchText);
                 promise = AppServices.GetMeasurementsapnData(userId,
-                    token, $scope.itemsPerPage, startLimit, link);
+                    token, $scope.itemsPerPage, startLimit, link, searchText)
                 promise.then(function (data) {
 //							$scope.dataLoadingDM = true;
                     $scope.err = false;

@@ -263,6 +263,10 @@
         padding: 2px 6px;
     }
 
+    .ui-grid-pager-panel{
+        padding-bottom: 2px !important;
+    }
+
 
 </style>
 
@@ -394,30 +398,10 @@
                                      -->
                                 </div>
                                 <div id="TestPlanOptions" ui-grid="TestPlanOptions" ui-grid-selection ui-grid-cellNav
-                                     ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ng-style="getTableHeight()"
+                                     ui-grid-auto-resize ui-grid-edit ui-grid-row-edit ui-grid-pagination
                                      class="table table-hover grid">
                                     <img class="loading loaderandwait" src="images/please_wait.gif"
                                          ng-show="dataProcessingTestPlan"></img>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_info data-info_d-list" id="dataTables-example_info"
-                                             role="alert" aria-live="polite" aria-relevant="all">Showing
-                                            {{(itemsPerPage*currentPage+1)}} to {{endLimit}} of {{totalRecords}} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_paginate paging_simple_numbers">
-                                            <a ng-class="DisablePrevPage()" class="paginate_button previous"
-                                               ng-click="prevPage()">&larr;</a>
-                                            <span>
-												  <a ng-repeat="n in range()" ng-class="{current: n == currentPage}"
-                                                     ng-click="setPage(n)" class="paginate_button">{{n+1}}</a>
-												</span>
-                                            <a ng-class="DisableNextPage()" class="paginate_button next"
-                                               ng-click="nextPage()">&rarr;</a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <!-- /test plan ui grid -->
                             </div>
@@ -948,7 +932,22 @@
 
                                                 </div>
                                             </div>
-
+                                            <!-- <div ng-show="{{role == 'ROLE_OTADMIN'}}">
+                                                <div class="panel-heading" >
+                                                        <h6 class="panel-title">Edit Customer</h6>
+                                                    </div>
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3" style="padding:0px;">
+                                                            <label class="text-semibold">Assign To Customer:</label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <div ng-dropdown-multiselect="" options="customers" selected-model="selectedCustomersList" checkboxes="true" extra-settings="customerSettings"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            
                                             <div class="panel-footer" id="test_script_panel_footer">
 
                                                 <ul>
