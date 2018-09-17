@@ -1,6 +1,4 @@
-var oTech = angular.module("oTech", ['angularjs-dropdown-multiselect', 'toastr', 'ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages']).filter('oTech', function () {
-});
-
+var oTech = angular.module("oTech", ['angularjs-dropdown-multiselect', 'toastr', 'ui.grid.selection', 'ui.router', 'ngAnimate', 'ngTouch', 'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.moveColumns', 'ui.grid.pinning', 'ui.grid.pagination', 'ui.grid.treeView', 'ui.grid.autoResize', 'ngSanitize', 'ngCookies', 'ui.bootstrap', 'angularjs-datetime-picker', 'treeGrid', 'ncy-angular-breadcrumb', 'angular.filter', 'ui.tree', 'ngMessages', 'rzModule', 'ui.bootstrap', 'nvd3', 'ngMaterial']).filter('oTech', function () {
 
 oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $q, $location) {
 
@@ -177,7 +175,17 @@ oTech.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
         ncyBreadcrumb: {
             label: 'Test Plan'
         }
-    })
+       })
+       .state("mobileperformance", {
+        url: "/dashboard/mobilePerformance",
+        templateUrl: "app/views/mobilePerformance.html",
+        controller: 'MobilePerformanceController'
+        })
+        .state("wifiperformance", {
+            url: "/dashboard/wifiPerformance",
+            templateUrl: "app/views/wifiPerformance.html",
+            controller: 'WifiPerformanceController'
+            })
         .state("myDevices", {
             url: "/dashboard/myDevices",
             templateUrl: "app/views/mydevices.html",
